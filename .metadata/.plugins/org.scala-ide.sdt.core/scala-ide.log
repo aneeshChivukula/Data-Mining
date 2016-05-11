@@ -1,0 +1,614 @@
+2016-05-03 16:16:30,048 ERROR [Worker-0] - Statistics - Statistics file `/home/aneesh/.scalaide/statistics` is corrupted. A new one is being created. Corrupted content was:
+
+com.cedarsoftware.util.io.JsonIoException: error parsing JSON value
+	at com.cedarsoftware.util.io.JsonReader.readObject(JsonReader.java:529)
+	at com.cedarsoftware.util.io.JsonReader.jsonToJava(JsonReader.java:289)
+	at com.cedarsoftware.util.io.JsonReader.jsonToJava(JsonReader.java:262)
+	at org.scalaide.core.internal.statistics.Statistics.org$scalaide$core$internal$statistics$Statistics$$read(Statistics.scala:74)
+	at org.scalaide.core.internal.statistics.Statistics$$anonfun$readStats$1.apply(Statistics.scala:52)
+	at org.scalaide.core.internal.statistics.Statistics$$anonfun$readStats$1.apply(Statistics.scala:51)
+	at org.scalaide.core.ScalaIdeDataStore$$anonfun$validate$2.apply(ScalaIdeDataStore.scala:59)
+	at org.scalaide.util.eclipse.EclipseUtils$$anon$3.run(EclipseUtils.scala:214)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.scalaide.util.eclipse.EclipseUtils$.withSafeRunner(EclipseUtils.scala:210)
+	at org.scalaide.core.ScalaIdeDataStore$.validate(ScalaIdeDataStore.scala:58)
+	at org.scalaide.core.internal.statistics.Statistics.readStats(Statistics.scala:51)
+	at org.scalaide.core.internal.statistics.Statistics.<init>(Statistics.scala:30)
+	at org.scalaide.core.internal.ScalaPlugin.stats$lzycompute(ScalaPlugin.scala:135)
+	at org.scalaide.core.internal.ScalaPlugin.stats(ScalaPlugin.scala:135)
+	at org.scalaide.core.internal.ScalaPlugin.statistics(ScalaPlugin.scala:138)
+	at org.scalaide.core.internal.ScalaPlugin.start(ScalaPlugin.scala:109)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:771)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:764)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.start(BundleContextImpl.java:721)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.startWorker0(EquinoxBundle.java:941)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.startWorker(EquinoxBundle.java:318)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:571)
+	at org.eclipse.osgi.container.Module.start(Module.java:439)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:454)
+	at org.eclipse.osgi.internal.hooks.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.internal.loader.classpath.ClasspathManager.findLocalClass(ClasspathManager.java:531)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.findLocalClass(ModuleClassLoader.java:324)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:327)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:402)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:352)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:344)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:160)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.loadClass(EquinoxBundle.java:573)
+	at org.eclipse.core.internal.registry.osgi.RegistryStrategyOSGI.createExecutableExtension(RegistryStrategyOSGI.java:174)
+	at org.eclipse.core.internal.registry.ExtensionRegistry.createExecutableExtension(ExtensionRegistry.java:905)
+	at org.eclipse.core.internal.registry.ConfigurationElement.createExecutableExtension(ConfigurationElement.java:243)
+	at org.eclipse.core.internal.registry.ConfigurationElementHandle.createExecutableExtension(ConfigurationElementHandle.java:55)
+	at org.eclipse.ui.internal.WorkbenchPlugin$1.run(WorkbenchPlugin.java:294)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:52)
+	at org.eclipse.ui.internal.WorkbenchPlugin.createExtension(WorkbenchPlugin.java:289)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition$1.run(LightweightDecoratorDefinition.java:125)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.internalGetDecorator(LightweightDecoratorDefinition.java:120)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:255)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:83)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:367)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:349)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:372)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:332)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: com.cedarsoftware.util.io.JsonIoException: EOF reached prematurely
+	at com.cedarsoftware.util.io.JsonParser.error(JsonParser.java:584)
+	at com.cedarsoftware.util.io.JsonParser.readValue(JsonParser.java:278)
+	at com.cedarsoftware.util.io.JsonReader.readObject(JsonReader.java:521)
+	... 54 more
+2016-05-03 16:19:43,581  WARN [ModalContext] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:19:43,583  WARN [ModalContext] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:19:44,456  WARN [Worker-12] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:19:44,459  WARN [Worker-12] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:20:18,978  WARN [Worker-16] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:20:18,978  WARN [Worker-16] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:20:48,061  WARN [main] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:20:48,061  WARN [main] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:20:51,665  WARN [Worker-12] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:20:51,665  WARN [Worker-12] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:20:52,030  WARN [Java indexing] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:20:52,030  WARN [Java indexing] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:20:53,233  WARN [Worker-12] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:20:53,233  WARN [Worker-12] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:22:16,378  WARN [Worker-11] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:22:16,378  WARN [Worker-11] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:22:34,798  WARN [Worker-5] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:22:34,799  WARN [Worker-5] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:22:50,489  WARN [Worker-15] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:22:50,490  WARN [Worker-15] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:24:02,850  WARN [Worker-11] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:24:02,850  WARN [Worker-11] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 16:29:16,675  WARN [Worker-19] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 16:29:16,675  WARN [Worker-19] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:04:51,066  WARN [main] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:04:51,066  WARN [main] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:04:51,456 ERROR [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - System.err - Exception in thread "org.scalaide.ui.internal.reconciliation.ScalaReconciler"
+2016-05-03 17:04:51,456 ERROR [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - System.err - java.lang.NullPointerException
+2016-05-03 17:04:51,456 ERROR [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - System.err - at org.scalaide.ui.internal.editor.outline.ScalaOutlineReconcilingStrategy.reconcile(ScalaOutlineReconcilingStrategy.scala:26)
+2016-05-03 17:04:51,456 ERROR [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - System.err - at org.scalaide.ui.internal.editor.outline.ScalaOutlineReconcilingStrategy.initialReconcile(ScalaOutlineReconcilingStrategy.scala:39)
+2016-05-03 17:04:51,456 ERROR [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - System.err - at org.eclipse.jdt.internal.ui.text.CompositeReconcilingStrategy.initialReconcile(CompositeReconcilingStrategy.java:114)
+2016-05-03 17:04:51,456 ERROR [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - System.err - at org.eclipse.jface.text.reconciler.MonoReconciler.initialProcess(MonoReconciler.java:105)
+2016-05-03 17:04:51,456 ERROR [org.scalaide.ui.internal.reconciliation.ScalaReconciler] - System.err - at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:173)
+2016-05-03 17:05:12,038  WARN [main] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:05:12,038  WARN [main] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:05:50,548 ERROR [main] - ScalaDocumentProvider - exception thrown while trying to save document
+java.lang.IllegalArgumentException: Illegal value: -1
+	at org.eclipse.core.internal.resources.Resource.revertModificationStamp(Resource.java:1618)
+	at org.eclipse.core.internal.filebuffers.ResourceTextFileBuffer.commitFileBufferContent(ResourceTextFileBuffer.java:403)
+	at org.eclipse.core.internal.filebuffers.ResourceFileBuffer.commit(ResourceFileBuffer.java:327)
+	at org.eclipse.jdt.internal.ui.javaeditor.DocumentAdapter.save(DocumentAdapter.java:472)
+	at org.eclipse.jdt.internal.core.CommitWorkingCopyOperation.executeOperation(CommitWorkingCopyOperation.java:123)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:729)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2241)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:794)
+	at org.eclipse.jdt.internal.core.CompilationUnit.commitWorkingCopy(CompilationUnit.java:391)
+	at org.scalaide.ui.internal.editor.ScalaDocumentProvider.commitWorkingCopy0(ScalaDocumentProvider.scala:87)
+	at org.scalaide.ui.internal.editor.ScalaDocumentProvider.commitWorkingCopy(ScalaDocumentProvider.scala:39)
+	at org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitDocumentProvider$4.execute(CompilationUnitDocumentProvider.java:1458)
+	at org.eclipse.ui.editors.text.TextFileDocumentProvider$DocumentProviderOperation.run(TextFileDocumentProvider.java:132)
+	at org.eclipse.ui.actions.WorkspaceModifyDelegatingOperation.execute(WorkspaceModifyDelegatingOperation.java:70)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation$1.run(WorkspaceModifyOperation.java:108)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2241)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation.run(WorkspaceModifyOperation.java:130)
+	at org.eclipse.ui.internal.editors.text.WorkspaceOperationRunner.run(WorkspaceOperationRunner.java:75)
+	at org.eclipse.ui.internal.editors.text.WorkspaceOperationRunner.run(WorkspaceOperationRunner.java:65)
+	at org.eclipse.ui.editors.text.TextFileDocumentProvider.executeOperation(TextFileDocumentProvider.java:456)
+	at org.eclipse.ui.editors.text.TextFileDocumentProvider.saveDocument(TextFileDocumentProvider.java:772)
+	at org.eclipse.ui.texteditor.AbstractTextEditor.performSave(AbstractTextEditor.java:5076)
+	at org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor.performSave(CompilationUnitEditor.java:1244)
+	at org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitEditor.doSave(CompilationUnitEditor.java:1301)
+	at org.eclipse.ui.texteditor.AbstractTextEditor$TextEditorSavable.doSave(AbstractTextEditor.java:7209)
+	at org.eclipse.ui.Saveable.doSave(Saveable.java:216)
+	at org.eclipse.ui.internal.SaveableHelper.doSaveModel(SaveableHelper.java:357)
+	at org.eclipse.ui.internal.SaveableHelper$3.run(SaveableHelper.java:201)
+	at org.eclipse.ui.internal.SaveableHelper$5.run(SaveableHelper.java:285)
+	at org.eclipse.jface.operation.ModalContext.runInCurrentThread(ModalContext.java:463)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:371)
+	at org.eclipse.ui.internal.WorkbenchWindow$14.run(WorkbenchWindow.java:2181)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:70)
+	at org.eclipse.ui.internal.WorkbenchWindow.run(WorkbenchWindow.java:2177)
+	at org.eclipse.ui.internal.SaveableHelper.runProgressMonitorOperation(SaveableHelper.java:293)
+	at org.eclipse.ui.internal.SaveableHelper.runProgressMonitorOperation(SaveableHelper.java:271)
+	at org.eclipse.ui.internal.SaveableHelper.saveModels(SaveableHelper.java:213)
+	at org.eclipse.ui.internal.SaveableHelper.savePart(SaveableHelper.java:148)
+	at org.eclipse.ui.internal.WorkbenchPage.saveSaveable(WorkbenchPage.java:3892)
+	at org.eclipse.ui.internal.WorkbenchPage.saveEditor(WorkbenchPage.java:3906)
+	at org.eclipse.ui.internal.handlers.SaveHandler.execute(SaveHandler.java:54)
+	at org.eclipse.ui.internal.handlers.HandlerProxy.execute(HandlerProxy.java:295)
+	at org.eclipse.ui.internal.handlers.E4HandlerProxy.execute(E4HandlerProxy.java:90)
+	at sun.reflect.GeneratedMethodAccessor80.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:56)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.invokeUsingClass(InjectorImpl.java:252)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.invoke(InjectorImpl.java:234)
+	at org.eclipse.e4.core.contexts.ContextInjectionFactory.invoke(ContextInjectionFactory.java:132)
+	at org.eclipse.e4.core.commands.internal.HandlerServiceHandler.execute(HandlerServiceHandler.java:152)
+	at org.eclipse.core.commands.Command.executeWithChecks(Command.java:493)
+	at org.eclipse.core.commands.ParameterizedCommand.executeWithChecks(ParameterizedCommand.java:486)
+	at org.eclipse.e4.core.commands.internal.HandlerServiceImpl.executeHandler(HandlerServiceImpl.java:210)
+	at org.eclipse.e4.ui.bindings.keys.KeyBindingDispatcher.executeCommand(KeyBindingDispatcher.java:286)
+	at org.eclipse.e4.ui.bindings.keys.KeyBindingDispatcher.press(KeyBindingDispatcher.java:507)
+	at org.eclipse.e4.ui.bindings.keys.KeyBindingDispatcher.processKeyEvent(KeyBindingDispatcher.java:558)
+	at org.eclipse.e4.ui.bindings.keys.KeyBindingDispatcher.filterKeySequenceBindings(KeyBindingDispatcher.java:378)
+	at org.eclipse.e4.ui.bindings.keys.KeyBindingDispatcher.access$0(KeyBindingDispatcher.java:324)
+	at org.eclipse.e4.ui.bindings.keys.KeyBindingDispatcher$KeyDownFilter.handleEvent(KeyBindingDispatcher.java:86)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Display.filterEvent(Display.java:1550)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1328)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1353)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1338)
+	at org.eclipse.swt.widgets.Widget.sendKeyEvent(Widget.java:1365)
+	at org.eclipse.swt.widgets.Widget.gtk_key_press_event(Widget.java:763)
+	at org.eclipse.swt.widgets.Control.gtk_key_press_event(Control.java:3325)
+	at org.eclipse.swt.widgets.Composite.gtk_key_press_event(Composite.java:793)
+	at org.eclipse.swt.widgets.Widget.windowProc(Widget.java:1980)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:5685)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4717)
+	at org.eclipse.swt.internal.gtk.OS._gtk_main_do_event(Native Method)
+	at org.eclipse.swt.internal.gtk.OS.gtk_main_do_event(OS.java:9326)
+	at org.eclipse.swt.widgets.Display.eventProc(Display.java:1225)
+	at org.eclipse.swt.internal.gtk.OS._g_main_context_iteration(Native Method)
+	at org.eclipse.swt.internal.gtk.OS.g_main_context_iteration(OS.java:2435)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3428)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:1127)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:337)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1018)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:156)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:694)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:337)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:606)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:150)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:139)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:380)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:235)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:669)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:608)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1515)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1488)
+2016-05-03 17:06:49,945  WARN [main] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:06:49,945  WARN [main] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:07:31,268  WARN [main] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:07:31,268  WARN [main] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:09:42,676  WARN [ModalContext] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:09:42,676  WARN [ModalContext] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:09:42,983  WARN [ModalContext] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:09:42,983  WARN [ModalContext] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:09:43,000  WARN [Worker-23] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:09:43,000  WARN [Worker-23] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:10:24,701  WARN [ModalContext] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:10:24,701  WARN [ModalContext] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:10:24,890  WARN [Worker-26] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:10:24,890  WARN [Worker-26] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:10:32,987  WARN [Worker-25] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:10:32,987  WARN [Worker-25] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:10:45,149  WARN [main] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:10:45,149  WARN [main] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:10:47,723  WARN [main] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:10:47,723  WARN [main] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:10:47,823  WARN [Worker-11] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:10:47,823  WARN [Worker-11] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:10:54,717  WARN [Worker-21] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:10:54,718  WARN [Worker-21] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:11:02,106  WARN [Worker-23] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:11:02,106  WARN [Worker-23] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:11:05,149  WARN [Worker-11] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:11:05,149  WARN [Worker-11] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:12:20,319  WARN [ModalContext] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:12:20,319  WARN [ModalContext] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:12:20,330  WARN [ModalContext] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:12:20,330  WARN [ModalContext] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:12:20,639  WARN [ModalContext] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:12:20,639  WARN [ModalContext] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:12:20,965  WARN [Worker-20] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:12:20,965  WARN [Worker-20] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:12:22,538  WARN [Worker-11] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:12:22,538  WARN [Worker-11] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:14:38,052  WARN [main] - ScalaProject - Project TemporalGraphTraversal has platform default sourceLevel.
+2016-05-03 17:14:38,053  WARN [main] - ScalaProject - Project TemporalGraphTraversal runs on platform default installation.
+2016-05-03 17:16:25,073  WARN [Worker-11] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:16:25,079  WARN [Worker-11] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:16:31,268  WARN [Worker-26] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:16:31,269  WARN [Worker-26] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:17:41,726  WARN [Worker-25] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:17:41,727  WARN [Worker-25] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:17:46,567  WARN [Worker-11] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:17:46,567  WARN [Worker-11] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:17:51,771  WARN [Worker-11] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:17:51,771  WARN [Worker-11] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:17:55,941  WARN [Worker-27] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:17:55,941  WARN [Worker-27] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:17:59,343  WARN [Worker-23] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:17:59,344  WARN [Worker-23] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:18:00,736  WARN [Worker-25] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:18:00,736  WARN [Worker-25] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:18:05,174  WARN [Worker-26] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:18:05,174  WARN [Worker-26] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:18:11,607  WARN [Worker-27] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:18:11,607  WARN [Worker-27] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:20:39,208  WARN [Worker-27] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:20:39,208  WARN [Worker-27] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:20:53,275  WARN [Worker-26] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:20:53,275  WARN [Worker-26] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:22:14,041  WARN [Worker-29] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:22:14,042  WARN [Worker-29] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:30:02,076  WARN [Worker-25] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:30:02,076  WARN [Worker-25] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:30:04,842  WARN [Worker-27] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:30:04,843  WARN [Worker-27] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:30:38,534  WARN [Worker-31] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:30:38,534  WARN [Worker-31] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:30:39,070  WARN [Worker-31] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:30:39,070  WARN [Worker-31] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:30:39,108  WARN [Java indexing] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 17:30:39,108  WARN [Java indexing] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 17:35:30,570  WARN [ModalContext] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-03 17:35:30,570  WARN [ModalContext] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-03 17:35:30,577  WARN [ModalContext] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-03 17:35:30,577  WARN [ModalContext] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-03 17:35:31,011  WARN [Worker-23] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-03 17:35:31,014  WARN [Worker-23] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-03 17:35:31,024  WARN [Worker-23] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-03 17:35:31,024  WARN [Worker-23] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-03 19:20:04,335  WARN [Worker-31] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-03 19:20:04,355  WARN [Worker-31] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-03 19:20:15,299  WARN [main] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-03 19:20:15,299  WARN [main] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-04 13:31:48,738  WARN [main] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-04 13:31:48,745  WARN [main] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-04 13:31:48,752  WARN [main] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-04 13:31:48,752  WARN [main] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-04 13:31:48,763  WARN [main] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-04 13:31:48,764  WARN [main] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-04 13:32:00,082  WARN [Worker-6] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-04 13:32:00,092  WARN [Worker-6] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-10 12:50:49,491  WARN [main] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-10 12:50:49,517  WARN [main] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-10 12:50:49,536  WARN [main] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-10 12:50:49,536  WARN [main] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-10 12:50:49,557  WARN [main] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-10 12:50:49,557  WARN [main] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-10 12:51:04,673  WARN [Worker-5] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-10 12:51:04,676  WARN [Worker-5] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-11 11:29:47,911  WARN [main] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-11 11:29:47,928  WARN [main] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-11 11:29:47,936  WARN [main] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-11 11:29:47,936  WARN [main] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-11 11:29:47,945  WARN [main] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-11 11:29:47,946  WARN [main] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-11 11:30:00,190  WARN [Worker-4] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-11 11:30:00,196  WARN [Worker-4] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-11 11:32:12,210  WARN [ModalContext] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:32:12,210  WARN [ModalContext] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:32:16,186  WARN [Worker-4] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:32:16,186  WARN [Worker-4] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:32:16,848  WARN [Worker-4] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-11 11:32:16,849  WARN [Worker-4] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-11 11:32:16,870  WARN [Worker-4] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-11 11:32:16,871  WARN [Worker-4] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-11 11:32:17,093  WARN [Worker-4] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-11 11:32:17,093  WARN [Worker-4] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-11 11:32:17,102  WARN [Worker-4] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-11 11:32:17,102  WARN [Worker-4] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-11 11:33:09,165  WARN [Worker-6] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:33:09,165  WARN [Worker-6] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:33:25,254  WARN [main] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:33:25,255  WARN [main] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:33:26,858  WARN [main] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:33:26,858  WARN [main] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:33:27,122  WARN [Worker-10] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:33:27,122  WARN [Worker-10] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:33:38,480  WARN [Worker-4] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:33:38,481  WARN [Worker-4] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:33:41,491  WARN [Worker-18] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:33:41,492  WARN [Worker-18] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:33:56,418  WARN [Worker-4] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:33:56,418  WARN [Worker-4] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:34:00,858  WARN [Worker-4] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:34:00,858  WARN [Worker-4] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:34:05,447  WARN [Worker-6] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:34:05,447  WARN [Worker-6] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:34:07,660  WARN [Worker-10] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:34:07,661  WARN [Worker-10] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:34:10,208  WARN [Worker-10] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:34:10,208  WARN [Worker-10] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:34:16,224  WARN [main] - ScalaProject - Project ScalaSample has platform default sourceLevel.
+2016-05-11 11:34:16,225  WARN [main] - ScalaProject - Project ScalaSample runs on platform default installation.
+2016-05-11 11:34:29,746  WARN [Worker-8] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:34:29,746  WARN [Worker-8] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:40:45,579  WARN [Worker-5] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:40:45,579  WARN [Worker-5] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:40:53,569  WARN [Worker-6] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:40:53,570  WARN [Worker-6] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:56:28,703  WARN [Worker-4] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:56:28,703  WARN [Worker-4] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:56:58,637  WARN [main] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:56:58,638  WARN [main] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 11:56:58,975  WARN [Worker-5] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 11:56:58,976  WARN [Worker-5] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:25:21,232  WARN [ModalContext] - ScalaProject - Project Data Loaders has platform default sourceLevel.
+2016-05-11 12:25:21,232  WARN [ModalContext] - ScalaProject - Project Data Loaders runs on platform default installation.
+2016-05-11 12:25:21,233  WARN [ModalContext] - ScalaProject - Project Data Loaders has platform default sourceLevel.
+2016-05-11 12:25:21,233  WARN [ModalContext] - ScalaProject - Project Data Loaders runs on platform default installation.
+2016-05-11 12:25:21,617  WARN [ModalContext] - ScalaProject - Project Data Loaders has platform default sourceLevel.
+2016-05-11 12:25:21,617  WARN [ModalContext] - ScalaProject - Project Data Loaders runs on platform default installation.
+2016-05-11 12:25:22,034  WARN [Worker-3] - ScalaProject - Project Data Loaders has platform default sourceLevel.
+2016-05-11 12:25:22,035  WARN [Worker-3] - ScalaProject - Project Data Loaders runs on platform default installation.
+2016-05-11 12:25:23,599  WARN [Worker-2] - ScalaProject - Project Data Loaders has platform default sourceLevel.
+2016-05-11 12:25:23,599  WARN [Worker-2] - ScalaProject - Project Data Loaders runs on platform default installation.
+2016-05-11 12:26:50,868  WARN [Worker-5] - ScalaProject - Project Data Loaders has platform default sourceLevel.
+2016-05-11 12:26:50,869  WARN [Worker-5] - ScalaProject - Project Data Loaders runs on platform default installation.
+2016-05-11 12:27:21,426  WARN [Worker-3] - ScalaProject - Project Data Loaders has platform default sourceLevel.
+2016-05-11 12:27:21,426  WARN [Worker-3] - ScalaProject - Project Data Loaders runs on platform default installation.
+2016-05-11 12:29:44,956  WARN [Worker-9] - ScalaProject - Project Data Loaders has platform default sourceLevel.
+2016-05-11 12:29:44,956  WARN [Worker-9] - ScalaProject - Project Data Loaders runs on platform default installation.
+2016-05-11 12:29:46,083  WARN [Worker-5] - ScalaProject - Project Data Loaders has platform default sourceLevel.
+2016-05-11 12:29:46,083  WARN [Worker-5] - ScalaProject - Project Data Loaders runs on platform default installation.
+2016-05-11 12:30:55,198  WARN [ModalContext] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:30:55,199  WARN [ModalContext] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:30:55,199  WARN [ModalContext] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:30:55,199  WARN [ModalContext] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:30:55,493  WARN [ModalContext] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:30:55,493  WARN [ModalContext] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:30:55,724  WARN [Worker-3] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:30:55,724  WARN [Worker-3] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:30:57,226  WARN [Worker-2] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:30:57,226  WARN [Worker-2] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:31:30,052  WARN [Worker-6] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:31:30,052  WARN [Worker-6] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:31:38,963  WARN [Worker-6] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:31:38,963  WARN [Worker-6] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:40:19,337  WARN [Worker-9] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:40:19,337  WARN [Worker-9] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:40:47,746  WARN [Worker-10] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:40:47,746  WARN [Worker-10] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:51:25,108  WARN [ModalContext] - ScalaProject - Project LoadDynamicNetwork has platform default sourceLevel.
+2016-05-11 12:51:25,108  WARN [ModalContext] - ScalaProject - Project LoadDynamicNetwork runs on platform default installation.
+2016-05-11 12:51:25,108  WARN [ModalContext] - ScalaProject - Project LoadDynamicNetwork has platform default sourceLevel.
+2016-05-11 12:51:25,109  WARN [ModalContext] - ScalaProject - Project LoadDynamicNetwork runs on platform default installation.
+2016-05-11 12:51:25,212  WARN [Worker-2] - ScalaProject - Project LoadDynamicNetwork has platform default sourceLevel.
+2016-05-11 12:51:25,212  WARN [Worker-2] - ScalaProject - Project LoadDynamicNetwork runs on platform default installation.
+2016-05-11 12:51:26,344  WARN [Worker-7] - ScalaProject - Project LoadDynamicNetwork has platform default sourceLevel.
+2016-05-11 12:51:26,344  WARN [Worker-7] - ScalaProject - Project LoadDynamicNetwork runs on platform default installation.
+2016-05-11 12:51:26,357  WARN [Worker-7] - ScalaProject - Project LoadDynamicNetwork has platform default sourceLevel.
+2016-05-11 12:51:26,357  WARN [Worker-7] - ScalaProject - Project LoadDynamicNetwork runs on platform default installation.
+2016-05-11 12:51:37,893  WARN [Text Viewer Hover Presenter] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:51:37,893  WARN [Text Viewer Hover Presenter] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:51:37,926  WARN [Text Viewer Hover Presenter] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:51:37,926  WARN [Text Viewer Hover Presenter] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:51:37,930 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error thrown while initializing the presentation compiler.
+Java Model Exception: Java Model Status [DynamicNetworkAnalysis does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newNotPresentException(JavaElement.java:556)
+	at org.eclipse.jdt.internal.core.JavaModelManager.getPerProjectInfoCheckExistence(JavaModelManager.java:2307)
+	at org.eclipse.jdt.internal.core.JavaProject.getPerProjectInfo(JavaProject.java:1909)
+	at org.eclipse.jdt.internal.core.JavaProject.getRawClasspath(JavaProject.java:1931)
+	at org.scalaide.core.internal.project.ClasspathManagement$class.jdkPaths(ClasspathManagement.scala:147)
+	at org.scalaide.core.internal.project.ScalaProject.jdkPaths(ScalaProject.scala:147)
+	at org.scalaide.core.internal.project.ClasspathManagement$class.scalaClasspath(ClasspathManagement.scala:134)
+	at org.scalaide.core.internal.project.ScalaProject.scalaClasspath(ScalaProject.scala:147)
+	at org.scalaide.core.internal.project.ScalaProject.setupCompilerClasspath(ScalaProject.scala:500)
+	at org.scalaide.core.internal.project.ScalaProject.initializeCompilerSettings(ScalaProject.scala:486)
+	at org.scalaide.core.internal.project.ScalaProject.org$scalaide$core$internal$project$ScalaProject$$prepareCompilerSettings(ScalaProject.scala:435)
+	at org.scalaide.core.internal.project.ScalaProject$$anonfun$5.apply(ScalaProject.scala:159)
+	at org.scalaide.core.internal.project.ScalaProject$$anonfun$5.apply(ScalaProject.scala:159)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.liftedTree1$1(PresentationCompilerProxy.scala:152)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.create(PresentationCompilerProxy.scala:151)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.initialize(PresentationCompilerProxy.scala:116)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.obtainPc$1(PresentationCompilerProxy.scala:78)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.internal(PresentationCompilerProxy.scala:98)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.apply(PresentationCompilerProxy.scala:56)
+	at org.scalaide.core.compiler.InteractiveCompilationUnit$class.withSourceFile(InteractiveCompilationUnit.scala:201)
+	at org.scalaide.core.internal.jdt.model.ScalaSourceFile.withSourceFile(ScalaSourceFile.scala:66)
+	at org.scalaide.debug.internal.editor.TextHoverFactory$$anon$1$$anonfun$2.apply(TextHoverFactory.scala:38)
+	at org.scalaide.debug.internal.editor.TextHoverFactory$$anon$1$$anonfun$2.apply(TextHoverFactory.scala:37)
+	at scala.Option.map(Option.scala:146)
+	at org.scalaide.debug.internal.editor.TextHoverFactory$$anon$1.getHoverInfo2(TextHoverFactory.scala:37)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:166)
+2016-05-11 12:51:37,936 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error thrown while initializing the presentation compiler.
+Java Model Exception: Java Model Status [DynamicNetworkAnalysis does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newNotPresentException(JavaElement.java:556)
+	at org.eclipse.jdt.internal.core.JavaModelManager.getPerProjectInfoCheckExistence(JavaModelManager.java:2307)
+	at org.eclipse.jdt.internal.core.JavaProject.getPerProjectInfo(JavaProject.java:1909)
+	at org.eclipse.jdt.internal.core.JavaProject.getRawClasspath(JavaProject.java:1931)
+	at org.scalaide.core.internal.project.ClasspathManagement$class.jdkPaths(ClasspathManagement.scala:147)
+	at org.scalaide.core.internal.project.ScalaProject.jdkPaths(ScalaProject.scala:147)
+	at org.scalaide.core.internal.project.ClasspathManagement$class.scalaClasspath(ClasspathManagement.scala:134)
+	at org.scalaide.core.internal.project.ScalaProject.scalaClasspath(ScalaProject.scala:147)
+	at org.scalaide.core.internal.project.ScalaProject.setupCompilerClasspath(ScalaProject.scala:500)
+	at org.scalaide.core.internal.project.ScalaProject.initializeCompilerSettings(ScalaProject.scala:486)
+	at org.scalaide.core.internal.project.ScalaProject.org$scalaide$core$internal$project$ScalaProject$$prepareCompilerSettings(ScalaProject.scala:435)
+	at org.scalaide.core.internal.project.ScalaProject$$anonfun$5.apply(ScalaProject.scala:159)
+	at org.scalaide.core.internal.project.ScalaProject$$anonfun$5.apply(ScalaProject.scala:159)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.liftedTree1$1(PresentationCompilerProxy.scala:152)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.create(PresentationCompilerProxy.scala:151)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.initialize(PresentationCompilerProxy.scala:116)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.obtainPc$1(PresentationCompilerProxy.scala:78)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.internal(PresentationCompilerProxy.scala:98)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.apply(PresentationCompilerProxy.scala:56)
+	at org.scalaide.core.compiler.InteractiveCompilationUnit$class.withSourceFile(InteractiveCompilationUnit.scala:201)
+	at org.scalaide.core.internal.jdt.model.ScalaSourceFile.withSourceFile(ScalaSourceFile.scala:66)
+	at org.scalaide.ui.internal.editor.hover.ScalaHoverImpl$$anonfun$1.apply(ScalaHoverImpl.scala:103)
+	at org.scalaide.ui.internal.editor.hover.ScalaHoverImpl$$anonfun$1.apply(ScalaHoverImpl.scala:101)
+	at scala.Option.map(Option.scala:146)
+	at org.scalaide.ui.internal.editor.hover.ScalaHoverImpl.getHoverInfo2(ScalaHoverImpl.scala:101)
+	at org.scalaide.debug.internal.editor.TextHoverFactory$$anon$1.org$scalaide$debug$internal$editor$TextHoverFactory$$anon$$super$getHoverInfo2(TextHoverFactory.scala:53)
+	at org.scalaide.debug.internal.editor.TextHoverFactory$$anon$1$$anonfun$2$$anonfun$apply$5.apply(TextHoverFactory.scala:53)
+	at scala.Option.getOrElse(Option.scala:121)
+	at org.scalaide.debug.internal.editor.TextHoverFactory$$anon$1$$anonfun$2.apply(TextHoverFactory.scala:51)
+	at org.scalaide.debug.internal.editor.TextHoverFactory$$anon$1$$anonfun$2.apply(TextHoverFactory.scala:37)
+	at scala.Option.map(Option.scala:146)
+	at org.scalaide.debug.internal.editor.TextHoverFactory$$anon$1.getHoverInfo2(TextHoverFactory.scala:37)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:166)
+2016-05-11 12:51:38,266  WARN [Worker-2] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:51:38,267  WARN [Worker-2] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:51:38,334 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error thrown while initializing the presentation compiler.
+Java Model Exception: Java Model Status [DynamicNetworkAnalysis does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newNotPresentException(JavaElement.java:556)
+	at org.eclipse.jdt.internal.core.JavaModelManager.getPerProjectInfoCheckExistence(JavaModelManager.java:2307)
+	at org.eclipse.jdt.internal.core.JavaProject.getPerProjectInfo(JavaProject.java:1909)
+	at org.eclipse.jdt.internal.core.JavaProject.getRawClasspath(JavaProject.java:1931)
+	at org.scalaide.core.internal.project.ClasspathManagement$class.jdkPaths(ClasspathManagement.scala:147)
+	at org.scalaide.core.internal.project.ScalaProject.jdkPaths(ScalaProject.scala:147)
+	at org.scalaide.core.internal.project.ClasspathManagement$class.scalaClasspath(ClasspathManagement.scala:134)
+	at org.scalaide.core.internal.project.ScalaProject.scalaClasspath(ScalaProject.scala:147)
+	at org.scalaide.core.internal.project.ScalaProject.setupCompilerClasspath(ScalaProject.scala:500)
+	at org.scalaide.core.internal.project.ScalaProject.initializeCompilerSettings(ScalaProject.scala:486)
+	at org.scalaide.core.internal.project.ScalaProject.org$scalaide$core$internal$project$ScalaProject$$prepareCompilerSettings(ScalaProject.scala:435)
+	at org.scalaide.core.internal.project.ScalaProject$$anonfun$5.apply(ScalaProject.scala:159)
+	at org.scalaide.core.internal.project.ScalaProject$$anonfun$5.apply(ScalaProject.scala:159)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.liftedTree1$1(PresentationCompilerProxy.scala:152)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.create(PresentationCompilerProxy.scala:151)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.initialize(PresentationCompilerProxy.scala:116)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.obtainPc$1(PresentationCompilerProxy.scala:78)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.internal(PresentationCompilerProxy.scala:98)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.apply(PresentationCompilerProxy.scala:56)
+	at org.scalaide.core.compiler.InteractiveCompilationUnit$class.withSourceFile(InteractiveCompilationUnit.scala:201)
+	at org.scalaide.core.internal.jdt.model.ScalaSourceFile.withSourceFile(ScalaSourceFile.scala:66)
+	at org.scalaide.core.internal.decorators.markoccurrences.ScalaOccurrencesFinder.findOccurrences(ScalaOccurrencesFinder.scala:50)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$class.getAnnotations(MarkOccurrencesEditorExtension.scala:104)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$class.org$scalaide$ui$internal$editor$MarkOccurrencesEditorExtension$$performOccurrencesUpdate(MarkOccurrencesEditorExtension.scala:95)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1$$anonfun$apply$4$$anonfun$apply$2.apply$mcV$sp(MarkOccurrencesEditorExtension.scala:75)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1$$anonfun$apply$4$$anonfun$apply$2.apply(MarkOccurrencesEditorExtension.scala:75)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1$$anonfun$apply$4$$anonfun$apply$2.apply(MarkOccurrencesEditorExtension.scala:75)
+	at org.scalaide.util.Utils$.debugTimed(Utils.scala:28)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1$$anonfun$apply$4.apply(MarkOccurrencesEditorExtension.scala:74)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1$$anonfun$apply$4.apply(MarkOccurrencesEditorExtension.scala:72)
+	at scala.Option.foreach(Option.scala:257)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1.apply(MarkOccurrencesEditorExtension.scala:72)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1.apply(MarkOccurrencesEditorExtension.scala:71)
+	at org.scalaide.util.eclipse.EclipseUtils$$anon$1.run(EclipseUtils.scala:115)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+2016-05-11 12:51:38,902  WARN [Worker-2] - ScalaProject - Project DynamicNetworkAnalysis has platform default sourceLevel.
+2016-05-11 12:51:38,903  WARN [Worker-2] - ScalaProject - Project DynamicNetworkAnalysis runs on platform default installation.
+2016-05-11 12:51:39,045 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error thrown while initializing the presentation compiler.
+Java Model Exception: Java Model Status [DynamicNetworkAnalysis does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newNotPresentException(JavaElement.java:556)
+	at org.eclipse.jdt.internal.core.JavaModelManager.getPerProjectInfoCheckExistence(JavaModelManager.java:2307)
+	at org.eclipse.jdt.internal.core.JavaProject.getPerProjectInfo(JavaProject.java:1909)
+	at org.eclipse.jdt.internal.core.JavaProject.getRawClasspath(JavaProject.java:1931)
+	at org.scalaide.core.internal.project.ClasspathManagement$class.jdkPaths(ClasspathManagement.scala:147)
+	at org.scalaide.core.internal.project.ScalaProject.jdkPaths(ScalaProject.scala:147)
+	at org.scalaide.core.internal.project.ClasspathManagement$class.scalaClasspath(ClasspathManagement.scala:134)
+	at org.scalaide.core.internal.project.ScalaProject.scalaClasspath(ScalaProject.scala:147)
+	at org.scalaide.core.internal.project.ScalaProject.setupCompilerClasspath(ScalaProject.scala:500)
+	at org.scalaide.core.internal.project.ScalaProject.initializeCompilerSettings(ScalaProject.scala:486)
+	at org.scalaide.core.internal.project.ScalaProject.org$scalaide$core$internal$project$ScalaProject$$prepareCompilerSettings(ScalaProject.scala:435)
+	at org.scalaide.core.internal.project.ScalaProject$$anonfun$5.apply(ScalaProject.scala:159)
+	at org.scalaide.core.internal.project.ScalaProject$$anonfun$5.apply(ScalaProject.scala:159)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.liftedTree1$1(PresentationCompilerProxy.scala:152)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.create(PresentationCompilerProxy.scala:151)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.initialize(PresentationCompilerProxy.scala:116)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.obtainPc$1(PresentationCompilerProxy.scala:78)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.internal(PresentationCompilerProxy.scala:98)
+	at org.scalaide.core.internal.compiler.PresentationCompilerProxy.apply(PresentationCompilerProxy.scala:56)
+	at org.scalaide.core.compiler.InteractiveCompilationUnit$class.withSourceFile(InteractiveCompilationUnit.scala:201)
+	at org.scalaide.core.internal.jdt.model.ScalaSourceFile.withSourceFile(ScalaSourceFile.scala:66)
+	at org.scalaide.core.internal.decorators.markoccurrences.ScalaOccurrencesFinder.findOccurrences(ScalaOccurrencesFinder.scala:50)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$class.getAnnotations(MarkOccurrencesEditorExtension.scala:104)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$class.org$scalaide$ui$internal$editor$MarkOccurrencesEditorExtension$$performOccurrencesUpdate(MarkOccurrencesEditorExtension.scala:95)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1$$anonfun$apply$4$$anonfun$apply$2.apply$mcV$sp(MarkOccurrencesEditorExtension.scala:75)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1$$anonfun$apply$4$$anonfun$apply$2.apply(MarkOccurrencesEditorExtension.scala:75)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1$$anonfun$apply$4$$anonfun$apply$2.apply(MarkOccurrencesEditorExtension.scala:75)
+	at org.scalaide.util.Utils$.debugTimed(Utils.scala:28)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1$$anonfun$apply$4.apply(MarkOccurrencesEditorExtension.scala:74)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1$$anonfun$apply$4.apply(MarkOccurrencesEditorExtension.scala:72)
+	at scala.Option.foreach(Option.scala:257)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1.apply(MarkOccurrencesEditorExtension.scala:72)
+	at org.scalaide.ui.internal.editor.MarkOccurrencesEditorExtension$$anonfun$1.apply(MarkOccurrencesEditorExtension.scala:71)
+	at org.scalaide.util.eclipse.EclipseUtils$$anon$1.run(EclipseUtils.scala:115)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+2016-05-11 12:56:35,031  WARN [Worker-2] - ScalaProject - Project Sample Project has platform default sourceLevel.
+2016-05-11 12:56:35,031  WARN [Worker-2] - ScalaProject - Project Sample Project runs on platform default installation.
+2016-05-11 12:56:35,661 ERROR [main] - org.scala-ide.sdt.core - org.scala-ide.sdt.core - org.scala-ide.sdt.core - 0 - Error in Scala compiler
+scala.reflect.internal.FatalError: /home/aneesh/SampleApp/src/main/scala does not exist or is not a directory
+	at scala.tools.nsc.settings.MutableSettings$OutputDirs.checkDir(MutableSettings.scala:271)
+	at scala.tools.nsc.settings.MutableSettings$OutputDirs.add(MutableSettings.scala:261)
+	at xsbt.CachedCompiler0$$anonfun$2.apply(CompilerInterface.scala:72)
+	at xsbt.CachedCompiler0$$anonfun$2.apply(CompilerInterface.scala:71)
+	at scala.collection.IndexedSeqOptimized$class.foreach(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.ArrayOps$ofRef.foreach(ArrayOps.scala:186)
+	at xsbt.CachedCompiler0.<init>(CompilerInterface.scala:71)
+	at xsbt.CompilerInterface.newCompiler(CompilerInterface.scala:23)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at sbt.compiler.AnalyzingCompiler.call(AnalyzingCompiler.scala:101)
+	at sbt.compiler.AnalyzingCompiler.newCachedCompiler(AnalyzingCompiler.scala:56)
+	at sbt.compiler.AnalyzingCompiler.newCachedCompiler(AnalyzingCompiler.scala:51)
+	at sbt.compiler.CompilerCache$$anon$2.apply(CompilerCache.scala:47)
+	at sbt.compiler.AnalyzingCompiler.compile(AnalyzingCompiler.scala:39)
+	at sbt.compiler.MixedAnalyzingCompiler$$anonfun$compileScala$1$1.apply$mcV$sp(MixedAnalyzingCompiler.scala:51)
+	at sbt.compiler.MixedAnalyzingCompiler$$anonfun$compileScala$1$1.apply(MixedAnalyzingCompiler.scala:51)
+	at sbt.compiler.MixedAnalyzingCompiler$$anonfun$compileScala$1$1.apply(MixedAnalyzingCompiler.scala:51)
+	at sbt.compiler.MixedAnalyzingCompiler.timed(MixedAnalyzingCompiler.scala:75)
+	at sbt.compiler.MixedAnalyzingCompiler.compileScala$1(MixedAnalyzingCompiler.scala:50)
+	at sbt.compiler.MixedAnalyzingCompiler.compile(MixedAnalyzingCompiler.scala:65)
+	at sbt.compiler.IC$$anonfun$compileInternal$1.apply(IncrementalCompiler.scala:160)
+	at sbt.compiler.IC$$anonfun$compileInternal$1.apply(IncrementalCompiler.scala:160)
+	at sbt.inc.IncrementalCompile$$anonfun$doCompile$1.apply(Compile.scala:66)
+	at sbt.inc.IncrementalCompile$$anonfun$doCompile$1.apply(Compile.scala:64)
+	at sbt.inc.IncrementalCommon.cycle(IncrementalCommon.scala:31)
+	at sbt.inc.Incremental$$anonfun$1.apply(Incremental.scala:62)
+	at sbt.inc.Incremental$$anonfun$1.apply(Incremental.scala:61)
+	at sbt.inc.Incremental$.manageClassfiles(Incremental.scala:89)
+	at sbt.inc.Incremental$.compile(Incremental.scala:61)
+	at sbt.inc.IncrementalCompile$.apply(Compile.scala:54)
+	at sbt.compiler.IC$.compileInternal(IncrementalCompiler.scala:160)
+	at sbt.compiler.IC$.incrementalCompile(IncrementalCompiler.scala:138)
+	at org.scalaide.core.internal.builder.zinc.CachingCompiler.compile(CachingCompiler.scala:37)
+	at org.scalaide.core.internal.builder.zinc.EclipseSbtBuildManager.aggressiveCompile(EclipseSbtBuildManager.scala:213)
+	at org.scalaide.core.internal.builder.zinc.EclipseSbtBuildManager.runCompiler(EclipseSbtBuildManager.scala:145)
+	at org.scalaide.core.internal.builder.zinc.EclipseSbtBuildManager.update(EclipseSbtBuildManager.scala:127)
+	at org.scalaide.core.internal.builder.zinc.EclipseSbtBuildManager.build(EclipseSbtBuildManager.scala:85)
+	at org.scalaide.core.internal.project.scopes.BuildScopeUnit.build(BuildScopeUnit.scala:73)
+	at org.scalaide.core.internal.project.SbtScopesBuildManager$$anonfun$build$1.apply(SbtScopesBuildManager.scala:54)
+	at org.scalaide.core.internal.project.SbtScopesBuildManager$$anonfun$build$1.apply(SbtScopesBuildManager.scala:51)
+	at scala.collection.immutable.List.foreach(List.scala:381)
+	at org.scalaide.core.internal.project.SbtScopesBuildManager.build(SbtScopesBuildManager.scala:51)
+	at org.scalaide.core.internal.project.ScalaProject.build(ScalaProject.scala:603)
+	at org.scalaide.core.internal.builder.ScalaBuilder.build(ScalaBuilder.scala:109)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:734)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:205)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:245)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:300)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:303)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:359)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:382)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:144)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:235)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)

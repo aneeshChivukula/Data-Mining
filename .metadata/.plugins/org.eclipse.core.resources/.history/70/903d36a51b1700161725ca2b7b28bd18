@@ -1,0 +1,29 @@
+package Loaders
+
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkContext._
+import org.apache.spark.SparkConf
+import org.apache.spark.graphx._
+
+val sc: SparkContext
+val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+
+
+object DDL {
+    
+}
+
+
+
+/*
+
+HiveQL
+
+select count(*) from Affiliations;
+select year(from_unixtime(unix_timestamp(ConferenceEndDate,'yyyy/mm/dd'), 'yyyy-mm-dd')) from ConferenceInstances;
+describe ConferenceInstances;
+select ConferenceStartDate,ConferenceEndDate,ConferenceAbstractRegistrationDate, ConferenceSubmissionDeadlineDate, ConferenceNotificationDueDate, ConferenceFinalVersionDueDate from ConferenceInstances where ConferenceStartDate=null or ConferenceEndDate=null or ConferenceAbstractRegistrationDate=null or ConferenceSubmissionDeadlineDate=null or ConferenceNotificationDueDate=null or ConferenceFinalVersionDueDate=null;
+select NormalizedPaperTitle,NormalizedVenueName from Papers limit 10;
+select * from Papers where NormalizedVenueName='nature';
+
+*/

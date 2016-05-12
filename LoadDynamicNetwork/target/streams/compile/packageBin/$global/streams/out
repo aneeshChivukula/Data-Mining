@@ -1,15 +1,11 @@
-[0m[[0minfo[0m] [0mPackaging /home/aneesh/workspace/DynamicNetworkAnalysis/target/scala-2.11/data-loaders_2.11-1.0.jar ...[0m
+[0m[[0minfo[0m] [0mPackaging /home/aneesh/workspace/LoadDynamicNetwork/target/scala-2.11/data-loaders_2.11-1.0.jar ...[0m
 [0m[[0mdebug[0m] [0mInput file mappings:[0m
-[0m[[0mdebug[0m] [0m	DDL$$anonfun$main$1.class[0m
-[0m[[0mdebug[0m] [0m	  /home/aneesh/workspace/DynamicNetworkAnalysis/target/scala-2.11/classes/DDL$$anonfun$main$1.class[0m
-[0m[[0mdebug[0m] [0m	DDL.class[0m
-[0m[[0mdebug[0m] [0m	  /home/aneesh/workspace/DynamicNetworkAnalysis/target/scala-2.11/classes/DDL.class[0m
 [0m[[0mdebug[0m] [0m	DDL$$anonfun$main$4.class[0m
-[0m[[0mdebug[0m] [0m	  /home/aneesh/workspace/DynamicNetworkAnalysis/target/scala-2.11/classes/DDL$$anonfun$main$4.class[0m
-[0m[[0mdebug[0m] [0m	DDL$$anonfun$main$2.class[0m
-[0m[[0mdebug[0m] [0m	  /home/aneesh/workspace/DynamicNetworkAnalysis/target/scala-2.11/classes/DDL$$anonfun$main$2.class[0m
+[0m[[0mdebug[0m] [0m	  /home/aneesh/workspace/LoadDynamicNetwork/target/scala-2.11/classes/DDL$$anonfun$main$4.class[0m
+[0m[[0mdebug[0m] [0m	DDL.class[0m
+[0m[[0mdebug[0m] [0m	  /home/aneesh/workspace/LoadDynamicNetwork/target/scala-2.11/classes/DDL.class[0m
 [0m[[0mdebug[0m] [0m	DDL$$anonfun$main$3.class[0m
-[0m[[0mdebug[0m] [0m	  /home/aneesh/workspace/DynamicNetworkAnalysis/target/scala-2.11/classes/DDL$$anonfun$main$3.class[0m
+[0m[[0mdebug[0m] [0m	  /home/aneesh/workspace/LoadDynamicNetwork/target/scala-2.11/classes/DDL$$anonfun$main$3.class[0m
 [0m[[0mdebug[0m] [0m	DDL$.class[0m
-[0m[[0mdebug[0m] [0m	  /home/aneesh/workspace/DynamicNetworkAnalysis/target/scala-2.11/classes/DDL$.class[0m
+[0m[[0mdebug[0m] [0m	  /home/aneesh/workspace/LoadDynamicNetwork/target/scala-2.11/classes/DDL$.class[0m
 [0m[[0minfo[0m] [0mDone packaging.[0m

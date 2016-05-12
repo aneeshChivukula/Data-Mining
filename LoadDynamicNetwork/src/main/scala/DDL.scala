@@ -7,12 +7,15 @@ object DDL {
 	def main(args: Array[String]) {
 		
 		// Create database
-		val conf = new SparkConf().setAppName("Data Loader").setMaster("yarn-cluster")
+		val conf = new SparkConf().setAppName("Data Loader")
 		val sc = new SparkContext(conf)
 		val sqlContext = new org.apache.spark.sql.SQLContext(sc)
-		import sqlContext.implicits._
+		print(sqlContext)
 		
-		sqlContext.sql("show databases").collect().foreach(println);
+		sqlContext.sql("show databases").collect().foreach(println)
+    sqlContext.sql("drop database mydb cascade")
+		sqlContext.sql("import sqlContext.implicits._")
+		sqlContext.sql("show databases").collect().foreach(println)
 		sqlContext.sql("CREATE DATABASE mydb")
 		sqlContext.sql("USE mydb")
 		sqlContext.sql("show tables").collect().foreach(println);
@@ -28,28 +31,62 @@ object DDL {
 		res.rdd.map(x=>x.mkString(",")).foreach(println)
 		res.rdd.saveAsTextFile("hdfs://atlas8:9000/data/output")
 
+		df = sqlContext.sql("select FieldOfStudyName from FieldsOfStudy")
+		df.show()
+		df.rdd.saveAsTextFile("hdfs://atlas8:9000/data/fieldsofstudy")
+		// hadoop fs -copyToLocal /data/fieldsofstudy/part-00000 .
+		// grep "Computer vision" part-00000 > Mining.txt
+		var df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Computer vision'")
+		df2.show()
+		df2 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='01E7DD16'")
+		df2.count()
+		
+		
 		// Load all tables into database
 		sqlContext.sql("CREATE TABLE Journals (JournalID String,JournalName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
 		sqlContext.sql("CREATE TABLE ConferenceSeries (ConferenceSeriesID String,ShortName String,FullName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
 		sqlContext.sql("CREATE TABLE ConferenceInstances (ConferenceSeriesID String,ConferenceInstanceID String,ShortName String,FullName String,Location String,OfficialConferenceURL String,ConferenceStartDate String,ConferenceEndDate String,ConferenceAbstractRegistrationDate String,ConferenceSubmissionDeadlineDate String,ConferenceNotificationDueDate String,ConferenceFinalVersionDueDate String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
- 
+
+		sqlContext.sql("CREATE TABLE Affiliations (AffiliationID String,AffiliationName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE Authors (AuthorID String,AuthorName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE FieldsOfStudy (FieldOfStudyID String,FieldOfStudyName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE FieldOfStudyHierarchy (ChildFieldOfStudyID String,ChildFieldOfStudyLevel String,ParentFieldOfStudyID String,ParentFieldOfStudyLevel String,Confidence String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE Journals (JournalID String,JournalName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE Papers (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE PaperAuthorAffiliations (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE PaperKeywords (PaperID String,KeywordName String,FieldOfStudyIDMappedToKeyword String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE PaperReferences (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE PaperUrls (PaperID String,URL String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		
 		sqlContext.sql("LOAD DATA INPATH '/data/Journals.txt' OVERWRITE INTO TABLE Journals")
 		sqlContext.sql("LOAD DATA INPATH '/data/Conferences.txt' OVERWRITE INTO TABLE ConferenceSeries")
 		sqlContext.sql("LOAD DATA INPATH '/data/ConferenceInstances.txt' OVERWRITE INTO TABLE ConferenceInstances")
 
-		sqlContext.sql("select JournalName from Journals").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputjnj")
-		sqlContext.sql("select FullName from ConferenceSeries").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputfncs")
-		sqlContext.sql("select ShortName from ConferenceInstances").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputsnci")
-		sqlContext.sql("select FullName from ConferenceInstances").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputfnci")
+		sqlContext.sql("LOAD DATA INPATH '/data/Affiliations.txt' OVERWRITE INTO TABLE Affiliations")
+		sqlContext.sql("LOAD DATA INPATH '/data/Authors.txt' OVERWRITE INTO TABLE Authors")
+		sqlContext.sql("LOAD DATA INPATH '/data/FieldsOfStudy.txt' OVERWRITE INTO TABLE FieldsOfStudy")
+		sqlContext.sql("LOAD DATA INPATH '/data/FieldOfStudyHierarchy.txt' OVERWRITE INTO TABLE FieldOfStudyHierarchy")
+		sqlContext.sql("LOAD DATA INPATH '/data/Journals.txt' OVERWRITE INTO TABLE Journals")
+		sqlContext.sql("LOAD DATA INPATH '/data/Papers.txt' OVERWRITE INTO TABLE Papers")
+		sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliations.txt' OVERWRITE INTO TABLE PaperAuthorAffiliations")
+		sqlContext.sql("LOAD DATA INPATH '/data/PaperKeywords.txt' OVERWRITE INTO TABLE PaperKeywords")
+		sqlContext.sql("LOAD DATA INPATH '/data/PaperReferences.txt' OVERWRITE INTO TABLE PaperReferences")
+		sqlContext.sql("LOAD DATA INPATH '/data/PaperUrls.txt' OVERWRITE INTO TABLE PaperUrls")
+		
+		
+//		sqlContext.sql("select JournalName from Journals").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputjnj")
+//		sqlContext.sql("select FullName from ConferenceSeries").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputfncs")
+//		sqlContext.sql("select ShortName from ConferenceInstances").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputsnci")
+//		sqlContext.sql("select FullName from ConferenceInstances").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputfnci")
 
 
 		// Search for computer science publications
 
-		sqlContext.sql("select FullName from ConferenceInstances where FullName rlike '^.*Artificial.*Intelligence.*$' ").count()
-		sqlContext.sql("select FullName from ConferenceInstances where FullName rlike '^.*Artificial.*Intelligence.*$' ").show()
-		sqlContext.sql("select FullName from ConferenceInstances where ShortName rlike '^.*AAAI.*$' ").show()
+//		sqlContext.sql("select FullName from ConferenceInstances where FullName rlike '^.*Artificial.*Intelligence.*$' ").count()
+//		sqlContext.sql("select FullName from ConferenceInstances where FullName rlike '^.*Artificial.*Intelligence.*$' ").show()
+//		sqlContext.sql("select FullName from ConferenceInstances where ShortName rlike '^.*AAAI.*$' ").show()
 
-		// sqlContext.sql("USE mydb")
+//	 sqlContext.sql("USE mydb")
 
 
 
@@ -73,6 +110,10 @@ object DDL {
 		res2 = sqlContext.sql("select * from ConferenceInstances where FullName rlike '^.*[Ii]nfo.*$' ")
 		res3 = res3.unionAll(res1.unionAll(res2).distinct()) // res3.count() : 10539
 
+		res3.count()
+		res3.rdd.saveAsTextFile("/data/res31")
+		res3.write.format("com.databricks.spark.csv").save("/home/achivuku/output/resrdds/res31.csv")
+		
 		res1 = sqlContext.sql("select * from ConferenceInstances where ShortName rlike '^.*AQIS.*$' ")
 		res2 = sqlContext.sql("select * from ConferenceInstances where FullName rlike '^.*[Qq]uantum.*$' ")
 		res3 = res3.unionAll(res1.unionAll(res2).distinct()) // res3.count() : 10573
@@ -359,7 +400,7 @@ object DDL {
 
 		res3.count()
 
-
+		
 		
 	}
 		
@@ -420,5 +461,403 @@ Query Fields
 Conferences, ConferenceInstances : Short name (abbreviation), Full name, 
 Papers : Normalized paper title, Normalized venue name
 Journals : Journal name
+
+
+Spark-submit configuration :
+spark-submit --class "DDL" --master yarn --deploy-mode cluster --driver-memory 16G --executor-memory 16G --num-executors 14 --executor-cores 7 ~/data-loaders_2.11-1.0.jar
+ssh achivuku@atlas8
+scp ./target/scala-2.11/data-loaders_2.11-1.0.jar achivuku@atlas8:~
+
+spark-shell --packages com.databricks:spark-csv_2.11:1.4.0
+spark-shell  --executor-memory 16G
+
+Search only Field of study name and join on Field of study ID, Paper ID, Conference series ID, Journal ID
+In Field of study name check only exact match for Algorithm, Computer Network, Artificial Intelligence, Machine Learning, Simulation, Pattern Recognition, Real-Time Computing, Computer Hardware, Data Mining, Computer Vision. 
+We expect to find 1lakh to 2lakh papers over 11 years. 
+After filtering above for paper ids and removing duplicates we can join the paper ids with papers, authors, conferences to get the RDDs as coevolving networks
+This way we can run SparkSQL queries on only one node to get relevant results
+
+No field of study in 2016KDDCupSelectedPapers. Papers span for 4 years and 6 conferences only.  
+3677 papers in 2016KDDCupSelectedPapers
+148228 papers with keyword "Data mining"
+
+
+spark-submit --class "DDL" --master yarn --deploy-mode cluster --driver-memory 16G --executor-memory 16G --num-executors 14 --executor-cores 7 ~/data-loaders_2.11-1.0.jar
+SparkSQL is not working in cluster mode due to Hive dependency
+Out of memory when trying to save large rdds from conference instances
+Need admin support to load the database into a database server with/out hadoop
+Need to get correct sqlContext, Check correct sql statements in cluster mode, use hivecontext, 
+
+Spark API
+Dataframes
+http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrame
+SparkSQL
+http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.functions$
+https://spark.apache.org/docs/1.6.0/api/java/org/apache/spark/sql/Column.html
+Academic Search API
+https://www.microsoft.com/cognitive-services/en-us/academic-knowledge-api/documentation/overview
+https://dev.projectoxford.ai/docs/services/56332331778daf02acc0a50b/operations/56332331778daf06340c9666 
+ */
+
+
+/*
+ 
+ Field of Study "Data" :
+ 
+ [General Data Protection Regulation]
+[Investigative Data Warehouse]
+[Common Data Link]
+[Database transaction]
+[Torpedo Data Computer]
+[Data structure]
+[Data Integrity Field]
+[Small Molecule Pathway Database]
+[Data deficient]
+[Data flow diagram]
+[Data pre-processing]
+[Data segment]
+[Data compression]
+[Conserved Domain Database]
+[Meta Data Services]
+[Data remanence]
+[Data breach]
+[Evolution-Data Optimized]
+[Data transformation]
+[Database design]
+[User Datagram Protocol]
+[Data definition language]
+[Database administrator]
+[Data synchronization]
+[Datalog]
+[National Hydrography Dataset]
+[E. Coli Metabolome Database]
+[Data center services]
+[Datagram Transport Layer Security]
+[OPC Data Access]
+[Data architecture]
+[Data scraping]
+[Common Source Data Base]
+[Data stream clustering]
+[Data system]
+[Service Data Objects]
+[Unstructured Supplementary Service Data]
+[Data Transformation Services]
+[Datarâ€“Mathews method for real option valuation]
+[Data quality]
+[Key Sequenced Data Set]
+[International Data Encryption Algorithm]
+[Relative Record Data Set]
+[Database theory]
+[BioModels Database]
+[Data file]
+[Data compaction]
+[Database server]
+[Data scrubbing]
+[Data model]
+[Common Data Representation]
+[Data]
+[Database-centric architecture]
+[Data governance]
+[Data strobe encoding]
+[Data]
+[Data differencing]
+[Database model]
+[Data envelopment analysis]
+[Joint Probabilistic Data Association Filter]
+[Data binding]
+[Data warehouse]
+[Data grid]
+[Data rate units]
+[Fiber Distributed Data Interface]
+[Data manipulation language]
+[Infrared Data Association]
+[Data hierarchy]
+[Dataflow architecture]
+[Data model]
+[Database search engine]
+[Open Data Protocol]
+[Data transfer object]
+[Datakit]
+[Data transmission]
+[Data cluster]
+[Java Data Objects]
+[Data profiling]
+[Data stream mining]
+[Generic Model Organism Database]
+[Nursing Minimum Data Set]
+[Hierarchical Data Format]
+[SABIO-Reaction Kinetics Database]
+[Programming with Big Data in R]
+[High-Level Data Link Control]
+[Database testing]
+[Data access layer]
+[Data Link Control]
+[Data mining]
+[EM Data Bank]
+[Investigations in Numbers, Data, and Space]
+[Data-Link Switching]
+[Data verification]
+[Data structure alignment]
+[National Lidar Dataset]
+[Data matrix]
+[Datagram]
+[Data at Rest]
+[Data field]
+[Database]
+[Data aggregator]
+[Data acquisition]
+[Data analysis]
+[Protein Data Bank (RCSB PDB)]
+[Data-flow analysis]
+[Data element definition]
+[Data mapper pattern]
+[Data loss]
+[High-Speed Circuit-Switched Data]
+[Data cube]
+[Data center]
+[OPC Historical Data Access]
+[Global Data Synchronization Network]
+[Database catalog]
+[National Elevation Dataset]
+[Open Database Connectivity]
+[National Snow and Ice Data Center]
+[Data access object]
+[Data set]
+[Extended Data Services]
+[Data custodian]
+[Data dictionary]
+[Data service unit]
+[Data independence]
+[Data conversion]
+[Database schema]
+[Data-intensive computing]
+[Data administration]
+[Data point]
+[Data parallelism]
+[Database tuning]
+[Database normalization]
+[Explicit Data Graph Execution]
+[Data exchange]
+[Data-driven testing]
+[Data visualization]
+[Data signaling rate]
+[Tactical Data Link]
+[Data curation]
+[Dataflow]
+[Data logger]
+[Data efficiency]
+[Data truncation]
+[Inorganic Crystal Structure Database]
+[Data mapping]
+[Data assimilation]
+[Data modeling]
+[Data striping]
+[Data buffer]
+[Data domain]
+[JPL Small-Body Database]
+[Secure Data Aggregation in WSN]
+[Data Execution Prevention]
+[Federal Reserve Economic Data]
+[Database storage structures]
+[Dynamic Data Exchange]
+[Data virtualization]
+[Data consistency]
+[Data Defined Storage]
+[Data as a service]
+[United States Department of Energy International Energy Storage Database]
+[Data processing system]
+[Data processing]
+[IBM 2321 Data Cell]
+[Data management]
+[Data redundancy]
+[Remote Database Access]
+[Ethernet Global Data Protocol]
+[Data element]
+[Data proliferation]
+[Data security]
+[Data deduplication]
+[Data integration]
+[Data compression ratio]
+[National Data Repository]
+[Data diffusion machine]
+[Data retrieval]
+[Data transformation]
+[Data control language]
+[Data Protection API]
+[VHF Data Link]
+[Data integrity]
+[Data cleansing]
+[Data set]
+[Database index]
+[Physical Data Flow]
+[Data Authentication Algorithm]
+[Data access]
+[FlyBase : A Database of Drosophila Genes & Genomes]
+[External Data Representation]
+[Data link]
+[Data Protection Act 1998]
+[Human Metabolome Database]
+[Data dredging]
+[Radio Data System]
+[Data validation]
+[Data monitoring committee]
+[Data collection]
+[Data migration]
+[Data reduction]
+[Data Web]
+[Data, context and interaction]
+[SRTM Water Body Data]
+[Protein Data Bank]
+[Data link layer]
+[Data circuit-terminating equipment]
+[Circuit Switched Data]
+[Disk Data Format]
+[European Data Relay System]
+[Data management plan]
+[Standard for Exchange of Non-clinical Data]
+[Data terminal equipment]
+[Data Protection Directive]
+[Data Reference Model]
+[Data type]
+[Transporter Classification Database]
+[Central Air Data Computer]
+[Entry Sequenced Data Set]
+[Data recovery]
+
+
+ 
+ 
+ Field of study "Algorithm" :
+ 
+ [Tiny Encryption Algorithm]
+[Solitaire Cryptographic Algorithm]
+[Algorithm design]
+[FSA-Red Algorithm]
+[International Data Encryption Algorithm]
+[Algorithmics]
+[Common Scrambling Algorithm]
+[Knuth's Algorithm X]
+[Algorithmic probability]
+[Algorithmic efficiency]
+[Algorithmic inference]
+[Lamport's Distributed Mutual Exclusion Algorithm]
+[Algorithmic program debugging]
+[Algorithmic learning theory]
+[Algorithmic State Machine]
+[Elliptic Curve Digital Signature Algorithm]
+[Algorithmic Lovász local lemma]
+[Generic Security Service Algorithm for Secret Key Transaction]
+[Algorithmic information theory]
+[Algorithm characterizations]
+[Digital Signature Algorithm]
+[Algorithm]
+[Algorithmic mechanism design]
+[GSP Algorithm]
+[Algorithmic trading]
+[Generalized Hebbian Algorithm]
+[Shortest Path Faster Algorithm]
+[Weighted Majority Algorithm]
+[Data Authentication Algorithm]
+[HMAC-based One-time Password Algorithm]
+[Shinnar-Le Roux Algorithm]
+[Algorithmic game theory]
+[Algorithm engineering]
+[Algorithmic skeleton]
+[Secure Hash Algorithm]
+[The Harmful Effects of Algorithms in Grades 1–4]
+[Algorithmically random sequence]
+
+ 
+ 
+ Field of Study "Computer" :
+ 
+ [Torpedo Data Computer]
+[Computer display standard]
+[Computer programming]
+[Computer-assisted personal interviewing]
+[Computer memory]
+[Network Computer]
+[Information and Computer Science]
+[Computer facial animation]
+[Computer fan control]
+[Computer literacy]
+[Computer chess]
+[Computer access control]
+[Computer ethics]
+[Computer forensics]
+[Computerized maintenance management system]
+[Computer data storage]
+[Computer-mediated communication]
+[Computer Engineering]
+[Computer audition]
+[Intergalactic Computer Network]
+[Computer-generated imagery]
+[Computer-supported cooperative work]
+[Computer bridge]
+[Computer-aided software engineering]
+[Computer Modern]
+[Computer representation of surfaces]
+[Computer hardware]
+[Computer network]
+[Computer security compromised by hardware failure]
+[Computer virus]
+[AP Computer Science]
+[Computer cluster]
+[Computer graphics lighting]
+[Computer-on-module]
+[Computer module]
+[Computer architecture]
+[Computer fraud]
+[Computer stereo vision]
+[Computerized adaptive testing]
+[Computer user satisfaction]
+[Computer experiment]
+[Computer-automated design]
+[Computer fan]
+[Computer file]
+[Computer Graphics Metafile]
+[Computerized classification test]
+[Computer Automated Measurement and Control]
+[Computer performance]
+[Computer music]
+[Computer network programming]
+[Computer Aided Design]
+[Computer number format]
+[Computer security model]
+[Computer Animation]
+[Computer Science]
+[Computer-assisted web interviewing]
+[Computer optimization]
+[Computer worm]
+[Computer graphics]
+[On the Cruelty of Really Teaching Computer Science]
+[Computer-assisted proof]
+[Computer-aided manufacturing]
+[Computer-integrated manufacturing]
+[Single-chip Cloud Computer]
+[Computer cooling]
+[Computer-assisted translation]
+[Mark I Fire Control Computer]
+[Computer Systems Research Group]
+[Computer multitasking]
+[Computer vision]
+[Computer graphics (images)]
+[Computer architecture simulator]
+[Computer security]
+[Computer-aided technologies]
+[Computer simulation]
+[Computerized system validation]
+[Computer network operations]
+[Computer for operations with functions]
+[Computer port]
+[Computer Applications]
+[Integrated Computer-Aided Manufacturing]
+[Computer-mediated reality]
+[Computer terminal]
+[Computer-aided engineering]
+[Computer art]
+[Computer appliance]
+[Central Air Data Computer]
+
  
  */

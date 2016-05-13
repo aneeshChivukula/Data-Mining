@@ -491,8 +491,57 @@ object DDL {
     sqlContext.sql("LOAD DATA INPATH '/data/splitauthorsaa' OVERWRITE INTO TABLE Authorsaa")
     sqlContext.sql("LOAD DATA INPATH '/data/splitauthorsab' OVERWRITE INTO TABLE Authorsab")
 
+    
+    
 		
     val papersids =  sqlContext.sql("select PaperID from FilteredPapersID")    
+    
+    val papersaa = sqlContext.sql("select * from Papersaa")
+    val papersab = sqlContext.sql("select * from Papersab")
+    
+    val paperauthoraffiliationsaa = sqlContext.sql("select * from PaperAuthorAffiliationsaa")
+    val paperauthoraffiliationsab = sqlContext.sql("select * from PaperAuthorAffiliationsab")
+    val paperauthoraffiliationsac = sqlContext.sql("select * from PaperAuthorAffiliationsac")
+    val paperauthoraffiliationsad = sqlContext.sql("select * from PaperAuthorAffiliationsad")
+
+    val paperreferencesaa = sqlContext.sql("select * from PaperReferencesaa")
+    val paperreferencesab = sqlContext.sql("select * from PaperReferencesab")
+    val paperreferencesac = sqlContext.sql("select * from PaperReferencesac")
+    val paperreferencesad = sqlContext.sql("select * from PaperReferencesad")
+    val paperreferencesae = sqlContext.sql("select * from PaperReferencesae")
+    val paperreferencesaf = sqlContext.sql("select * from PaperReferencesaf")
+
+    val paperkeywordsaa = sqlContext.sql("select * from PaperKeywordsaa")
+    val paperkeywordsab = sqlContext.sql("select * from PaperKeywordsab")
+
+    val authorsaa = sqlContext.sql("select * from Authorsaa")
+    val authorsab = sqlContext.sql("select * from Authorsab")    
+    
+    papersids.join(papersaa, papersids("PaperID") === papersaa("PaperID"), "inner").drop(papersaa.col("paperid"))
+    papersids.join(papersab, papersids("PaperID") === papersab("PaperID"), "inner").drop(papersab.col("paperid"))
+    
+    papersids.join(paperauthoraffiliationsaa, papersids("PaperID") === paperauthoraffiliationsaa("PaperID"), "inner").drop(paperauthoraffiliationsaa.col("paperid"))
+    papersids.join(paperauthoraffiliationsab, papersids("PaperID") === paperauthoraffiliationsab("PaperID"), "inner").drop(paperauthoraffiliationsab.col("paperid"))
+    papersids.join(paperauthoraffiliationsac, papersids("PaperID") === paperauthoraffiliationsac("PaperID"), "inner").drop(paperauthoraffiliationsac.col("paperid"))
+    papersids.join(paperauthoraffiliationsad, papersids("PaperID") === paperauthoraffiliationsad("PaperID"), "inner").drop(paperauthoraffiliationsad.col("paperid"))
+    
+    papersids.join(paperreferencesaa, papersids("PaperID") === paperreferencesaa("PaperID"), "inner").drop(paperreferencesaa.col("paperid"))
+    papersids.join(paperreferencesab, papersids("PaperID") === paperreferencesab("PaperID"), "inner").drop(paperreferencesab.col("paperid"))
+    papersids.join(paperreferencesac, papersids("PaperID") === paperreferencesac("PaperID"), "inner").drop(paperreferencesac.col("paperid"))
+    papersids.join(paperreferencesad, papersids("PaperID") === paperreferencesad("PaperID"), "inner").drop(paperreferencesad.col("paperid"))
+    papersids.join(paperreferencesae, papersids("PaperID") === paperreferencesae("PaperID"), "inner").drop(paperreferencesae.col("paperid"))
+    papersids.join(paperreferencesaf, papersids("PaperID") === paperreferencesaf("PaperID"), "inner").drop(paperreferencesaf.col("paperid"))
+    
+    papersids.join(paperkeywordsaa, papersids("PaperID") === paperkeywordsaa("PaperID"), "inner").drop(paperkeywordsaa.col("paperid"))
+    papersids.join(paperkeywordsab, papersids("PaperID") === paperkeywordsab("PaperID"), "inner").drop(paperkeywordsab.col("paperid"))
+    
+    papersids.join(authorsaa, papersids("PaperID") === authorsaa("PaperID"), "inner").drop(authorsaa.col("paperid"))
+    papersids.join(authorsab, papersids("PaperID") === authorsab("PaperID"), "inner").drop(authorsab.col("paperid"))
+
+       
+    
+    
+    
     val papers = sqlContext.sql("select * from Papers")
     val authors = sqlContext.sql("select * from PaperAuthorAffiliations")
     // val papers = sqlContext.sql("select * from Papers LIMIT 26909020 OFFSET 100000000")

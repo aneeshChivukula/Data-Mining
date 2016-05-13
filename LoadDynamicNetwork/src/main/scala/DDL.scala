@@ -12,14 +12,18 @@ object DDL {
 		val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 		print(sqlContext)
 		
+		/*
 		sqlContext.sql("show databases").collect().foreach(println)
     sqlContext.sql("drop database mydb cascade")
 		sqlContext.sql("import sqlContext.implicits._")
 		sqlContext.sql("show databases").collect().foreach(println)
 		sqlContext.sql("CREATE DATABASE mydb")
+		*/
+		
 		sqlContext.sql("USE mydb")
 		sqlContext.sql("show tables").collect().foreach(println);
 
+		/*
 		// Create data frame of conference names and journal names
 		sqlContext.sql("CREATE TABLE Papers (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
 		sqlContext.sql("LOAD DATA INPATH '/data/Papers.txt' OVERWRITE INTO TABLE Papers")
@@ -37,9 +41,55 @@ object DDL {
 		// hadoop fs -copyToLocal /data/fieldsofstudy/part-00000 .
 		// grep "Computer vision" part-00000 > Mining.txt
 		var df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Computer vision'")
-		df2.show()
-		df2 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='01E7DD16'")
-		df2.count()
+		df2.show() // 01E7DD16
+		val df3 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='01E7DD16'")
+		df3.count()
+		
+		df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Data mining'")
+		df2.show() // 0765A2E4
+		val df4 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='0765A2E4'")
+
+		df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Algorithm'")
+		df2.show() // 00AE2819
+		val df5 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='00AE2819'")
+
+		df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Artificial intelligence'")
+		df2.show() // 093C4716
+		val df6 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='093C4716'")
+
+		df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Computer network'")
+		df2.show() // 01DCF91B
+		val df7 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='01DCF91B'")
+
+		df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Machine learning'")
+		df2.show() // 0724DFBA
+		val df8 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='0724DFBA'")
+
+		df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Simulation'")
+		df2.show() // 02A1BFD4
+		val df9 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='02A1BFD4'")
+
+		df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Pattern recognition'")
+		df2.show() // 0AAB07DF, 09215ADF
+		val df10 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='0AAB07DF'")
+		val df11 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='09215ADF'")
+		
+		df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Real-time computing'")
+		df2.show() // 04BB9B33
+		val df12 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='04BB9B33'")
+		
+		df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Computer hardware'")
+		df2.show() // 008F4943
+		val df13 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='008F4943'")
+		
+		val dffin = df13.unionAll(df12).unionAll(df11).unionAll(df10).unionAll(df9).unionAll(df8).unionAll(df7).unionAll(df6).unionAll(df5).unionAll(df4).unionAll(df3)				
+		dffin.count() // 1254879
+		dffin.rdd.saveAsTextFile("/data/filteredcspaperids")
+		
+    dffin.registerTempTable("papersdf") 
+		sqlContext.sql("CREATE TABLE FilteredPapersID (PaperID String) as select * from papersdf")
+		sqlContext.sql("CREATE TABLE FilteredPapersID (PaperID String)")
+    sqlContext.sql("LOAD DATA INPATH '/data/filteredcspaperids' OVERWRITE INTO TABLE FilteredPapersID")
 		
 		
 		// Load all tables into database
@@ -400,7 +450,27 @@ object DDL {
 
 		res3.count()
 
+		*/
+    
+    val papersids =  sqlContext.sql("select PaperID from FilteredPapersID")    
+    val papers = sqlContext.sql("select * from Papers")
+    val authors = sqlContext.sql("select * from PaperAuthorAffiliations")
+    // val papers = sqlContext.sql("select * from Papers LIMIT 26909020 OFFSET 100000000")
+    // val authors = sqlContext.sql("select * from PaperAuthorAffiliations LIMIT 200000000")
+    papers.count() // 126909021
+    authors.count() // 337000600
+//		sqlContext.sql("DROP TABLE filteredpapers")
+		papersids.join(papers, papersids("PaperID") === papers("PaperID"), "inner").drop(papers.col("paperid")).registerTempTable("papersf") 
+		sqlContext.sql("create table filteredpapers as select * from papersf");
 		
+    papersids.join(papers, papersids("PaperID") === papers("PaperID"), "inner").drop(papers.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/filteredcspapers")
+    
+    papersids.join(authors, papersids("PaperID") === authors("PaperID"), "inner").drop(authors.col("paperid")).registerTempTable("authorsf") 
+		sqlContext.sql("create table filteredauthors as select * from authorsf");
+    // papersids.join(authors, papersids("PaperID") === authors("PaperID"), "inner").drop(authors.col("paperid")).count()
+		// sqlContext.sql("drop table filteredauthors")
+		
+    
 		
 	}
 		

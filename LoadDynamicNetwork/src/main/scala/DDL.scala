@@ -454,7 +454,8 @@ object DDL {
     
 		
 		
-		sqlContext.sql("CREATE TABLE Papersaa (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		  
+    sqlContext.sql("CREATE TABLE Papersaa (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE Papersab (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("LOAD DATA INPATH '/data/PapersSplits/splitpapersaa' OVERWRITE INTO TABLE Papersaa")
     sqlContext.sql("LOAD DATA INPATH '/data/PapersSplits/splitpapersab' OVERWRITE INTO TABLE Papersab")
@@ -464,10 +465,10 @@ object DDL {
     sqlContext.sql("CREATE TABLE PaperAuthorAffiliationsac (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperAuthorAffiliationsad (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsaa' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsab' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsac' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsad' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
-    
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsab' OVERWRITE INTO TABLE PaperAuthorAffiliationsab")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsac' OVERWRITE INTO TABLE PaperAuthorAffiliationsac")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsad' OVERWRITE INTO TABLE PaperAuthorAffiliationsad")
+
     sqlContext.sql("CREATE TABLE PaperReferencesaa (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperReferencesab (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperReferencesac (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
@@ -475,74 +476,73 @@ object DDL {
     sqlContext.sql("CREATE TABLE PaperReferencesae (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperReferencesaf (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsaa' OVERWRITE INTO TABLE PaperReferencesaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsab' OVERWRITE INTO TABLE PaperReferencesaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsac' OVERWRITE INTO TABLE PaperReferencesaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsad' OVERWRITE INTO TABLE PaperReferencesaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsae' OVERWRITE INTO TABLE PaperReferencesaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsaf' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsab' OVERWRITE INTO TABLE PaperReferencesab")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsac' OVERWRITE INTO TABLE PaperReferencesac")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsad' OVERWRITE INTO TABLE PaperReferencesad")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsae' OVERWRITE INTO TABLE PaperReferencesae")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsaf' OVERWRITE INTO TABLE PaperReferencesaf")
     
     sqlContext.sql("CREATE TABLE PaperKeywordsaa (PaperID String,KeywordName String,FieldOfStudyIDMappedToKeyword String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperKeywordsab (PaperID String,KeywordName String,FieldOfStudyIDMappedToKeyword String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("LOAD DATA INPATH '/data/PaperKeywordsSplits/splitpaperkeysaa' OVERWRITE INTO TABLE PaperKeywordsaa")
     sqlContext.sql("LOAD DATA INPATH '/data/PaperKeywordsSplits/splitpaperkeysab' OVERWRITE INTO TABLE PaperKeywordsab")
     
+    
+    sqlContext.sql("CREATE TABLE CSPaperAuthorAffiliations (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsaa' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
+    
+    
     sqlContext.sql("CREATE TABLE Authorsaa (AuthorID String,AuthorName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE Authorsab (AuthorID String,AuthorName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("LOAD DATA INPATH '/data/AuthorsSplits/splitauthorsaa' OVERWRITE INTO TABLE Authorsaa")
     sqlContext.sql("LOAD DATA INPATH '/data/AuthorsSplits/splitauthorsab' OVERWRITE INTO TABLE Authorsab")
 
-    
-    
+           
 		
     val papersids =  sqlContext.sql("select PaperID from FilteredPapersID")    
     
-    val papersaa = sqlContext.sql("select * from Papersaa")
-    val papersab = sqlContext.sql("select * from Papersab")
+    val papersaa = sqlContext.sql("select * from Papersaa LIMIT 100000000")
+    val papersab = sqlContext.sql("select * from Papersab LIMIT 100000000")
     
-    val paperauthoraffiliationsaa = sqlContext.sql("select * from PaperAuthorAffiliationsaa")
-    val paperauthoraffiliationsab = sqlContext.sql("select * from PaperAuthorAffiliationsab")
-    val paperauthoraffiliationsac = sqlContext.sql("select * from PaperAuthorAffiliationsac")
-    val paperauthoraffiliationsad = sqlContext.sql("select * from PaperAuthorAffiliationsad")
+    val paperauthoraffiliationsaa = sqlContext.sql("select * from PaperAuthorAffiliationsaa LIMIT 100000000")
+    val paperauthoraffiliationsab = sqlContext.sql("select * from PaperAuthorAffiliationsab LIMIT 100000000")
+    val paperauthoraffiliationsac = sqlContext.sql("select * from PaperAuthorAffiliationsac LIMIT 100000000")
+    val paperauthoraffiliationsad = sqlContext.sql("select * from PaperAuthorAffiliationsad LIMIT 100000000")
 
-    val paperreferencesaa = sqlContext.sql("select * from PaperReferencesaa")
-    val paperreferencesab = sqlContext.sql("select * from PaperReferencesab")
-    val paperreferencesac = sqlContext.sql("select * from PaperReferencesac")
-    val paperreferencesad = sqlContext.sql("select * from PaperReferencesad")
-    val paperreferencesae = sqlContext.sql("select * from PaperReferencesae")
-    val paperreferencesaf = sqlContext.sql("select * from PaperReferencesaf")
+    val paperreferencesaa = sqlContext.sql("select * from PaperReferencesaa LIMIT 100000000")
+    val paperreferencesab = sqlContext.sql("select * from PaperReferencesab LIMIT 100000000")
+    val paperreferencesac = sqlContext.sql("select * from PaperReferencesac LIMIT 100000000")
+    val paperreferencesad = sqlContext.sql("select * from PaperReferencesad LIMIT 100000000")
+    val paperreferencesae = sqlContext.sql("select * from PaperReferencesae LIMIT 100000000")
+    val paperreferencesaf = sqlContext.sql("select * from PaperReferencesaf LIMIT 100000000")
 
-    val paperkeywordsaa = sqlContext.sql("select * from PaperKeywordsaa")
-    val paperkeywordsab = sqlContext.sql("select * from PaperKeywordsab")
+    val paperkeywordsaa = sqlContext.sql("select * from PaperKeywordsaa LIMIT 100000000")
+    val paperkeywordsab = sqlContext.sql("select * from PaperKeywordsab LIMIT 100000000")
 
-    val authorsaa = sqlContext.sql("select * from Authorsaa")
-    val authorsab = sqlContext.sql("select * from Authorsab")    
+    val authorsaa = sqlContext.sql("select * from Authorsaa LIMIT 100000000")
+    val authorsab = sqlContext.sql("select * from Authorsab LIMIT 100000000")    
     
-    papersids.join(papersaa, papersids("PaperID") === papersaa("PaperID"), "inner").drop(papersaa.col("paperid"))
-    papersids.join(papersab, papersids("PaperID") === papersab("PaperID"), "inner").drop(papersab.col("paperid"))
+    papersids.join(papersaa, papersids("PaperID") === papersaa("PaperID"), "inner").drop(papersaa.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/papersaa")
+    papersids.join(papersab, papersids("PaperID") === papersab("PaperID"), "inner").drop(papersab.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/papersab")
     
-    papersids.join(paperauthoraffiliationsaa, papersids("PaperID") === paperauthoraffiliationsaa("PaperID"), "inner").drop(paperauthoraffiliationsaa.col("paperid"))
-    papersids.join(paperauthoraffiliationsab, papersids("PaperID") === paperauthoraffiliationsab("PaperID"), "inner").drop(paperauthoraffiliationsab.col("paperid"))
-    papersids.join(paperauthoraffiliationsac, papersids("PaperID") === paperauthoraffiliationsac("PaperID"), "inner").drop(paperauthoraffiliationsac.col("paperid"))
-    papersids.join(paperauthoraffiliationsad, papersids("PaperID") === paperauthoraffiliationsad("PaperID"), "inner").drop(paperauthoraffiliationsad.col("paperid"))
+    papersids.join(paperauthoraffiliationsaa, papersids("PaperID") === paperauthoraffiliationsaa("PaperID"), "inner").drop(paperauthoraffiliationsaa.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperauthoraffiliationsaa")
+    papersids.join(paperauthoraffiliationsab, papersids("PaperID") === paperauthoraffiliationsab("PaperID"), "inner").drop(paperauthoraffiliationsab.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperauthoraffiliationsab")
+    papersids.join(paperauthoraffiliationsac, papersids("PaperID") === paperauthoraffiliationsac("PaperID"), "inner").drop(paperauthoraffiliationsac.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperauthoraffiliationsac")
+    papersids.join(paperauthoraffiliationsad, papersids("PaperID") === paperauthoraffiliationsad("PaperID"), "inner").drop(paperauthoraffiliationsad.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperauthoraffiliationsad")
     
-    papersids.join(paperreferencesaa, papersids("PaperID") === paperreferencesaa("PaperID"), "inner").drop(paperreferencesaa.col("paperid"))
-    papersids.join(paperreferencesab, papersids("PaperID") === paperreferencesab("PaperID"), "inner").drop(paperreferencesab.col("paperid"))
-    papersids.join(paperreferencesac, papersids("PaperID") === paperreferencesac("PaperID"), "inner").drop(paperreferencesac.col("paperid"))
-    papersids.join(paperreferencesad, papersids("PaperID") === paperreferencesad("PaperID"), "inner").drop(paperreferencesad.col("paperid"))
-    papersids.join(paperreferencesae, papersids("PaperID") === paperreferencesae("PaperID"), "inner").drop(paperreferencesae.col("paperid"))
-    papersids.join(paperreferencesaf, papersids("PaperID") === paperreferencesaf("PaperID"), "inner").drop(paperreferencesaf.col("paperid"))
+    papersids.join(paperreferencesaa, papersids("PaperID") === paperreferencesaa("PaperID"), "inner").drop(paperreferencesaa.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperreferencesaa")
+    papersids.join(paperreferencesab, papersids("PaperID") === paperreferencesab("PaperID"), "inner").drop(paperreferencesab.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperreferencesab")
+    papersids.join(paperreferencesac, papersids("PaperID") === paperreferencesac("PaperID"), "inner").drop(paperreferencesac.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperreferencesac")
+    papersids.join(paperreferencesad, papersids("PaperID") === paperreferencesad("PaperID"), "inner").drop(paperreferencesad.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperreferencesad")
+    papersids.join(paperreferencesae, papersids("PaperID") === paperreferencesae("PaperID"), "inner").drop(paperreferencesae.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperreferencesae")
+    papersids.join(paperreferencesaf, papersids("PaperID") === paperreferencesaf("PaperID"), "inner").drop(paperreferencesaf.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperreferencesaf")
     
-    papersids.join(paperkeywordsaa, papersids("PaperID") === paperkeywordsaa("PaperID"), "inner").drop(paperkeywordsaa.col("paperid"))
-    papersids.join(paperkeywordsab, papersids("PaperID") === paperkeywordsab("PaperID"), "inner").drop(paperkeywordsab.col("paperid"))
+    papersids.join(paperkeywordsaa, papersids("PaperID") === paperkeywordsaa("PaperID"), "inner").drop(paperkeywordsaa.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperkeywordsaa")
+    papersids.join(paperkeywordsab, papersids("PaperID") === paperkeywordsab("PaperID"), "inner").drop(paperkeywordsab.col("paperid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/paperkeywordsab")
     
-    papersids.join(authorsaa, papersids("PaperID") === authorsaa("PaperID"), "inner").drop(authorsaa.col("paperid"))
-    papersids.join(authorsab, papersids("PaperID") === authorsab("PaperID"), "inner").drop(authorsab.col("paperid"))
 
-    
     val papers = sqlContext.sql("select * from Papers")
     val authors = sqlContext.sql("select * from PaperAuthorAffiliations")
-    // val papers = sqlContext.sql("select * from Papers LIMIT 26909020 OFFSET 100000000")
-    // val authors = sqlContext.sql("select * from PaperAuthorAffiliations LIMIT 200000000")
     papers.count() // 126909021
     authors.count() // 337000600
 //		sqlContext.sql("DROP TABLE filteredpapers")
@@ -555,7 +555,40 @@ object DDL {
 		sqlContext.sql("create table filteredauthors as select * from authorsf");
     // papersids.join(authors, papersids("PaperID") === authors("PaperID"), "inner").drop(authors.col("paperid")).count()
 		// sqlContext.sql("drop table filteredauthors")
-		
+
+    
+    sqlContext.sql("CREATE TABLE CSPaperAuthorAffiliations (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY ',' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/CSPaperAuthorAffiliations.csv' OVERWRITE INTO TABLE CSPaperAuthorAffiliations")
+    val cspaperauthoraffiliations = sqlContext.sql("select * from CSPaperAuthorAffiliations")
+    cspaperauthoraffiliations.count() // 3863333
+    val csauthorids = sqlContext.sql("select AuthorID from CSPaperAuthorAffiliations")
+    csauthorids.printSchema()
+    authorsaa.printSchema()
+    
+    csauthorids.join(authorsaa, csauthorids("AuthorID") === authorsaa("AuthorID"), "inner").drop(authorsaa.col("authorid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/authorsaa")
+    csauthorids.join(authorsab, csauthorids("AuthorID") === authorsab("AuthorID"), "inner").drop(authorsab.col("authorid")).rdd.saveAsTextFile("hdfs://atlas8:9000/data/authorsab")
+
+    
+    sqlContext.sql("CREATE TABLE CSAuthors (AuthorID String,AuthorName String) ROW FORMAT delimited FIELDS TERMINATED BY ',' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/CSAuthors.csv' OVERWRITE INTO TABLE CSAuthors")
+    val csauthors = sqlContext.sql("select * from CSAuthors")
+    csauthors.count() // 3863333
+
+    sqlContext.sql("CREATE TABLE CSPapers (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY ',' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/CSPapers.csv' OVERWRITE INTO TABLE CSPapers")
+    val cspapers = sqlContext.sql("select * from CSPapers")
+    cspapers.count() // 1254879
+    
+    sqlContext.sql("CREATE TABLE CSPaperKeywords (PaperID String,KeywordName String,FieldOfStudyIDMappedToKeyword String) ROW FORMAT delimited FIELDS TERMINATED BY ',' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/CSPaperKeywords.csv' OVERWRITE INTO TABLE CSPaperKeywords")
+    val cspaperkeywords = sqlContext.sql("select * from CSPaperKeywords")
+    cspaperkeywords.count() // 10760875
+    
+    sqlContext.sql("CREATE TABLE CSPaperReferences (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY ',' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/CSPaperReferences.csv' OVERWRITE INTO TABLE CSPaperReferences")
+    val cspaperreferences = sqlContext.sql("select * from CSPaperReferences")
+    cspaperreferences.count() // 8179711
+   
     
 		
 	}
@@ -567,6 +600,12 @@ object DDL {
 
 
 /*
+
+Shell Commands
+
+sed 's/\[//g' merged-file > merged-file2
+sed 's/\]//g' merged-file2 > merged-file3
+cp merged-file3 merged-file
 
 HiveQL
 
@@ -592,6 +631,34 @@ hadoop fs -copyToLocal /data/outputfncs .
 hadoop fs -copyToLocal /data/outputsnci .
 hadoop fs -copyToLocal /data/outputfnci .
 hadoop fs -copyFromLocal /home/achivuku/Documents/MicrosoftAcademicGraph/ /data
+
+cd ~/output/filteredcspublications
+hadoop fs -copyToLocal /data/filteredcspapersaa .
+hadoop fs -copyToLocal /data/filteredcspapersab .
+
+hadoop fs -copyToLocal /data/paperauthoraffiliationsaa .
+hadoop fs -copyToLocal /data/paperauthoraffiliationsab .
+hadoop fs -copyToLocal /data/paperauthoraffiliationsac .
+hadoop fs -copyToLocal /data/paperauthoraffiliationsad .
+
+hadoop fs -copyToLocal /data/paperreferencesaa .
+hadoop fs -copyToLocal /data/paperreferencesab .
+hadoop fs -copyToLocal /data/paperreferencesac .
+hadoop fs -copyToLocal /data/paperreferencesad .
+hadoop fs -copyToLocal /data/paperreferencesae .
+hadoop fs -copyToLocal /data/paperreferencesaf .
+
+hadoop fs -copyToLocal /data/paperkeywordsaa .
+hadoop fs -copyToLocal /data/paperkeywordsab .
+
+hadoop fs -copyToLocal /data/authorsaa .
+hadoop fs -copyToLocal /data/authorsab .
+
+hadoop fs -copyFromLocal /home/achivuku/output/filteredcspublications/cspaperauthoraffiliations/merged-file /data/CSPaperAuthorAffiliations.csv
+hadoop fs -copyFromLocal /home/achivuku/output/filteredcspublications/csauthors/merged-file /data/CSAuthors.csv
+hadoop fs -copyFromLocal /home/achivuku/output/filteredcspublications/cspapers/merged-file /data/CSPapers.csv
+hadoop fs -copyFromLocal /home/achivuku/output/filteredcspublications/cspaperkeywords/merged-file /data/CSPaperKeywords.csv
+hadoop fs -copyFromLocal /home/achivuku/output/filteredcspublications/cspaperreferences/merged-file /data/CSPaperReferences.csv
 
 Spark Shell Commands :
 spark-shell -Dspark.executor.memory=50g
@@ -655,7 +722,38 @@ Academic Search API
 https://www.microsoft.com/cognitive-services/en-us/academic-knowledge-api/documentation/overview
 https://dev.projectoxford.ai/docs/services/56332331778daf02acc0a50b/operations/56332331778daf06340c9666 
 
+Data Benchmarks :
 
+337000600 records in PaperAuthorAffiliations table
+126909021 records in Papers table
+12 lakh to 12 lakh join is working with 33123 matches
+120 lakh to 12 lakh join is working with 338051 matches
+500 lakh to 12 lakh join is working with 999387 matches
+1000 lakh or 10 crore to 12 lakh join is working with 1375042 matches
+2000 lakh or 20 crore to 12 lakh join is working with 2121538 matches
+100000000 records matched are stored to disk in 819.418402 or 15mins
+So total runtime expected to be ~3hours
+
+The loops over joins must be executed on following tables 
+Papers.txt, PaperAuthorAffiliations.txt, PaperReferences.txt, PaperKeywords.txt, Authors.txt, in GBs
+ConferenceInstances.txt, FieldOfStudyHierarchy.txt, FieldsOfStudy.txt, in MBs
+Journals.txt, Affiliations.txt, Conferences.txt, in KBs
+
+wc -l PaperReferences.txt
+wc -l PaperKeywords.txt
+wc -l Authors.txt
+
+split -l 100000000 Papers.txt splitpapers
+split -l 100000000 PaperAuthorAffiliations.txt splitpapersauthors
+split -l 100000000 PaperReferences.txt splitpaperrefs
+split -l 100000000 PaperKeywords.txt splitpaperkeys
+split -l 100000000 Authors.txt splitauthors
+
+After getting all paper ids, do inner join with papers table and journals table and authors table and conferences table to get final list of papers, authors and citations with normalized venue name and journal name
+Need to join 12lakhs table with 12 crores table. OS exceptions seen if loading all 12 crores records. 
+Must focus on better input/output before and after join. As workaround, need to partition the large table into small tables and aggregate results inside a parallel loop. To partition execute where and order by clause on timestamp. 
+Input/output must be partitoned by timestamp and field of study. Alternate is to add a ROW_NUMBER() or RANK() to dataset and then SELECT the desired rows. 
+For large joins in RDDs, SparkSQL uses broadcast variables after hive setup. Partitioning Distributed rdd requires hive. 
 
 
  */

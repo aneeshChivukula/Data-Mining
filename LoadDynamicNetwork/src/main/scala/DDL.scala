@@ -456,17 +456,17 @@ object DDL {
 		
 		sqlContext.sql("CREATE TABLE Papersaa (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE Papersab (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersaa' OVERWRITE INTO TABLE Papersaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersab' OVERWRITE INTO TABLE Papersab")
+    sqlContext.sql("LOAD DATA INPATH '/data/PapersSplits/splitpapersaa' OVERWRITE INTO TABLE Papersaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PapersSplits/splitpapersab' OVERWRITE INTO TABLE Papersab")
     
     sqlContext.sql("CREATE TABLE PaperAuthorAffiliationsaa (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperAuthorAffiliationsab (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperAuthorAffiliationsac (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperAuthorAffiliationsad (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersauthorsaa' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersauthorsab' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersauthorsac' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersauthorsad' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsaa' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsab' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsac' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliationsSplits/splitpapersauthorsad' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
     
     sqlContext.sql("CREATE TABLE PaperReferencesaa (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperReferencesab (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
@@ -474,22 +474,22 @@ object DDL {
     sqlContext.sql("CREATE TABLE PaperReferencesad (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperReferencesae (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperReferencesaf (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsaa' OVERWRITE INTO TABLE PaperReferencesaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsab' OVERWRITE INTO TABLE PaperReferencesaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsac' OVERWRITE INTO TABLE PaperReferencesaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsad' OVERWRITE INTO TABLE PaperReferencesaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsae' OVERWRITE INTO TABLE PaperReferencesaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsaf' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsaa' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsab' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsac' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsad' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsae' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperReferencesSplits/splitpaperrefsaf' OVERWRITE INTO TABLE PaperReferencesaa")
     
     sqlContext.sql("CREATE TABLE PaperKeywordsaa (PaperID String,KeywordName String,FieldOfStudyIDMappedToKeyword String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE PaperKeywordsab (PaperID String,KeywordName String,FieldOfStudyIDMappedToKeyword String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperkeysaa' OVERWRITE INTO TABLE PaperKeywordsaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperkeysab' OVERWRITE INTO TABLE PaperKeywordsab")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperKeywordsSplits/splitpaperkeysaa' OVERWRITE INTO TABLE PaperKeywordsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/PaperKeywordsSplits/splitpaperkeysab' OVERWRITE INTO TABLE PaperKeywordsab")
     
     sqlContext.sql("CREATE TABLE Authorsaa (AuthorID String,AuthorName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE Authorsab (AuthorID String,AuthorName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitauthorsaa' OVERWRITE INTO TABLE Authorsaa")
-    sqlContext.sql("LOAD DATA INPATH '/data/splitauthorsab' OVERWRITE INTO TABLE Authorsab")
+    sqlContext.sql("LOAD DATA INPATH '/data/AuthorsSplits/splitauthorsaa' OVERWRITE INTO TABLE Authorsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/AuthorsSplits/splitauthorsab' OVERWRITE INTO TABLE Authorsab")
 
     
     
@@ -538,9 +538,6 @@ object DDL {
     papersids.join(authorsaa, papersids("PaperID") === authorsaa("PaperID"), "inner").drop(authorsaa.col("paperid"))
     papersids.join(authorsab, papersids("PaperID") === authorsab("PaperID"), "inner").drop(authorsab.col("paperid"))
 
-       
-    
-    
     
     val papers = sqlContext.sql("select * from Papers")
     val authors = sqlContext.sql("select * from PaperAuthorAffiliations")

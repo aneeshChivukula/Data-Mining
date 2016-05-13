@@ -452,6 +452,46 @@ object DDL {
 
 		*/
     
+		
+		
+		sqlContext.sql("CREATE TABLE Papersaa (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE Papersab (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersaa' OVERWRITE INTO TABLE Papersaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersab' OVERWRITE INTO TABLE Papersab")
+    
+    sqlContext.sql("CREATE TABLE PaperAuthorAffiliationsaa (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE PaperAuthorAffiliationsab (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE PaperAuthorAffiliationsac (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE PaperAuthorAffiliationsad (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersauthorsaa' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersauthorsab' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersauthorsac' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpapersauthorsad' OVERWRITE INTO TABLE PaperAuthorAffiliationsaa")
+    
+    sqlContext.sql("CREATE TABLE PaperReferencesaa (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE PaperReferencesab (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE PaperReferencesac (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE PaperReferencesad (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE PaperReferencesae (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE PaperReferencesaf (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsaa' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsab' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsac' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsad' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsae' OVERWRITE INTO TABLE PaperReferencesaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperrefsaf' OVERWRITE INTO TABLE PaperReferencesaa")
+    
+    sqlContext.sql("CREATE TABLE PaperKeywordsaa (PaperID String,KeywordName String,FieldOfStudyIDMappedToKeyword String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE PaperKeywordsab (PaperID String,KeywordName String,FieldOfStudyIDMappedToKeyword String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperkeysaa' OVERWRITE INTO TABLE PaperKeywordsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitpaperkeysab' OVERWRITE INTO TABLE PaperKeywordsab")
+    
+    sqlContext.sql("CREATE TABLE Authorsaa (AuthorID String,AuthorName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("CREATE TABLE Authorsab (AuthorID String,AuthorName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitauthorsaa' OVERWRITE INTO TABLE Authorsaa")
+    sqlContext.sql("LOAD DATA INPATH '/data/splitauthorsab' OVERWRITE INTO TABLE Authorsab")
+
+		
     val papersids =  sqlContext.sql("select PaperID from FilteredPapersID")    
     val papers = sqlContext.sql("select * from Papers")
     val authors = sqlContext.sql("select * from PaperAuthorAffiliations")
@@ -505,10 +545,11 @@ hadoop fs -copyToLocal /data/outputsncs .
 hadoop fs -copyToLocal /data/outputfncs .
 hadoop fs -copyToLocal /data/outputsnci .
 hadoop fs -copyToLocal /data/outputfnci .
-
+hadoop fs -copyFromLocal /home/achivuku/Documents/MicrosoftAcademicGraph/ /data
 
 Spark Shell Commands :
 spark-shell -Dspark.executor.memory=50g
+spark-shell  --executor-memory 16G
 
 Python Shell Commands :
 
@@ -567,6 +608,10 @@ https://spark.apache.org/docs/1.6.0/api/java/org/apache/spark/sql/Column.html
 Academic Search API
 https://www.microsoft.com/cognitive-services/en-us/academic-knowledge-api/documentation/overview
 https://dev.projectoxford.ai/docs/services/56332331778daf02acc0a50b/operations/56332331778daf06340c9666 
+
+
+
+
  */
 
 

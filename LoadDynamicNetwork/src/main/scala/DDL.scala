@@ -6,25 +6,29 @@ import org.apache.spark.SparkConf
 object DDL {
 	def main(args: Array[String]) {
 		
+	  
+	  
 		// Create database
 		val conf = new SparkConf().setAppName("Data Loader")
 		val sc = new SparkContext(conf)
 		val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 		print(sqlContext)
 		
-		/*
 		sqlContext.sql("show databases").collect().foreach(println)
     sqlContext.sql("drop database mydb cascade")
 		sqlContext.sql("import sqlContext.implicits._")
 		sqlContext.sql("show databases").collect().foreach(println)
 		sqlContext.sql("CREATE DATABASE mydb")
-		*/
 		
 		sqlContext.sql("USE mydb")
 		sqlContext.sql("show tables").collect().foreach(println);
 
-		/*
-		// Create data frame of conference names and journal names
+		
+		
+		
+		
+		
+		// Create data frame of CS conference names and journal names
 		sqlContext.sql("CREATE TABLE Papers (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
 		sqlContext.sql("LOAD DATA INPATH '/data/Papers.txt' OVERWRITE INTO TABLE Papers")
 		var df = sqlContext.sql("select * from Papers where NormalizedVenueName='nature'")
@@ -44,7 +48,75 @@ object DDL {
 		df2.show() // 01E7DD16
 		val df3 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='01E7DD16'")
 		df3.count()
+
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// Load all MAG tables into SparkSQL database
+		sqlContext.sql("CREATE TABLE Journals (JournalID String,JournalName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE ConferenceSeries (ConferenceSeriesID String,ShortName String,FullName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE ConferenceInstances (ConferenceSeriesID String,ConferenceInstanceID String,ShortName String,FullName String,Location String,OfficialConferenceURL String,ConferenceStartDate String,ConferenceEndDate String,ConferenceAbstractRegistrationDate String,ConferenceSubmissionDeadlineDate String,ConferenceNotificationDueDate String,ConferenceFinalVersionDueDate String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+
+		sqlContext.sql("CREATE TABLE Affiliations (AffiliationID String,AffiliationName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE Authors (AuthorID String,AuthorName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE FieldsOfStudy (FieldOfStudyID String,FieldOfStudyName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE FieldOfStudyHierarchy (ChildFieldOfStudyID String,ChildFieldOfStudyLevel String,ParentFieldOfStudyID String,ParentFieldOfStudyLevel String,Confidence String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE Journals (JournalID String,JournalName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE Papers (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE PaperAuthorAffiliations (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE PaperKeywords (PaperID String,KeywordName String,FieldOfStudyIDMappedToKeyword String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE PaperReferences (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		sqlContext.sql("CREATE TABLE PaperUrls (PaperID String,URL String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+		
+		sqlContext.sql("LOAD DATA INPATH '/data/Journals.txt' OVERWRITE INTO TABLE Journals")
+		sqlContext.sql("LOAD DATA INPATH '/data/Conferences.txt' OVERWRITE INTO TABLE ConferenceSeries")
+		sqlContext.sql("LOAD DATA INPATH '/data/ConferenceInstances.txt' OVERWRITE INTO TABLE ConferenceInstances")
+
+		sqlContext.sql("LOAD DATA INPATH '/data/Affiliations.txt' OVERWRITE INTO TABLE Affiliations")
+		sqlContext.sql("LOAD DATA INPATH '/data/Authors.txt' OVERWRITE INTO TABLE Authors")
+		sqlContext.sql("LOAD DATA INPATH '/data/FieldsOfStudy.txt' OVERWRITE INTO TABLE FieldsOfStudy")
+		sqlContext.sql("LOAD DATA INPATH '/data/FieldOfStudyHierarchy.txt' OVERWRITE INTO TABLE FieldOfStudyHierarchy")
+		sqlContext.sql("LOAD DATA INPATH '/data/Journals.txt' OVERWRITE INTO TABLE Journals")
+		sqlContext.sql("LOAD DATA INPATH '/data/Papers.txt' OVERWRITE INTO TABLE Papers")
+		sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliations.txt' OVERWRITE INTO TABLE PaperAuthorAffiliations")
+		sqlContext.sql("LOAD DATA INPATH '/data/PaperKeywords.txt' OVERWRITE INTO TABLE PaperKeywords")
+		sqlContext.sql("LOAD DATA INPATH '/data/PaperReferences.txt' OVERWRITE INTO TABLE PaperReferences")
+		sqlContext.sql("LOAD DATA INPATH '/data/PaperUrls.txt' OVERWRITE INTO TABLE PaperUrls")
+		
+		
+		sqlContext.sql("select JournalName from Journals").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputjnj")
+		sqlContext.sql("select FullName from ConferenceSeries").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputfncs")
+		sqlContext.sql("select ShortName from ConferenceInstances").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputsnci")
+		sqlContext.sql("select FullName from ConferenceInstances").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputfnci")
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// Search for computer science publications
+
+
+//	 sqlContext.sql("USE mydb")
+
+		
+		
+		
+		
+		// Search for exact fields of study
 		df2 = sqlContext.sql("select FieldOfStudyID from FieldsOfStudy where FieldOfStudyName='Data mining'")
 		df2.show() // 0765A2E4
 		val df4 = sqlContext.sql("select PaperID from PaperKeywords where fieldofstudyidmappedtokeyword='0765A2E4'")
@@ -91,55 +163,19 @@ object DDL {
 		sqlContext.sql("CREATE TABLE FilteredPapersID (PaperID String)")
     sqlContext.sql("LOAD DATA INPATH '/data/filteredcspaperids' OVERWRITE INTO TABLE FilteredPapersID")
 		
-		
-		// Load all tables into database
-		sqlContext.sql("CREATE TABLE Journals (JournalID String,JournalName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE ConferenceSeries (ConferenceSeriesID String,ShortName String,FullName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE ConferenceInstances (ConferenceSeriesID String,ConferenceInstanceID String,ShortName String,FullName String,Location String,OfficialConferenceURL String,ConferenceStartDate String,ConferenceEndDate String,ConferenceAbstractRegistrationDate String,ConferenceSubmissionDeadlineDate String,ConferenceNotificationDueDate String,ConferenceFinalVersionDueDate String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
+    
+    
+    
+    
+    
+    
+    
 
-		sqlContext.sql("CREATE TABLE Affiliations (AffiliationID String,AffiliationName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE Authors (AuthorID String,AuthorName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE FieldsOfStudy (FieldOfStudyID String,FieldOfStudyName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE FieldOfStudyHierarchy (ChildFieldOfStudyID String,ChildFieldOfStudyLevel String,ParentFieldOfStudyID String,ParentFieldOfStudyLevel String,Confidence String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE Journals (JournalID String,JournalName String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE Papers (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE PaperAuthorAffiliations (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE PaperKeywords (PaperID String,KeywordName String,FieldOfStudyIDMappedToKeyword String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE PaperReferences (PaperID String,PaperReferenceID String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		sqlContext.sql("CREATE TABLE PaperUrls (PaperID String,URL String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
-		
-		sqlContext.sql("LOAD DATA INPATH '/data/Journals.txt' OVERWRITE INTO TABLE Journals")
-		sqlContext.sql("LOAD DATA INPATH '/data/Conferences.txt' OVERWRITE INTO TABLE ConferenceSeries")
-		sqlContext.sql("LOAD DATA INPATH '/data/ConferenceInstances.txt' OVERWRITE INTO TABLE ConferenceInstances")
-
-		sqlContext.sql("LOAD DATA INPATH '/data/Affiliations.txt' OVERWRITE INTO TABLE Affiliations")
-		sqlContext.sql("LOAD DATA INPATH '/data/Authors.txt' OVERWRITE INTO TABLE Authors")
-		sqlContext.sql("LOAD DATA INPATH '/data/FieldsOfStudy.txt' OVERWRITE INTO TABLE FieldsOfStudy")
-		sqlContext.sql("LOAD DATA INPATH '/data/FieldOfStudyHierarchy.txt' OVERWRITE INTO TABLE FieldOfStudyHierarchy")
-		sqlContext.sql("LOAD DATA INPATH '/data/Journals.txt' OVERWRITE INTO TABLE Journals")
-		sqlContext.sql("LOAD DATA INPATH '/data/Papers.txt' OVERWRITE INTO TABLE Papers")
-		sqlContext.sql("LOAD DATA INPATH '/data/PaperAuthorAffiliations.txt' OVERWRITE INTO TABLE PaperAuthorAffiliations")
-		sqlContext.sql("LOAD DATA INPATH '/data/PaperKeywords.txt' OVERWRITE INTO TABLE PaperKeywords")
-		sqlContext.sql("LOAD DATA INPATH '/data/PaperReferences.txt' OVERWRITE INTO TABLE PaperReferences")
-		sqlContext.sql("LOAD DATA INPATH '/data/PaperUrls.txt' OVERWRITE INTO TABLE PaperUrls")
-		
-		
-//		sqlContext.sql("select JournalName from Journals").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputjnj")
-//		sqlContext.sql("select FullName from ConferenceSeries").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputfncs")
-//		sqlContext.sql("select ShortName from ConferenceInstances").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputsnci")
-//		sqlContext.sql("select FullName from ConferenceInstances").distinct().rdd.saveAsTextFile("hdfs://atlas8:9000/data/outputfnci")
-
-
-		// Search for computer science publications
+		// Search for approximate fields of study
 
 //		sqlContext.sql("select FullName from ConferenceInstances where FullName rlike '^.*Artificial.*Intelligence.*$' ").count()
 //		sqlContext.sql("select FullName from ConferenceInstances where FullName rlike '^.*Artificial.*Intelligence.*$' ").show()
 //		sqlContext.sql("select FullName from ConferenceInstances where ShortName rlike '^.*AAAI.*$' ").show()
-
-//	 sqlContext.sql("USE mydb")
-
-
-
 		var res1 = sqlContext.sql("select * from ConferenceInstances where ShortName rlike '^.*AAAI.*$' ")
 		var res2 = sqlContext.sql("select * from ConferenceInstances where FullName rlike '^.*[Aa]rtificial.*[Ii]ntelligence.*$' ")
 		var res3 = res1.unionAll(res2).distinct() // res3.count() : 541
@@ -450,10 +486,13 @@ object DDL {
 
 		res3.count()
 
-		*/
     
 		
 		
+		
+		
+		
+		// Split and Join MAG database to create CS database		
 		  
     sqlContext.sql("CREATE TABLE Papersaa (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
     sqlContext.sql("CREATE TABLE Papersab (PaperID String,OriginalPaperTitle String,NormalizedPaperTitle String,PaperPublishYear String,PaperPublishDate String,PaperDocumentObjectIdentifier String,OriginalVenueName String,NormalizedVenueName String,JournalIDMappedToVenueName String,ConferenceSeriesIDMappedToVenueName String,PaperRank String) ROW FORMAT delimited FIELDS TERMINATED BY '\t' STORED AS textfile")
@@ -556,6 +595,13 @@ object DDL {
     // papersids.join(authors, papersids("PaperID") === authors("PaperID"), "inner").drop(authors.col("paperid")).count()
 		// sqlContext.sql("drop table filteredauthors")
 
+
+    
+    
+    
+    
+    
+    // Create CS database 
     
     sqlContext.sql("CREATE TABLE CSPaperAuthorAffiliations (PaperID String,AuthorID String,AffiliationID String,OriginalAffiliationName String,NormalizedAffiliationName String,AuthorSequenceNumber String) ROW FORMAT delimited FIELDS TERMINATED BY ',' STORED AS textfile")
     sqlContext.sql("LOAD DATA INPATH '/data/CSPaperAuthorAffiliations.csv' OVERWRITE INTO TABLE CSPaperAuthorAffiliations")

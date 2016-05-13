@@ -158,6 +158,8 @@ object DDL {
 		dffin.count() // 1254879
 		dffin.rdd.saveAsTextFile("/data/filteredcspaperids")
 		
+		
+		
     dffin.registerTempTable("papersdf") 
 		sqlContext.sql("CREATE TABLE FilteredPapersID (PaperID String) as select * from papersdf")
 		sqlContext.sql("CREATE TABLE FilteredPapersID (PaperID String)")
@@ -173,9 +175,11 @@ object DDL {
 
 		// Search for approximate fields of study
 
-//		sqlContext.sql("select FullName from ConferenceInstances where FullName rlike '^.*Artificial.*Intelligence.*$' ").count()
-//		sqlContext.sql("select FullName from ConferenceInstances where FullName rlike '^.*Artificial.*Intelligence.*$' ").show()
-//		sqlContext.sql("select FullName from ConferenceInstances where ShortName rlike '^.*AAAI.*$' ").show()
+		sqlContext.sql("select FullName from ConferenceInstances where FullName rlike '^.*Artificial.*Intelligence.*$' ").count()
+		sqlContext.sql("select FullName from ConferenceInstances where FullName rlike '^.*Artificial.*Intelligence.*$' ").show()
+		sqlContext.sql("select FullName from ConferenceInstances where ShortName rlike '^.*AAAI.*$' ").show()
+		
+		
 		var res1 = sqlContext.sql("select * from ConferenceInstances where ShortName rlike '^.*AAAI.*$' ")
 		var res2 = sqlContext.sql("select * from ConferenceInstances where FullName rlike '^.*[Aa]rtificial.*[Ii]ntelligence.*$' ")
 		var res3 = res1.unionAll(res2).distinct() // res3.count() : 541

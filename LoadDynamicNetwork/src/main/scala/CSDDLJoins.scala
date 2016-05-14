@@ -3,7 +3,7 @@ import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
 
 
-object DDL {
+object CSDDLJoins {
 	def main(args: Array[String]) {
 		
 	  
@@ -639,8 +639,44 @@ object DDL {
     val cspaperreferences = sqlContext.sql("select * from CSPaperReferences")
     cspaperreferences.count() // 8179711
    
+    val dfdm = sqlContext.sql("select * from FieldsOfStudy where FieldOfStudyName='Data mining'")
+    val dfa = sqlContext.sql("select * from FieldsOfStudy where FieldOfStudyName='Algorithm'")
+    val dfai = sqlContext.sql("select * from FieldsOfStudy where FieldOfStudyName='Artificial intelligence'")
+    val dfcn = sqlContext.sql("select * from FieldsOfStudy where FieldOfStudyName='Computer network'")
+    val dfml = sqlContext.sql("select * from FieldsOfStudy where FieldOfStudyName='Machine learning'")
+    val dfs = sqlContext.sql("select * from FieldsOfStudy where FieldOfStudyName='Simulation'")
+    val dfpr = sqlContext.sql("select * from FieldsOfStudy where FieldOfStudyName='Pattern recognition'")
+    val dfrtc = sqlContext.sql("select * from FieldsOfStudy where FieldOfStudyName='Real-time computing'")
+    val dfch = sqlContext.sql("select * from FieldsOfStudy where FieldOfStudyName='Computer hardware'")
+
+    val dfffn = dfdm.unionAll(dfa).unionAll(dfai).unionAll(dfcn).unionAll(dfml).unionAll(dfs).unionAll(dfpr).unionAll(dfrtc).unionAll(dfch)
     
-		
+		dfffn.registerTempTable("dfffntemp") 
+		sqlContext.sql("create table CSFieldsOfStudy as select * from dfffntemp")
+		dfffn.rdd.saveAsTextFile("file:///home/achivuku/output/filteredcspublications/csfieldsofstudy")
+    
+    val csfieldsofstudy = sqlContext.sql("select * from csfieldsofstudy")
+    csfieldsofstudy.count() // 10
+    
+    sqlContext.sql("select FieldOfStudyIDMappedToKeyword,PaperID from CSPaperKeywords").rdd.saveAsTextFile("file:///home/achivuku/output/filteredcspublications/rddinputs/csfieldspapers")
+    
+    sqlContext.sql("select ConferenceSubmissionDeadlineDate from ConferenceInstances").count() // 50202
+    sqlContext.sql("select ConferenceStartDate from ConferenceInstances").count() // 50202
+    
+    
+    // Split CSPaperAuthorAffiliations and Join CSPapers to get Paper ID, Author ID, Paper publish year, Paper publish date, Affiliation ID, Normalized affiliation name, 
+    // Split CSPaperKeywords and Join CSPapers to get Paper ID, Field of study ID mapped to keyword, Paper publish year, Paper publish date, Normalized paper title, Normalized venue name, Journal ID, Conference series ID, Keyword name
+    // To map, filter, join above RDDs better to use Join without SQL to execute on spark cluster
+    // Also good idea to try writing above SQL code using only RDD operations
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	}
 		
 
@@ -1168,5 +1204,9 @@ For large joins in RDDs, SparkSQL uses broadcast variables after hive setup. Par
 [Computer appliance]
 [Central Air Data Computer]
 
- 
+
+Relational SQL joins are intractable even on computer science database. On single node Spark SQL queries can be used only for select and create statements.
+Even on computer science database too many join queries cannot be executed without multinode spark cluster using hive as datawarehouse.
+Must use data caching on multinode spark cluster with distributed RDDs.    
+Typically SQL queries in database servers and data warehouses not using spark need data indexes and performance tuning for large joins 
  */

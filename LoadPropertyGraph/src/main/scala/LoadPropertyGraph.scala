@@ -11,18 +11,6 @@ import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.MutableList
 
 
-
-//class Helpers {
-//
-//  def removemissingvalues(line: String) ={
-//    val splitline = line.split(',');
-//    if(splitline(0) != null)
-//      print(line)    
-//  }
-//  
-//}
-
-
 object LoadPropertyGraph {
   def main(args: Array[String]) {
     

@@ -663,6 +663,14 @@ object CSDDLJoins {
     sqlContext.sql("select ConferenceSubmissionDeadlineDate from ConferenceInstances").count() // 50202
     sqlContext.sql("select ConferenceStartDate from ConferenceInstances").count() // 50202
     
+    sqlContext.sql("select FieldOfStudyIDMappedToKeyword,PaperID from CSPaperKeywords").rdd.saveAsTextFile("file:///home/achivuku/output/filteredcspublications/rddinputs/csfieldspapers")
+
+    sqlContext.sql("select PaperID,AuthorID from CSPaperAuthorAffiliations").rdd.saveAsTextFile("file:///home/achivuku/output/filteredcspublications/rddinputs/cspaperauthoraffiliationspidaid")
+    sqlContext.sql("select PaperID,ConferenceSeriesIDMappedToVenueName from CSPapers").rdd.saveAsTextFile("file:///home/achivuku/output/filteredcspublications/rddinputs/cspaperspidcsidmvn")
+    sqlContext.sql("select PaperID,FieldOfStudyIDMappedToKeyword,KeywordName from CSPaperKeywords").rdd.saveAsTextFile("file:///home/achivuku/output/filteredcspublications/rddinputs/cspaperkeywordspidfidkn")
+    sqlContext.sql("select ConferenceSeriesID,ConferenceStartDate from conferenceinstances").rdd.saveAsTextFile("file:///home/achivuku/output/filteredcspublications/rddinputs/conferenceinstancescsidcsd")
+    
+    
     
     // Split CSPaperAuthorAffiliations and Join CSPapers to get Paper ID, Author ID, Paper publish year, Paper publish date, Affiliation ID, Normalized affiliation name, 
     // Split CSPaperKeywords and Join CSPapers to get Paper ID, Field of study ID mapped to keyword, Paper publish year, Paper publish date, Normalized paper title, Normalized venue name, Journal ID, Conference series ID, Keyword name

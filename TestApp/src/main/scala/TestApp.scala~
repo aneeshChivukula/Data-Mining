@@ -1,0 +1,19 @@
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkContext._
+import org.apache.spark.SparkConf
+
+object TestApp {
+	def main(args: Array[String]) {
+		val conf = new SparkConf().setAppName("Data Loader")
+		val sc = new SparkContext(conf)
+		val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+		
+		import sqlContext._
+
+		val df = sc.parallelize(Array(
+		("one", "A", 1), ("one", "B", 2), ("two", "A", 3), ("two", "B", 4)
+		)).toDF("key1", "key2", "value")
+		df.show()
+	}
+
+}

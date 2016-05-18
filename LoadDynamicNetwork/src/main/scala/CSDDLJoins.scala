@@ -812,6 +812,7 @@ http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Da
 SparkSQL
 http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.functions$
 https://spark.apache.org/docs/1.6.0/api/java/org/apache/spark/sql/Column.html
+https://spark.apache.org/docs/1.4.0/api/java/org/apache/spark/sql/Row.html
 Academic Search API
 https://www.microsoft.com/cognitive-services/en-us/academic-knowledge-api/documentation/overview
 https://dev.projectoxford.ai/docs/services/56332331778daf02acc0a50b/operations/56332331778daf06340c9666 

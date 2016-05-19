@@ -90,6 +90,10 @@ object LoadPropertyGraph {
 //   )
     }
    // Reduce input data size. Rather than Index, Hash stringnames on vertices to get unique longs as vertex ids in graphx. Get tuples from data api. 
+   // Data storage options that include graph queries include nosql datawarehouse, graph database, object database.
+      // Could also look into data modelling, data storage, data visualization scenarios/issues in domain databases like xml databases, geospatial databases, traffic databases, 3d gaming databases
+      // Must look into system-level issues like data benchmarks, data indexing, data partitioning and data storage for big data.
+    
    val coauthors2015 = sc.union(l)
    coauthors2015.collect.take(10).foreach(println)   
       

@@ -89,6 +89,7 @@ object LoadPropertyGraph {
     }
 //   )
     }
+   // Reduce input data size. Rather than Index, Hash stringnames on vertices to get unique longs as vertex ids in graphx. Get tuples from data api. 
    val coauthors2015 = sc.union(l)
    coauthors2015.collect.take(10).foreach(println)   
       
@@ -567,6 +568,65 @@ Temporary Code Snippets :
 
 
 
+Try set intersection with groupby to get papers common between vertices.Otherwise Write code using mllib data types and convert table to adjacency list outside RDD. 
+Check output is seen for creation of property graph.
+check ways to increase performance in spark submit
+(
+groupby
+mapValues, countByKey, sortBy for sorting
+combineByKey or flatMapValues to loop over auth id
+cogroup or join for unique value list lookup
+reduceByKey or collectAsMap or lookup to get output
+foldByKey to get values in max-min ranges or take a union all
+RDD ops
+
+Experimental:
+combineByKeyWithClassTag
+aggregateByKey
+
+Note that this method should only be used if the resulting map is expected to be small, as the whole thing is loaded into the driver's memory. To handle very large results, consider using rdd.mapValues(_ => 1L).reduceByKey(_ + _), which returns an RDD[T, Long] instead of a map.
+
+Note: As currently implemented, groupByKey must be able to hold all the key-value pairs for any key in memory. If a key has too many values, it can result in an OutOfMemoryError.
+
+Note: This operation may be very expensive. If you are grouping in order to perform an aggregation (such as a sum or average) over each key, using PairRDDFunctions.aggregateByKey or PairRDDFunctions.reduceByKey will provide much better performance.
+
+If you find yourself writing code where you groupByKey() and then use a reduce() or fold() on the values, you can probably achieve the same result more efficiently by using one of the per-key aggregation functions. Rather than reducing the RDD to an in-memory value, we reduce the data per key and get back an RDD with the reduced values corresponding to each key. For example, rdd.reduceByKey(func) produces the same RDD as rdd.groupByKey().mapValues(value => value.reduce(func)) but is more efficient as it avoids the step of creating a list of values for each key.
+
+flatMapValues giving org.apache.spark.SparkException: Task not serializable
+https://databricks.gitbooks.io/databricks-spark-knowledge-base/content/troubleshooting/javaionotserializableexception.html
+http://stackoverflow.com/questions/22592811/task-not-serializable-java-io-notserializableexception-when-calling-function-ou
+https://github.com/jaceklaskowski/mastering-apache-spark-book/blob/master/spark-tips-and-tricks-sparkexception-task-not-serializable.adoc
+http://stackoverflow.com/questions/29295838/org-apache-spark-sparkexception-task-not-serializable
+
+Dont know what to do. Using loops instead of methods and reducing input size.
+)
+
+
+// There is no alternative to using a Array for packing and unpacking tuples incrementally after a join
+// Is groupby and lookup the best way to generate edge lists? Each Lookup taking around half a minute. Around 2.5 lakhs lookups were done in  2.2 h before job was killed 
+// Drop multigraph creation. Create adjacency matrix only for zero elements.
+// Check performance with small size of features and sample before distributed deployment in spark rdds.
+Complete this work in few days by fri
+
+its more of a bipartitite to adjacency matrix problem where one dimension is projected or folded away
+looping on iterators cannot be affected. but lookups can be reduced by two groupbykey followed by set intersection of values.
+improve lookup, indexing, sorting key-values
+other alternative is to convert table to adjacency matrix inside spark and adjacency matrix to edge list outside spark
+final alternative is to reduce input data size
+
+authidx, authid - paired rdd lookup
+paperid : author ids - groupby
+inside spark think about key values suitable for combining keys over set intersections - lookup&intersect paperids for every authorid belonging to paperid - reduce input data size for allowing parallel processing
+
+After partitioning on date, take only papersids authorsids in rdd. And do two groupby followed by intersect to get paperid
+Must loop over all combinations of authors starting from most cited paper
+Must not repeat intersections over authors that have already been scanned by looping over authors than papers
+To be able to load into graphx, loop by index than id
+
+adjacency matrix can be created in spark mllib data types, data matrices, data indexing. then convert adjacency matrix to edge list outside spark. - spark mllib data types have dependency on sqlcontext but not hive - sparksql dependency works only for dataframes created from existing rdd that do not access hive tables in database
+graphframes is alternative to mllib data types
+
+otherwise do all table to matrix to list conversion outside spark rdds if size permits
 
 
 

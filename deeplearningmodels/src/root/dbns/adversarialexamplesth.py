@@ -73,10 +73,10 @@ for i in np.random.choice(np.arange(0, len(testY)), size = (10,)):
 Theano, Lasagne, nolearn, keras, pylearn2, plato, crino
 Only older version of nolearn has DBN. Newer version of nolearn has DNN.
 In yaml, pylearn2 has a DBM, RBM
-Standard DBN code is not available in python packages. 
-We must implement a DBN by adapting existing code. CNNs are readily available. Or must trace the dependencies of github packages providing code(like plato). 
+Standard DBN code is not available in python packages. CNNs are readily available.
+We must implement a DBN by adapting existing code. Or must trace the dependencies of github packages providing code(like plato). 
 More packages to be checked : pylearn2, Torch7, DL4J, H2O, DeepLearnToolbox, MXNet in yaml, lua, Matlab, Java, R 
-Can next try Java packages like DL4J, R packages like deepnet
+Alternatves to nolearn in python are Java packages like DL4J, R packages like deepnet
 https://github.com/Theano/Theano/wiki/Related-projects
 http://scikit-learn.org/stable/modules/neural_networks.html
 http://scikit-learn.org/dev/modules/neural_networks_supervised.html

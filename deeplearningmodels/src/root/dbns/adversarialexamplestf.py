@@ -93,11 +93,12 @@ Pending
 Done
 tensorflow api and tutorials
 theano api and tutorials
-To Do
 working dbn code
 nolearn both versions
 pylearn2 rbms
 plato, crino, blocks on theano, lasagne
+To Do
+DBN in DL4J and R
 
 with tf.Session() as sess:
   with tf.device("/gpu:1"):

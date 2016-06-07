@@ -75,7 +75,8 @@ Only older version of nolearn has DBN. Newer version of nolearn has DNN.
 In yaml, pylearn2 has a DBM, RBM
 Standard DBN code is not available in python packages. 
 We must implement a DBN by adapting existing code. CNNs are readily available. Or must trace the dependencies of github packages providing code(like plato). 
-More packages to be checked : pylearn2, Torch7, DL4J, H2O, DeepLearnToolbox, MXNet in Java, R, Matlab
+More packages to be checked : pylearn2, Torch7, DL4J, H2O, DeepLearnToolbox, MXNet in yaml, lua, Matlab, Java, R 
+Can next try Java packages like DL4J, R packages like deepnet
 https://github.com/Theano/Theano/wiki/Related-projects
 http://scikit-learn.org/stable/modules/neural_networks.html
 http://scikit-learn.org/dev/modules/neural_networks_supervised.html
@@ -101,5 +102,10 @@ http://blocks.readthedocs.io/en/latest/api/algorithms.html
 http://deeplearning.net/software/pylearn2/library/models.html
 https://groups.google.com/forum/#!topic/pylearn-dev/cBNms1QEmXc
 
-
+http://deeplearning4j.org/compare-dl4j-torch7-pylearn.html
+http://deeplearning4j.org/deepbeliefnetwork.html
+http://deeplearning4j.org/restrictedboltzmannmachine.html
+https://github.com/deeplearning4j
+http://deeplearning4j.org/
+https://www.quora.com/What-are-the-best-packages-for-deep-learning-in-R
 '''

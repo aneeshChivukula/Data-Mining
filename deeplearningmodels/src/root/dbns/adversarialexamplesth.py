@@ -77,6 +77,11 @@ Standard DBN code is not available in python packages. CNNs are readily availabl
 We must implement a DBN by adapting existing code. Or must trace the dependencies of github packages providing code(like plato). 
 More packages to be checked : pylearn2, Torch7, DL4J, H2O, DeepLearnToolbox, MXNet in yaml, lua, Matlab, Java, R 
 Alternatves to nolearn in python are Java packages like DL4J, R packages like deepnet
+For using GPUs, DL4J consolidates blas into ND4J that has jdk, cuda, nvidia dependencies for switiching backends on linear algebra operations 
+ND4J allows portabbility of deep learning code.  DL4J pipelines also works on both hadoop and spark. So main focus is on tuning network hyperparameters and interpreting output in the deep learning model. 
+DL4J has both java and scala api docs for building computation graphs and deep learning models. Canova allows us to vectorize and split data input to neural networks. 
+DL4J has detailed tutorials for IntelliJ than Eclipse IDE, Maven than SBT build tool
+Thus, DL4J is like the Weka of deep learning
 https://github.com/Theano/Theano/wiki/Related-projects
 http://scikit-learn.org/stable/modules/neural_networks.html
 http://scikit-learn.org/dev/modules/neural_networks_supervised.html

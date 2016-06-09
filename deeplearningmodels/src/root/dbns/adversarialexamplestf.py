@@ -211,4 +211,52 @@ http://stats.stackexchange.com/questions/51273/what-is-the-difference-between-a-
 # score = metrics.accuracy_score(classifier.predict(X_test), y_test)
 # print('Accuracy: %f' % score)
 
+
+
+Each digit has 2200 images, and we divide them equally into training and test set. All
+combinations of pairs of digits from “0” to “9” are tested and we select the ones whose false
+positive rates are higher than 0.02 in the initial game state. These are (2, 6), (2, 8), (3, 8),
+(4, 1), (5, 8), (7, 9). We then apply the Stackelberg algorithm on these six pairs. In this
+experiment the first digit of a pair is the class of interest for the adversary (i.e. the positive
+class).
+
+Draws images based on the MNIST data : Use matplotlib, pil and opencv in linux to plot and change images, draw line using pil or Pillow, estimate starting and ending pixel for line by looking at the image used for initializing the deep learning model, look at one picture to estimate start/end pixel and use same start/end point for all pictures, 
+https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/fig/mnist.py
+
+sudo pip install --upgrade Pillow
+import os
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import numpy as np
+from PIL import Image, ImageDraw
+
+os.chdir('/home/aneesh/Documents/Adversarial Learning Datasets/USPS Dataset')
+images = open('train.0.txt').readlines()
+
+line = "7 -1 -1 -1 -1 -1 -0.815 0.673 0.875 0.264 -0.376 -0.962 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0.136 0.465 -0.844 -0.282 0.466 0.611 -0.918 -1 -1 -1 -1 -1 -1 -1 -1 -0.919 0.895 0.666 -1 -1 -1 0.651 -0.407 -1 -1 -1 -1 -1 -1 -1 -1 -0.233 0.51 -1 -1 -1 -1 0.515 0.087 -1 -1 -1 -1 -1 -1 -1 -1 -0.398 -0.496 -1 -1 -1 -1 0.216 0.093 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0.503 -0.324 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.951 0.968 -0.676 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.289 0.761 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0.616 -0.047 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.548 0.96 -0.842 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0.311 0.16 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.832 1 -0.664 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0.072 0.302 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.805 0.874 -0.727 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0.288 -0.076 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.992 0.293 -1 -1 -1 -1 -1 -1 -1 -1 -1"
+splitline = line.split(' ')
+image7 = np.array(splitline[1:],np.float64)
+line = "9 -1 -1 -1 -1 -1 -0.948 -0.561 0.148 0.384 0.904 0.29 -0.782 -1 -1 -1 -1 -1 -1 -1 -1 -0.748 0.588 1 1 0.991 0.915 1 0.931 -0.476 -1 -1 -1 -1 -1 -1 -0.787 0.794 1 0.727 -0.178 -0.693 -0.786 -0.624 0.834 0.756 -0.822 -1 -1 -1 -1 -0.922 0.81 1 0.01 -0.928 -1 -1 -1 -1 -0.39 1 0.271 -1 -1 -1 -1 0.012 1 0.248 -1 -1 -1 -1 -1 -0.402 0.326 1 0.801 -0.998 -1 -1 -0.981 0.645 1 -0.687 -1 -1 -1 -1 -0.792 0.976 1 1 0.413 -0.976 -1 -1 -0.993 0.834 0.897 -0.951 -1 -1 -1 -0.831 0.14 1 1 0.302 -0.889 -1 -1 -1 -1 0.356 0.794 -0.836 -1 -0.445 0.074 0.833 1 1 0.696 -0.881 -1 -1 -1 -1 -1 -0.368 0.955 1 1 1 1 0.905 1 1 -0.262 -1 -1 -1 -1 -1 -1 -1 -0.507 0.451 0.692 0.692 -0.007 -0.237 1 0.882 -0.795 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0.155 1 0.436 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.991 0.703 1 -0.025 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.833 0.959 1 -0.629 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.6 0.998 0.841 -0.932 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.424 1 0.732 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -0.908 0.43 0.622 -0.973 -1 -1 -1 -1 -1"
+splitline = line.split(' ')
+image9 = np.array(splitline[1:],np.float64)
+
+image = image7
+image = image9
+imagediff = image9 - image7
+image[70:134] = image[70:134] + imagediff[70:134]
+
+ncols=16
+image.shape = (image.size//ncols, ncols)
+
+img = Image.fromarray(image)
+draw = ImageDraw.Draw(img) 
+draw.line((4,4, 7,7))
+
+image = np.array(img)
+plt.imshow(image, cmap='Greys_r')
+plt.show()
+
+http://matplotlib.org/users/image_tutorial.html
+
 '''

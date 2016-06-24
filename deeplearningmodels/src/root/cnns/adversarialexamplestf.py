@@ -325,6 +325,14 @@ coord.join(threads)
 
 
 '''
+export TRAIN_DIR=/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Train/
+export VALIDATION_DIR=/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Validation/
+export LABELS_FILE=/home/aneesh/models-master/inception/labels.txt
+export OUTPUT_DIRECTORY=/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/
+
+
+bazel-bin/inception/build_image_data   --train_directory="${TRAIN_DIR}"   --validation_directory="${VALIDATION_DIR}"   --output_directory="${OUTPUT_DIRECTORY}"   --labels_file="${LABELS_FILE}"   --train_shards=10   --validation_shards=10   --num_threads=1
+
 
 for i in range(1000):
   batch_xs, batch_ys = mnist.train.next_batch(100)

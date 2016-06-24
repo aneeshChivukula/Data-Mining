@@ -12,7 +12,7 @@ import sys
 from tensorflow.contrib import learn as skflow
 import threading
 
-from dataset import Parser
+from root.cnns.decodedataset import Parser
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
@@ -65,6 +65,7 @@ def read_and_decode(filenames_queue):
 #     for _ in xrange(examples_per_shard*train_shards): 
     _, value = reader.read(filenames_queue)
     image_buffer, label_index = localparser.parse_example_proto(value)
+    
     image = localparser.image_preprocessing(image_buffer)
 #         train_images_and_labels.append([image, label_index])
     return image, tf.reshape(label_index, shape = [1,1])

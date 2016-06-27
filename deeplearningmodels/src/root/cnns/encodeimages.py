@@ -7,7 +7,7 @@ import threading
 train_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Train'
 validation_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Validation/'
 labels_file = '/home/aneesh/models-master/inception/labels.txt'
-output_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategoriesTmp/'
+output_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/'
 
 train_shards = 10
 validation_shards=24
@@ -87,7 +87,8 @@ def process_image_files_batch(coder, name, thread_index,ranges,filenames,humans,
             example = tf.train.Example(features=tf.train.Features(
                 feature={
                 'image': tf.train.Feature(
-                bytes_list=tf.train.BytesList(value=[image_buffer.tostring()])),
+                bytes_list=tf.train.BytesList(value=[image_data])),
+#                 bytes_list=tf.train.BytesList(value=[image_buffer.tostring()])),
                 'label': tf.train.Feature(
                 int64_list=tf.train.Int64List(value=[label])),
                 'text': tf.train.Feature(

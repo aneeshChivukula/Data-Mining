@@ -24,9 +24,11 @@ class Parser():
         print('example_serialized',example_serialized)
         features = tf.parse_single_example(example_serialized, feature_map)
 #         label = tf.cast(features['image/class/label'], dtype=tf.int32)
-    
-        return features['image'], features['label']
-
+        print('features',features)
+        
+#         return features['image'], features['label']
+        return features['image'], tf.cast(features['label'], tf.int32) 
+        
 
     def decode_jpeg(self,image_buffer, scope=None):
       """Decode a JPEG string into one 3-D float image Tensor.
@@ -38,9 +40,9 @@ class Parser():
       """
       with tf.op_scope([image_buffer], scope, 'decode_jpeg'):
         image = tf.image.decode_jpeg(image_buffer, channels=FLAGS.depth)
-        
+#         image = tf.decode_raw(image_buffer, tf.float32)
 #         print(image,image.__class__)
-        
+                
         image = tf.image.convert_image_dtype(image, dtype=tf.float32)
         image = tf.reshape(image, shape=[FLAGS.height, FLAGS.width, FLAGS.depth])
         return image
@@ -48,6 +50,7 @@ class Parser():
 #     def image_preprocessing(self,image_buffer, bbox):
     def image_preprocessing(self,image_buffer):
           return self.decode_jpeg(image_buffer)
+
 
 
 

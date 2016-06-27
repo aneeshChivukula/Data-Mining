@@ -18,12 +18,7 @@ import numpy as np
 import tensorflow as tf
 
 
-localparser = Parser()
 InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
-train_files = tf.gfile.Glob(InDir+"train-*")
-test_files = tf.gfile.Glob(InDir+"validation-*")
-
-# print(train_files)
 num_preprocess_threads = 4
 num_readers = 4 
 examples_per_shard = 10
@@ -38,81 +33,130 @@ denselayernumneurons = 100
 train_shards = 10
 validation_shards=24
 imagespershard=10
-
-# train_files_queue = tf.train.string_input_producer(train_files)
-# sess = tf.InteractiveSession()
-
 min_queue_examples = examples_per_shard * input_queue_memory_factor
-sess = tf.Session()
-
-
-# train_examples_queue = tf.RandomShuffleQueue(
-#           capacity=min_queue_examples + 3 * batch_size,
-#           min_after_dequeue=min_queue_examples,
-#           dtypes=[tf.string])
-
-train_examples_queue = tf.FIFOQueue(
-          capacity=examples_per_shard*train_shards,
-          dtypes=[tf.string])
-test_examples_queue = tf.FIFOQueue(
-          capacity=examples_per_shard + 3 * batch_size,
-          dtypes=[tf.string])
-
+localparser = Parser()
 
 def read_and_decode(filenames_queue):
     reader = tf.TFRecordReader()
-#     train_images_and_labels = []
-#     for _ in xrange(examples_per_shard*train_shards): 
     _, value = reader.read(filenames_queue)
     image_buffer, label_index = localparser.parse_example_proto(value)
-    
     image = localparser.image_preprocessing(image_buffer)
-#         train_images_and_labels.append([image, label_index])
     return image, tf.reshape(label_index, shape = [1,1])
-
-filenames_queue = tf.train.string_input_producer(train_files)
-# image, label_index = read_and_decode(filenames_queue)
-
-
-
-coord = tf.train.Coordinator()
-threads = tf.train.start_queue_runners(sess=sess,coord=coord)
+#     return image, label_index
 
 training_data = []
 training_labels = []
 
-# for _ in xrange(examples_per_shard * train_shards):
-for _ in xrange(2):
+sess = tf.Session()
+# with tf.Session() as sess_preprocess:
+train_files = tf.gfile.Glob(InDir+"train-*")
+test_files = tf.gfile.Glob(InDir+"validation-*")
+
+filenames_queue = tf.train.string_input_producer(train_files)
+# image, label_index = read_and_decode(filenames_queue)
+# print('image',image)
+# print('label_index',label_index)
+
+c = tf.constant(4.0)
+print(tf.get_default_graph())
+print(c.graph)
+assert c.graph is tf.get_default_graph()
+
+
+g = tf.Graph()
+with g.as_default():
+    c = tf.constant(30.0)
+    assert c.graph is g
+    
+with tf.Graph().as_default() as g:
+    c = tf.constant(5.0)
+    assert c.graph is g
+    
+# class tf.Graph
+# tf.Graph.finalize()
+# tf.control_dependencies([pred])
+# tf.Graph.device()
+# tf.Graph.name_scope(name)
+# tf.Graph.add_to_collection(name, value)
+# tf.Graph.as_graph_element(obj, allow_tensor=True, allow_operation=True)
+# tf.Graph.get_tensor_by_name(name)
+# tf.Graph.create_op(op_type, inputs, dtypes, input_types=None, name=None, attrs=None, op_def=None, compute_shapes=True, compute_device=True)
+
+# class tf.Operation
+# Session.run(). op.run() or tf.get_default_session().run(op)
+# tf.Operation.name
+# tf.Operation.type
+# tf.Operation.inputs
+# tf.Operation.control_inputstf.Operation.outputs
+# tf.Operation.device
+# tf.Operation.graph
+# tf.Operation.run(feed_dict=None, session=None)
+
+# class tf.Tensor
+# Session.run(). t.eval() or tf.get_default_session().run(t)
+# tf.Tensor.dtypes
+# tf.Tensor.graph
+# tf.Tensor.op
+# tf.Tensor.consumers()tf.Tensor.eval(feed_dict=None, session=None)
+# tf.Tensor.get_shape()
+# tf.Tensor.set_shape(shape)
+# class tf.DType
+# tf.DType.is_compatible_with(other)
+# tf.device(device_name_or_function)
+# tf.name_scope(name)
+# tf.control_dependencies(control_inputs)
+# tf.convert_to_tensor(value, dtype=None, name=None, as_ref=False)
+# tf.get_default_graph()
+# class tf.Dimension
+# class tf.DeviceSpec
+# tf.Variable 
+# tf.initialize_variables(var_list, name=init)
+
+
+
+sys.exit()
+
+init_op = tf.initialize_all_variables()
+# sess.run(init_op)
+
+coord = tf.train.Coordinator()
+threads = tf.train.start_queue_runners(sess=sess,coord=coord)
+
+# image = sess.run(image)
+# print(image)
+
+# coord.request_stop()
+# coord.join(threads)
+
+# while not coord.should_stop():
+for _ in xrange(examples_per_shard * train_shards):
+# for _ in xrange(2):
     image, label_index = read_and_decode(filenames_queue)
     training_data.append(image)
     training_labels.append(label_index)
 
-image, label_index = read_and_decode(filenames_queue)
-sess.run(tf.initialize_all_variables())
-
-coord.request_stop()
-coord.join(threads)
-sys.exit()
-
-# from tensorflow.examples.tutorials.mnist import input_data
-# mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
-# training_data, training_labels = mnist.train.next_batch(100)
+# sess.run(init_op)
 
 
-# train_images_and_labels = []
-# for _ in xrange(examples_per_shard * train_shards):
-# #     train_images_and_labels.append(sess.run([image, label_index]))
-#     example,label = sess.run([image, label_index])
-#     training_data.append(example)
-#     training_labels.append(float(label))
 
-# print('train_images_and_labels',train_images_and_labels)
-# print('train_images_and_labels',train_images_and_labels[0][1][0])
-# print('train_images_and_labels',train_images_and_labels[:][1][0])
 print(training_data)
 print(training_labels)
 
 print('Loaded data')
+
+# coord.request_stop()
+# coord.join(threads)
+# coord.request_stop()
+# sys.exit()
+
+# sys.exit()
+
+# with tf.Session() as sess_train:
+#     print(training_data)
+#     print(training_labels)
+#     
+#     sys.exit()
+
 
 
 x = tf.Variable(tf.zeros([batch_size,height,width,depth]))
@@ -166,8 +210,8 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 
 
-# print(training_data)
-# print(training_labels)
+print('training_data',training_data)
+print('training_labels',training_labels)
 
 
 
@@ -181,14 +225,18 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 # sess.run(input_data.initializer,feed_dict={data_initializer: training_data})
 # sess.run(input_labels.initializer,feed_dict={label_initializer: training_labels})
 
-sess.run(tf.initialize_all_variables())
+# sess.run(tf.initialize_all_variables())
+sess.run(init_op)
 print('Initialized data') 
+
+
 
 # sess.run(train_step)
 sess.run(train_step, feed_dict={x: training_data, y_: training_labels})
 print('Trained model') 
 
 print('accuracy',accuracy)
+
 
 
 coord.request_stop()
@@ -756,4 +804,24 @@ coord.join(threads)
 print(train_files)
 
 sys.exit()
+
+
+
+
+
+
+
+        # train_images_and_labels = []
+        # for _ in xrange(examples_per_shard * train_shards):
+        # #     train_images_and_labels.append(sess.run([image, label_index]))
+        #     example,label = sess.run([image, label_index])
+        #     training_data.append(example)
+        #     training_labels.append(float(label))
+        # print('train_images_and_labels',train_images_and_labels)
+        # print('train_images_and_labels',train_images_and_labels[0][1][0])
+        # print('train_images_and_labels',train_images_and_labels[:][1][0])
+        
+        # from tensorflow.examples.tutorials.mnist import input_data
+        # mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
+        # training_data, training_labels = mnist.train.next_batch(100)
 '''

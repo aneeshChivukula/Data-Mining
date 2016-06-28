@@ -11,11 +11,13 @@ from sklearn.metrics.classification import accuracy_score
 import sys
 from tensorflow.contrib import learn as skflow
 import threading
+import time
 
-from root.cnns.decodedataset import Parser
 import matplotlib.pyplot as plt
 import numpy as np
+from root.cnns.decodedataset import Parser
 import tensorflow as tf
+
 
 localparser = Parser()
 batch_size = 100
@@ -29,8 +31,8 @@ def read_and_decode(filenames_queue):
     _, value = reader.read(filenames_queue)
     image_buffer, label_index = localparser.parse_example_proto(value)
     image = localparser.image_preprocessing(image_buffer)
-    return image, tf.reshape(label_index, shape = [1,1])
-#     return image, label_index
+#     return image, tf.reshape(label_index, shape = [1,1])
+    return image, label_index
 
 # training_data = []
 # training_labels = []
@@ -42,6 +44,7 @@ def inputs():
     print('Loaded data')
     return images, labels
 # Have only one tf file for training. And one tf file for testing
+# Change batch size to train on more data
 
 def weight_variable(shape):
   initial = tf.truncated_normal(shape, stddev=0.1)
@@ -57,7 +60,7 @@ def conv2d(x, W):
 def max_pool_2x2(x):
   return tf.nn.max_pool(x, ksize=[1, 2, 2, 1],
                         strides=[1, 2, 2, 1], padding='SAME')  
-# Define another method for train_op
+# Unable to Define another method for train_op
 
 
 
@@ -66,29 +69,23 @@ def run_training():
     num_readers = 4 
     examples_per_shard = 10
     input_queue_memory_factor = 16
+    min_queue_examples = examples_per_shard * input_queue_memory_factor
+
     height = 100
     width = 300
     depth = 3
     numclasslabels = 2
     keep_prob = 0.5
     denselayernumneurons = 100
-    train_shards = 10
-    validation_shards=24
-    imagespershard=10
-    min_queue_examples = examples_per_shard * input_queue_memory_factor
+    numsteps = 2
 
     with tf.Graph().as_default():
-        
 
         x, y_ = inputs()
         y_ = tf.cast(y_, dtype=tf.float32)
         
         print('images',x)
         print('labels',y_)
-    
-    
-#         x = tf.Variable(tf.zeros([batch_size,height,width,depth]))
-#         y_ = tf.Variable(tf.zeros([batch_size,1], dtype=tf.float32))
         
         W_conv1 = weight_variable([5, 5, 3, 32])
         b_conv1 = bias_variable([32])
@@ -116,11 +113,13 @@ def run_training():
           
         y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
         
+        print('output',y_conv)
+        
         cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
         train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
         correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-        
+        # Need to check the network architecture since accuracy is varying from 0.17 to 0.77 across runs
 
         init_op = tf.initialize_all_variables()
         sess = tf.Session()
@@ -131,13 +130,30 @@ def run_training():
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(sess=sess,coord=coord)
         
-        sess.run(train_step)
-        print('Trained model') 
+        
+        try:
+            step = 0
+            while not coord.should_stop(): # Train the same network over multiple runs
+                start_time = time.time()
+        
+                for i in range(2): # Load multiple batches of data here
+                    sess.run(train_step)
+                    print('Training model') 
+                    print('accuracy',sess.run(accuracy))
 
-        coord.request_stop()
-        coord.join(threads)
-         
-        print('accuracy',sess.run(accuracy))
+                duration = time.time() - start_time
+                step += 1
+                print('Step %d: accuracy = %.2f (%.3f sec)' % (step, sess.run(accuracy),duration))
+                if(step>numsteps):
+                    coord.request_stop()
+
+        except tf.errors.OutOfRangeError:
+            print('Exiting after training for %d steps.',step)           
+        finally:
+            coord.request_stop()
+            coord.join(threads)
+#         coord.request_stop()
+#         coord.join(threads)
         sess.close()
 
 
@@ -892,7 +908,8 @@ def training(x,y_):
 #     return tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 
-
+#         x = tf.Variable(tf.zeros([batch_size,height,width,depth]))
+#         y_ = tf.Variable(tf.zeros([batch_size,1], dtype=tf.float32))
 
 
 '''

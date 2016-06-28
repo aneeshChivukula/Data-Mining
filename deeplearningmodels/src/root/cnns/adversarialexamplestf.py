@@ -34,8 +34,7 @@ def read_and_decode(filenames_queue):
 #     return image, tf.reshape(label_index, shape = [1,1])
     return image, label_index
 
-# training_data = []
-# training_labels = []
+
 def inputs():
     num_preprocess_threads = 4
     filenames_queue = tf.train.string_input_producer(train_files)
@@ -43,8 +42,8 @@ def inputs():
     images, labels = tf.train.batch([image, label_index], batch_size, num_threads=num_preprocess_threads, capacity=2*batch_size)
     print('Loaded data')
     return images, labels
-# Have only one tf file for training. And one tf file for testing
-# Change batch size to train on more data
+# Prefer to Have only one tf file for training. And one tf file for testing
+# Change batch size to train data size
 
 def weight_variable(shape):
   initial = tf.truncated_normal(shape, stddev=0.1)
@@ -60,23 +59,47 @@ def conv2d(x, W):
 def max_pool_2x2(x):
   return tf.nn.max_pool(x, ksize=[1, 2, 2, 1],
                         strides=[1, 2, 2, 1], padding='SAME')  
-# Unable to Define another method for train_op
 
-
-
-
-def run_training():
-    num_readers = 4 
-    examples_per_shard = 10
-    input_queue_memory_factor = 16
-    min_queue_examples = examples_per_shard * input_queue_memory_factor
-
+def model(x,y_):
     height = 100
     width = 300
     depth = 3
     numclasslabels = 2
     keep_prob = 0.5
-    denselayernumneurons = 100
+    denselayernumneurons = 100    
+    W_conv1 = weight_variable([5, 5, 3, 32])
+    b_conv1 = bias_variable([32])
+
+    h_conv1 = tf.nn.relu(conv2d(x, W_conv1) + b_conv1)
+    h_pool1 = max_pool_2x2(h_conv1)
+      
+    W_conv2 = weight_variable([5, 5, 32, 64])
+    b_conv2 = bias_variable([64])
+      
+    h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
+    h_pool2 = max_pool_2x2(h_conv2)
+    
+    W_fc1 = weight_variable([(width/4)*(height/4)*64, denselayernumneurons])
+    b_fc1 = bias_variable([denselayernumneurons])
+      
+    h_pool2_flat = tf.reshape(h_pool2, [-1, (width/4)*(height/4)*64])
+    h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
+      
+#         keep_prob = tf.placeholder(tf.float32)
+    h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+      
+    W_fc2 = weight_variable([denselayernumneurons, numclasslabels])
+    b_fc2 = bias_variable([numclasslabels])
+      
+    y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+    
+    print('output',y_conv)
+    
+    cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
+    
+    return (cross_entropy,y_conv)
+
+def run_training():
     numsteps = 2
 
     with tf.Graph().as_default():
@@ -87,64 +110,33 @@ def run_training():
         print('images',x)
         print('labels',y_)
         
-        W_conv1 = weight_variable([5, 5, 3, 32])
-        b_conv1 = bias_variable([32])
-
-        h_conv1 = tf.nn.relu(conv2d(x, W_conv1) + b_conv1)
-        h_pool1 = max_pool_2x2(h_conv1)
-          
-        W_conv2 = weight_variable([5, 5, 32, 64])
-        b_conv2 = bias_variable([64])
-          
-        h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
-        h_pool2 = max_pool_2x2(h_conv2)
+        cross_entropy,y_conv = model(x,y_)
         
-        W_fc1 = weight_variable([(width/4)*(height/4)*64, denselayernumneurons])
-        b_fc1 = bias_variable([denselayernumneurons])
-          
-        h_pool2_flat = tf.reshape(h_pool2, [-1, (width/4)*(height/4)*64])
-        h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
-          
-#         keep_prob = tf.placeholder(tf.float32)
-        h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
-          
-        W_fc2 = weight_variable([denselayernumneurons, numclasslabels])
-        b_fc2 = bias_variable([numclasslabels])
-          
-        y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
-        
-        print('output',y_conv)
-        
-        cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
         train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
         correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-        # Need to check the network architecture since accuracy is varying from 0.17 to 0.77 across runs
+        # Need to check the network architecture since accuracy is varying from 0.1 to 0.8 across runs
 
         init_op = tf.initialize_all_variables()
         sess = tf.Session()
         sess.run(init_op)
         print('Initialized data')
-        # Check graph ops created uptil here
-#         sys.exit()
+        # Visualize graph ops created uptil here
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(sess=sess,coord=coord)
         
-        
         try:
             step = 0
-            while not coord.should_stop(): # Train the same network over multiple runs
+            while not coord.should_stop(): 
                 start_time = time.time()
-        
-                for i in range(2): # Load multiple batches of data here
-                    sess.run(train_step)
-                    print('Training model') 
-                    print('accuracy',sess.run(accuracy))
+                
+                sess.run(train_step)
+                print('Training model') 
 
                 duration = time.time() - start_time
                 step += 1
-                print('Step %d: accuracy = %.2f (%.3f sec)' % (step, sess.run(accuracy),duration))
-                if(step>numsteps):
+                print('Step %d: training accuracy = %.2f (%.3f sec)' % (step, sess.run(accuracy),duration))
+                if(step>numsteps): # Train the same network over multiple runs
                     coord.request_stop()
 
         except tf.errors.OutOfRangeError:
@@ -912,4 +904,19 @@ def training(x,y_):
 #         y_ = tf.Variable(tf.zeros([batch_size,1], dtype=tf.float32))
 
 
+
+#                 for i in range(2): # Load multiple batches of data here - Getting racearound conditions
+#                 x, y_ = inputs()
+#                 y_ = tf.cast(y_, dtype=tf.float32)
+#                 print('accuracy',sess.run(accuracy))
+
+
+
+#     num_readers = 4 
+#     examples_per_shard = 10
+#     input_queue_memory_factor = 16
+#     min_queue_examples = examples_per_shard * input_queue_memory_factor
+
+# training_data = []
+# training_labels = []
 '''

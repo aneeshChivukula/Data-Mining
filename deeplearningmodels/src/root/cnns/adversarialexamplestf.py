@@ -24,7 +24,7 @@ batch_size = 100
 InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
 train_files = tf.gfile.Glob(InDir+"train-*")
 test_files = tf.gfile.Glob(InDir+"validation-*")
-
+numsteps = 2
 
 def read_and_decode(filenames_queue):
     reader = tf.TFRecordReader()
@@ -99,54 +99,61 @@ def model(x,y_):
     
     return (cross_entropy,y_conv)
 
+
+def training(x,y_):
+    print('images',x)
+    print('labels',y_)
+    
+    cross_entropy,y_conv = model(x,y_)
+    
+    train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
+    correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+    # Need to check the network architecture since accuracy is varying from 0.1 to 0.8 across runs
+
+    init_op = tf.initialize_all_variables()
+    sess = tf.Session()
+    sess.run(init_op)
+    print('Initialized data')
+    # Visualize graph ops created uptil here
+    coord = tf.train.Coordinator()
+    threads = tf.train.start_queue_runners(sess=sess,coord=coord)
+    
+    try:
+        step = 0
+        while not coord.should_stop(): 
+            start_time = time.time()
+            
+            sess.run(train_step)
+            print('Training model') 
+
+            duration = time.time() - start_time
+            step += 1
+            print('Step %d: training accuracy = %.2f (%.3f sec)' % (step, sess.run(accuracy),duration))
+            if(step>numsteps): # Train the same network over multiple runs
+                coord.request_stop()
+
+    except tf.errors.OutOfRangeError:
+        print('Exiting after training for %d steps.',step)           
+    finally:
+        coord.request_stop()
+        coord.join(threads)
+#         coord.request_stop()
+#         coord.join(threads)
+    sess.close()
+
+
+
+
 def run_training():
-    numsteps = 2
-
     with tf.Graph().as_default():
-
         x, y_ = inputs()
         y_ = tf.cast(y_, dtype=tf.float32)
         
-        print('images',x)
-        print('labels',y_)
+        x, y_ = inputs()
+        y_ = tf.cast(y_, dtype=tf.float32)
         
-        cross_entropy,y_conv = model(x,y_)
-        
-        train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
-        correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
-        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-        # Need to check the network architecture since accuracy is varying from 0.1 to 0.8 across runs
-
-        init_op = tf.initialize_all_variables()
-        sess = tf.Session()
-        sess.run(init_op)
-        print('Initialized data')
-        # Visualize graph ops created uptil here
-        coord = tf.train.Coordinator()
-        threads = tf.train.start_queue_runners(sess=sess,coord=coord)
-        
-        try:
-            step = 0
-            while not coord.should_stop(): 
-                start_time = time.time()
-                
-                sess.run(train_step)
-                print('Training model') 
-
-                duration = time.time() - start_time
-                step += 1
-                print('Step %d: training accuracy = %.2f (%.3f sec)' % (step, sess.run(accuracy),duration))
-                if(step>numsteps): # Train the same network over multiple runs
-                    coord.request_stop()
-
-        except tf.errors.OutOfRangeError:
-            print('Exiting after training for %d steps.',step)           
-        finally:
-            coord.request_stop()
-            coord.join(threads)
-#         coord.request_stop()
-#         coord.join(threads)
-        sess.close()
+        training(x,y_)
 
 
 def main(_):

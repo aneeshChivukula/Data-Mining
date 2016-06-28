@@ -17,24 +17,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
-
-InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
-num_preprocess_threads = 4
-num_readers = 4 
-examples_per_shard = 10
-batch_size = 50
-input_queue_memory_factor = 16
-height = 100
-width = 300
-depth = 3
-numclasslabels = 2
-keep_prob = 0.5
-denselayernumneurons = 100
-train_shards = 10
-validation_shards=24
-imagespershard=10
-min_queue_examples = examples_per_shard * input_queue_memory_factor
 localparser = Parser()
+batch_size = 100
+InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
+train_files = tf.gfile.Glob(InDir+"train-*")
+test_files = tf.gfile.Glob(InDir+"validation-*")
+
 
 def read_and_decode(filenames_queue):
     reader = tf.TFRecordReader()
@@ -44,124 +32,17 @@ def read_and_decode(filenames_queue):
     return image, tf.reshape(label_index, shape = [1,1])
 #     return image, label_index
 
-training_data = []
-training_labels = []
-
-sess = tf.Session()
-# with tf.Session() as sess_preprocess:
-train_files = tf.gfile.Glob(InDir+"train-*")
-test_files = tf.gfile.Glob(InDir+"validation-*")
-
-filenames_queue = tf.train.string_input_producer(train_files)
-# image, label_index = read_and_decode(filenames_queue)
-# print('image',image)
-# print('label_index',label_index)
-
-c = tf.constant(4.0)
-print(tf.get_default_graph())
-print(c.graph)
-assert c.graph is tf.get_default_graph()
-
-
-g = tf.Graph()
-with g.as_default():
-    c = tf.constant(30.0)
-    assert c.graph is g
-    
-with tf.Graph().as_default() as g:
-    c = tf.constant(5.0)
-    assert c.graph is g
-    
-# class tf.Graph
-# tf.Graph.finalize()
-# tf.control_dependencies([pred])
-# tf.Graph.device()
-# tf.Graph.name_scope(name)
-# tf.Graph.add_to_collection(name, value)
-# tf.Graph.as_graph_element(obj, allow_tensor=True, allow_operation=True)
-# tf.Graph.get_tensor_by_name(name)
-# tf.Graph.create_op(op_type, inputs, dtypes, input_types=None, name=None, attrs=None, op_def=None, compute_shapes=True, compute_device=True)
-
-# class tf.Operation
-# Session.run(). op.run() or tf.get_default_session().run(op)
-# tf.Operation.name
-# tf.Operation.type
-# tf.Operation.inputs
-# tf.Operation.control_inputstf.Operation.outputs
-# tf.Operation.device
-# tf.Operation.graph
-# tf.Operation.run(feed_dict=None, session=None)
-
-# class tf.Tensor
-# Session.run(). t.eval() or tf.get_default_session().run(t)
-# tf.Tensor.dtypes
-# tf.Tensor.graph
-# tf.Tensor.op
-# tf.Tensor.consumers()tf.Tensor.eval(feed_dict=None, session=None)
-# tf.Tensor.get_shape()
-# tf.Tensor.set_shape(shape)
-# class tf.DType
-# tf.DType.is_compatible_with(other)
-# tf.device(device_name_or_function)
-# tf.name_scope(name)
-# tf.control_dependencies(control_inputs)
-# tf.convert_to_tensor(value, dtype=None, name=None, as_ref=False)
-# tf.get_default_graph()
-# class tf.Dimension
-# class tf.DeviceSpec
-# tf.Variable 
-# tf.initialize_variables(var_list, name=init)
-
-
-
-sys.exit()
-
-init_op = tf.initialize_all_variables()
-# sess.run(init_op)
-
-coord = tf.train.Coordinator()
-threads = tf.train.start_queue_runners(sess=sess,coord=coord)
-
-# image = sess.run(image)
-# print(image)
-
-# coord.request_stop()
-# coord.join(threads)
-
-# while not coord.should_stop():
-for _ in xrange(examples_per_shard * train_shards):
-# for _ in xrange(2):
+# training_data = []
+# training_labels = []
+def inputs():
+    num_preprocess_threads = 4
+    filenames_queue = tf.train.string_input_producer(train_files)
     image, label_index = read_and_decode(filenames_queue)
-    training_data.append(image)
-    training_labels.append(label_index)
+    images, labels = tf.train.batch([image, label_index], batch_size, num_threads=num_preprocess_threads, capacity=2*batch_size)
+    print('Loaded data')
+    return images, labels
+# Have only one tf file for training. And one tf file for testing
 
-# sess.run(init_op)
-
-
-
-print(training_data)
-print(training_labels)
-
-print('Loaded data')
-
-# coord.request_stop()
-# coord.join(threads)
-# coord.request_stop()
-# sys.exit()
-
-# sys.exit()
-
-# with tf.Session() as sess_train:
-#     print(training_data)
-#     print(training_labels)
-#     
-#     sys.exit()
-
-
-
-x = tf.Variable(tf.zeros([batch_size,height,width,depth]))
-y_ = tf.Variable(tf.zeros([batch_size,1], dtype=tf.float32))
- 
 def weight_variable(shape):
   initial = tf.truncated_normal(shape, stddev=0.1)
   return tf.Variable(initial)
@@ -176,44 +57,99 @@ def conv2d(x, W):
 def max_pool_2x2(x):
   return tf.nn.max_pool(x, ksize=[1, 2, 2, 1],
                         strides=[1, 2, 2, 1], padding='SAME')  
-  
-W_conv1 = weight_variable([5, 5, 3, 32])
-b_conv1 = bias_variable([32])
-
-h_conv1 = tf.nn.relu(conv2d(x, W_conv1) + b_conv1)
-h_pool1 = max_pool_2x2(h_conv1)
-  
-W_conv2 = weight_variable([5, 5, 32, 64])
-b_conv2 = bias_variable([64])
-  
-h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
-h_pool2 = max_pool_2x2(h_conv2)
-
-W_fc1 = weight_variable([(width/4)*(height/4)*64, denselayernumneurons])
-b_fc1 = bias_variable([denselayernumneurons])
-  
-h_pool2_flat = tf.reshape(h_pool2, [-1, (width/4)*(height/4)*64])
-h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
-  
-keep_prob = tf.placeholder(tf.float32)
-h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
-  
-W_fc2 = weight_variable([denselayernumneurons, numclasslabels])
-b_fc2 = bias_variable([numclasslabels])
-  
-y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
-
-cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
-train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
-correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
-accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+# Define another method for train_op
 
 
 
-print('training_data',training_data)
-print('training_labels',training_labels)
+
+def run_training():
+    num_readers = 4 
+    examples_per_shard = 10
+    input_queue_memory_factor = 16
+    height = 100
+    width = 300
+    depth = 3
+    numclasslabels = 2
+    keep_prob = 0.5
+    denselayernumneurons = 100
+    train_shards = 10
+    validation_shards=24
+    imagespershard=10
+    min_queue_examples = examples_per_shard * input_queue_memory_factor
+
+    with tf.Graph().as_default():
+        
+
+        x, y_ = inputs()
+        y_ = tf.cast(y_, dtype=tf.float32)
+        
+        print('images',x)
+        print('labels',y_)
+    
+    
+#         x = tf.Variable(tf.zeros([batch_size,height,width,depth]))
+#         y_ = tf.Variable(tf.zeros([batch_size,1], dtype=tf.float32))
+        
+        W_conv1 = weight_variable([5, 5, 3, 32])
+        b_conv1 = bias_variable([32])
+
+        h_conv1 = tf.nn.relu(conv2d(x, W_conv1) + b_conv1)
+        h_pool1 = max_pool_2x2(h_conv1)
+          
+        W_conv2 = weight_variable([5, 5, 32, 64])
+        b_conv2 = bias_variable([64])
+          
+        h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
+        h_pool2 = max_pool_2x2(h_conv2)
+        
+        W_fc1 = weight_variable([(width/4)*(height/4)*64, denselayernumneurons])
+        b_fc1 = bias_variable([denselayernumneurons])
+          
+        h_pool2_flat = tf.reshape(h_pool2, [-1, (width/4)*(height/4)*64])
+        h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
+          
+#         keep_prob = tf.placeholder(tf.float32)
+        h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+          
+        W_fc2 = weight_variable([denselayernumneurons, numclasslabels])
+        b_fc2 = bias_variable([numclasslabels])
+          
+        y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+        
+        cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
+        train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
+        correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
+        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+        
+
+        init_op = tf.initialize_all_variables()
+        sess = tf.Session()
+        sess.run(init_op)
+        print('Initialized data')
+        # Check graph ops created uptil here
+#         sys.exit()
+        coord = tf.train.Coordinator()
+        threads = tf.train.start_queue_runners(sess=sess,coord=coord)
+        
+        sess.run(train_step)
+        print('Trained model') 
+
+        coord.request_stop()
+        coord.join(threads)
+         
+        print('accuracy',sess.run(accuracy))
+        sess.close()
 
 
+def main(_):
+  run_training()
+
+if __name__ == '__main__':
+  tf.app.run()
+
+
+
+'''
 
 
 # data_initializer = tf.placeholder(dtype=tf.float32, shape=((examples_per_shard * train_shards),height,width,depth))
@@ -226,21 +162,11 @@ print('training_labels',training_labels)
 # sess.run(input_labels.initializer,feed_dict={label_initializer: training_labels})
 
 # sess.run(tf.initialize_all_variables())
-sess.run(init_op)
-print('Initialized data') 
 
 
 
 # sess.run(train_step)
-sess.run(train_step, feed_dict={x: training_data, y_: training_labels})
-print('Trained model') 
 
-print('accuracy',accuracy)
-
-
-
-coord.request_stop()
-coord.join(threads)
 
 
 
@@ -373,7 +299,6 @@ coord.join(threads)
 
 
 
-'''
 export TRAIN_DIR=/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Train/
 export VALIDATION_DIR=/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Validation/
 export LABELS_FILE=/home/aneesh/models-master/inception/labels.txt
@@ -824,4 +749,150 @@ sys.exit()
         # from tensorflow.examples.tutorials.mnist import input_data
         # mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
         # training_data, training_labels = mnist.train.next_batch(100)
+
+
+
+
+
+
+# image = sess.run(image)
+# print(image)
+
+# coord.request_stop()
+# coord.join(threads)
+
+# while not coord.should_stop():
+# for _ in xrange(examples_per_shard * train_shards):
+# # for _ in xrange(2):
+#     image, label_index = read_and_decode(filenames_queue)
+#     training_data.append(image)
+#     training_labels.append(label_index)
+# 
+# 
+# 
+# 
+# print('training_data',training_data)
+# print('training_labels',training_labels)
+
+
+
+
+
+
+
+
+
+
+
+
+
+# image, label_index = read_and_decode(filenames_queue)
+# print('image',image)
+# print('label_index',label_index)
+
+# c = tf.constant(4.0)
+# print(tf.get_default_graph())
+# print(c.graph)
+# assert c.graph is tf.get_default_graph()
+# 
+# 
+# g = tf.Graph()
+# with g.as_default():
+#     c = tf.constant(30.0)
+#     assert c.graph is g
+#     
+# with tf.Graph().as_default() as g:
+#     c = tf.constant(5.0)
+#     assert c.graph is g
+    
+# class tf.Graph
+# tf.Graph.finalize()
+# tf.control_dependencies([pred])
+# tf.Graph.device()
+# tf.Graph.name_scope(name)
+# tf.Graph.add_to_collection(name, value)
+# tf.Graph.as_graph_element(obj, allow_tensor=True, allow_operation=True)
+# tf.Graph.get_tensor_by_name(name)
+# tf.Graph.create_op(op_type, inputs, dtypes, input_types=None, name=None, attrs=None, op_def=None, compute_shapes=True, compute_device=True)
+
+# class tf.Operation
+# Session.run(). op.run() or tf.get_default_session().run(op)
+# tf.Operation.name
+# tf.Operation.type
+# tf.Operation.inputs
+# tf.Operation.control_inputstf.Operation.outputs
+# tf.Operation.device
+# tf.Operation.graph
+# tf.Operation.run(feed_dict=None, session=None)
+
+# class tf.Tensor
+# Session.run(). t.eval() or tf.get_default_session().run(t)
+# tf.Tensor.dtypes
+# tf.Tensor.graph
+# tf.Tensor.op
+# tf.Tensor.consumers()tf.Tensor.eval(feed_dict=None, session=None)
+# tf.Tensor.get_shape()
+# tf.Tensor.set_shape(shape)
+# class tf.DType
+# tf.DType.is_compatible_with(other)
+# tf.device(device_name_or_function)
+# tf.name_scope(name)
+# tf.control_dependencies(control_inputs)
+# tf.convert_to_tensor(value, dtype=None, name=None, as_ref=False)
+# tf.get_default_graph()
+# class tf.Dimension
+# class tf.DeviceSpec
+# tf.Variable 
+# tf.initialize_variables(var_list, name=init)
+
+
+
+
+
+
+
+def training(x,y_):
+    height = 100
+    width = 300
+    denselayernumneurons = 100
+    numclasslabels = 2
+    keep_probability = 0.5
+    
+    W_conv1 = weight_variable([5, 5, 3, 32])
+    b_conv1 = bias_variable([32])
+
+    h_conv1 = tf.nn.relu(conv2d(x, W_conv1) + b_conv1)
+    h_pool1 = max_pool_2x2(h_conv1)
+      
+    W_conv2 = weight_variable([5, 5, 32, 64])
+    b_conv2 = bias_variable([64])
+      
+    h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
+    h_pool2 = max_pool_2x2(h_conv2)
+    
+    W_fc1 = weight_variable([(width/4)*(height/4)*64, denselayernumneurons])
+    b_fc1 = bias_variable([denselayernumneurons])
+      
+    h_pool2_flat = tf.reshape(h_pool2, [-1, (width/4)*(height/4)*64])
+    h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
+      
+    h_fc1_drop = tf.nn.dropout(h_fc1, keep_probability)
+      
+    W_fc2 = weight_variable([denselayernumneurons, numclasslabels])
+    b_fc2 = bias_variable([numclasslabels])
+      
+    y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+    
+    cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
+    tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
+    correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+    
+#     return accuracy
+#     return tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+
+
+
+
 '''

@@ -8,6 +8,8 @@ tf.app.flags.DEFINE_integer('width', 300,
                             """image width""")
 tf.app.flags.DEFINE_integer('depth', 3,
                             """image width""")
+tf.app.flags.DEFINE_integer('numlabels', 2,
+                            """number of training labels""")
 
 class Parser():
     def parse_example_proto(self,example_serialized):
@@ -24,10 +26,18 @@ class Parser():
         print('example_serialized',example_serialized)
         features = tf.parse_single_example(example_serialized, feature_map)
 #         label = tf.cast(features['image/class/label'], dtype=tf.int32)
-        print('features',features)
+#         print('features',features)
+#         print('features[\'label\']',features['label'])
+#         print(tf.one_hot(features['label'],depth = 2))
         
 #         return features['image'], features['label']
-        return features['image'], tf.cast(features['label'], tf.int32) 
+#         return features['image'], tf.cast(features['label'], dtype=tf.int32) 
+
+        print('collapsed',tf.cast(tf.reshape(tf.one_hot(features['label'],depth = 2) , shape=[2]), dtype=tf.int32))
+
+
+#         return features['image'], tf.cast(tf.one_hot(features['label'],depth = 2), dtype=tf.int32) 
+        return features['image'], tf.cast(tf.reshape(tf.one_hot(features['label'],depth = 2) , shape=[2]), dtype=tf.int32)
         
 
     def decode_jpeg(self,image_buffer, scope=None):

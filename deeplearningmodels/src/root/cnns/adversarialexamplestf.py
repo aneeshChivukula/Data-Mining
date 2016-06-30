@@ -20,11 +20,45 @@ import tensorflow as tf
 
 
 localparser = Parser()
-batch_size = 100
 InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
 train_files = tf.gfile.Glob(InDir+"train-*")
-test_files = tf.gfile.Glob(InDir+"validation-*")
-numsteps = 2
+test_files = tf.gfile.Glob(InDir+"test-*")
+validation_files = tf.gfile.Glob(InDir+"validation-*")
+
+batch_size = 100
+# batch_size = 3000
+num_preprocess_threads = 4
+training_iters = 100
+display_step = 10
+learning_rate=0.001
+
+n_input = 90000
+n_classes = 2
+keep_prob = 0.75
+
+# stride = 4
+# denselayernumneurons = 2048
+# convmapsize = 11
+# height = 224
+# width = 224
+depth = 3
+height = 100
+width = 300
+denselayernumneurons = 200
+convmapsize = 5
+stride = 1
+
+layer1filters = 48
+layer2filters = 128
+layer3filters = 192
+layer4filters = 192
+layer5filters = 128
+
+layer1convmapsize = 11
+layer2convmapsize = 5
+layer3convmapsize = 3
+layer4convmapsize = 3
+layer5convmapsize = 3
 
 def read_and_decode(filenames_queue):
     reader = tf.TFRecordReader()
@@ -35,12 +69,15 @@ def read_and_decode(filenames_queue):
     return image, label_index
 
 
-def inputs():
-    num_preprocess_threads = 4
-    filenames_queue = tf.train.string_input_producer(train_files)
-    image, label_index = read_and_decode(filenames_queue)
-    images, labels = tf.train.batch([image, label_index], batch_size, num_threads=num_preprocess_threads, capacity=2*batch_size)
+def inputs(filenames):
+    filenames_queue = tf.train.string_input_producer(filenames)
+    image, onehot_label = read_and_decode(filenames_queue)
+    
+#     print 'onehot_label',onehot_label
+    
+    images, labels = tf.train.batch([image, onehot_label], batch_size, num_threads=num_preprocess_threads, capacity=2*batch_size)
     print('Loaded data')
+#     print 'labels',labels
     return images, labels
 # Prefer to Have only one tf file for training. And one tf file for testing
 # Change batch size to train data size
@@ -53,34 +90,31 @@ def bias_variable(shape):
   initial = tf.constant(0.1, shape=shape)
   return tf.Variable(initial)
   
-def conv2d(x, W):
-  return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
+def conv2d(x, W,strides=1):
+   return tf.nn.conv2d(x, W, strides=[1, strides, strides, 1], padding='SAME')
   
-def max_pool_2x2(x):
-  return tf.nn.max_pool(x, ksize=[1, 2, 2, 1],
-                        strides=[1, 2, 2, 1], padding='SAME')  
+def max_pool_2d(x,k=2):
+  return tf.nn.max_pool(x, ksize=[1, k, k, 1],
+                        strides=[1, k, k, 1], padding='SAME')  
+
+
 
 def model(x,y_):
-    height = 100
-    width = 300
-    depth = 3
-    numclasslabels = 2
-    keep_prob = 0.5
-    denselayernumneurons = 100    
     W_conv1 = weight_variable([5, 5, 3, 32])
+    W_conv2 = weight_variable([5, 5, 32, 64])
+    W_fc1 = weight_variable([(width/4)*(height/4)*64, denselayernumneurons])
+    W_fc2 = weight_variable([denselayernumneurons, n_classes])
+
     b_conv1 = bias_variable([32])
+    b_conv2 = bias_variable([64])
+    b_fc1 = bias_variable([denselayernumneurons])
+    b_fc2 = bias_variable([n_classes])
 
     h_conv1 = tf.nn.relu(conv2d(x, W_conv1) + b_conv1)
-    h_pool1 = max_pool_2x2(h_conv1)
-      
-    W_conv2 = weight_variable([5, 5, 32, 64])
-    b_conv2 = bias_variable([64])
+    h_pool1 = max_pool_2d(h_conv1)
       
     h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
-    h_pool2 = max_pool_2x2(h_conv2)
-    
-    W_fc1 = weight_variable([(width/4)*(height/4)*64, denselayernumneurons])
-    b_fc1 = bias_variable([denselayernumneurons])
+    h_pool2 = max_pool_2d(h_conv2)
       
     h_pool2_flat = tf.reshape(h_pool2, [-1, (width/4)*(height/4)*64])
     h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
@@ -88,36 +122,93 @@ def model(x,y_):
 #         keep_prob = tf.placeholder(tf.float32)
     h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
       
-    W_fc2 = weight_variable([denselayernumneurons, numclasslabels])
-    b_fc2 = bias_variable([numclasslabels])
-      
     y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+    # Have five layers with correct shapes here
     
     print('output',y_conv)
     
     cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
-    
+    # Change objective function here
     return (cross_entropy,y_conv)
+
+
+# def model(x,y_):
+#         
+#     W_conv1 = weight_variable([layer1convmapsize, layer1convmapsize, depth, layer1filters])
+#     b_conv1 = bias_variable([layer1filters])
+# 
+#     W_conv2 = weight_variable([layer2convmapsize, layer2convmapsize, layer1filters, layer2filters])
+#     b_conv2 = bias_variable([layer2filters])
+# 
+#     W_conv3 = weight_variable([layer3convmapsize, layer3convmapsize, layer2filters, layer3filters])
+#     b_conv3 = bias_variable([layer3filters])
+# 
+#     W_conv4 = weight_variable([layer4convmapsize, layer4convmapsize, layer3filters, layer4filters])
+#     b_conv4 = bias_variable([layer4filters])
+# 
+#     W_conv5 = weight_variable([layer5convmapsize, layer5convmapsize, layer4filters, layer5filters])
+#     b_conv5 = bias_variable([layer5filters])
+# 
+#     
+#     h_conv1 = tf.nn.relu(conv2d(x, W_conv1,stride) + b_conv1)
+#     h_pool1 = max_pool_2d(h_conv1)
+#       
+#     h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2,stride) + b_conv2)
+#     h_pool2 = max_pool_2d(h_conv2)
+# 
+#     h_conv3 = tf.nn.relu(conv2d(h_pool2, W_conv3,stride) + b_conv3)
+#     h_pool3 = max_pool_2d(h_conv3)
+# 
+#     h_conv4 = tf.nn.relu(conv2d(h_pool3, W_conv4,stride) + b_conv4)
+#     h_pool4 = max_pool_2d(h_conv4)
+#     
+#     h_conv5 = tf.nn.relu(conv2d(h_pool4, W_conv5,stride) + b_conv5)
+#     h_pool5 = max_pool_2d(h_conv5)
+#       
+#     W_fc1 = weight_variable([(width/(2*5))*(height/(2*5))*layer5filters, denselayernumneurons])
+#     b_fc1 = bias_variable([denselayernumneurons])
+#     
+#     W_fc2 = weight_variable([denselayernumneurons, n_classes])
+#     b_fc2 = bias_variable([n_classes])
+# 
+#     h_pool5_flat = tf.reshape(h_pool5, [-1, (width/(2*5))*(height/(2*5))*layer5filters])
+#     
+#     h_fc1 = tf.nn.relu(tf.matmul(h_pool5_flat, W_fc1) + b_fc1)
+#     h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+#       
+# #         keep_prob = tf.placeholder(tf.float32)
+#       
+#     y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+#     # Have five layers with correct shapes here
+#     
+#     print('output',y_conv)
+#     
+#     cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
+#     # Change objective function here
+#     return (cross_entropy,y_conv)
 
 
 def training(x,y_):
     print('images',x)
     print('labels',y_)
     
-    cross_entropy,y_conv = model(x,y_)
+    cost,y_conv = model(x,y_)
     
-    train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
+    train_step = tf.train.AdamOptimizer(1e-4).minimize(cost)
+    print('y_conv',y_conv)
+    print('y_',y_)
     correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
     # Need to check the network architecture since accuracy is varying from 0.1 to 0.8 across runs
-
+    # Check dimensions of y_ and y as expected
+    
     init_op = tf.initialize_all_variables()
     sess = tf.Session()
+    coord = tf.train.Coordinator()
+    threads = tf.train.start_queue_runners(sess=sess,coord=coord)
     sess.run(init_op)
     print('Initialized data')
     # Visualize graph ops created uptil here
-    coord = tf.train.Coordinator()
-    threads = tf.train.start_queue_runners(sess=sess,coord=coord)
     
     try:
         step = 0
@@ -128,11 +219,15 @@ def training(x,y_):
             print('Training model') 
 
             duration = time.time() - start_time
-            step += 1
-            print('Step %d: training accuracy = %.2f (%.3f sec)' % (step, sess.run(accuracy),duration))
-            if(step>numsteps): # Train the same network over multiple runs
+            
+            if step % display_step == 0:
+                keep_prob = 1
+                loss,acc = sess.run([cost,accuracy])
+                print('Step %d: minibatch loss = %.6f training accuracy = %.2f (%.3f sec)' % (step,loss,acc,duration))
+            if(step>training_iters): # Train the same network over multiple runs
                 coord.request_stop()
-
+            step += 1
+    # Train for multiple iterations before computing accuracy
     except tf.errors.OutOfRangeError:
         print('Exiting after training for %d steps.',step)           
     finally:
@@ -147,10 +242,10 @@ def training(x,y_):
 
 def run_training():
     with tf.Graph().as_default():
-        x, y_ = inputs()
+        x, y_ = inputs(train_files)
         y_ = tf.cast(y_, dtype=tf.float32)
         
-        x, y_ = inputs()
+        x, y_ = inputs(train_files)
         y_ = tf.cast(y_, dtype=tf.float32)
         
         training(x,y_)
@@ -505,7 +600,7 @@ if __name__ == '__main__':
     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Train/crocodile_head/')
 
 
-
+ll /home/aneesh/models-master/inception/resizer.py
 
 Build a subgraph that enqueues preprocessed elements into the queue. 
 
@@ -926,4 +1021,92 @@ def training(x,y_):
 
 # training_data = []
 # training_labels = []
+
+
+
+def read_and_decode_record(value):
+    image_buffer, label_index = localparser.parse_example_proto(value)
+    image = localparser.image_preprocessing(image_buffer)
+#     return image, tf.reshape(label_index, shape = [1,1])
+#     return image, tf.reshape(tf.cast(label_index, dtype=tf.float32), shape = [1,1])
+#     return image, label_index
+    return image_buffer, label_index
+
+
+def inputs():
+    num_preprocess_threads = 4
+    filenames_queue = tf.train.string_input_producer(train_files)
+    
+    with tf.name_scope('batch_processing'):
+        filenames_queue = tf.train.string_input_producer(train_files)
+        num_preprocess_threads = 4
+        num_readers = 4
+        examples_per_shard = 10
+        
+        examples_queue = tf.FIFOQueue(
+          capacity=2*batch_size,
+          dtypes=[tf.string])
+        
+        enqueue_ops = []
+        for _ in range(num_readers):
+            reader = tf.TFRecordReader()
+            _, value = reader.read(filenames_queue)
+            enqueue_ops.append(examples_queue.enqueue([value]))
+        tf.train.queue_runner.add_queue_runner(
+          tf.train.queue_runner.QueueRunner(examples_queue, enqueue_ops))
+        example_serialized = examples_queue.dequeue()
+        
+        images_and_labels = []
+        images = []
+        labels = []
+        for thread_id in range(num_preprocess_threads):
+            image, label_index = read_and_decode_record(example_serialized)
+           
+            images_and_labels.append([image, label_index])
+            images.append(image)
+            labels.append(label_index)
+        
+        print images_and_labels
+#         sys.exit()
+        
+        images,label_index_batch = tf.train.batch_join(images_and_labels, batch_size=batch_size, capacity=2 * num_preprocess_threads * batch_size)
+        images = tf.train.batch(images, batch_size=batch_size, capacity=2 * num_preprocess_threads * batch_size)
+        label_index_batch = tf.train.batch(labels, batch_size=batch_size, capacity=2 * num_preprocess_threads * batch_size)
+        return images, label_index_batch
+    # Need to check problem with data type suitable for each record in tf.train.batch_join
+
+
+
+
+def model(x,y_):
+    W_conv1 = weight_variable([5, 5, 3, 32])
+    W_conv2 = weight_variable([5, 5, 32, 64])
+    W_fc1 = weight_variable([(width/4)*(height/4)*64, denselayernumneurons])
+    W_fc2 = weight_variable([denselayernumneurons, n_classes])
+
+    b_conv1 = bias_variable([32])
+    b_conv2 = bias_variable([64])
+    b_fc1 = bias_variable([denselayernumneurons])
+    b_fc2 = bias_variable([n_classes])
+
+    h_conv1 = tf.nn.relu(conv2d(x, W_conv1) + b_conv1)
+    h_pool1 = max_pool_2d(h_conv1)
+      
+    h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
+    h_pool2 = max_pool_2d(h_conv2)
+      
+    h_pool2_flat = tf.reshape(h_pool2, [-1, (width/4)*(height/4)*64])
+    h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
+      
+#         keep_prob = tf.placeholder(tf.float32)
+    h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+      
+    y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+    # Have five layers with correct shapes here
+    
+    print('output',y_conv)
+    
+    cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
+    # Change objective function here
+    return (cross_entropy,y_conv)
 '''

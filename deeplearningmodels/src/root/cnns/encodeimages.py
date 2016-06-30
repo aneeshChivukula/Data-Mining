@@ -5,12 +5,12 @@ import numpy as np
 import threading
 
 train_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Train'
-validation_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Validation/'
+test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test/'
 labels_file = '/home/aneesh/models-master/inception/labels.txt'
 output_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/'
 
 train_shards = 10
-validation_shards=24
+test_shards=24
 imagespershard=10
 
 num_shards = train_shards
@@ -27,7 +27,10 @@ filenames = []
 labels = []
 humans = []
 
-label_index = 1
+label_index = 0
+
+
+
 
 
 class ImageCoder(object):
@@ -75,6 +78,9 @@ def process_image_files_batch(coder, name, thread_index,ranges,filenames,humans,
             filename = filenames[i]
             label = labels[i]
             human = humans[i]
+            
+            print 'label',label
+            print 'label',type(label)
             
             image_data = tf.gfile.FastGFile(filename, 'r').read()
             image_buffer = coder.decode_jpeg(image_data)

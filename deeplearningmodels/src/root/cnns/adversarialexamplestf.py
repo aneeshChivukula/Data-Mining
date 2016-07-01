@@ -36,17 +36,17 @@ n_input = 90000
 n_classes = 2
 keep_prob = 0.75
 
-# stride = 4
-# denselayernumneurons = 2048
-# convmapsize = 11
-# height = 224
-# width = 224
+stride = 4
+denselayernumneurons = 2048
+convmapsize = 11
+height = 224
+width = 224
 depth = 3
-height = 100
-width = 300
-denselayernumneurons = 200
-convmapsize = 5
-stride = 1
+# height = 100
+# width = 300
+# denselayernumneurons = 200
+# convmapsize = 5
+# stride = 1
 
 layer1filters = 48
 layer2filters = 128
@@ -99,84 +99,28 @@ def max_pool_2d(x,k=2):
 
 
 
-def model(x,y_):
-    W_conv1 = weight_variable([5, 5, 3, 32])
-    W_conv2 = weight_variable([5, 5, 32, 64])
-    W_fc1 = weight_variable([(width/4)*(height/4)*64, denselayernumneurons])
-    W_fc2 = weight_variable([denselayernumneurons, n_classes])
-
-    b_conv1 = bias_variable([32])
-    b_conv2 = bias_variable([64])
-    b_fc1 = bias_variable([denselayernumneurons])
-    b_fc2 = bias_variable([n_classes])
-
-    h_conv1 = tf.nn.relu(conv2d(x, W_conv1) + b_conv1)
-    h_pool1 = max_pool_2d(h_conv1)
-      
-    h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
-    h_pool2 = max_pool_2d(h_conv2)
-      
-    h_pool2_flat = tf.reshape(h_pool2, [-1, (width/4)*(height/4)*64])
-    h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
-      
-#         keep_prob = tf.placeholder(tf.float32)
-    h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
-      
-    y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
-    # Have five layers with correct shapes here
-    
-    print('output',y_conv)
-    
-    cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
-    # Change objective function here
-    return (cross_entropy,y_conv)
-
-
 # def model(x,y_):
-#         
-#     W_conv1 = weight_variable([layer1convmapsize, layer1convmapsize, depth, layer1filters])
-#     b_conv1 = bias_variable([layer1filters])
-# 
-#     W_conv2 = weight_variable([layer2convmapsize, layer2convmapsize, layer1filters, layer2filters])
-#     b_conv2 = bias_variable([layer2filters])
-# 
-#     W_conv3 = weight_variable([layer3convmapsize, layer3convmapsize, layer2filters, layer3filters])
-#     b_conv3 = bias_variable([layer3filters])
-# 
-#     W_conv4 = weight_variable([layer4convmapsize, layer4convmapsize, layer3filters, layer4filters])
-#     b_conv4 = bias_variable([layer4filters])
-# 
-#     W_conv5 = weight_variable([layer5convmapsize, layer5convmapsize, layer4filters, layer5filters])
-#     b_conv5 = bias_variable([layer5filters])
-# 
-#     
-#     h_conv1 = tf.nn.relu(conv2d(x, W_conv1,stride) + b_conv1)
-#     h_pool1 = max_pool_2d(h_conv1)
-#       
-#     h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2,stride) + b_conv2)
-#     h_pool2 = max_pool_2d(h_conv2)
-# 
-#     h_conv3 = tf.nn.relu(conv2d(h_pool2, W_conv3,stride) + b_conv3)
-#     h_pool3 = max_pool_2d(h_conv3)
-# 
-#     h_conv4 = tf.nn.relu(conv2d(h_pool3, W_conv4,stride) + b_conv4)
-#     h_pool4 = max_pool_2d(h_conv4)
-#     
-#     h_conv5 = tf.nn.relu(conv2d(h_pool4, W_conv5,stride) + b_conv5)
-#     h_pool5 = max_pool_2d(h_conv5)
-#       
-#     W_fc1 = weight_variable([(width/(2*5))*(height/(2*5))*layer5filters, denselayernumneurons])
-#     b_fc1 = bias_variable([denselayernumneurons])
-#     
+#     W_conv1 = weight_variable([5, 5, 3, 32])
+#     W_conv2 = weight_variable([5, 5, 32, 64])
+#     W_fc1 = weight_variable([(width/4)*(height/4)*64, denselayernumneurons])
 #     W_fc2 = weight_variable([denselayernumneurons, n_classes])
+# 
+#     b_conv1 = bias_variable([32])
+#     b_conv2 = bias_variable([64])
+#     b_fc1 = bias_variable([denselayernumneurons])
 #     b_fc2 = bias_variable([n_classes])
 # 
-#     h_pool5_flat = tf.reshape(h_pool5, [-1, (width/(2*5))*(height/(2*5))*layer5filters])
-#     
-#     h_fc1 = tf.nn.relu(tf.matmul(h_pool5_flat, W_fc1) + b_fc1)
-#     h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+#     h_conv1 = tf.nn.relu(conv2d(x, W_conv1) + b_conv1)
+#     h_pool1 = max_pool_2d(h_conv1)
+#       
+#     h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
+#     h_pool2 = max_pool_2d(h_conv2)
+#       
+#     h_pool2_flat = tf.reshape(h_pool2, [-1, (width/4)*(height/4)*64])
+#     h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
 #       
 # #         keep_prob = tf.placeholder(tf.float32)
+#     h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
 #       
 #     y_conv=tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
 #     # Have five layers with correct shapes here
@@ -188,6 +132,67 @@ def model(x,y_):
 #     return (cross_entropy,y_conv)
 
 
+def model(x,y_):
+         
+    W_conv1 = weight_variable([layer1convmapsize, layer1convmapsize, depth, layer1filters])
+    b_conv1 = bias_variable([layer1filters])
+ 
+    W_conv2 = weight_variable([layer2convmapsize, layer2convmapsize, layer1filters, layer2filters])
+    b_conv2 = bias_variable([layer2filters])
+ 
+    W_conv3 = weight_variable([layer3convmapsize, layer3convmapsize, layer2filters, layer3filters])
+    b_conv3 = bias_variable([layer3filters])
+ 
+    W_conv4 = weight_variable([layer4convmapsize, layer4convmapsize, layer3filters, layer4filters])
+    b_conv4 = bias_variable([layer4filters])
+ 
+    W_conv5 = weight_variable([layer5convmapsize, layer5convmapsize, layer4filters, layer5filters])
+    b_conv5 = bias_variable([layer5filters])
+ 
+     
+    h_conv1 = tf.nn.relu(conv2d(x, W_conv1,stride) + b_conv1)
+    h_pool1 = max_pool_2d(h_conv1)
+       
+    h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2,stride) + b_conv2)
+    h_pool2 = max_pool_2d(h_conv2)
+ 
+    h_conv3 = tf.nn.relu(conv2d(h_pool2, W_conv3,stride) + b_conv3)
+    h_pool3 = max_pool_2d(h_conv3)
+ 
+    h_conv4 = tf.nn.relu(conv2d(h_pool3, W_conv4,stride) + b_conv4)
+    h_pool4 = max_pool_2d(h_conv4)
+     
+    h_conv5 = tf.nn.relu(conv2d(h_pool4, W_conv5,stride) + b_conv5)
+    h_pool5 = max_pool_2d(h_conv5)
+       
+    W_fc1 = weight_variable([(width/(2*5))*(height/(2*5))*layer5filters, denselayernumneurons])
+    b_fc1 = bias_variable([denselayernumneurons])
+     
+    W_fc2 = weight_variable([denselayernumneurons, denselayernumneurons])
+    b_fc2 = bias_variable([denselayernumneurons])
+    
+    W_fc3 = weight_variable([denselayernumneurons, n_classes])
+    b_fc3 = bias_variable([n_classes])
+ 
+    h_pool5_flat = tf.reshape(h_pool5, [-1, (width/(2*5))*(height/(2*5))*layer5filters])
+     
+    h_fc1 = tf.nn.relu(tf.matmul(h_pool5_flat, W_fc1) + b_fc1)
+    h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+    
+    h_fc2 = tf.nn.relu(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+    h_fc2_drop = tf.nn.dropout(h_fc2, keep_prob)
+    
+    y_conv=tf.nn.softmax(tf.matmul(h_fc2_drop, W_fc3) + b_fc3)
+    # Have eight layers with correct shapes here
+     
+    print('output',y_conv)
+     
+    cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))
+    # Not changing objective function here. The objective function is already softmax regression or multinomial logistic regression
+    return (cross_entropy,y_conv)
+
+
+# def training(x,y_,xt, yt_):
 def training(x,y_):
     print('images',x)
     print('labels',y_)
@@ -195,12 +200,17 @@ def training(x,y_):
     cost,y_conv = model(x,y_)
     
     train_step = tf.train.AdamOptimizer(1e-4).minimize(cost)
+    # Setting only learning_rate in Optimizer. Remaining parameters are paper specific optimizations.
     print('y_conv',y_conv)
     print('y_',y_)
     correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
     # Need to check the network architecture since accuracy is varying from 0.1 to 0.8 across runs
     # Check dimensions of y_ and y as expected
+    
+    
+#     update_x = tf.assign(x, xt)
+#     update_y_ = tf.assign(y_, yt_)
     
     init_op = tf.initialize_all_variables()
     sess = tf.Session()
@@ -228,9 +238,17 @@ def training(x,y_):
                 coord.request_stop()
             step += 1
     # Train for multiple iterations before computing accuracy
+    # We can also train on multiple batches because computation graph parameters are updated across batches
     except tf.errors.OutOfRangeError:
         print('Exiting after training for %d steps.',step)           
     finally:
+        
+#         keep_prob = 1.
+#         sess.run([update_x,update_y_])
+# 
+#         print('Step %d: testing accuracy = %.2f' % (step,sess.run(accuracy)))
+        
+        
         coord.request_stop()
         coord.join(threads)
 #         coord.request_stop()
@@ -244,10 +262,15 @@ def run_training():
     with tf.Graph().as_default():
         x, y_ = inputs(train_files)
         y_ = tf.cast(y_, dtype=tf.float32)
-        
-        x, y_ = inputs(train_files)
-        y_ = tf.cast(y_, dtype=tf.float32)
-        
+
+#         xt, yt_ = inputs(validation_files)
+#         xt, yt_ = inputs(test_files)
+#         yt_ = tf.cast(y_, dtype=tf.float32)
+        # Assuming train data and test data have same batch_size. y, y_conv and yt must have same shape. 
+        # So we cannot tell one sample accuracy? Or can we redefine model for new xt,yt_ but use old W's?
+        # We dont want to change model. We want to check only accuracy for any test batch size.
+        # Can we send test data at runtime through a feeder? Need to experiment and see if feeders accept tensors?
+#         training(x,y_,xt, yt_)
         training(x,y_)
 
 

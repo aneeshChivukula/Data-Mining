@@ -10,12 +10,17 @@ labels_file = '/home/aneesh/models-master/inception/labels.txt'
 output_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/'
 
 train_shards = 10
-test_shards=24
+test_shards=10
 imagespershard=10
 
-num_shards = train_shards
-num_threads = 5
+curr_dir = train_dir
 name = 'train'
+num_shards = train_shards
+# curr_dir = test_dir
+# name = 'test'
+# num_shards = train_shards
+
+num_threads = 5
 colorspace = 'RGB'
 channels = 3
 image_format = 'JPEG'
@@ -121,7 +126,7 @@ def process_image_files_batch(coder, name, thread_index,ranges,filenames,humans,
     
 
 for synset in unique_labels:
-    jpeg_file_path = '%s/%s/*.jpg' % (train_dir,synset)
+    jpeg_file_path = '%s/%s/*.jpg' % (curr_dir,synset)
     matching_files = tf.gfile.Glob(jpeg_file_path)
     labels.extend([label_index] * len(matching_files))
     humans.extend([synset] * len(matching_files))

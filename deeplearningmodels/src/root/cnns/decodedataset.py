@@ -2,9 +2,13 @@ import tensorflow as tf
 
 FLAGS = tf.app.flags.FLAGS
 
-tf.app.flags.DEFINE_integer('height', 100,
+# tf.app.flags.DEFINE_integer('height', 100,
+#                             """image height""")
+# tf.app.flags.DEFINE_integer('width', 300,
+#                             """image width""")
+tf.app.flags.DEFINE_integer('height', 224,
                             """image height""")
-tf.app.flags.DEFINE_integer('width', 300,
+tf.app.flags.DEFINE_integer('width', 224,
                             """image width""")
 tf.app.flags.DEFINE_integer('depth', 3,
                             """image width""")

@@ -30,7 +30,7 @@ train_batch_size = 100
 test_batch_size = 50
 # batch_size = 3000
 num_preprocess_threads = 4
-training_iters = 2
+training_iters = 50
 # training_iters = 50
 # training_iters = 100
 display_step = 10
@@ -137,7 +137,7 @@ def model(x,y_,dropout,weights_variables_dict):
     return (cross_entropy,y_conv)
 
 
-def trainingAndtesting(x,y_,test_images,test_labels):
+def trainingAndtesting(train_images,train_labels,test_images,test_labels):
 # def trainingAndtesting(x,y_):
 
     print('Training model - start')
@@ -159,6 +159,9 @@ def trainingAndtesting(x,y_,test_images,test_labels):
     #     "test_batch_y_": tf.Variable(tf.zeros([test_batch_size,height,width,depth]))
     }
     keep_prob = tf.placeholder(tf.float32) 
+    x = tf.placeholder(tf.float32, [None, height,width,depth])
+    y_ = tf.placeholder(tf.float32, [None, n_classes])
+    
 
 #     keep_prob = tf.Variable(tf.constant(0.),dtype=tf.float32)
 #     keep_prob = training_keep_prob
@@ -187,14 +190,14 @@ def trainingAndtesting(x,y_,test_images,test_labels):
         while not coord.should_stop(): 
             start_time = time.time()
              
-            sess.run(train_step,feed_dict={keep_prob: 0.7})
+            sess.run(train_step,feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: 0.7})
             print('Training model') 
  
             duration = time.time() - start_time
              
             if step % display_step == 0:
 #                 keep_prob = 1
-                loss,acc = sess.run([cost,accuracy],feed_dict={keep_prob: 0.7})
+                loss,acc = sess.run([cost,accuracy],feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: 0.7})
 #                 loss,acc = sess.run([cost,accuracy], feed_dict={x:sess.run(x),y_:sess.run(y_)})
 #                 loss,acc = sess.run([cost,accuracy], feed_dict={x: x,y_: y_})
 #                 print('sess.run(x)',sess.run(x))
@@ -248,7 +251,7 @@ def run_training():
         
         test_images = []
         test_labels = []
-        for i in xrange(0,len(filenames)-1):
+        for i in xrange(0,len(filenames)-10):
             filename = filenames[i]
             label = labels[i]
             human = humans[i]
@@ -259,12 +262,12 @@ def run_training():
             image = tf.reshape(image, shape=[height, width, depth])
             test_images.append(image)  
             test_labels.append(tf.cast(tf.reshape(tf.one_hot(label,depth = 2) , shape=[2]), dtype=tf.int32))  
-        
-        x, y_ = inputs(train_files)
-        y_ = tf.cast(y_, dtype=tf.float32)
-
         test_labels = tf.cast(test_labels, dtype=tf.float32)
-        trainingAndtesting(x,y_,test_images,test_labels)
+
+        
+        train_images, train_labels = inputs(train_files)
+        train_labels = tf.cast(train_labels, dtype=tf.float32)
+        trainingAndtesting(train_images,train_labels,test_images,test_labels)
 
 def main(_):
   run_training()

@@ -140,7 +140,7 @@ def model(x,y_,dropout,weights_variables_dict):
 def trainingAndtesting(train_images,train_labels,test_images,test_labels):
 # def trainingAndtesting(x,y_):
 
-    print('Training model - start')
+    print('trainingAndtesting model - start')
     weights_variables_dict = {
         "W_conv1" : weight_variable([layer1convmapsize, layer1convmapsize, depth, layer1filters]),                     
         "W_conv2" : weight_variable([layer2convmapsize, layer2convmapsize, layer1filters, layer2filters]),
@@ -224,7 +224,7 @@ def trainingAndtesting(train_images,train_labels,test_images,test_labels):
 #         coord.join(threads)
 
     sess.close()
-    print('Training model - end')
+    print('trainingAndtesting model - end')
     
 def run_training():
     with tf.Graph().as_default():

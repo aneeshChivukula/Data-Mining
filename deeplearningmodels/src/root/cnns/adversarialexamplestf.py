@@ -1,16 +1,17 @@
-from PIL import Image, ImageDraw
-import StringIO
+# from PIL import Image, ImageDraw
+# import StringIO
+# from sklearn import datasets, cross_validation, metrics
+# import sklearn
+# from sklearn.cross_validation import train_test_split
+# from sklearn.linear_model.logistic import LogisticRegression
+# from sklearn.metrics.classification import accuracy_score
+# from tensorflow.contrib import learn as skflow
+# import pandas
+
 import os
 import math
-import pandas
 import random
-from sklearn import datasets, cross_validation, metrics
-import sklearn
-from sklearn.cross_validation import train_test_split
-from sklearn.linear_model.logistic import LogisticRegression
-from sklearn.metrics.classification import accuracy_score
 import sys
-from tensorflow.contrib import learn as skflow
 import threading
 import time
 
@@ -21,16 +22,20 @@ import tensorflow as tf
 
 
 localparser = Parser()
-# InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
-InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/SerializedClasses/" 
-test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
-labels_file = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/Labels.txt'
+InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
+test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test'
+labels_file = '/home/aneesh/models-master/inception/labels.txt'
+
+# InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/SerializedClasses/" 
+# test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+# labels_file = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/Labels.txt'
 
 train_files = tf.gfile.Glob(InDir+"train-*")
 test_files = tf.gfile.Glob(InDir+"test-*")
 # validation_files = tf.gfile.Glob(InDir+"validation-*")
 
 train_batch_size = 3000
+# train_batch_size = 100
 # test_batch_size = 50
 # batch_size = 3000
 num_preprocess_threads = 4

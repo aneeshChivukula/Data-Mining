@@ -2148,5 +2148,44 @@ if __name__ == '__main__':
             # TypeError: The value of a feed cannot be a tf.Tensor object. Acceptable feed values include Python scalars, strings, lists, or numpy ndarrays.
 #             testing(xt,yt_,weights_variables_dict)
     
+
+
+import os
+from os import listdir
+from PIL import Image
+
+width = 224
+height = 224
+
+#width = 300
+#height = 100
+
+
+
+def resizer(CurrDir):
+	os.chdir(CurrDir)
+	for f in listdir(CurrDir):
+		
+		img = Image.open(f)
+		print(img.size)
+		image = img.resize((width,height), Image.ANTIALIAS)
+		image.save(CurrDir + f)
+                print(img.size)
+
+
+if __name__ == '__main__':
+	print ""
+#	resizer('/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Train/crocodile/')
+#	resizer('/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Train/crocodile_head/')
+
+#	resizer('/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test/crocodile/')
+#	resizer('/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test/crocodile_head/')
+
+	resizer('/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test/crocodile/')
+	resizer('/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test/crocodile_head/')
+
+
+
+
     
 '''

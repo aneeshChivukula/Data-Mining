@@ -21,16 +21,20 @@ import tensorflow as tf
 
 
 localparser = Parser()
-InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
+# InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
+InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/SerializedClasses/" 
+test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+labels_file = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/Labels.txt'
+
 train_files = tf.gfile.Glob(InDir+"train-*")
 test_files = tf.gfile.Glob(InDir+"test-*")
-validation_files = tf.gfile.Glob(InDir+"validation-*")
+# validation_files = tf.gfile.Glob(InDir+"validation-*")
 
-train_batch_size = 100
-test_batch_size = 50
+train_batch_size = 3000
+# test_batch_size = 50
 # batch_size = 3000
 num_preprocess_threads = 4
-training_iters = 50
+training_iters = 2
 # training_iters = 50
 # training_iters = 100
 display_step = 10
@@ -228,12 +232,9 @@ def trainingAndtesting(train_images,train_labels,test_images,test_labels):
     
 def run_training():
     with tf.Graph().as_default():
-        coder = ImageCoder()
-        
-        test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test/'
         curr_dir = test_dir
+
         
-        labels_file = '/home/aneesh/models-master/inception/labels.txt'
         unique_labels = [l.strip() for l in tf.gfile.FastGFile(labels_file, 'r').readlines()]
         filenames = []
         labels = []
@@ -242,7 +243,7 @@ def run_training():
         label_index = 0
 
         for synset in unique_labels:
-            jpeg_file_path = '%s/%s/*.jpg' % (curr_dir,synset)
+            jpeg_file_path = '%s/%s/*' % (curr_dir,synset)
             matching_files = tf.gfile.Glob(jpeg_file_path)
             filenames.extend(matching_files)
             labels.extend([label_index] * len(matching_files))
@@ -266,7 +267,9 @@ def run_training():
 
         
         train_images, train_labels = inputs(train_files)
-        train_labels = tf.cast(train_labels, dtype=tf.float32)
+        train_labels = tf.cast(train_labels, dtype=tf.float32)        
+        
+        
         trainingAndtesting(train_images,train_labels,test_images,test_labels)
 
 def main(_):

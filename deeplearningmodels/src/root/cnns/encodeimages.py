@@ -4,10 +4,18 @@ import tensorflow as tf
 import numpy as np
 import threading
 
-train_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Train'
-test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test/'
-labels_file = '/home/aneesh/models-master/inception/labels.txt'
-output_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/'
+# train_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Train'
+# test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test/'
+# labels_file = '/home/aneesh/models-master/inception/labels.txt'
+# output_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/'
+
+
+train_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit'
+test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit'
+labels_file = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/Labels.txt'
+output_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/SerializedClasses/'
+
+
 
 train_shards = 10
 test_shards=10
@@ -26,7 +34,7 @@ channels = 3
 image_format = 'JPEG'
 
 unique_labels = [l.strip() for l in tf.gfile.FastGFile(labels_file, 'r').readlines()]
-print(unique_labels)
+print('unique_labels',unique_labels)
 
 filenames = []
 labels = []
@@ -126,7 +134,10 @@ def process_image_files_batch(coder, name, thread_index,ranges,filenames,humans,
     
 
 for synset in unique_labels:
-    jpeg_file_path = '%s/%s/*.jpg' % (curr_dir,synset)
+#     jpeg_file_path = '%s/%s/*.jpg' % (curr_dir,synset)
+    
+    jpeg_file_path = '%s/%s/*' % (curr_dir,synset)
+    
     matching_files = tf.gfile.Glob(jpeg_file_path)
     labels.extend([label_index] * len(matching_files))
     humans.extend([synset] * len(matching_files))

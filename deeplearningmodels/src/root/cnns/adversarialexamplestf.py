@@ -25,17 +25,17 @@ localparser = Parser()
 InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
 test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test'
 labels_file = '/home/aneesh/models-master/inception/labels.txt'
+train_batch_size = 100
 
 # InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/SerializedClasses/" 
 # test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
 # labels_file = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/Labels.txt'
+# train_batch_size = 3000
 
 train_files = tf.gfile.Glob(InDir+"train-*")
 test_files = tf.gfile.Glob(InDir+"test-*")
 # validation_files = tf.gfile.Glob(InDir+"validation-*")
 
-train_batch_size = 3000
-# train_batch_size = 100
 # test_batch_size = 50
 # batch_size = 3000
 num_preprocess_threads = 4

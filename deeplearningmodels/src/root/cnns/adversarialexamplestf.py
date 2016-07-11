@@ -22,15 +22,15 @@ import tensorflow as tf
 
 
 localparser = Parser()
-InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
-test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test'
-labels_file = '/home/aneesh/models-master/inception/labels.txt'
-train_batch_size = 100
+# InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/SerializedObjectCategories/" 
+# test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test'
+# labels_file = '/home/aneesh/models-master/inception/labels.txt'
+# train_batch_size = 100
 
-# InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/SerializedClasses/" 
-# test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
-# labels_file = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/Labels.txt'
-# train_batch_size = 3000
+InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/SerializedClasses/" 
+test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+labels_file = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/Labels.txt'
+train_batch_size = 100
 
 train_files = tf.gfile.Glob(InDir+"train-*")
 test_files = tf.gfile.Glob(InDir+"test-*")
@@ -43,17 +43,18 @@ training_iters = 2
 # training_iters = 50
 # training_iters = 100
 display_step = 10
-learning_rate=0.001
+learning_rate= 0.0001
 
-n_input = 90000
+# n_input = 90000
 n_classes = 2
 # keep_prob = 1.
-training_keep_prob = 0.75
+training_keep_prob = 0.5
 testing_keep_prob = 1.
 
-stride = 4
-denselayernumneurons = 2048
-convmapsize = 11
+# stride = 4
+denselayernumneurons = 4096
+# denselayernumneurons2 = 1000
+# convmapsize = 11
 height = 224
 width = 224
 depth = 3
@@ -63,17 +64,19 @@ depth = 3
 # convmapsize = 5
 # stride = 1
 
-layer1filters = 48
-layer2filters = 128
-layer3filters = 192
-layer4filters = 192
-layer5filters = 128
+layer1filters = 64
+layer2filters = 192
+layer3filters = 384
+layer4filters = 256
+layer5filters = 256
 
 layer1convmapsize = 11
 layer2convmapsize = 5
 layer3convmapsize = 3
 layer4convmapsize = 3
 layer5convmapsize = 3
+
+convimagesize = 3
 
 class ImageCoder(object):
     def __init__(self):
@@ -87,20 +90,20 @@ class ImageCoder(object):
                            feed_dict={self._decode_jpeg_data: image_data})
         return image
 
-def weight_variable(shape):
-  initial = tf.truncated_normal(shape, stddev=0.1)
+def weight_variable(shape,stddev):
+  initial = tf.truncated_normal(shape, stddev)
   return tf.Variable(initial)
   
-def bias_variable(shape):
-  initial = tf.constant(0.1, shape=shape)
+def bias_variable(shape,const):
+  initial = tf.constant(const, shape=shape)
   return tf.Variable(initial)
   
-def conv2d(x, W,strides=1):
-   return tf.nn.conv2d(x, W, strides=[1, strides, strides, 1], padding='SAME')
+def conv2d(x, W,stride,currpadding):
+   return tf.nn.conv2d(x, W, padding=currpadding, strides=[1, stride, stride, 1])
    
-def max_pool_2d(x,k=2):
-  return tf.nn.max_pool(x, ksize=[1, k, k, 1],
-                        strides=[1, k, k, 1], padding='SAME')  
+def max_pool_2d(x,size,stride,currpadding):
+  return tf.nn.max_pool(x, padding=currpadding, ksize=[1, size, size, 1],
+                        strides=[1, stride, stride, 1])  
 
 def read_and_decode(filenames_queue):
     reader = tf.TFRecordReader()
@@ -122,26 +125,38 @@ def inputs(filenames):
 
 def model(x,y_,dropout,weights_variables_dict):
     
-             
-    h_conv1 = tf.nn.relu(conv2d(x, weights_variables_dict["W_conv1"],4) + weights_variables_dict["b_conv1"])
-    h_pool1 = max_pool_2d(h_conv1)
+    print(x.dtype.base_dtype)
+    print(weights_variables_dict["W_conv1"].dtype.base_dtype)
+
+    
+    h_conv1 = tf.nn.relu(conv2d(x, weights_variables_dict["W_conv1"],4,'SAME') + weights_variables_dict["b_conv1"])
+    h_conv1_normed = tf.nn.local_response_normalization(h_conv1,5,2,0.0001,0.75)
+    h_pool1 = max_pool_2d(h_conv1_normed,3,2,'SAME')
      
-    h_conv2 = tf.nn.relu(conv2d(h_pool1, weights_variables_dict["W_conv2"],2) + weights_variables_dict["b_conv2"])
-    h_pool2 = max_pool_2d(h_conv2)
+    h_conv2 = tf.nn.relu(conv2d(h_pool1, weights_variables_dict["W_conv2"],1,'VALID') + weights_variables_dict["b_conv2"])
+    h_conv2_normed = tf.nn.local_response_normalization(h_conv2,5,2,0.0001,0.75)
+    h_pool2 = max_pool_2d(h_conv2_normed,3,2,'SAME')
      
-    h_conv3 = tf.nn.relu(conv2d(h_pool2, weights_variables_dict["W_conv3"],1) + weights_variables_dict["b_conv3"])
-    h_pool3 = max_pool_2d(h_conv3)
+    h_conv3 = tf.nn.relu(conv2d(h_pool2, weights_variables_dict["W_conv3"],1,'VALID') + weights_variables_dict["b_conv3"])
+    h_conv4 = tf.nn.relu(conv2d(h_conv3, weights_variables_dict["W_conv4"],1,'VALID') + weights_variables_dict["b_conv4"])
+
+    h_conv5 = tf.nn.relu(conv2d(h_conv4, weights_variables_dict["W_conv5"],1,'VALID') + weights_variables_dict["b_conv5"])
+    h_pool3 = max_pool_2d(h_conv5,3,2,'SAME')
+    
+#     print(h_pool3)
+#     sys.exit()
      
-    h_pool3_flat = tf.reshape(h_pool3, [-1, 4*4*layer3filters])
+    h_pool3_flat = tf.reshape(h_pool3, [-1, convimagesize*convimagesize*layer5filters]) # Must change 4*4*layer3filters to correct shape for tf.matmul
     h_fc1 = tf.nn.relu(tf.matmul(h_pool3_flat, weights_variables_dict["W_fc1"]) + weights_variables_dict["b_fc1"])
     h_fc1_drop = tf.nn.dropout(h_fc1, dropout)
-     
+    
     h_fc2 = tf.nn.relu(tf.matmul(h_fc1_drop, weights_variables_dict["W_fc2"]) + weights_variables_dict["b_fc2"])
     h_fc2_drop = tf.nn.dropout(h_fc2, dropout)
      
     y_conv=tf.nn.softmax(tf.matmul(h_fc2_drop, weights_variables_dict["W_fc3"]) + weights_variables_dict["b_fc3"])
      
     cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(tf.clip_by_value(y_conv,1e-10,1.0)), reduction_indices=[1]))  
+#     cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))  
      
     return (cross_entropy,y_conv)
 
@@ -151,18 +166,27 @@ def trainingAndtesting(train_images,train_labels,test_images,test_labels):
 
     print('trainingAndtesting model - start')
     weights_variables_dict = {
-        "W_conv1" : weight_variable([layer1convmapsize, layer1convmapsize, depth, layer1filters]),                     
-        "W_conv2" : weight_variable([layer2convmapsize, layer2convmapsize, layer1filters, layer2filters]),
-        "W_conv3" : weight_variable([layer3convmapsize, layer3convmapsize, layer2filters, layer3filters]),
-        "b_conv1" : bias_variable([layer1filters]),
-        "b_conv2" : bias_variable([layer2filters]),
-        "b_conv3" : bias_variable([layer3filters]),
-        "W_fc1" : weight_variable([4*4*layer3filters, denselayernumneurons]),
-        "W_fc2" : weight_variable([denselayernumneurons, denselayernumneurons]),
-        "W_fc3" : weight_variable([denselayernumneurons, n_classes]),
-        "b_fc1" : bias_variable([denselayernumneurons]),
-        "b_fc2" : bias_variable([denselayernumneurons]),
-        "b_fc3" : bias_variable([n_classes])
+        "W_conv1" : weight_variable([layer1convmapsize, layer1convmapsize, depth, layer1filters],0.01),                     
+        "W_conv2" : weight_variable([layer2convmapsize, layer2convmapsize, layer1filters, layer2filters],0.01),
+        "W_conv3" : weight_variable([layer3convmapsize, layer3convmapsize, layer2filters, layer3filters],0.03),
+        "W_conv4" : weight_variable([layer4convmapsize, layer4convmapsize, layer3filters, layer4filters],0.03),
+        "W_conv5" : weight_variable([layer5convmapsize, layer5convmapsize, layer4filters, layer5filters],0.03),
+
+        "b_conv1" : bias_variable([layer1filters],1.),
+        "b_conv2" : bias_variable([layer2filters],1.),
+        "b_conv3" : bias_variable([layer3filters],1.),
+        "b_conv4" : bias_variable([layer4filters],1.),
+        "b_conv5" : bias_variable([layer5filters],1.),
+        
+        
+        # Continue from here
+        "W_fc1" : weight_variable([convimagesize*convimagesize*layer5filters, denselayernumneurons],0.01),
+        "W_fc2" : weight_variable([denselayernumneurons, denselayernumneurons],0.01),
+        "W_fc3" : weight_variable([denselayernumneurons, n_classes],0.01),
+
+        "b_fc1" : bias_variable([denselayernumneurons],1.),
+        "b_fc2" : bias_variable([denselayernumneurons],1.),        
+        "b_fc3" : bias_variable([n_classes],-7.)
     #     "keep_prob" : tf.Variable(0,dtype=tf.float32)                      
     #     "test_batch_x": tf.Variable(tf.zeros([train_batch_size,height,width,depth])),
     #     "test_batch_y_": tf.Variable(tf.zeros([test_batch_size,height,width,depth]))
@@ -177,7 +201,7 @@ def trainingAndtesting(train_images,train_labels,test_images,test_labels):
     cost,y_conv = model(x,y_,keep_prob,weights_variables_dict)
 #     cost,y_conv = model(x,y_)
  
-    train_step = tf.train.AdamOptimizer(1e-4).minimize(cost)
+    train_step = tf.train.AdamOptimizer(learning_rate).minimize(cost)
     # Setting only learning_rate in Optimizer. Remaining parameters are paper specific optimizations.
  
     correct_prediction = tf.equal(tf.argmax(y_conv,1), tf.argmax(y_,1))
@@ -199,14 +223,14 @@ def trainingAndtesting(train_images,train_labels,test_images,test_labels):
         while not coord.should_stop(): 
             start_time = time.time()
              
-            sess.run(train_step,feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: 0.7})
+            sess.run(train_step,feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: training_keep_prob})
             print('Training model') 
  
             duration = time.time() - start_time
              
             if step % display_step == 0:
 #                 keep_prob = 1
-                loss,acc = sess.run([cost,accuracy],feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: 0.7})
+                loss,acc = sess.run([cost,accuracy],feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: training_keep_prob})
 #                 loss,acc = sess.run([cost,accuracy], feed_dict={x:sess.run(x),y_:sess.run(y_)})
 #                 loss,acc = sess.run([cost,accuracy], feed_dict={x: x,y_: y_})
 #                 print('sess.run(x)',sess.run(x))
@@ -224,7 +248,7 @@ def trainingAndtesting(train_images,train_labels,test_images,test_labels):
          
 #         keep_prob = 1.
 #         keep_prob = testing_keep_prob
-        print('Step %d: testing accuracy = %.2f' % (step,sess.run(accuracy, feed_dict={x:sess.run(test_images),y_:sess.run(test_labels),keep_prob: 1.})))
+        print('Step %d: testing accuracy = %.2f' % (step,sess.run(accuracy, feed_dict={x:sess.run(test_images),y_:sess.run(test_labels),keep_prob: testing_keep_prob})))
          
          
         coord.request_stop()

@@ -2187,5 +2187,82 @@ if __name__ == '__main__':
 
 
 
+
+
+layer1filters = 48
+layer2filters = 128
+layer3filters = 192
+layer4filters = 192
+layer5filters = 128
+
+layer1convmapsize = 11
+layer2convmapsize = 5
+layer3convmapsize = 3
+layer4convmapsize = 3
+layer5convmapsize = 3
+
+training_keep_prob = 0.75
+testing_keep_prob = 1.
+
+stride = 4
+denselayernumneurons = 2048
+convmapsize = 11
+height = 224
+width = 224
+depth = 3
+
+
+    weights_variables_dict = {
+        "W_conv1" : weight_variable([layer1convmapsize, layer1convmapsize, depth, layer1filters]),                     
+        "W_conv2" : weight_variable([layer2convmapsize, layer2convmapsize, layer1filters, layer2filters]),
+        "W_conv3" : weight_variable([layer3convmapsize, layer3convmapsize, layer2filters, layer3filters]),
+        "b_conv1" : bias_variable([layer1filters]),
+        "b_conv2" : bias_variable([layer2filters]),
+        "b_conv3" : bias_variable([layer3filters]),
+        "W_fc1" : weight_variable([4*4*layer3filters, denselayernumneurons]),
+        "W_fc2" : weight_variable([denselayernumneurons, denselayernumneurons]),
+        "W_fc3" : weight_variable([denselayernumneurons, n_classes]),
+        "b_fc1" : bias_variable([denselayernumneurons]),
+        "b_fc2" : bias_variable([denselayernumneurons]),
+        "b_fc3" : bias_variable([n_classes])
+    #     "keep_prob" : tf.Variable(0,dtype=tf.float32)                      
+    #     "test_batch_x": tf.Variable(tf.zeros([train_batch_size,height,width,depth])),
+    #     "test_batch_y_": tf.Variable(tf.zeros([test_batch_size,height,width,depth]))
+    }
+    keep_prob = tf.placeholder(tf.float32) 
+
+
+
+
+
+
+def model(x,y_,dropout,weights_variables_dict):
+    
+             
+    h_conv1 = tf.nn.relu(conv2d(x, weights_variables_dict["W_conv1"],4) + weights_variables_dict["b_conv1"])
+    h_pool1 = max_pool_2d(h_conv1)
+     
+    h_conv2 = tf.nn.relu(conv2d(h_pool1, weights_variables_dict["W_conv2"],2) + weights_variables_dict["b_conv2"])
+    h_pool2 = max_pool_2d(h_conv2)
+     
+    h_conv3 = tf.nn.relu(conv2d(h_pool2, weights_variables_dict["W_conv3"],1) + weights_variables_dict["b_conv3"])
+    h_pool3 = max_pool_2d(h_conv3)
+     
+    h_pool3_flat = tf.reshape(h_pool3, [-1, 4*4*layer3filters])
+    h_fc1 = tf.nn.relu(tf.matmul(h_pool3_flat, weights_variables_dict["W_fc1"]) + weights_variables_dict["b_fc1"])
+    h_fc1_drop = tf.nn.dropout(h_fc1, dropout)
+    
+    h_fc2 = tf.nn.relu(tf.matmul(h_fc1_drop, weights_variables_dict["W_fc2"]) + weights_variables_dict["b_fc2"])
+    h_fc2_drop = tf.nn.dropout(h_fc2, dropout)
+     
+    y_conv=tf.nn.softmax(tf.matmul(h_fc2_drop, weights_variables_dict["W_fc3"]) + weights_variables_dict["b_fc3"])
+     
+    cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(tf.clip_by_value(y_conv,1e-10,1.0)), reduction_indices=[1]))  
+     
+    return (cross_entropy,y_conv)
+
+
+
+
     
 '''

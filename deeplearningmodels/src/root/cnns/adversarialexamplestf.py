@@ -217,44 +217,51 @@ def trainingAndtesting(train_images,train_labels,test_images,test_labels):
     threads = tf.train.start_queue_runners(sess=sess,coord=coord)
     print('Initialized data')
     # Visualize graph ops created uptil here
-     
-    try:
-        step = 0
-        while not coord.should_stop(): 
-            start_time = time.time()
-             
-            sess.run(train_step,feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: training_keep_prob})
-            print('Training model') 
- 
-            duration = time.time() - start_time
-             
-            if step % display_step == 0:
-#                 keep_prob = 1
-                loss,acc = sess.run([cost,accuracy],feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: training_keep_prob})
-#                 loss,acc = sess.run([cost,accuracy], feed_dict={x:sess.run(x),y_:sess.run(y_)})
-#                 loss,acc = sess.run([cost,accuracy], feed_dict={x: x,y_: y_})
-#                 print('sess.run(x)',sess.run(x))
-#                 print('sess.run(y_)',sess.run(y_))
-                
-                print('Step %d: minibatch loss = %.6f training accuracy = %.2f (%.3f sec)' % (step,loss,acc,duration))
-            if(step>training_iters): # Train the same network over multiple runs
-                coord.request_stop()
-            step += 1
-    # Train for multiple iterations before computing accuracy
-    # We can also train on multiple batches because computation graph parameters are updated across batches
-    except tf.errors.OutOfRangeError:
-        print('Exiting after training for %d steps.',step)           
-    finally:
-         
-#         keep_prob = 1.
-#         keep_prob = testing_keep_prob
-        print('Step %d: testing accuracy = %.2f' % (step,sess.run(accuracy, feed_dict={x:sess.run(test_images),y_:sess.run(test_labels),keep_prob: testing_keep_prob})))
-         
-         
-        coord.request_stop()
-        coord.join(threads)
+    
+    start_time = time.time()
+    print('Training model') 
+    loss,acc = sess.run([cost,accuracy],feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: training_keep_prob})
+    duration = time.time() - start_time
+    print('Minibatch loss = %.6f training accuracy = %.2f (%.3f sec)' % (loss,acc,duration))
+    print('testing accuracy = %.2f' % (sess.run(accuracy, feed_dict={x:sess.run(test_images),y_:sess.run(test_labels),keep_prob: testing_keep_prob})))
+    
+#     try:
+#         step = 0
+#         while not coord.should_stop(): 
+#             start_time = time.time()
+#              
+#             sess.run(train_step,feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: training_keep_prob})
+#             print('Training model') 
+#  
+#             duration = time.time() - start_time
+#              
+#             if step % display_step == 0:
+# #                 keep_prob = 1
+#                 loss,acc = sess.run([cost,accuracy],feed_dict={x:sess.run(train_images),y_:sess.run(train_labels),keep_prob: training_keep_prob})
+# #                 loss,acc = sess.run([cost,accuracy], feed_dict={x:sess.run(x),y_:sess.run(y_)})
+# #                 loss,acc = sess.run([cost,accuracy], feed_dict={x: x,y_: y_})
+# #                 print('sess.run(x)',sess.run(x))
+# #                 print('sess.run(y_)',sess.run(y_))
+#                 
+#                 print('Step %d: minibatch loss = %.6f training accuracy = %.2f (%.3f sec)' % (step,loss,acc,duration))
+#             if(step>training_iters): # Train the same network over multiple runs
+#                 coord.request_stop()
+#             step += 1
+#     # Train for multiple iterations before computing accuracy
+#     # We can also train on multiple batches because computation graph parameters are updated across batches
+#     except tf.errors.OutOfRangeError:
+#         print('Exiting after training for %d steps.',step)           
+#     finally:
+#          
+# #         keep_prob = 1.
+# #         keep_prob = testing_keep_prob
+#         print('Step %d: testing accuracy = %.2f' % (step,sess.run(accuracy, feed_dict={x:sess.run(test_images),y_:sess.run(test_labels),keep_prob: testing_keep_prob})))
+#          
+#          
 #         coord.request_stop()
 #         coord.join(threads)
+    coord.request_stop()
+    coord.join(threads)
 
     sess.close()
     print('trainingAndtesting model - end')

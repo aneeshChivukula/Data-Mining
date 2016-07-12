@@ -1,12 +1,19 @@
-import os
-import math
-import sys
-from os import listdir
 from PIL import Image
+import io
+import math
+import numpy
+from os import listdir
+import os
 from shutil import copyfile
+import sys
 
-width = 224
-height = 224
+
+width = 32
+height = 32
+length = 3073
+
+# width = 224
+# height = 224
 
 #width = 300
 #height = 100
@@ -44,7 +51,31 @@ def resizer(CurrDir):
         image.save(CurrDir + f)
         print(img.size)
 
+def binarizer(CurrDir,ValDir,OutFile): 
+    # resizer and binarizer have same directory
+    # Pixel value is in the form (R,G,B) where R,G,B belongs in the range 0,255
+    ind = 0
+    L = []
+    os.chdir(CurrDir)
+    binfile = open(OutFile, 'wb',)
+    os.chdir(CurrDir + ValDir)
+    for d in listdir(CurrDir + ValDir):
+        os.chdir(CurrDir + ValDir + d)
+        for f in listdir(CurrDir + ValDir + d):
+            img = Image.open(f)
+            l = numpy.insert(numpy.array(img.getdata()).flatten(order='F'),0, ind)
+            if(len(l) == length):
+                L.append(l)
+        ind = ind + 1
+    
+    print(len(L)*length)
+    print(len(numpy.concatenate(L)))
+    
+    numpy.concatenate(L).astype('int16').tofile(binfile)
+#     file.write(numpy.concatenate(L).astype('int16'))
+    binfile.close()
 
+    
 
 if __name__ == '__main__':
     
@@ -57,11 +88,14 @@ if __name__ == '__main__':
 #    resizer('/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/101_ObjectCategories_Test/crocodile_head/')
         
 
-#     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
 #     partitoner(InDir)
- 
-    resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/BrownDog/')
-    resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/BlackDog/')
+   
+    resizer(InDir+'TrainSplit/BrownDog/')
+    resizer(InDir+'TrainSplit/BlackDog/')
+  
+    resizer(InDir+'TestSplit/BrownDog/')
+    resizer(InDir+'TestSplit/BlackDog/')
 
-    resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/BrownDog/')
-    resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/BlackDog/')
+    binarizer(InDir,'TrainSplit/','train.bin')
+    binarizer(InDir,'TestSplit/','test.bin')

@@ -2264,5 +2264,49 @@ def model(x,y_,dropout,weights_variables_dict):
 
 
 
+#         print(l)
+#         print(img.size)
+#         print(img.tell())
+#         print(img.getpixel((1,1)))
+#         print(img.getpixel((31,31)))
+#         print(list(img.getdata()))
+#         print(numpy.array(img.getdata()).shape)
+#         print(numpy.array(img.getdata()).shape)
+#         M = numpy.array(img.getdata()).reshape((width, height, 3))
+#         print(M.shape)
+#         print(M[0:32,0:32,0].flatten(order='C'))
+#         print(M[0:32,0:32,2].flatten(order='C'))
+#         print(M[0:32,0:32,1])
+#         print(M[0:32,0:32,2])
+        
+#         print(img.tobytes())
+        
+#         imgByteArr = io.BytesIO()
+#         img.save(imgByteArr, format='JPEG')
+# #         print(imgByteArr.getvalue())
+#         print(imgByteArr.readable())
+# 
+#         print(imgByteArr.tell())
+#         print(imgByteArr.seek(0,0))
+#         print(imgByteArr.tell())
+#         print(imgByteArr.seek(0,2))
+#         print(imgByteArr.tell())
+
+#     print(len(L[0:1000]))
+#     print(L[0:-1])
+#     print((numpy.concatenate(L[0:-1])))
+#     print(len((L[0:1000])))
+#     print(numpy.concatenate(L[0:1000]).shape)
+#     print(len((L[1500:2000])))
+#     print(numpy.concatenate(L[1500:2000]).shape)
+
+
+    print(len(L[-1]))
+    print(len(L))
+    print(len(numpy.concatenate(L)))
+
+    # Loop over both directories
+    # Append all images to a list and finall write list to file as one big binary string 
+    # Make one train file and one test file       
     
 '''

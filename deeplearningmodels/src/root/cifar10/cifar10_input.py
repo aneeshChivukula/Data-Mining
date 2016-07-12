@@ -30,9 +30,13 @@ import tensorflow as tf
 IMAGE_SIZE = 24
 
 # Global constants describing the CIFAR-10 data set.
-NUM_CLASSES = 10
-NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 50000
-NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 10000
+# NUM_CLASSES = 10
+# NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 50000
+# NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 10000
+
+NUM_CLASSES = 2
+NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 500
+NUM_EXAMPLES_PER_EPOCH_FOR_EVAL = 100
 
 
 def read_cifar10(filename_queue):
@@ -146,8 +150,14 @@ def distorted_inputs(data_dir, batch_size):
     images: Images. 4D tensor of [batch_size, IMAGE_SIZE, IMAGE_SIZE, 3] size.
     labels: Labels. 1D tensor of [batch_size] size.
   """
-  filenames = [os.path.join(data_dir, 'data_batch_%d.bin' % i)
-               for i in xrange(1, 6)]
+  
+  print('In distorted_inputs')
+  print('data_dir',data_dir)
+  
+#   filenames = [os.path.join(data_dir, 'data_batch_%d.bin' % i)
+#                for i in xrange(1, 6)]
+  filenames = [os.path.join(data_dir, 'train.bin')]
+    
   for f in filenames:
     if not tf.gfile.Exists(f):
       raise ValueError('Failed to find file: ' + f)
@@ -155,9 +165,18 @@ def distorted_inputs(data_dir, batch_size):
   # Create a queue that produces the filenames to read.
   filename_queue = tf.train.string_input_producer(filenames)
 
+
   # Read examples from files in the filename queue.
   read_input = read_cifar10(filename_queue)
   reshaped_image = tf.cast(read_input.uint8image, tf.float32)
+
+#   print('filenames',filenames)
+#   print('filename_queue',filename_queue)
+#   print('reshaped_image',reshaped_image)
+# 
+#   import sys
+#   sys.exit()
+
 
   height = IMAGE_SIZE
   width = IMAGE_SIZE

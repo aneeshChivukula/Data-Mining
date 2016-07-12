@@ -41,7 +41,8 @@ import time
 import numpy as np
 import tensorflow as tf
 
-from tensorflow.models.image.cifar10 import cifar10
+# from tensorflow.models.image.cifar10 import cifar10
+from root.cifar10 import cifar10
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -53,9 +54,15 @@ tf.app.flags.DEFINE_string('checkpoint_dir', '/tmp/cifar10_train',
                            """Directory where to read model checkpoints.""")
 tf.app.flags.DEFINE_integer('eval_interval_secs', 60 * 5,
                             """How often to run the eval.""")
-tf.app.flags.DEFINE_integer('num_examples', 10000,
+# tf.app.flags.DEFINE_integer('num_examples', 10000,
+#                             """Number of examples to run.""")
+# tf.app.flags.DEFINE_integer('num_examples', 1500,
+#                             """Number of examples to run.""")
+tf.app.flags.DEFINE_integer('num_examples', 810,
                             """Number of examples to run.""")
-tf.app.flags.DEFINE_boolean('run_once', False,
+# tf.app.flags.DEFINE_boolean('run_once', False,
+#                          """Whether to run eval only once.""")
+tf.app.flags.DEFINE_boolean('run_once', True,
                          """Whether to run eval only once.""")
 
 
@@ -96,6 +103,7 @@ def eval_once(saver, summary_writer, top_k_op, summary_op):
       while step < num_iter and not coord.should_stop():
         predictions = sess.run([top_k_op])
         true_count += np.sum(predictions)
+#         print('predictions',predictions)
         step += 1
 
       # Compute precision @ 1.
@@ -146,7 +154,7 @@ def evaluate():
 
 
 def main(argv=None):  # pylint: disable=unused-argument
-  cifar10.maybe_download_and_extract()
+#   cifar10.maybe_download_and_extract()
   if tf.gfile.Exists(FLAGS.eval_dir):
     tf.gfile.DeleteRecursively(FLAGS.eval_dir)
   tf.gfile.MakeDirs(FLAGS.eval_dir)

@@ -50,7 +50,10 @@ from root.cifar10 import cifar10
 
 FLAGS = tf.app.flags.FLAGS
 
-tf.app.flags.DEFINE_string('train_dir', '/tmp/cifar10_train',
+# tf.app.flags.DEFINE_string('train_dir', '/tmp/cifar10_train',
+#                            """Directory where to write event logs """
+#                            """and checkpoint.""")
+tf.app.flags.DEFINE_string('train_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train',
                            """Directory where to write event logs """
                            """and checkpoint.""")
 # tf.app.flags.DEFINE_integer('max_steps', 1000000,
@@ -82,6 +85,8 @@ def train():
     # updates the model parameters.
     train_op = cifar10.train(loss, global_step)
 
+
+    print('tf.all_variables()',tf.all_variables())
     # Create a saver.
     saver = tf.train.Saver(tf.all_variables())
 

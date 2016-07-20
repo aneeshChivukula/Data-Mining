@@ -40,17 +40,22 @@ import time
 
 import numpy as np
 import tensorflow as tf
+import os
 
 # from tensorflow.models.image.cifar10 import cifar10
 from root.cifar10 import cifar10
 
 FLAGS = tf.app.flags.FLAGS
 
-tf.app.flags.DEFINE_string('eval_dir', '/tmp/cifar10_eval',
+# tf.app.flags.DEFINE_string('eval_dir', '/tmp/cifar10_eval',
+#                            """Directory where to write event logs.""")
+tf.app.flags.DEFINE_string('eval_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_eval',
                            """Directory where to write event logs.""")
 tf.app.flags.DEFINE_string('eval_data', 'test',
                            """Either 'test' or 'train_eval'.""")
-tf.app.flags.DEFINE_string('checkpoint_dir', '/tmp/cifar10_train',
+# tf.app.flags.DEFINE_string('checkpoint_dir', '/tmp/cifar10_train',
+#                            """Directory where to read model checkpoints.""")
+tf.app.flags.DEFINE_string('checkpoint_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train',
                            """Directory where to read model checkpoints.""")
 tf.app.flags.DEFINE_integer('eval_interval_secs', 60 * 5,
                             """How often to run the eval.""")
@@ -66,7 +71,7 @@ tf.app.flags.DEFINE_boolean('run_once', True,
                          """Whether to run eval only once.""")
 
 
-def eval_once(saver, summary_writer, top_k_op, summary_op):
+def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore):
   """Run Eval once.
 
   Args:
@@ -87,6 +92,35 @@ def eval_once(saver, summary_writer, top_k_op, summary_op):
     else:
       print('No checkpoint file found')
       return
+
+
+    print(os.path.join(FLAGS.data_dir, 'conv1-weights.npy'))
+    print(sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
+    
+    np.save(os.path.join(FLAGS.out_dir, 'conv1-weights.npy'), sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
+    np.save(os.path.join(FLAGS.out_dir, 'conv1-biases.npy'), sess.run(variables_to_restore['conv1/biases/ExponentialMovingAverage']))
+    np.save(os.path.join(FLAGS.out_dir, 'conv2-weights.npy'), sess.run(variables_to_restore['conv2/weights/ExponentialMovingAverage']))
+    np.save(os.path.join(FLAGS.out_dir, 'conv2-biases.npy'), sess.run(variables_to_restore['conv2/biases/ExponentialMovingAverage']))
+    np.save(os.path.join(FLAGS.out_dir, 'local3-weights.npy'), sess.run(variables_to_restore['local3/weights/ExponentialMovingAverage']))
+    np.save(os.path.join(FLAGS.out_dir, 'local3-biases.npy'), sess.run(variables_to_restore['local3/biases/ExponentialMovingAverage']))
+    np.save(os.path.join(FLAGS.out_dir, 'local4-weights.npy'), sess.run(variables_to_restore['local4/weights/ExponentialMovingAverage']))
+    np.save(os.path.join(FLAGS.out_dir, 'local4-biases.npy'), sess.run(variables_to_restore['local4/biases/ExponentialMovingAverage']))
+    np.save(os.path.join(FLAGS.out_dir, 'softmax_linear-weights.npy'), sess.run(variables_to_restore['softmax_linear/weights/ExponentialMovingAverage']))
+    np.save(os.path.join(FLAGS.out_dir, 'softmax_linear-biases.npy'), sess.run(variables_to_restore['softmax_linear/biases/ExponentialMovingAverage']))
+    
+#     print('Separating here')
+#     print(np.load(os.path.join(FLAGS.data_dir, 'conv1-weights.npy')).shape)
+#     print('sess.run(variables_to_restore) conv1/weights/ExponentialMovingAverage',sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
+#     print('sess.run(variables_to_restore) conv1/biases/ExponentialMovingAverage',sess.run(variables_to_restore['conv1/biases/ExponentialMovingAverage']))
+#     print('sess.run(variables_to_restore) conv2/weights/ExponentialMovingAverage',sess.run(variables_to_restore['conv2/weights/ExponentialMovingAverage']))
+#     print('sess.run(variables_to_restore) conv2/biases/ExponentialMovingAverage',sess.run(variables_to_restore['conv2/biases/ExponentialMovingAverage']))
+#     print('sess.run(variables_to_restore) local3/weights/ExponentialMovingAverage',sess.run(variables_to_restore['local3/weights/ExponentialMovingAverage']))
+#     print('sess.run(variables_to_restore) local3/biases/ExponentialMovingAverage',sess.run(variables_to_restore['local3/biases/ExponentialMovingAverage']))
+#     print('sess.run(variables_to_restore) local4/weights/ExponentialMovingAverage',sess.run(variables_to_restore['local4/weights/ExponentialMovingAverage']))
+#     print('sess.run(variables_to_restore) local4/biases/ExponentialMovingAverage',sess.run(variables_to_restore['local4/biases/ExponentialMovingAverage']))
+#     print('sess.run(variables_to_restore) softmax_linear/weights/ExponentialMovingAverage',sess.run(variables_to_restore['softmax_linear/weights/ExponentialMovingAverage']))
+#     print('sess.run(variables_to_restore) softmax_linear/biases/ExponentialMovingAverage',type(sess.run(variables_to_restore['softmax_linear/biases/ExponentialMovingAverage'])))
+
 
     # Start the queue runners.
     coord = tf.train.Coordinator()
@@ -131,7 +165,7 @@ def evaluate():
     # Build a Graph that computes the logits predictions from the
     # inference model.
     logits = cifar10.inference(images)
-
+    print('logits',logits)
     # Calculate predictions.
     top_k_op = tf.nn.in_top_k(logits, labels, 1)
 
@@ -141,13 +175,18 @@ def evaluate():
     variables_to_restore = variable_averages.variables_to_restore()
     saver = tf.train.Saver(variables_to_restore)
 
+    if not FLAGS.out_dir:
+      raise ValueError('Please supply a out_dir')
+  
+    
+    
     # Build the summary operation based on the TF collection of Summaries.
     summary_op = tf.merge_all_summaries()
 
     summary_writer = tf.train.SummaryWriter(FLAGS.eval_dir, g)
 
     while True:
-      eval_once(saver, summary_writer, top_k_op, summary_op)
+      eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore)
       if FLAGS.run_once:
         break
       time.sleep(FLAGS.eval_interval_secs)

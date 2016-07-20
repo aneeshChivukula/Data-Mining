@@ -53,7 +53,11 @@ tf.app.flags.DEFINE_integer('batch_size', 128,
                             """Number of images to process in a batch.""")
 # tf.app.flags.DEFINE_string('data_dir', '/tmp/cifar10_data',
 #                            """Path to the CIFAR-10 data directory.""")
-tf.app.flags.DEFINE_string('data_dir', '/tmp/cifar10_data',
+tf.app.flags.DEFINE_string('data_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_data',
+                           """Path to the CIFAR-10 data directory.""")
+# tf.app.flags.DEFINE_string('out_dir', '/tmp/cifar10_output',
+#                            """Path to the CIFAR-10 data directory.""")
+tf.app.flags.DEFINE_string('out_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output',
                            """Path to the CIFAR-10 data directory.""")
 
 

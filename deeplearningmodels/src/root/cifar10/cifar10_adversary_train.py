@@ -61,19 +61,15 @@ def adversary_train():
         
         images, labels = cifar10.distorted_inputs()
 
-        alpha = cifar10._variable_on_cpu('alpha', [24, 24, 3], tf.constant_initializer(0.1))
-        imagesnew = tf.add(images,alpha)
+#         alpha = cifar10._variable_on_cpu('alpha', [24, 24, 3], tf.constant_initializer(0.1))
+#         imagesnew = tf.add(images,alpha)
 
         kernel1 = tf.convert_to_tensor(np.load(os.path.join(FLAGS.out_dir, 'conv1-weights.npy')))
-#         conv2d1 = tf.nn.conv2d(images, kernel1, [1, 1, 1, 1], padding='SAME')
-        conv2d1 = tf.nn.conv2d(imagesnew, kernel1, [1, 1, 1, 1], padding='SAME')
+        conv2d1 = tf.nn.conv2d(images, kernel1, [1, 1, 1, 1], padding='SAME')
+#         conv2d1 = tf.nn.conv2d(imagesnew, kernel1, [1, 1, 1, 1], padding='SAME')
         biases1 = tf.convert_to_tensor(np.load(os.path.join(FLAGS.out_dir, 'conv1-biases.npy')))
         bias1 = tf.nn.bias_add(conv2d1, biases1)
         conv1 = tf.nn.relu(bias1)
-
-        
-        
-
         
         pool1 = tf.nn.max_pool(conv1, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1],
                          padding='SAME', name='pool1')
@@ -101,10 +97,10 @@ def adversary_train():
         weights4 = tf.convert_to_tensor(np.load(os.path.join(FLAGS.out_dir, 'local4-weights.npy')))
         biases4 = tf.convert_to_tensor(np.load(os.path.join(FLAGS.out_dir, 'local4-biases.npy')))
         
-        local4 = tf.nn.relu(tf.matmul(local3, weights4) + biases4 )
-#         local4old = tf.nn.relu(tf.matmul(local3, weights4) + biases4 )
-#         alpha = cifar10._variable_on_cpu('alpha', [192], tf.constant_initializer(0.1))
-#         local4 = tf.add(local4old,alpha)
+#         local4 = tf.nn.relu(tf.matmul(local3, weights4) + biases4 )
+        local4old = tf.nn.relu(tf.matmul(local3, weights4) + biases4 )
+        alpha = cifar10._variable_on_cpu('alpha', [192], tf.constant_initializer(0.1))
+        local4 = tf.add(local4old,alpha)
         
         softmaxweights = tf.convert_to_tensor(np.load(os.path.join(FLAGS.out_dir, 'softmax_linear-weights.npy')))
         softmaxbiases = tf.convert_to_tensor(np.load(os.path.join(FLAGS.out_dir, 'softmax_linear-biases.npy')))
@@ -115,8 +111,8 @@ def adversary_train():
         cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(softmax_linear, labels, name='cross_entropy_per_example')
         cross_entropy_mean = tf.reduce_mean(cross_entropy, name='cross_entropy')        
         
-        loss = cross_entropy_mean
-        train_op = train(cross_entropy_mean, global_step)
+        loss = tf.nn.l2_loss(alpha) + cross_entropy_mean 
+        train_op = train(loss, global_step)
 
         init = tf.initialize_all_variables()
         
@@ -143,9 +139,10 @@ def adversary_train():
                 print (format_str % (datetime.now(), step, loss_value,
                              examples_per_sec, sec_per_batch))
                 
-#                 print('alpha',sess.run(alpha))
+                print('alpha',sess.run(alpha))
                 
         
+#         print((sess.run(tf.add(images,alpha))).shape)
         
         
         np.save(os.path.join(FLAGS.out_dir, 'alpha.npy'), sess.run(alpha))

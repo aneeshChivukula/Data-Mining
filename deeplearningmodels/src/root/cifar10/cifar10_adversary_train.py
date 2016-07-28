@@ -55,7 +55,7 @@ def train(total_loss, global_step):
     return train_op
 
 
-def adversary_train():
+def adversary_train_cnn():
     with tf.Graph().as_default():
         global_step = tf.Variable(0, trainable=False)
         
@@ -172,15 +172,54 @@ def adversary_train():
 #                     name='norm1')
         
         
+from deap import base
+from deap import creator
+from deap import tools
+from PIL import Image
+from os import listdir
+
+
+def initIndividual(icls, filename):
+    return icls(Image.open(filename).getdata())
+
+def initPopulation(ind_init, InDir):
+    l = list()
+    for d in listdir(InDir):
+        for f in listdir(InDir + d):
+            l.append(ind_init(filename=InDir + d + '/' + f))
+    return l
         
+def adversary_train_genetic(InDir):
+    creator.create("FitnessMax", base.Fitness, weights=(0.0,))
+    creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+
+    toolbox = base.Toolbox()
+    toolbox.register("individual", initIndividual, creator.Individual)
+    print(toolbox.individual(filename=InDir+'BlackDog/n02111277_9983.JPEG').shape)
+
+    toolbox.register("population", initPopulation, toolbox.individual, InDir)
+    
+    population = toolbox.population()    
+    print('population',population)
+
+
+    
+    
 
 def main(argv=None):
     if tf.gfile.Exists(FLAGS.train_dir):
         tf.gfile.DeleteRecursively(FLAGS.train_dir)
     tf.gfile.MakeDirs(FLAGS.train_dir)
-    
-    
-    adversary_train()
+    adversary_train_cnn()
+
+
     
 if __name__ == '__main__':
-  tf.app.run()
+#   tf.app.run()
+  InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
+
+  adversary_train_genetic(InDir)
+  
+  
+  
+  

@@ -50,6 +50,16 @@ def resizer(CurrDir):
         image = img.resize((width,height), Image.ANTIALIAS)
         image.save(CurrDir + f)
         print(img.size)
+        
+        
+def colourtograyscale(InDir,OutDir):
+    os.chdir(InDir)
+    for f in listdir(InDir):
+        img = Image.open(f)
+        # http://stackoverflow.com/questions/12201577/how-can-i-convert-an-rgb-image-into-grayscale-in-python
+        # http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
+        
+
 
 def binarizer(CurrDir,ValDir,OutFile): 
     # resizer and binarizer have same directory
@@ -99,3 +109,5 @@ if __name__ == '__main__':
 
     binarizer(InDir,'TrainSplit/','train.bin')
     binarizer(InDir,'TestSplit/','test.bin')
+
+

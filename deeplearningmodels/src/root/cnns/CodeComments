@@ -2308,5 +2308,25 @@ def model(x,y_,dropout,weights_variables_dict):
     # Loop over both directories
     # Append all images to a list and finall write list to file as one big binary string 
     # Make one train file and one test file       
+
+
+
+
+
+
+The lightness method averages the most prominent and least prominent colors: (max(R, G, B) + min(R, G, B)) / 2.
+
+The average method simply averages the values: (R + G + B) / 3.
+
+The luminosity method is a more sophisticated version of the average method. It also averages the values, but it forms a weighted average to account for human perception. We’re more sensitive to green than other colors, so green is weighted most heavily. 
+The formula for luminosity is 0.21 R + 0.72 G + 0.07 B.
+
+http://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/
+
+How can I convert an RGB image into grayscale in Python?
+http://stackoverflow.com/questions/12201577/how-can-i-convert-an-rgb-image-into-grayscale-in-python
+Using python PIL to turn a RGB image into a pure black and white image
+http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
+
     
 '''

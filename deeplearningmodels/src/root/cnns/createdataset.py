@@ -69,7 +69,9 @@ def binarizer(CurrDir,ValDir,OutFile):
     os.chdir(CurrDir)
     binfile = open(OutFile, 'wb',)
     os.chdir(CurrDir + ValDir)
-    for d in listdir(CurrDir + ValDir):
+    ls = listdir(CurrDir + ValDir)
+    ls.sort()
+    for d in ls:
         os.chdir(CurrDir + ValDir + d)
         for f in listdir(CurrDir + ValDir + d):
             img = Image.open(f)
@@ -101,11 +103,11 @@ if __name__ == '__main__':
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
 #     partitoner(InDir)
    
-    resizer(InDir+'TrainSplit/BrownDog/')
-    resizer(InDir+'TrainSplit/BlackDog/')
-  
-    resizer(InDir+'TestSplit/BrownDog/')
-    resizer(InDir+'TestSplit/BlackDog/')
+#     resizer(InDir+'TrainSplit/BrownDog/')
+#     resizer(InDir+'TrainSplit/BlackDog/')
+#   
+#     resizer(InDir+'TestSplit/BrownDog/')
+#     resizer(InDir+'TestSplit/BlackDog/')
 
     binarizer(InDir,'TrainSplit/','train.bin')
     binarizer(InDir,'TestSplit/','test.bin')

@@ -89,7 +89,10 @@ def read_cifar10(filename_queue):
   # The first bytes represent the label, which we convert from uint8->int32.
   result.label = tf.cast(
       tf.slice(record_bytes, [0], [label_bytes]), tf.int32)
-
+  
+  
+  print('result.label',result.label)
+  
   # The remaining bytes after the label represent the image, which we reshape
   # from [depth * height * width] to [depth, height, width].
   depth_major = tf.reshape(tf.slice(record_bytes, [label_bytes], [image_bytes]),

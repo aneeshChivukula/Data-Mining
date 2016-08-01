@@ -72,6 +72,11 @@ def train():
     # Get images and labels for CIFAR-10.
     print('In train')
     images, labels = cifar10.distorted_inputs()
+    
+    
+    
+    
+    
 #     import sys
 #     sys.exit()
     # Build a Graph that computes the logits predictions from the
@@ -100,7 +105,6 @@ def train():
     sess = tf.Session(config=tf.ConfigProto(
         log_device_placement=FLAGS.log_device_placement))
     sess.run(init)
-
     # Start the queue runners.
     tf.train.start_queue_runners(sess=sess)
 
@@ -122,6 +126,7 @@ def train():
                       'sec/batch)')
         print (format_str % (datetime.now(), step, loss_value,
                              examples_per_sec, sec_per_batch))
+#         print('labels',sess.run(labels))
 
       if step % 100 == 0:
         summary_str = sess.run(summary_op)

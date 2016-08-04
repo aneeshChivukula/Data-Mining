@@ -71,7 +71,7 @@ tf.app.flags.DEFINE_boolean('run_once', True,
                          """Whether to run eval only once.""")
 
 
-def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore):
+def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,logits,labels):
   """Run Eval once.
 
   Args:
@@ -94,9 +94,9 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore):
       return
 
 
-    print(os.path.join(FLAGS.data_dir, 'conv1-weights.npy'))
-    print(sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
-    
+#     print(os.path.join(FLAGS.data_dir, 'conv1-weights.npy'))
+#     print(sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
+
     np.save(os.path.join(FLAGS.out_dir, 'conv1-weights.npy'), sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
     np.save(os.path.join(FLAGS.out_dir, 'conv1-biases.npy'), sess.run(variables_to_restore['conv1/biases/ExponentialMovingAverage']))
     np.save(os.path.join(FLAGS.out_dir, 'conv2-weights.npy'), sess.run(variables_to_restore['conv2/weights/ExponentialMovingAverage']))
@@ -142,6 +142,8 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore):
 
       # Compute precision @ 1.
       precision = true_count / total_sample_count
+#       print('logits',sess.run(logits))
+#       print('labels',sess.run(labels))
       print('%s: precision @ 1 = %.3f' % (datetime.now(), precision))
 
       summary = tf.Summary()
@@ -186,7 +188,7 @@ def evaluate():
     summary_writer = tf.train.SummaryWriter(FLAGS.eval_dir, g)
 
     while True:
-      eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore)
+      eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,logits,labels)
       if FLAGS.run_once:
         break
       time.sleep(FLAGS.eval_interval_secs)

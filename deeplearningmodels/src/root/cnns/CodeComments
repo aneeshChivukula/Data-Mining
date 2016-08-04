@@ -2329,5 +2329,11 @@ Using python PIL to turn a RGB image into a pure black and white image
 http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
 
 
+
+    print('curralpha',curralpha.shape)
+    print('curralpha',curralpha[:,:,0].shape)
+    print('curralpha',np.sqrt(np.sum(np.square(curralpha[:,:,0]))))
+    print('curralpha',np.sqrt(np.sum(np.square(curralpha[:,:,1]))))
+    print('curralpha',np.sqrt(np.sum(np.square(curralpha[:,:,2]))))
     
 '''

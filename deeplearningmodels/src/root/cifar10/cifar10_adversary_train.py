@@ -1,11 +1,18 @@
+from __future__ import division
+
+from PIL import Image
+from datetime import datetime
+from deap import base
+from deap import creator
+from deap import tools
+import math
+from os import listdir
 import os.path
 import time
 
 import numpy as np
-import tensorflow as tf
-
 from root.cifar10 import cifar10
-from datetime import datetime
+import tensorflow as tf
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -19,6 +26,15 @@ tf.app.flags.DEFINE_integer('max_steps', 20,
                             """Number of batches to run.""")
 tf.app.flags.DEFINE_boolean('log_device_placement', False,
                             """Whether to log device placement.""")
+tf.app.flags.DEFINE_string('eval_data', 'test',
+                           """Either 'test' or 'train_eval'.""")
+tf.app.flags.DEFINE_integer('num_examples', 810,
+                            """Number of examples to run.""")
+tf.app.flags.DEFINE_integer('low', 0,
+                            """Lower limit for pixel value.""")
+tf.app.flags.DEFINE_integer('high', 256,
+                            """Upper limit for pixel value.""")
+
 
 length = 3073
 
@@ -111,49 +127,54 @@ def loss_function_input(images,flag):
         
 def adversary_test_cnn():
     with tf.Graph().as_default():
+        sess = tf.Session(config=tf.ConfigProto(
+        log_device_placement=FLAGS.log_device_placement))
+        coord = tf.train.Coordinator()
+
         global_step = tf.Variable(0, trainable=False)
         
         eval_data = FLAGS.eval_data == 'test'
         
         images, labels = cifar10.inputs(eval_data=eval_data)
         
-        softmax_linear = loss_function_input(images)
-        
+        softmax_linear = loss_function_input(images,'test')
         labels = tf.cast(labels, tf.int64)
-        softmax_probabilities = tf.nn.softmax(softmax_linear)
-#         cross_entropy_mean = tf.reduce_mean(cross_entropy, name='cross_entropy')  
         
-        loss = softmax_probabilities
-        
-        train_op = train(loss, global_step)
+        top_k_op = tf.nn.in_top_k(softmax_linear, labels, 1)
         
         init = tf.initialize_all_variables()
-        
-        sess = tf.Session(config=tf.ConfigProto(
-        log_device_placement=FLAGS.log_device_placement))
-        
         sess.run(init)
-        tf.train.start_queue_runners(sess=sess)
+        try:
+            threads = []
+            for qr in tf.get_collection(tf.GraphKeys.QUEUE_RUNNERS):
+                threads.extend(qr.create_threads(sess, coord=coord, daemon=True,
+                                         start=True))
+            num_iter = int(math.ceil(FLAGS.num_examples / FLAGS.batch_size))
+            true_count = 0
+            total_sample_count = num_iter * FLAGS.batch_size
+            step = 0
+            
+            while step < num_iter and not coord.should_stop():
 
-        for step in xrange(FLAGS.max_steps):
-            start_time = time.time()
-            _, loss_value = sess.run([train_op, loss])
-            duration = time.time() - start_time
-            
-            assert not np.isnan(loss_value), 'Model diverged with loss = NaN'
-            
-            if step % 10 == 0:
-                num_examples_per_step = FLAGS.batch_size
-                examples_per_sec = num_examples_per_step / duration
-                sec_per_batch = float(duration)
                 
-                format_str = ('%s: step %d, loss = %.2f (%.1f examples/sec; %.3f '
-                      'sec/batch)')
-                print (format_str % (datetime.now(), step, loss_value,
-                             examples_per_sec, sec_per_batch))
+                predictions = sess.run([top_k_op])
+                print('sess.run(labels)',sess.run(labels))
+#                 print('sess.run(softmax_linear)',sess.run(softmax_linear))
+#                 print('predictions',predictions)
 
+                
+                true_count += np.sum(predictions)
+                step += 1
+                
+            precision = (true_count / total_sample_count)
+            print('%s: precision @ 1 = %.3f' % (datetime.now(), precision))
+        except Exception as e:  
+            coord.request_stop(e)
+
+        coord.request_stop()
+        coord.join(threads, stop_grace_period_secs=10)
         
-        return(sess.run(loss_value))
+        return(1-precision)
         
         
 def adversary_train_cnn():
@@ -164,7 +185,7 @@ def adversary_train_cnn():
 
 #         alpha = cifar10._variable_on_cpu('alpha', [24, 24, 3], tf.constant_initializer(0.1))
 #         imagesnew = tf.add(images,alpha)
-        softmax_linear,alpha = loss_function_input(images)
+        softmax_linear,alpha = loss_function_input(images,'train')
         
         
         labels = tf.cast(labels, tf.int64)
@@ -199,7 +220,7 @@ def adversary_train_cnn():
                 print (format_str % (datetime.now(), step, loss_value,
                              examples_per_sec, sec_per_batch))
                 
-                print('alpha',sess.run(alpha))
+#                 print('alpha',sess.run(alpha))
                 
         
 #         print((sess.run(tf.add(images,alpha))).shape)
@@ -232,11 +253,6 @@ def adversary_train_cnn():
 #                     name='norm1')
         
         
-from deap import base
-from deap import creator
-from deap import tools
-from PIL import Image
-from os import listdir
 
 
 def initIndividualImage(icls, filename):
@@ -248,25 +264,28 @@ def initIndividualImage(icls, filename):
 
 
 def initIndividual(icls):
-    return np.random.randint(256, size=(32, 32, 3))
+    return np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
 
 def initPopulation(ind_init, InDir):
     l = list()
     ind = 0
     ls = listdir(InDir)
     ls.sort()
-    for d in ls:
-        for f in listdir(InDir + d):
-            a = ind_init(filename=InDir + d + '/' + f)
-            if(len(a.shape) == 3):
-                l.append((ind,ind_init(filename=InDir + d + '/' + f)))
-        ind = ind + 1
+    
+    d = ls[0]
+    
+#     for d in ls:
+    for f in listdir(InDir + d):
+        a = ind_init(filename=InDir + d + '/' + f)
+        if(len(a.shape) == 3):
+            l.append((ind,ind_init(filename=InDir + d + '/' + f)))
+    ind = ind + 1
 #     print('l',l)
     return l
 
 
-def evaluate(currpopulation,trainclasses):
-    binarizer(FLAGS.data_dir + '/imagenet2010-batches-bin/',currpopulation,trainclasses,'test.bin')
+def evaluate(currpopulation):
+    binarizer(FLAGS.data_dir + '/imagenet2010-batches-bin/',currpopulation,'test.bin')
     return adversary_test_cnn()
 
 def select(population,popsize,fitnesses):
@@ -274,16 +293,16 @@ def select(population,popsize,fitnesses):
 
 def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
-    r = np.random.randint(256, size=(32, 32, 3))
+    r = np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
     individual[mask] = r[mask]
     return (individual,)
 
 def crossover(individual1,individual2):
-    heightstartind = np.random.randint(256)
-    heightendind = np.random.randint(heightstartind,256)
+    heightstartind = np.random.randint(low=0,high=32)
+    heightendind = np.random.randint(heightstartind,32)
     
-    widthstartind = np.random.randint(256)
-    widthendind = np.random.randint(widthstartind,256)
+    widthstartind = np.random.randint(low=0,high=32)
+    widthendind = np.random.randint(widthstartind,32)
     
     individual2[heightstartind:heightendind,widthstartind:widthendind,], individual1[heightstartind:heightendind,widthstartind:widthendind,] = individual1[heightstartind:heightendind,widthstartind:widthendind,].copy(), individual2[heightstartind:heightendind,widthstartind:widthendind,].copy()
 
@@ -291,23 +310,51 @@ def crossover(individual1,individual2):
 
 # def selection(individual1,individual2):
 
-def binarizer(CurrDir,population,classes,OutFile):
+def binarizer(CurrDir,population,OutFile):
     
     os.chdir(CurrDir)
     binfile = open(OutFile, 'wb',)
     
     L = []
     for t in population:
+#         print('t',t)
         l = np.insert(t[0].flatten(order='F'),0, t[1])
         if(len(l) == length):
             L.append(l)
 
-    print(len(L)*length)
-    print(len(np.concatenate(L)))
+#     print(len(L)*length)
+#     print(len(np.concatenate(L)))
     
     np.concatenate(L).astype('int16').tofile(binfile)
     binfile.close()
 
+def tensornorm(curralpha):
+    (i,j,k) = np.shape(curralpha)
+    return (np.sqrt(np.sum(np.square(curralpha))/(i*j*k)))
+#     return (np.sqrt(np.sum(np.square(curralpha))/(i*j*k)) / 100)
+
+def distorted_image(x,curralpha):
+    a = (curralpha + x)
+    a[a>256] = 255
+    a[a<0] = 0
+    
+#     print('a',a)
+#     print('x[0]',x[0])
+#     print('x[1]',x[1])
+    
+    return a
+
+def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
+    fitnesses = []
+    for curralpha in alphaspopulation:
+
+        distortedimages = []
+        for x in imagespopulation:
+            distortedimages.append((distorted_image(x[1],curralpha),x[0]))
+        fitnesses.append(toolbox.evaluation(distortedimages) - tensornorm(curralpha))
+
+#         fitnesses.append(toolbox.evaluation(map(lambda x:(distorted_image(x[1],curralpha),x[0]), imagespopulation) - tensornorm(curralpha)))
+    return fitnesses
 
 def adversary_train_genetic(InDir,WeightsDir):
     
@@ -326,34 +373,23 @@ def adversary_train_genetic(InDir,WeightsDir):
 
     toolbox.register("mutation", mutation)
     toolbox.register("crossover", crossover)
-    toolbox.register("evaluation", evaluate)
+    toolbox.register("evaluation", evaluate) # For each alpha, add L2norm(alpha) to the (1-GAAccuracy) returned by evaluate
     toolbox.register("selection", select)
 
-
-
-    imagepopulation = toolbox.imagepopulation()
+    imagespopulation = toolbox.imagepopulation()
     
-#     print('imagepopulation',imagepopulation)
-
     numalphas = 10
-    population = toolbox.population(n=numalphas)    
-#     print('population',(population)[0])
+    alphaspopulation = toolbox.population(n=numalphas)
     
-    curralpha = population[0]
-    
-    currpopulation = map(lambda x: ((curralpha + x[1]),x[0]), imagepopulation)
-#     print(currpopulation)
+    fitnesses = alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
+    print('fitnesses',fitnesses)
+#     print('alphaspopulation',alphaspopulation)
     
     
-    
-    
-    
-
 
     import sys
     sys.exit()
     
-    np.load()
 
 
 

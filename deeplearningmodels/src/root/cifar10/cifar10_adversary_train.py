@@ -34,6 +34,8 @@ tf.app.flags.DEFINE_integer('low', 0,
                             """Lower limit for pixel value.""")
 tf.app.flags.DEFINE_integer('high', 256,
                             """Upper limit for pixel value.""")
+tf.app.flags.DEFINE_integer('max_iter_test', 50,
+                            """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
 
 
 length = 3073
@@ -149,22 +151,20 @@ def adversary_test_cnn():
             for qr in tf.get_collection(tf.GraphKeys.QUEUE_RUNNERS):
                 threads.extend(qr.create_threads(sess, coord=coord, daemon=True,
                                          start=True))
-            num_iter = int(math.ceil(FLAGS.num_examples / FLAGS.batch_size))
+#             num_iter = int(math.ceil(FLAGS.num_examples / FLAGS.batch_size))
+            num_iter = FLAGS.max_iter_test
             true_count = 0
             total_sample_count = num_iter * FLAGS.batch_size
             step = 0
             
             while step < num_iter and not coord.should_stop():
-
-                
                 predictions = sess.run([top_k_op])
-                print('sess.run(labels)',sess.run(labels))
-#                 print('sess.run(softmax_linear)',sess.run(softmax_linear))
-#                 print('predictions',predictions)
-
-                
                 true_count += np.sum(predictions)
                 step += 1
+                
+#                 print('sess.run(softmax_linear)',sess.run(softmax_linear))
+#                 print('predictions',predictions)
+#                 print('labels',labels)
                 
             precision = (true_count / total_sample_count)
             print('%s: precision @ 1 = %.3f' % (datetime.now(), precision))
@@ -272,14 +272,14 @@ def initPopulation(ind_init, InDir):
     ls = listdir(InDir)
     ls.sort()
     
-    d = ls[0]
+#     d = ls[0]
     
-#     for d in ls:
-    for f in listdir(InDir + d):
-        a = ind_init(filename=InDir + d + '/' + f)
-        if(len(a.shape) == 3):
-            l.append((ind,ind_init(filename=InDir + d + '/' + f)))
-    ind = ind + 1
+    for d in ls:
+        for f in listdir(InDir + d):
+            a = ind_init(filename=InDir + d + '/' + f)
+            if(len(a.shape) == 3):
+                l.append((ind,ind_init(filename=InDir + d + '/' + f)))
+        ind = ind + 1
 #     print('l',l)
     return l
 
@@ -317,14 +317,9 @@ def binarizer(CurrDir,population,OutFile):
     
     L = []
     for t in population:
-#         print('t',t)
         l = np.insert(t[0].flatten(order='F'),0, t[1])
         if(len(l) == length):
             L.append(l)
-
-#     print(len(L)*length)
-#     print(len(np.concatenate(L)))
-    
     np.concatenate(L).astype('int16').tofile(binfile)
     binfile.close()
 
@@ -337,11 +332,6 @@ def distorted_image(x,curralpha):
     a = (curralpha + x)
     a[a>256] = 255
     a[a<0] = 0
-    
-#     print('a',a)
-#     print('x[0]',x[0])
-#     print('x[1]',x[1])
-    
     return a
 
 def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
@@ -351,6 +341,7 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
         distortedimages = []
         for x in imagespopulation:
             distortedimages.append((distorted_image(x[1],curralpha),x[0]))
+        
         fitnesses.append(toolbox.evaluation(distortedimages) - tensornorm(curralpha))
 
 #         fitnesses.append(toolbox.evaluation(map(lambda x:(distorted_image(x[1],curralpha),x[0]), imagespopulation) - tensornorm(curralpha)))
@@ -377,16 +368,21 @@ def adversary_train_genetic(InDir,WeightsDir):
     toolbox.register("selection", select)
 
     imagespopulation = toolbox.imagepopulation()
+#     for x in imagespopulation:
+#         print(x[0])
+
     
     numalphas = 10
     alphaspopulation = toolbox.population(n=numalphas)
     
     fitnesses = alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
     print('fitnesses',fitnesses)
-#     print('alphaspopulation',alphaspopulation)
-    
-    
 
+
+
+
+
+#     print('imagespopulation',imagespopulation)
     import sys
     sys.exit()
     

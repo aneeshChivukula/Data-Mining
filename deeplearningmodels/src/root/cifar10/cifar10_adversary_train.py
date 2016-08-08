@@ -8,11 +8,13 @@ from deap import tools
 import math
 from os import listdir
 import os.path
+import random
 import time
 
 import numpy as np
 from root.cifar10 import cifar10
 import tensorflow as tf
+
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -255,7 +257,7 @@ def adversary_train_cnn():
         
 
 
-def initIndividualImage(icls, filename):
+def initIndividualImage(filename):
 #     return icls(Image.open(filename).getdata()).reshape((32,32,3))
     img = Image.open(filename)
     img.load()
@@ -263,10 +265,11 @@ def initIndividualImage(icls, filename):
 #     return np.array(Image.open(filename).getdata()).reshape((32,32,3))
 
 
-def initIndividual(icls):
+# def initIndividual(icls):
+def initIndividual():
     return np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
 
-def initPopulation(ind_init, InDir):
+def initImagePopulation(ind_init, InDir):
     l = list()
     ind = 0
     ls = listdir(InDir)
@@ -283,13 +286,15 @@ def initPopulation(ind_init, InDir):
 #     print('l',l)
     return l
 
-
 def evaluate(currpopulation):
     binarizer(FLAGS.data_dir + '/imagenet2010-batches-bin/',currpopulation,'test.bin')
     return adversary_test_cnn()
 
-def select(population,popsize,fitnesses):
-    return np.random.choice(a=population,size=len(population)/2,replace=True,p=fitnesses)
+def select(population,fitnesses):
+    popsize = len(population)
+    popindices = range(0,popsize)
+    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=fitnesses)
+    return [population[i] for i in randompopindices]
 
 def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
@@ -323,9 +328,8 @@ def binarizer(CurrDir,population,OutFile):
     np.concatenate(L).astype('int16').tofile(binfile)
     binfile.close()
 
-def tensornorm(curralpha):
-    (i,j,k) = np.shape(curralpha)
-    return (np.sqrt(np.sum(np.square(curralpha))/(i*j*k)))
+def tensornorm(curralpha):    
+    return (np.sqrt(np.sum(np.square(curralpha)))) # Divide by avg of l2 norm of training data to get within range of 0,1
 #     return (np.sqrt(np.sum(np.square(curralpha))/(i*j*k)) / 100)
 
 def distorted_image(x,curralpha):
@@ -336,56 +340,82 @@ def distorted_image(x,curralpha):
 
 def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
     fitnesses = []
-    for curralpha in alphaspopulation:
-
+    
+    
+    alphanorms = []
+    totnorm = 0.0
+    for index,curralpha in enumerate(alphaspopulation):
+        alphanorms.append(tensornorm(curralpha))
+        totnorm = totnorm + alphanorms[index]
+    
+    for index,curralpha in enumerate(alphaspopulation):
         distortedimages = []
         for x in imagespopulation:
             distortedimages.append((distorted_image(x[1],curralpha),x[0]))
         
-        fitnesses.append(toolbox.evaluation(distortedimages) - tensornorm(curralpha))
+        fitnesses.append(1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
 
-#         fitnesses.append(toolbox.evaluation(map(lambda x:(distorted_image(x[1],curralpha),x[0]), imagespopulation) - tensornorm(curralpha)))
-    return fitnesses
+    return fitnesses / sum(fitnesses)
 
 def adversary_train_genetic(InDir,WeightsDir):
-    
+
     creator.create("FitnessMax", base.Fitness, weights=(0.0,))
-#     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
-
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
-    toolbox = base.Toolbox()
-    toolbox.register("individual", initIndividual, creator.Individual)
-    toolbox.register("individualImage", initIndividualImage, creator.Individual)
-    ind1 = (toolbox.individualImage(filename=InDir+'BlackDog/n02111277_9983.JPEG'))
-#     ind2 = (toolbox.individualImage(filename=InDir+'BlackDog/n02111277_9983.JPEG'))
-        
-    toolbox.register("imagepopulation", initPopulation, toolbox.individualImage, InDir)
-    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
-
-    toolbox.register("mutation", mutation)
-    toolbox.register("crossover", crossover)
-    toolbox.register("evaluation", evaluate) # For each alpha, add L2norm(alpha) to the (1-GAAccuracy) returned by evaluate
-    toolbox.register("selection", select)
-
-    imagespopulation = toolbox.imagepopulation()
-#     for x in imagespopulation:
-#         print(x[0])
-
     
     numalphas = 10
-    alphaspopulation = toolbox.population(n=numalphas)
+    toolbox = base.Toolbox()
+    toolbox.register("attribute",initIndividual)
+    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
+
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=numalphas)
     
+    alphaspopulation = toolbox.population()
+    
+    toolbox.register("mutate", mutation)
+    toolbox.register("mate", crossover)
+    toolbox.register("evaluate", evaluate)
+    toolbox.register("select", select)
+    
+    toolbox.register("individualImage", initIndividualImage)
+    toolbox.register("imagepopulation", initImagePopulation, toolbox.individualImage, InDir)
+    imagespopulation = toolbox.imagepopulation()
+
     fitnesses = alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
+    for ind, fit in zip(alphaspopulation, fitnesses):
+        ind.fitness.weights = (fit,)
+        ind.fitness.values = [fit]
+ 
     print('fitnesses',fitnesses)
-
-
-
-
-
-#     print('imagespopulation',imagespopulation)
-    import sys
-    sys.exit()
-    
+    CXPB, MUTPB, NGEN = 0.5, 0.2, 40
+     
+    for g in xrange(NGEN):
+        offspring = toolbox.select(alphaspopulation,fitnesses)
+        offspring = map(toolbox.clone, offspring)
+        
+        for child1, child2 in zip(offspring[::2], offspring[1::2]):
+            if random.random() < CXPB:
+                toolbox.mate(child1, child2)
+                del child1.fitness.values
+                child1.fitness.weights = 0.0
+                del child2.fitness.values
+                child2.fitness.weights = 0.0
+                
+        for mutant in offspring:
+            if random.random() < MUTPB:
+                toolbox.mutate(mutant)
+                del mutant.fitness.values
+                mutant.fitness.weights = 0.0
+        
+        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+        fitnesses = alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
+        for ind, fit in zip(alphaspopulation, fitnesses):
+            ind.fitness.weights = (fit,)
+            ind.fitness.values = [fit]
+            
+        alphaspopulation[:] = offspring
+        
+    return alphaspopulation
+        
 
 
 
@@ -412,8 +442,8 @@ if __name__ == '__main__':
 #   tf.app.run()
   InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
   WeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output'
-  adversary_train_genetic(InDir,WeightsDir)
-  
+  alphaspopulation = adversary_train_genetic(InDir,WeightsDir)
+  print('final alphaspopulation',alphaspopulation)
   
   
   

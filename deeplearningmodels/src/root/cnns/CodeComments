@@ -2336,4 +2336,124 @@ http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-
     print('curralpha',np.sqrt(np.sum(np.square(curralpha[:,:,1]))))
     print('curralpha',np.sqrt(np.sum(np.square(curralpha[:,:,2]))))
     
+    
+def adversary_train_genetic(InDir,WeightsDir):
+    
+    creator.create("FitnessMax", base.Fitness, weights=(0.0,))
+#     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+
+    creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+    toolbox = base.Toolbox()
+    toolbox.register("individual", initIndividual, creator.Individual)
+    toolbox.register("individualImage", initIndividualImage, creator.Individual)
+    ind1 = (toolbox.individualImage(filename=InDir+'BlackDog/n02111277_9983.JPEG'))
+#     ind2 = (toolbox.individualImage(filename=InDir+'BlackDog/n02111277_9983.JPEG'))
+        
+    toolbox.register("imagepopulation", initPopulation, toolbox.individualImage, InDir)
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+    toolbox.register("mutation", mutation)
+    toolbox.register("crossover", crossover)
+    toolbox.register("evaluation", evaluate) # For each alpha, add L2norm(alpha) to the (1-GAAccuracy) returned by evaluate
+    toolbox.register("selection", select)
+
+    imagespopulation = toolbox.imagepopulation()    
+    
+    creator.create("FitnessMax", base.Fitness, weights=(0.0,))
+#     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+
+    creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+    toolbox = base.Toolbox()
+    toolbox.register("individual", initIndividual, creator.Individual)
+    toolbox.register("individualImage", initIndividualImage, creator.Individual)
+    ind1 = (toolbox.individualImage(filename=InDir+'BlackDog/n02111277_9983.JPEG'))
+#     ind2 = (toolbox.individualImage(filename=InDir+'BlackDog/n02111277_9983.JPEG'))
+
+
+    print ind1.fitness.valid
+    import sys
+    sys.exit()
+
+        
+    toolbox.register("imagepopulation", initPopulation, toolbox.individualImage, InDir)
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+    toolbox.register("mutation", mutation)
+    toolbox.register("crossover", crossover)
+    toolbox.register("evaluation", evaluate) # For each alpha, add L2norm(alpha) to the (1-GAAccuracy) returned by evaluate
+    toolbox.register("selection", select)
+
+    imagespopulation = toolbox.imagepopulation()
+        
+    numalphas = 2
+    alphaspopulation = toolbox.population(n=numalphas)
+
+    
+    fitnesses = alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
+    print('fitnesses',fitnesses)
+
+    for ind, fit in zip(alphaspopulation, fitnesses):
+        ind.fitness.values = fit
+
+
+    import sys
+    sys.exit()
+
+
+    
+    creator.create("FitnessMax", base.Fitness, weights=(0.0,))
+#     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+
+    creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+    toolbox = base.Toolbox()
+    toolbox.register("individual", initIndividual, creator.Individual)
+    toolbox.register("individualImage", initIndividualImage, creator.Individual)
+    ind1 = (toolbox.individualImage(filename=InDir+'BlackDog/n02111277_9983.JPEG'))
+#     ind2 = (toolbox.individualImage(filename=InDir+'BlackDog/n02111277_9983.JPEG'))
+
+
+    print ind1.fitness.valid
+    import sys
+    sys.exit()
+
+        
+    toolbox.register("imagepopulation", initImagePopulation, toolbox.individualImage, InDir)
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+    toolbox.register("mutation", mutation)
+    toolbox.register("crossover", crossover)
+    toolbox.register("evaluate", evaluate) # For each alpha, add L2norm(alpha) to the (1-GAAccuracy) returned by evaluate
+    toolbox.register("select", select)
+
+    imagespopulation = toolbox.imagepopulation()
+        
+    numalphas = 2
+    alphaspopulation = toolbox.population(n=numalphas)
+
+    
+    fitnesses = alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
+    print('fitnesses',fitnesses)
+
+    for ind, fit in zip(alphaspopulation, fitnesses):
+        ind.fitness.values = fit
+
+
+    import sys
+    sys.exit()
+
+#         print('ind.fitness.valid',ind.fitness.valid)
+#         print('ind.fitness.weights',ind.fitness.weights)
+#         del ind.fitness.values
+#         ind.fitness.weights = (0.0,)
+#         print('ind.fitness.valid',ind.fitness.valid)
+#         print('ind.fitness.weights',ind.fitness.weights)
+
+
+#     print('alphaspopulation',alphaspopulation)
+    # select input is individuals. evaluate input is individual distorted images.    
+#     print('imagespopulation',imagespopulation)
+#     print('fitnesses',fitnesses)
+
+
+    
 '''

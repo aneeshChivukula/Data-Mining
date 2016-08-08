@@ -290,9 +290,14 @@ def evaluate(currpopulation):
     binarizer(FLAGS.data_dir + '/imagenet2010-batches-bin/',currpopulation,'test.bin')
     return adversary_test_cnn()
 
-def select(population,fitnesses):
+def select(population):
     popsize = len(population)
     popindices = range(0,popsize)
+
+    fitnesses = []
+    for p in population:
+        fitnesses.append(p.fitness.weights[0])
+    
     randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=fitnesses)
     return [population[i] for i in randompopindices]
 
@@ -340,7 +345,7 @@ def distorted_image(x,curralpha):
 
 def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
     fitnesses = []
-    
+#     fitnesses = np.zeros(len(alphaspopulation))
     
     alphanorms = []
     totnorm = 0.0
@@ -348,21 +353,29 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
         alphanorms.append(tensornorm(curralpha))
         totnorm = totnorm + alphanorms[index]
     
+#     print('alphaspopulation',alphaspopulation)
+    
     for index,curralpha in enumerate(alphaspopulation):
         distortedimages = []
         for x in imagespopulation:
             distortedimages.append((distorted_image(x[1],curralpha),x[0]))
-        
+#         np.append(fitnesses,1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
         fitnesses.append(1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
 
-    return fitnesses / sum(fitnesses)
+    totfitness = sum(fitnesses)
+    for index,_ in enumerate(alphaspopulation):
+        fit = fitnesses[index] / totfitness
+        alphaspopulation[index].fitness.weights = (fit,)
+        alphaspopulation[index].fitness.values = [fit]
+#     return fitnesses / sum(fitnesses)
+#     return np.divide(fitnesses, np.sum(fitnesses))
 
 def adversary_train_genetic(InDir,WeightsDir):
 
     creator.create("FitnessMax", base.Fitness, weights=(0.0,))
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
     
-    numalphas = 10
+    numalphas = 4
     toolbox = base.Toolbox()
     toolbox.register("attribute",initIndividual)
     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
@@ -380,16 +393,17 @@ def adversary_train_genetic(InDir,WeightsDir):
     toolbox.register("imagepopulation", initImagePopulation, toolbox.individualImage, InDir)
     imagespopulation = toolbox.imagepopulation()
 
-    fitnesses = alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
-    for ind, fit in zip(alphaspopulation, fitnesses):
-        ind.fitness.weights = (fit,)
-        ind.fitness.values = [fit]
- 
-    print('fitnesses',fitnesses)
+
+    alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
+    print('Calling alphasfitnesses before')
+    print('len(alphaspopulation)',len(alphaspopulation))
+
     CXPB, MUTPB, NGEN = 0.5, 0.2, 40
-     
-    for g in xrange(NGEN):
-        offspring = toolbox.select(alphaspopulation,fitnesses)
+    
+    for g in xrange(NGEN) and alphaspopulation:
+        print('g',g)
+        print('alphaspopulation',alphaspopulation)
+        offspring = toolbox.select(alphaspopulation)
         offspring = map(toolbox.clone, offspring)
         
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
@@ -407,11 +421,10 @@ def adversary_train_genetic(InDir,WeightsDir):
                 mutant.fitness.weights = 0.0
         
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-        fitnesses = alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
-        for ind, fit in zip(alphaspopulation, fitnesses):
-            ind.fitness.weights = (fit,)
-            ind.fitness.values = [fit]
-            
+        
+        print('Calling alphasfitnesses after')
+        print('len(alphaspopulation)',len(alphaspopulation))
+        alphasfitnesses(invalid_ind,imagespopulation,toolbox)
         alphaspopulation[:] = offspring
         
     return alphaspopulation

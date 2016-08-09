@@ -297,6 +297,8 @@ def select(population):
     fitnesses = []
     for p in population:
         fitnesses.append(p.fitness.weights[0])
+        
+    print('fitnesses in select',fitnesses)
     
     randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=fitnesses)
     return [population[i] for i in randompopindices]
@@ -304,8 +306,8 @@ def select(population):
 def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
     r = np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
-    individual[mask] = r[mask]
-    return (individual,)
+    individual[0][mask] = r[mask]
+    return (individual[0],)
 
 def crossover(individual1,individual2):
     heightstartind = np.random.randint(low=0,high=32)
@@ -360,6 +362,7 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
         for x in imagespopulation:
             distortedimages.append((distorted_image(x[1],curralpha),x[0]))
 #         np.append(fitnesses,1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
+        print('Reset fitnesses in alphasfitnesses')
         fitnesses.append(1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
 
     totfitness = sum(fitnesses)
@@ -367,6 +370,10 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
         fit = fitnesses[index] / totfitness
         alphaspopulation[index].fitness.weights = (fit,)
         alphaspopulation[index].fitness.values = [fit]
+        print('Reset weights in alphasfitnesses')
+    print('len(alphaspopulation) in alphasfitnesses',len(alphaspopulation))
+    print('fitnesses in alphasfitnesses',fitnesses)
+
 #     return fitnesses / sum(fitnesses)
 #     return np.divide(fitnesses, np.sum(fitnesses))
 
@@ -375,7 +382,7 @@ def adversary_train_genetic(InDir,WeightsDir):
     creator.create("FitnessMax", base.Fitness, weights=(0.0,))
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
     
-    numalphas = 4
+    numalphas = 2
     toolbox = base.Toolbox()
     toolbox.register("attribute",initIndividual)
     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
@@ -397,35 +404,49 @@ def adversary_train_genetic(InDir,WeightsDir):
     alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
     print('Calling alphasfitnesses before')
     print('len(alphaspopulation)',len(alphaspopulation))
+#     print('alphaspopulation before',(alphaspopulation))
+#     print('len(alphaspopulation) before',len(alphaspopulation))
 
     CXPB, MUTPB, NGEN = 0.5, 0.2, 40
-    
-    for g in xrange(NGEN) and alphaspopulation:
-        print('g',g)
-        print('alphaspopulation',alphaspopulation)
+    gen = 0
+    exitLoop = False
+    while (gen < (NGEN) and not exitLoop):
+        print('gen',gen)
+        
         offspring = toolbox.select(alphaspopulation)
         offspring = map(toolbox.clone, offspring)
         
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
             if random.random() < CXPB:
+                print('Calling mate')
                 toolbox.mate(child1, child2)
                 del child1.fitness.values
                 child1.fitness.weights = 0.0
                 del child2.fitness.values
                 child2.fitness.weights = 0.0
+                print('Reset weights')
                 
         for mutant in offspring:
             if random.random() < MUTPB:
+                print('Calling mutate')
                 toolbox.mutate(mutant)
                 del mutant.fitness.values
                 mutant.fitness.weights = 0.0
+                print('Reset weights')
         
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-        
+        print('len(invalid_ind)',len(invalid_ind))
         print('Calling alphasfitnesses after')
         print('len(alphaspopulation)',len(alphaspopulation))
-        alphasfitnesses(invalid_ind,imagespopulation,toolbox)
-        alphaspopulation[:] = offspring
+#         print('alphaspopulation after',(alphaspopulation))
+#         print('len(alphaspopulation) after',len(alphaspopulation))
+
+        if(len(alphaspopulation) != 0):
+            alphasfitnesses(invalid_ind,imagespopulation,toolbox)
+            alphaspopulation[:] = offspring
+            exitLoop = True
+        gen = gen + 1
+        
         
     return alphaspopulation
         

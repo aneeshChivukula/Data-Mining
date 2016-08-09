@@ -21,23 +21,23 @@ FLAGS = tf.app.flags.FLAGS
 # tf.app.flags.DEFINE_string('train_dir', '/tmp/cifar10_adversary_train',
 #                            """Directory where to write event logs """
 #                            """and checkpoint.""")
-tf.app.flags.DEFINE_string('train_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_adversary_train',
+tf.app.flags.DEFINE_string('adv_train_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_adversary_train',
                            """Directory where to write event logs """
                            """and checkpoint.""")
-tf.app.flags.DEFINE_integer('max_steps', 20,
+tf.app.flags.DEFINE_integer('adv_max_steps', 20,
                             """Number of batches to run.""")
-tf.app.flags.DEFINE_boolean('log_device_placement', False,
+tf.app.flags.DEFINE_boolean('adv_log_device_placement', False,
                             """Whether to log device placement.""")
-tf.app.flags.DEFINE_string('eval_data', 'test',
+tf.app.flags.DEFINE_string('adv_eval_data', 'test',
                            """Either 'test' or 'train_eval'.""")
-tf.app.flags.DEFINE_integer('num_examples', 810,
-                            """Number of examples to run.""")
 tf.app.flags.DEFINE_integer('low', 0,
                             """Lower limit for pixel value.""")
 tf.app.flags.DEFINE_integer('high', 256,
                             """Upper limit for pixel value.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
+tf.app.flags.DEFINE_integer('numalphas', 2,
+                            """Number of solutions in the GA algorithm.""")
 
 
 length = 3073
@@ -132,12 +132,12 @@ def loss_function_input(images,flag):
 def adversary_test_cnn():
     with tf.Graph().as_default():
         sess = tf.Session(config=tf.ConfigProto(
-        log_device_placement=FLAGS.log_device_placement))
+        log_device_placement=FLAGS.adv_log_device_placement))
         coord = tf.train.Coordinator()
 
         global_step = tf.Variable(0, trainable=False)
         
-        eval_data = FLAGS.eval_data == 'test'
+        eval_data = FLAGS.adv_eval_data == 'test'
         
         images, labels = cifar10.inputs(eval_data=eval_data)
         
@@ -200,12 +200,12 @@ def adversary_train_cnn():
         init = tf.initialize_all_variables()
         
         sess = tf.Session(config=tf.ConfigProto(
-        log_device_placement=FLAGS.log_device_placement))
+        log_device_placement=FLAGS.adv_log_device_placement))
         
         sess.run(init)
         tf.train.start_queue_runners(sess=sess)
         
-        for step in xrange(FLAGS.max_steps):
+        for step in xrange(FLAGS.adv_max_steps):
             start_time = time.time()
             _, loss_value = sess.run([train_op, loss])
             duration = time.time() - start_time
@@ -382,12 +382,11 @@ def adversary_train_genetic(InDir,WeightsDir):
     creator.create("FitnessMax", base.Fitness, weights=(0.0,))
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
     
-    numalphas = 2
     toolbox = base.Toolbox()
     toolbox.register("attribute",initIndividual)
     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
 
-    toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=numalphas)
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=FLAGS.numalphas)
     
     alphaspopulation = toolbox.population()
     
@@ -448,7 +447,7 @@ def adversary_train_genetic(InDir,WeightsDir):
         gen = gen + 1
         
         
-    return alphaspopulation
+    return (alphaspopulation,imagespopulation)
         
 
 
@@ -465,9 +464,9 @@ def adversary_train_genetic(InDir,WeightsDir):
     
 
 def main(argv=None):
-    if tf.gfile.Exists(FLAGS.train_dir):
-        tf.gfile.DeleteRecursively(FLAGS.train_dir)
-    tf.gfile.MakeDirs(FLAGS.train_dir)
+    if tf.gfile.Exists(FLAGS.adv_train_dir):
+        tf.gfile.DeleteRecursively(FLAGS.adv_train_dir)
+    tf.gfile.MakeDirs(FLAGS.adv_train_dir)
     adversary_train_cnn()
 
 
@@ -476,8 +475,9 @@ if __name__ == '__main__':
 #   tf.app.run()
   InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
   WeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output'
-  alphaspopulation = adversary_train_genetic(InDir,WeightsDir)
+  (alphaspopulation,imagespopulation) = adversary_train_genetic(InDir,WeightsDir)
   print('final alphaspopulation',alphaspopulation)
+  print('input imagespopulation',imagespopulation)
   
   
   

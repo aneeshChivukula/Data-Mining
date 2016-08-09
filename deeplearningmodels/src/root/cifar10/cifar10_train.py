@@ -73,10 +73,6 @@ def train():
     print('In train')
     images, labels = cifar10.distorted_inputs()
     
-    
-    
-    
-    
 #     import sys
 #     sys.exit()
     # Build a Graph that computes the logits predictions from the

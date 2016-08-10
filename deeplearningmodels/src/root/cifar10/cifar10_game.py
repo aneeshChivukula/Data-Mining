@@ -12,7 +12,12 @@ from root.cnns import createdataset
 from os import listdir
 
 
-def main(argv=None):  
+def main(argv=None):
+    
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
+    createdataset.binarizer(InDir,'TrainSplit/','train.bin')
+    createdataset.binarizer(InDir,'TestSplit/','test.bin')
+    
     TrainWeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
     if tf.gfile.Exists(TrainWeightsDir):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
@@ -23,7 +28,7 @@ def main(argv=None):
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
-    cifar10_eval.evaluate()
+    precision = cifar10_eval.evaluate()
     
     maxiters = 10
     LoopingFlag = True
@@ -32,6 +37,8 @@ def main(argv=None):
     
     alphastar = np.zeros((32, 32, 3))
     finalresults = []
+    
+    finalresults.append((avg_loss, precision, total_iters))
     
     while(LoopingFlag and total_iters < maxiters):
         InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 

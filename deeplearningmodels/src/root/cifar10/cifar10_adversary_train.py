@@ -169,7 +169,7 @@ def adversary_test_cnn():
 #                 print('labels',labels)
                 
             precision = (true_count / total_sample_count)
-            print('%s: precision @ 1 = %.3f' % (datetime.now(), precision))
+#             print('%s: adversary_test_cnn precision @ 1 = %.3f' % (datetime.now(), precision))
         except Exception as e:  
             coord.request_stop(e)
 

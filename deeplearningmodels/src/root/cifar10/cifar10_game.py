@@ -94,7 +94,7 @@ def main(argv=None):
         finalresults.append((adv_payoff, precision, total_iters))
 
         
-        if adv_payoff - adv_payoff_highest > eps:
+        if abs(adv_payoff - adv_payoff_highest) > eps:
             adv_payoff_highest = adv_payoff
             alphastar = alphastar + curralpha
         else:

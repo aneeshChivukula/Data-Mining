@@ -36,7 +36,7 @@ tf.app.flags.DEFINE_integer('high', 256,
                             """Upper limit for pixel value.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-tf.app.flags.DEFINE_integer('numalphas', 2,
+tf.app.flags.DEFINE_integer('numalphas', 10,
                             """Number of solutions in the GA algorithm.""")
 
 

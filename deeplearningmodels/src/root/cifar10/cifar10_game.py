@@ -25,14 +25,14 @@ def main(argv=None):
     tf.gfile.MakeDirs(EvalDir)
     cifar10_eval.evaluate()
     
-    maxiter = 10
+    maxiters = 10
     LoopingFlag = True
     total_iters = 0
     adv_payoff_highest = 0
     
     alphastar = np.zeros((32, 32, 3))
     
-    while(LoopingFlag and total_iters < maxiter):
+    while(LoopingFlag and total_iters < maxiters):
         InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
         WeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output'
         (alphaspopulation,imagespopulation) = cifar10_adversary_train.adversary_train_genetic(InDir,WeightsDir)
@@ -75,6 +75,8 @@ def main(argv=None):
         tf.gfile.MakeDirs(TrainWeightsDir)
         adv_payoff = cifar10_train.train()
 
+        print('payoff: %f in iteration: %f' % (adv_payoff, total_iters))
+        
         if adv_payoff > adv_payoff_highest:
             adv_payoff_highest = adv_payoff
             alphastar = alphastar + curralpha
@@ -92,6 +94,8 @@ def main(argv=None):
     
     print('adv_payoff_highest',adv_payoff_highest)
     print('alphastar',alphastar)
+    print('total_iters',total_iters)
+    print('maxiters',maxiters)
     # wstar are neural network weights stored in files on disk
     # Need to check whether game is converging as expected
     

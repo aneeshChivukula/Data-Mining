@@ -53,8 +53,9 @@ def main(argv=None):
     
     
     
-#      InDir = ''
-#     createdataset.
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_data/'
+    createdataset.binarizer(InDir,'imagenet2010-batches-bin/','train.bin')
+    createdataset.binarizer(InDir,'imagenet2010-batches-bin/','test.bin')
     
     
     

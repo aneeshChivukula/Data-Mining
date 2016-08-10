@@ -144,7 +144,8 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
       precision = true_count / total_sample_count
 #       print('logits',sess.run(logits))
 #       print('labels',sess.run(labels))
-      print('%s: precision @ 1 = %.3f' % (datetime.now(), precision))
+
+      print('%s: classification training precision @ 1 = %.3f' % (datetime.now(), precision))
 
       summary = tf.Summary()
       summary.ParseFromString(sess.run(summary_op))

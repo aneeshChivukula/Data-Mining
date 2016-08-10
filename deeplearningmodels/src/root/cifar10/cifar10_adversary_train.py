@@ -176,6 +176,8 @@ def adversary_test_cnn():
         coord.request_stop()
         coord.join(threads, stop_grace_period_secs=10)
         
+        print('%s: adversary training error @ 1 = %.3f' % (datetime.now(), 1-precision))
+        
         return(1-precision)
         
         

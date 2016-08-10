@@ -105,12 +105,12 @@ def train():
     tf.train.start_queue_runners(sess=sess)
 
     summary_writer = tf.train.SummaryWriter(FLAGS.train_dir, sess.graph)
-
+    losses = []
     for step in xrange(FLAGS.max_steps):
       start_time = time.time()
       _, loss_value = sess.run([train_op, loss])
       duration = time.time() - start_time
-
+      losses.append(loss_value)
       assert not np.isnan(loss_value), 'Model diverged with loss = NaN'
 
       if step % 10 == 0:
@@ -123,7 +123,7 @@ def train():
         print (format_str % (datetime.now(), step, loss_value,
                              examples_per_sec, sec_per_batch))
 #         print('labels',sess.run(labels))
-
+        
       if step % 100 == 0:
         summary_str = sess.run(summary_op)
         summary_writer.add_summary(summary_str, step)
@@ -132,7 +132,9 @@ def train():
       if step % 1000 == 0 or (step + 1) == FLAGS.max_steps:
         checkpoint_path = os.path.join(FLAGS.train_dir, 'model.ckpt')
         saver.save(sess, checkpoint_path, global_step=step)
-
+    
+    
+    return sum(losses) / len(losses)
 
 def main(argv=None):  # pylint: disable=unused-argument
 #   print('Before - Calling maybe_download_and_extract')
@@ -142,8 +144,7 @@ def main(argv=None):  # pylint: disable=unused-argument
   if tf.gfile.Exists(FLAGS.train_dir):
     tf.gfile.DeleteRecursively(FLAGS.train_dir)
   tf.gfile.MakeDirs(FLAGS.train_dir)
-  train()
-
+  loss = train()
 
 if __name__ == '__main__':
   tf.app.run()

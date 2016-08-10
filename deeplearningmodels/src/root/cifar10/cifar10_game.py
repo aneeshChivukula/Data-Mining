@@ -30,7 +30,7 @@ def main(argv=None):
     total_iters = 0
     adv_payoff_highest = 0
     
-    alphastar = np.zeros(size=(32, 32, 3))
+    alphastar = np.zeros((32, 32, 3))
     
     while(LoopingFlag and total_iters < maxiter):
         InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
@@ -90,6 +90,7 @@ def main(argv=None):
         
         total_iters = total_iters + 1
     
+    print('adv_payoff_highest',adv_payoff_highest)
     print('alphastar',alphastar)
     # wstar are neural network weights stored in files on disk
     # Need to check whether game is converging as expected

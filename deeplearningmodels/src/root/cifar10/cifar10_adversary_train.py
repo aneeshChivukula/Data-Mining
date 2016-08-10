@@ -400,6 +400,21 @@ def adversary_train_genetic(InDir,WeightsDir):
     imagespopulation = toolbox.imagepopulation()
 
 
+    print('imagespopulation',imagespopulation[0][1])
+    
+    CurrImage = imagespopulation[0][1]
+    print('CurrImage Before',CurrImage)
+#     CurrImage = np.asarray(CurrImage, np.uint8)
+    print('type(CurrImage)',type(CurrImage))
+    print('CurrImage.shape',CurrImage.shape)
+    print('CurrImage After',CurrImage)
+    import Image
+    Image.fromarray(CurrImage).save(InDir + 'BrownDog/' + str(1) + ".jpeg")
+    
+    import sys
+    sys.exit()
+
+
     alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
     print('Calling alphasfitnesses before')
     print('len(alphaspopulation)',len(alphaspopulation))

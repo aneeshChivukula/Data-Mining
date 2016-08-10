@@ -31,6 +31,7 @@ def main(argv=None):
     adv_payoff_highest = 0
     
     alphastar = np.zeros((32, 32, 3))
+    finalresults = []
     
     while(LoopingFlag and total_iters < maxiters):
         InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
@@ -75,18 +76,19 @@ def main(argv=None):
         tf.gfile.MakeDirs(TrainWeightsDir)
         adv_payoff = cifar10_train.train()
 
-        print('payoff: %f in iteration: %f' % (adv_payoff, total_iters))
+        EvalDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_eval'
+        if tf.gfile.Exists(EvalDir):
+          tf.gfile.DeleteRecursively(EvalDir)
+        tf.gfile.MakeDirs(EvalDir)
+        precision = cifar10_eval.evaluate()
+
+        print('payoff: %f and precision: %f in iteration: %f' % (adv_payoff, precision, total_iters))
+        finalresults.append((adv_payoff, precision, total_iters))
+
         
         if adv_payoff > adv_payoff_highest:
             adv_payoff_highest = adv_payoff
             alphastar = alphastar + curralpha
-
-            EvalDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_eval'
-            if tf.gfile.Exists(EvalDir):
-              tf.gfile.DeleteRecursively(EvalDir)
-            tf.gfile.MakeDirs(EvalDir)
-            cifar10_eval.evaluate()
-        
         else:
             LoopingFlag = False
         
@@ -96,6 +98,7 @@ def main(argv=None):
     print('alphastar',alphastar)
     print('total_iters',total_iters)
     print('maxiters',maxiters)
+    print('finalresults',finalresults)
     # wstar are neural network weights stored in files on disk
     # Need to check whether game is converging as expected
     

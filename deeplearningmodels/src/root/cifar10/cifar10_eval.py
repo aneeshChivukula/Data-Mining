@@ -157,6 +157,7 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
     coord.request_stop()
     coord.join(threads, stop_grace_period_secs=10)
 
+    return precision
 
 def evaluate():
   """Eval CIFAR-10 for a number of steps."""
@@ -189,18 +190,19 @@ def evaluate():
     summary_writer = tf.train.SummaryWriter(FLAGS.eval_dir, g)
 
     while True:
-      eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,logits,labels)
+      precision = eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,logits,labels)
       if FLAGS.run_once:
         break
       time.sleep(FLAGS.eval_interval_secs)
-
+      
+    return precision
 
 def main(argv=None):  # pylint: disable=unused-argument
 #   cifar10.maybe_download_and_extract()
   if tf.gfile.Exists(FLAGS.eval_dir):
     tf.gfile.DeleteRecursively(FLAGS.eval_dir)
   tf.gfile.MakeDirs(FLAGS.eval_dir)
-  evaluate()
+  precision = evaluate()
 
 
 if __name__ == '__main__':

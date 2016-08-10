@@ -35,19 +35,19 @@ def main(argv=None):
     ls = listdir(InDir)
     ls.sort()
     
-    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplit/'
-    if tf.gfile.Exists(InDir):
-      tf.gfile.DeleteRecursively(InDir)
-    tf.gfile.MakeDirs(InDir)
+    AdvInDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplit/'
+    if tf.gfile.Exists(AdvInDir):
+      tf.gfile.DeleteRecursively(AdvInDir)
+    tf.gfile.MakeDirs(AdvInDir)
     
     for Label in ls:
-        tf.gfile.MakeDirs(InDir + Label)
+        tf.gfile.MakeDirs(AdvInDir + Label)
     
 #     distortedimages = []
     for i,x in enumerate(imagespopulation):
         CurrLabel = ls[x[0]]
         CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
-        Image.fromarray(CurrImage).save(InDir + CurrLabel + "/" + str(i) + ".jpeg")
+        Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
 #         distortedimages.append(CurrImage)
 #     print('final distortedimages',distortedimages)
     

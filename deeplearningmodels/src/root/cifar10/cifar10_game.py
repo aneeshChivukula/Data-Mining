@@ -39,15 +39,15 @@ def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
 def main(argv=None):
     
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
+
     createdataset.binarizer(InDir,'TrainSplit/','train.bin')
-    createdataset.binarizer(InDir,'TestSplit/','test.bin')
-    
     TrainWeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
     if tf.gfile.Exists(TrainWeightsDir):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
     tf.gfile.MakeDirs(TrainWeightsDir)
     avg_loss = cifar10_train.train()
 
+    createdataset.binarizer(InDir,'TestSplit/','test.bin')
     EvalDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_eval'
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
@@ -79,12 +79,12 @@ def main(argv=None):
         curralpha = alphaspopulation[0]
     
         binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
-        
         if tf.gfile.Exists(TrainWeightsDir):
           tf.gfile.DeleteRecursively(TrainWeightsDir)
         tf.gfile.MakeDirs(TrainWeightsDir)
         adv_payoff = cifar10_train.train()
 
+        binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
         if tf.gfile.Exists(EvalDir):
           tf.gfile.DeleteRecursively(EvalDir)
         tf.gfile.MakeDirs(EvalDir)
@@ -97,6 +97,8 @@ def main(argv=None):
         if abs(adv_payoff - adv_payoff_highest) > eps:
             adv_payoff_highest = adv_payoff
             alphastar = alphastar + curralpha
+            alphastar[alphastar>256] = 255
+            alphastar[alphastar<0] = 0
         else:
             LoopingFlag = False
         
@@ -112,15 +114,11 @@ def main(argv=None):
     
     curralpha = alphastar
     binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
-
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     precision = cifar10_eval.evaluate()
     print('final precision on alphastar',precision)
-
-
-
 
 if __name__ == '__main__':
   tf.app.run()

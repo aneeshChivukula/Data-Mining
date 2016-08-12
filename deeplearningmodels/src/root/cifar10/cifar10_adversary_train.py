@@ -307,8 +307,7 @@ def select(population):
 
 def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
-    rn = random.randint(low=FLAGS.low,high=FLAGS.high)
-    r = np.full(rn, size=(32, 32, 3))
+    r = np.full((32, 32, 3),random.randint(FLAGS.low,FLAGS.high))
     individual[0][mask] = individual[0][mask] + r[mask]
     return (individual[0],)
 
@@ -445,6 +444,7 @@ def adversary_train_genetic(InDir,WeightsDir):
         if(len(alphaspopulation) != 0):
             alphasfitnesses(invalid_ind,imagespopulation,toolbox)
             alphaspopulation[:] = offspring
+        else:
             exitLoop = True
         gen = gen + 1
         
@@ -478,8 +478,8 @@ if __name__ == '__main__':
   InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
   WeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output'
   (alphaspopulation,imagespopulation) = adversary_train_genetic(InDir,WeightsDir)
-  print('final alphaspopulation',alphaspopulation)
-  print('input imagespopulation',imagespopulation)
+  print('final len(alphaspopulation)',len(alphaspopulation))
+#   print('input imagespopulation',imagespopulation)
   
   
   

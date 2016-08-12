@@ -30,7 +30,7 @@ tf.app.flags.DEFINE_boolean('adv_log_device_placement', False,
                             """Whether to log device placement.""")
 tf.app.flags.DEFINE_string('adv_eval_data', 'test',
                            """Either 'test' or 'train_eval'.""")
-tf.app.flags.DEFINE_integer('low', 0,
+tf.app.flags.DEFINE_integer('low', -256,
                             """Lower limit for pixel value.""")
 tf.app.flags.DEFINE_integer('high', 256,
                             """Upper limit for pixel value.""")
@@ -307,8 +307,9 @@ def select(population):
 
 def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
-    r = np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
-    individual[0][mask] = r[mask]
+    rn = random.randint(low=FLAGS.low,high=FLAGS.high)
+    r = np.full(rn, size=(32, 32, 3))
+    individual[0][mask] = individual[0][mask] + r[mask]
     return (individual[0],)
 
 def crossover(individual1,individual2):

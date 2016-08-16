@@ -384,6 +384,9 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
 #         fitnesses.append(1 + error - (alphanorms[index]/totnorm))
         alphaspopulation[index].fitness.precision = 1-error
         alphaspopulation[index].fitness.payoff = fit
+        alphaspopulation[index].fitness.weights = (fit,)
+        alphaspopulation[index].fitness.values = [fit]
+
 
     print('len(alphaspopulation) in alphasfitnesses',len(alphaspopulation))
     print('fitnesses in alphasfitnesses',fitnesses)
@@ -461,9 +464,9 @@ def adversary_train_genetic(InDir,WeightsDir):
 
                 toolbox.mate(child1, child2)
                 del child1.fitness.values
-                child1.fitness.weights = 0.0
+                child1.fitness.weights = (0.0,)
                 del child2.fitness.values
-                child2.fitness.weights = 0.0
+                child2.fitness.weights = (0.0,)
                 print('Reset mate weights')
                 print('child1',child1)
                 print('child2',child2)
@@ -479,7 +482,7 @@ def adversary_train_genetic(InDir,WeightsDir):
                 
                 toolbox.mutate(mutant)
                 del mutant.fitness.values
-                mutant.fitness.weights = 0.0
+                mutant.fitness.weights = (0.0,)
                 print('Reset mutant weights')
                 print('mutant',mutant)
                 
@@ -497,10 +500,12 @@ def adversary_train_genetic(InDir,WeightsDir):
             alphasfitnesses(invalid_ind,imagespopulation,toolbox)
             fitnesses = []
             for p in invalid_ind:
+                print('p.fitness.weights',p.fitness.weights)
+                print('p.fitness.valid',p.fitness.valid)
                 fitnesses.append(p.fitness.weights[0])
             print('reset fitnesses end of curr gen',fitnesses)
 
-        alphaspopulation[:] = copyindividuals( parents + offspring,toolbox)
+        alphaspopulation[:] = copyindividuals(parents + offspring,toolbox)
 
         
         fitnesses = []

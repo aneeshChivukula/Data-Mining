@@ -80,16 +80,16 @@ def main(argv=None):
         (alphaspopulation,imagespopulation) = cifar10_adversary_train.adversary_train_genetic(InDir,WeightsDir)
         
         print('alphaspopulation selected for game',alphaspopulation)
-        bestalphathreshold = 0.0
+        bestalphafitness = 0.0
         bestalpha = alphaspopulation[0]
         for index,_ in enumerate(alphaspopulation):
             print('alphaspopulation[index].fitness.weights selected for game',alphaspopulation[index].fitness.weights)
-            if(alphaspopulation[index].fitness.weights > bestalphathreshold):
-                bestalphathreshold = alphaspopulation[index].fitness.weights
+            if(alphaspopulation[index].fitness.weights > bestalphafitness):
+                bestalphafitness = alphaspopulation[index].fitness.weights
                 bestalpha = alphaspopulation[index]
         
         print('bestalpha selected for game',bestalpha)
-        print('bestalphathreshold selected for game',bestalphathreshold)
+        print('bestalphafitness selected for game',bestalphafitness)
 #         import sys
 #         sys.exit()
             

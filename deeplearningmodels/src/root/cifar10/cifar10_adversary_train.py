@@ -34,7 +34,7 @@ tf.app.flags.DEFINE_string('adv_eval_data', 'test',
                            """Either 'test' or 'train_eval'.""")
 tf.app.flags.DEFINE_integer('low', -255,
                             """Lower limit for pixel value.""")
-tf.app.flags.DEFINE_integer('high', 256,
+tf.app.flags.DEFINE_integer('high', 255,
                             """Upper limit for pixel value.""")
 tf.app.flags.DEFINE_integer('steplow', -10,
                             """Small step limit for mutation operator.""")

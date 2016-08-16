@@ -383,7 +383,7 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
         fitnesses.append(fit)
 #         fitnesses.append(1 + error - (alphanorms[index]/totnorm))
         alphaspopulation[index].fitness.precision = 1-error
-        alphaspopulation[index].fitness.payoff = fit
+#         alphaspopulation[index].fitness.payoff = fit
         alphaspopulation[index].fitness.weights = (fit,)
         alphaspopulation[index].fitness.values = [fit]
 
@@ -403,13 +403,14 @@ def copyindividuals(offspring,toolbox):
         indc.fitness.weights = (fit,)
         indc.fitness.values = [fit]
         indc.fitness.precision = ind.fitness.precision
-        indc.fitness.payoff = ind.fitness.payoff
+#         indc.fitness.payoff = ind.fitness.payoff
         indcs.append(indc)
     return indcs
 
 def adversary_train_genetic(InDir,WeightsDir):
 
-    creator.create("FitnessMax", base.Fitness, weights=(0.0,),precision=0.0,payoff=0.0)
+#     creator.create("FitnessMax", base.Fitness, weights=(0.0,),precision=0.0,payoff=0.0)
+    creator.create("FitnessMax", base.Fitness, weights=(0.0,),precision=0.0)
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
     
     toolbox = base.Toolbox()

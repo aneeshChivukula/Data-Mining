@@ -114,7 +114,7 @@ def main(argv=None):
 #         tf.gfile.MakeDirs(TrainWeightsDir)
 #         adv_payoff = cifar10_train.train()
         
-        adv_payoff = curralpha.fitness.payoff
+        adv_payoff = curralpha.fitness.weights[0]
         
         print('payoff: %f and precision: %f in iteration: %f' % (adv_payoff, precision, total_iters))
         finalresults.append((adv_payoff, precision, total_iters))

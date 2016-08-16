@@ -102,16 +102,19 @@ def main(argv=None):
 #         tf.gfile.MakeDirs(EvalDir)
 #         precision = cifar10_eval.evaluate()
 
-        distortedimages = []
-        for x in imagespopulation:
-            distortedimages.append((cifar10_adversary_train.distorted_image(x[1],curralpha),x[0]))
-        precision = 1-cifar10_adversary_train.evaluate(distortedimages)
+#         distortedimages = []
+#         for x in imagespopulation:
+#             distortedimages.append((cifar10_adversary_train.distorted_image(x[1],curralpha),x[0]))
+#         precision = 1-cifar10_adversary_train.evaluate(distortedimages)
 
-        binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
-        if tf.gfile.Exists(TrainWeightsDir):
-          tf.gfile.DeleteRecursively(TrainWeightsDir)
-        tf.gfile.MakeDirs(TrainWeightsDir)
-        adv_payoff = cifar10_train.train()
+        precision = curralpha.fitness.precision
+#         binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
+#         if tf.gfile.Exists(TrainWeightsDir):
+#           tf.gfile.DeleteRecursively(TrainWeightsDir)
+#         tf.gfile.MakeDirs(TrainWeightsDir)
+#         adv_payoff = cifar10_train.train()
+        
+        adv_payoff = curralpha.fitness.payoff
         
         print('payoff: %f and precision: %f in iteration: %f' % (adv_payoff, precision, total_iters))
         finalresults.append((adv_payoff, precision, total_iters))

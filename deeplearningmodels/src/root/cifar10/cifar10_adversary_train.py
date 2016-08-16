@@ -30,10 +30,14 @@ tf.app.flags.DEFINE_boolean('adv_log_device_placement', False,
                             """Whether to log device placement.""")
 tf.app.flags.DEFINE_string('adv_eval_data', 'test',
                            """Either 'test' or 'train_eval'.""")
-tf.app.flags.DEFINE_integer('low', -256,
+tf.app.flags.DEFINE_integer('low', -255,
                             """Lower limit for pixel value.""")
 tf.app.flags.DEFINE_integer('high', 256,
                             """Upper limit for pixel value.""")
+tf.app.flags.DEFINE_integer('steplow', -10,
+                            """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('stephigh', 10,
+                            """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
 tf.app.flags.DEFINE_integer('numalphas', 10,
@@ -307,9 +311,9 @@ def select(population):
 
 def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
-    r = np.full((32, 32, 3),random.randint(FLAGS.low,FLAGS.high))
+    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
     individual[0][mask] = individual[0][mask] + r[mask]
-    return (individual[0],)
+#     return (individual[0],)
 
 def crossover(individual1,individual2):
     heightstartind = np.random.randint(low=0,high=32)
@@ -320,7 +324,7 @@ def crossover(individual1,individual2):
     
     individual2[heightstartind:heightendind,widthstartind:widthendind,], individual1[heightstartind:heightendind,widthstartind:widthendind,] = individual1[heightstartind:heightendind,widthstartind:widthendind,].copy(), individual2[heightstartind:heightendind,widthstartind:widthendind,].copy()
 
-    return (individual1, individual2)
+#     return (individual1, individual2)
 
 # def selection(individual1,individual2):
 
@@ -338,8 +342,9 @@ def binarizer(CurrDir,population,OutFile):
     binfile.close()
 
 def tensornorm(curralpha):    
-    return (np.sqrt(np.sum(np.square(curralpha)))) # Divide by avg of l2 norm of training data to get within range of 0,1
-#     return (np.sqrt(np.sum(np.square(curralpha))/(i*j*k)) / 100)
+#     return (np.sqrt(np.sum(np.square(curralpha)))) # Divide by avg of l2 norm of training data to get within range of 0,1
+    return (np.sqrt(np.sum(np.square(curralpha))/(32*32*3)) / 256)
+#     return (np.sqrt(np.sum(np.square(curralpha))/(32*32*3*256)))
 
 def distorted_image(x,curralpha):
     a = (curralpha + x)
@@ -351,11 +356,12 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
     fitnesses = []
 #     fitnesses = np.zeros(len(alphaspopulation))
     
-    alphanorms = []
-    totnorm = 0.0
-    for index,curralpha in enumerate(alphaspopulation):
-        alphanorms.append(tensornorm(curralpha))
-        totnorm = totnorm + alphanorms[index]
+#     alphanorms = []
+#     totnorm = 0.0
+#     for index,curralpha in enumerate(alphaspopulation):
+#         alphanorms.append(tensornorm(curralpha))
+#         totnorm = totnorm + alphanorms[index]
+#         alphanorms[index] = tensornorm(curralpha)
     
 #     print('alphaspopulation',alphaspopulation)
     
@@ -366,8 +372,11 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
 #         np.append(fitnesses,1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
         print('Reset fitnesses in alphasfitnesses')
         error = toolbox.evaluate(distortedimages)
-        fitnesses.append(1 + error - (alphanorms[index]/totnorm))
+        fit = 1 + error - tensornorm(curralpha)
+        fitnesses.append(fit)
+#         fitnesses.append(1 + error - (alphanorms[index]/totnorm))
         alphaspopulation[index].fitness.precision = 1-error
+        alphaspopulation[index].fitness.payoff = fit
     totfitness = sum(fitnesses)
     for index,_ in enumerate(alphaspopulation):
         fit = fitnesses[index] / totfitness
@@ -382,7 +391,7 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
 
 def adversary_train_genetic(InDir,WeightsDir):
 
-    creator.create("FitnessMax", base.Fitness, weights=(0.0,),precision=0.0)
+    creator.create("FitnessMax", base.Fitness, weights=(0.0,),precision=0.0,payoff=0.0)
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
     
     toolbox = base.Toolbox()
@@ -410,30 +419,50 @@ def adversary_train_genetic(InDir,WeightsDir):
 
     CXPB, MUTPB, NGEN = 0.5, 0.2, 40
     gen = 0
-    exitLoop = False
-    while (gen < (NGEN) and not exitLoop):
+#     exitLoop = False
+#     while (gen < (NGEN) and not exitLoop):
+    while (gen < NGEN):
         print('gen',gen)
         
         offspring = toolbox.select(alphaspopulation)
         offspring = map(toolbox.clone, offspring)
+        parents = map(toolbox.clone, offspring)
+        
+        print('len(alphaspopulation)',len(alphaspopulation))
+        print('len(offspring)',len(offspring))
         
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
             if random.random() < CXPB:
                 print('Calling mate')
+                print('child1',child1)
+                print('child2',child2)
+
                 toolbox.mate(child1, child2)
                 del child1.fitness.values
                 child1.fitness.weights = 0.0
                 del child2.fitness.values
                 child2.fitness.weights = 0.0
-                print('Reset weights')
+                print('Reset mate weights')
+                print('child1',child1)
+                print('child2',child2)
+
+#                 import sys
+#                 sys.exit()
+                
                 
         for mutant in offspring:
             if random.random() < MUTPB:
                 print('Calling mutate')
+                print('mutant',mutant)
+                
                 toolbox.mutate(mutant)
                 del mutant.fitness.values
                 mutant.fitness.weights = 0.0
-                print('Reset weights')
+                print('Reset mutant weights')
+                print('mutant',mutant)
+                
+#                 import sys
+#                 sys.exit()
         
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
         print('len(invalid_ind)',len(invalid_ind))
@@ -442,11 +471,24 @@ def adversary_train_genetic(InDir,WeightsDir):
 #         print('alphaspopulation after',(alphaspopulation))
 #         print('len(alphaspopulation) after',len(alphaspopulation))
 
-        if(len(alphaspopulation) != 0 and len(invalid_ind) != 0):
+        if(len(invalid_ind) != 0):
             alphasfitnesses(invalid_ind,imagespopulation,toolbox)
-            alphaspopulation[:] = offspring
-        else:
-            exitLoop = True
+
+        alphaspopulation[:] = map(toolbox.clone, parents + offspring)
+
+
+
+#         print('len(alphaspopulation)',len(alphaspopulation))
+#         print('len(parents)',len(parents))
+#         print('len(offspring)',len(offspring))
+#         import sys
+#         sys.exit()
+        
+#         if(len(alphaspopulation) != 0 and len(invalid_ind) != 0):
+#             alphasfitnesses(invalid_ind,imagespopulation,toolbox)
+#             alphaspopulation[:] = offspring
+#         else:
+#             exitLoop = True
         gen = gen + 1
         
         

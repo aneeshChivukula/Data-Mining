@@ -133,13 +133,13 @@ def main(argv=None):
     # wstar are neural network weights stored in files on disk
     # Need to check whether game is converging as expected
     
-    curralpha = alphastar
-    binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
-    if tf.gfile.Exists(EvalDir):
-      tf.gfile.DeleteRecursively(EvalDir)
-    tf.gfile.MakeDirs(EvalDir)
-    precision = cifar10_eval.evaluate()
-    print('final precision of cifar10_eval on alphastar',precision)
+#     curralpha = alphastar
+#     binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
+#     if tf.gfile.Exists(EvalDir):
+#       tf.gfile.DeleteRecursively(EvalDir)
+#     tf.gfile.MakeDirs(EvalDir)
+#     precision = cifar10_eval.evaluate()
+#     print('final precision of cifar10_eval on alphastar',precision)
 
 if __name__ == '__main__':
   tf.app.run()

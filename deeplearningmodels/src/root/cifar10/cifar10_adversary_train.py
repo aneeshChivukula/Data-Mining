@@ -365,8 +365,9 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
             distortedimages.append((distorted_image(x[1],curralpha),x[0]))
 #         np.append(fitnesses,1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
         print('Reset fitnesses in alphasfitnesses')
-        fitnesses.append(1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
-
+        error = toolbox.evaluate(distortedimages)
+        fitnesses.append(1 + error - (alphanorms[index]/totnorm))
+        alphaspopulation[index].fitness.precision = 1-error
     totfitness = sum(fitnesses)
     for index,_ in enumerate(alphaspopulation):
         fit = fitnesses[index] / totfitness
@@ -381,7 +382,7 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
 
 def adversary_train_genetic(InDir,WeightsDir):
 
-    creator.create("FitnessMax", base.Fitness, weights=(0.0,))
+    creator.create("FitnessMax", base.Fitness, weights=(0.0,),precision=0.0)
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
     
     toolbox = base.Toolbox()

@@ -307,8 +307,9 @@ def select(population):
         fitnesses.append(p.fitness.weights[0])
         
     print('fitnesses in select',fitnesses)
+    print('rounded normalized fitnesses in select',np.round(np.divide(fitnesses,sum(fitnesses)),2))
     
-    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=fitnesses)
+    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=np.round(np.divide(fitnesses,sum(fitnesses)),2))
     
 #     L = [population[i] for i in randompopindices]
 #     return ([population[i] for i in randompopindices],[population[i] for i in popindices if i not in randompopindices])
@@ -383,12 +384,7 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
 #         fitnesses.append(1 + error - (alphanorms[index]/totnorm))
         alphaspopulation[index].fitness.precision = 1-error
         alphaspopulation[index].fitness.payoff = fit
-    totfitness = sum(fitnesses)
-    for index,_ in enumerate(alphaspopulation):
-        fit = fitnesses[index] / totfitness
-        alphaspopulation[index].fitness.weights = (fit,)
-        alphaspopulation[index].fitness.values = [fit]
-        print('Reset weights in alphasfitnesses')
+
     print('len(alphaspopulation) in alphasfitnesses',len(alphaspopulation))
     print('fitnesses in alphasfitnesses',fitnesses)
 

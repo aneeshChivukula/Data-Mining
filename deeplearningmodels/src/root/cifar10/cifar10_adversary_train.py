@@ -1,6 +1,7 @@
 from __future__ import division
 
 from PIL import Image
+import copy
 from datetime import datetime
 from deap import base
 from deap import creator
@@ -9,6 +10,7 @@ import math
 from os import listdir
 import os.path
 import random
+import sys
 import time
 
 import numpy as np
@@ -40,7 +42,7 @@ tf.app.flags.DEFINE_integer('stephigh', 10,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-tf.app.flags.DEFINE_integer('numalphas', 10,
+tf.app.flags.DEFINE_integer('numalphas', 4,
                             """Number of search solutions in the GA algorithm.""")
 
 
@@ -307,13 +309,17 @@ def select(population):
     print('fitnesses in select',fitnesses)
     
     randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=fitnesses)
+    
+#     L = [population[i] for i in randompopindices]
+#     return ([population[i] for i in randompopindices],[population[i] for i in popindices if i not in randompopindices])
     return [population[i] for i in randompopindices]
+#     return L
 
 def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
     individual[0][mask] = individual[0][mask] + r[mask]
-#     return (individual[0],)
+    return (individual[0],)
 
 def crossover(individual1,individual2):
     heightstartind = np.random.randint(low=0,high=32)
@@ -324,7 +330,7 @@ def crossover(individual1,individual2):
     
     individual2[heightstartind:heightendind,widthstartind:widthendind,], individual1[heightstartind:heightendind,widthstartind:widthendind,] = individual1[heightstartind:heightendind,widthstartind:widthendind,].copy(), individual2[heightstartind:heightendind,widthstartind:widthendind,].copy()
 
-#     return (individual1, individual2)
+    return (individual1, individual2)
 
 # def selection(individual1,individual2):
 
@@ -389,6 +395,19 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
 #     return fitnesses / sum(fitnesses)
 #     return np.divide(fitnesses, np.sum(fitnesses))
 
+
+def copyindividuals(offspring,toolbox):
+    indcs = []
+    for ind in offspring:
+        indc = toolbox.clone(ind)
+        fit = ind.fitness.weights[0]
+        indc.fitness.weights = (fit,)
+        indc.fitness.values = [fit]
+        indc.fitness.precision = ind.fitness.precision
+        indc.fitness.payoff = ind.fitness.payoff
+        indcs.append(indc)
+    return indcs
+
 def adversary_train_genetic(InDir,WeightsDir):
 
     creator.create("FitnessMax", base.Fitness, weights=(0.0,),precision=0.0,payoff=0.0)
@@ -424,9 +443,16 @@ def adversary_train_genetic(InDir,WeightsDir):
     while (gen < NGEN):
         print('gen',gen)
         
-        offspring = toolbox.select(alphaspopulation)
-        offspring = map(toolbox.clone, offspring)
-        parents = map(toolbox.clone, offspring)
+        selectedoffspring = toolbox.select(alphaspopulation)
+        
+        parents = copyindividuals(selectedoffspring,toolbox)
+        offspring = copyindividuals(selectedoffspring,toolbox)
+        
+#         offspring = map(toolbox.clone, offspring)
+#         parents = map(toolbox.clone, offspring)
+
+        print('Initialization completed')
+        
         
         print('len(alphaspopulation)',len(alphaspopulation))
         print('len(offspring)',len(offspring))
@@ -473,9 +499,28 @@ def adversary_train_genetic(InDir,WeightsDir):
 
         if(len(invalid_ind) != 0):
             alphasfitnesses(invalid_ind,imagespopulation,toolbox)
+            fitnesses = []
+            for p in invalid_ind:
+                fitnesses.append(p.fitness.weights[0])
+            print('reset fitnesses end of curr gen',fitnesses)
 
-        alphaspopulation[:] = map(toolbox.clone, parents + offspring)
+        alphaspopulation[:] = copyindividuals( parents + offspring,toolbox)
 
+        
+        fitnesses = []
+        for p in parents:
+            fitnesses.append(p.fitness.weights[0])
+        print('fitnesses parents gen',fitnesses)
+
+        fitnesses = []
+        for p in offspring:
+            fitnesses.append(p.fitness.weights[0])
+        print('fitnesses offspring gen',fitnesses)
+        
+        fitnesses = []
+        for p in alphaspopulation:
+            fitnesses.append(p.fitness.weights[0])
+        print('fitnesses end of curr gen',fitnesses)
 
 
 #         print('len(alphaspopulation)',len(alphaspopulation))

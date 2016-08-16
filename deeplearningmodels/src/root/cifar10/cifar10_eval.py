@@ -64,7 +64,7 @@ tf.app.flags.DEFINE_integer('eval_interval_secs', 60 * 5,
 # tf.app.flags.DEFINE_integer('num_examples', 1500,
 #                             """Number of examples to run.""")
 tf.app.flags.DEFINE_integer('num_examples', 810,
-                            """Number of examples to run.""")
+                            """Number of examples to evaluate.""")
 # tf.app.flags.DEFINE_boolean('run_once', False,
 #                          """Whether to run eval only once.""")
 tf.app.flags.DEFINE_boolean('run_once', True,

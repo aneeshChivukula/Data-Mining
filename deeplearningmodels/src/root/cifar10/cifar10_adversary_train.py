@@ -37,7 +37,7 @@ tf.app.flags.DEFINE_integer('high', 256,
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
 tf.app.flags.DEFINE_integer('numalphas', 10,
-                            """Number of solutions in the GA algorithm.""")
+                            """Number of search solutions in the GA algorithm.""")
 
 
 length = 3073
@@ -343,7 +343,7 @@ def tensornorm(curralpha):
 
 def distorted_image(x,curralpha):
     a = (curralpha + x)
-    a[a>256] = 255
+    a[a>255] = 255
     a[a<0] = 0
     return a
 
@@ -441,7 +441,7 @@ def adversary_train_genetic(InDir,WeightsDir):
 #         print('alphaspopulation after',(alphaspopulation))
 #         print('len(alphaspopulation) after',len(alphaspopulation))
 
-        if(len(alphaspopulation) != 0):
+        if(len(alphaspopulation) != 0 and len(invalid_ind) != 0):
             alphasfitnesses(invalid_ind,imagespopulation,toolbox)
             alphaspopulation[:] = offspring
         else:

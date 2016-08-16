@@ -53,9 +53,10 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     precision = cifar10_eval.evaluate()
+    print('initial precision of cifar10_eval on alphastar',precision)
     
     eps = 0.0001
-    maxiters = 10
+    maxiters = 11
     LoopingFlag = True
     total_iters = 0
     adv_payoff_highest = 0
@@ -75,34 +76,54 @@ def main(argv=None):
     labels.sort()
 
     while(LoopingFlag and total_iters < maxiters):
+        total_iters = total_iters + 1
         (alphaspopulation,imagespopulation) = cifar10_adversary_train.adversary_train_genetic(InDir,WeightsDir)
-        curralpha = alphaspopulation[0]
+        
+        print('alphaspopulation selected for game',alphaspopulation)
+        bestalphathreshold = 0.0
+        bestalpha = alphaspopulation[0]
+        for index,_ in enumerate(alphaspopulation):
+            print('alphaspopulation[index].fitness.weights selected for game',alphaspopulation[index].fitness.weights)
+            if(alphaspopulation[index].fitness.weights > bestalphathreshold):
+                bestalphathreshold = alphaspopulation[index].fitness.weights
+                bestalpha = alphaspopulation[index]
+        
+        print('bestalpha selected for game',bestalpha)
+        print('bestalphathreshold selected for game',bestalphathreshold)
+#         import sys
+#         sys.exit()
+            
+        curralpha = bestalpha
+#         curralpha = alphaspopulation[0]
     
+#         binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
+#         if tf.gfile.Exists(EvalDir):
+#           tf.gfile.DeleteRecursively(EvalDir)
+#         tf.gfile.MakeDirs(EvalDir)
+#         precision = cifar10_eval.evaluate()
+
+        distortedimages = []
+        for x in imagespopulation:
+            distortedimages.append((cifar10_adversary_train.distorted_image(x[1],curralpha),x[0]))
+        precision = 1-cifar10_adversary_train.evaluate(distortedimages)
+
         binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
         if tf.gfile.Exists(TrainWeightsDir):
           tf.gfile.DeleteRecursively(TrainWeightsDir)
         tf.gfile.MakeDirs(TrainWeightsDir)
         adv_payoff = cifar10_train.train()
-
-        binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
-        if tf.gfile.Exists(EvalDir):
-          tf.gfile.DeleteRecursively(EvalDir)
-        tf.gfile.MakeDirs(EvalDir)
-        precision = cifar10_eval.evaluate()
-
+        
         print('payoff: %f and precision: %f in iteration: %f' % (adv_payoff, precision, total_iters))
         finalresults.append((adv_payoff, precision, total_iters))
 
-        
         if abs(adv_payoff - adv_payoff_highest) > eps:
             adv_payoff_highest = adv_payoff
             alphastar = alphastar + curralpha
-            alphastar[alphastar>256] = 255
+            alphastar[alphastar>255] = 255
             alphastar[alphastar<0] = 0
         else:
             LoopingFlag = False
         
-        total_iters = total_iters + 1
     
     print('adv_payoff_highest',adv_payoff_highest)
     print('alphastar',alphastar)
@@ -118,7 +139,7 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     precision = cifar10_eval.evaluate()
-    print('final precision on alphastar',precision)
+    print('final precision of cifar10_eval on alphastar',precision)
 
 if __name__ == '__main__':
   tf.app.run()

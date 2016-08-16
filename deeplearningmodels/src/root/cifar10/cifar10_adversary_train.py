@@ -499,30 +499,30 @@ def adversary_train_genetic(InDir,WeightsDir):
 
         if(len(invalid_ind) != 0):
             alphasfitnesses(invalid_ind,imagespopulation,toolbox)
-            fitnesses = []
-            for p in invalid_ind:
-                print('p.fitness.weights',p.fitness.weights)
-                print('p.fitness.valid',p.fitness.valid)
-                fitnesses.append(p.fitness.weights[0])
-            print('reset fitnesses end of curr gen',fitnesses)
+#             fitnesses = []
+#             for p in invalid_ind:
+#                 print('p.fitness.weights',p.fitness.weights)
+#                 print('p.fitness.valid',p.fitness.valid)
+#                 fitnesses.append(p.fitness.weights[0])
+#             print('reset fitnesses end of curr gen',fitnesses)
 
         alphaspopulation[:] = copyindividuals(parents + offspring,toolbox)
 
         
-        fitnesses = []
-        for p in parents:
-            fitnesses.append(p.fitness.weights[0])
-        print('fitnesses parents gen',fitnesses)
-
-        fitnesses = []
-        for p in offspring:
-            fitnesses.append(p.fitness.weights[0])
-        print('fitnesses offspring gen',fitnesses)
-        
-        fitnesses = []
-        for p in alphaspopulation:
-            fitnesses.append(p.fitness.weights[0])
-        print('fitnesses end of curr gen',fitnesses)
+#         fitnesses = []
+#         for p in parents:
+#             fitnesses.append(p.fitness.weights[0])
+#         print('fitnesses parents gen',fitnesses)
+# 
+#         fitnesses = []
+#         for p in offspring:
+#             fitnesses.append(p.fitness.weights[0])
+#         print('fitnesses offspring gen',fitnesses)
+#         
+#         fitnesses = []
+#         for p in alphaspopulation:
+#             fitnesses.append(p.fitness.weights[0])
+#         print('fitnesses end of curr gen',fitnesses)
 
 
 #         print('len(alphaspopulation)',len(alphaspopulation))

@@ -42,9 +42,10 @@ tf.app.flags.DEFINE_integer('stephigh', 10,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-tf.app.flags.DEFINE_integer('numalphas', 4,
+tf.app.flags.DEFINE_integer('numalphas', 20,
                             """Number of search solutions in the GA algorithm.""")
-
+tf.app.flags.DEFINE_integer('numgens', 40,
+                            """Number of generations in the GA algorithm.""")
 
 length = 3073
 
@@ -141,7 +142,7 @@ def adversary_test_cnn():
         log_device_placement=FLAGS.adv_log_device_placement))
         coord = tf.train.Coordinator()
 
-        global_step = tf.Variable(0, trainable=False)
+#         global_step = tf.Variable(0, trainable=False)
         
         eval_data = FLAGS.adv_eval_data == 'test'
         
@@ -161,20 +162,35 @@ def adversary_test_cnn():
                                          start=True))
 #             num_iter = int(math.ceil(FLAGS.num_examples / FLAGS.batch_size))
             num_iter = FLAGS.max_iter_test
-            true_count = 0
-            total_sample_count = num_iter * FLAGS.batch_size
+#             true_count = 0
+            true_positives_count = 0
+            false_positives_count = 0
+#             total_sample_count = num_iter * FLAGS.batch_size
             step = 0
             
             while step < num_iter and not coord.should_stop():
-                predictions = sess.run([top_k_op])
-                true_count += np.sum(predictions)
+#                 predictions = sess.run([top_k_op])
+
+                is_label_one = sess.run(labels).astype(bool)
+                is_label_zero = np.logical_not(is_label_one)
+
+                correct_prediction = sess.run([top_k_op])
+                false_prediction = np.logical_not(correct_prediction)
+                
+                true_positives_count += np.sum(np.logical_and(correct_prediction,is_label_one))
+                false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
+                
+#                 true_count += np.sum(predictions)
                 step += 1
                 
 #                 print('sess.run(softmax_linear)',sess.run(softmax_linear))
 #                 print('predictions',predictions)
 #                 print('labels',labels)
-                
-            precision = (true_count / total_sample_count)
+            
+            
+            precision = float(true_positives_count) / float(true_positives_count+false_positives_count)
+            
+#             precision = (true_count / total_sample_count)
 #             print('%s: adversary_test_cnn precision @ 1 = %.3f' % (datetime.now(), precision))
         except Exception as e:  
             coord.request_stop(e)
@@ -320,7 +336,7 @@ def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
     individual[0][mask] = individual[0][mask] + r[mask]
-    return (individual[0],)
+    return (individual,)
 
 def crossover(individual1,individual2):
     heightstartind = np.random.randint(low=0,high=32)
@@ -436,11 +452,11 @@ def adversary_train_genetic(InDir,WeightsDir):
 #     print('alphaspopulation before',(alphaspopulation))
 #     print('len(alphaspopulation) before',len(alphaspopulation))
 
-    CXPB, MUTPB, NGEN = 0.5, 0.2, 40
+#     CXPB, MUTPB, NGEN = 0.5, 0.2, 40
     gen = 0
 #     exitLoop = False
 #     while (gen < (NGEN) and not exitLoop):
-    while (gen < NGEN):
+    while (gen < FLAGS.numgens):
         print('gen',gen)
         
         selectedoffspring = toolbox.select(alphaspopulation)
@@ -458,7 +474,7 @@ def adversary_train_genetic(InDir,WeightsDir):
         print('len(offspring)',len(offspring))
         
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
-            if random.random() < CXPB:
+#             if random.random() < CXPB:
                 print('Calling mate')
                 print('child1',child1)
                 print('child2',child2)
@@ -477,7 +493,7 @@ def adversary_train_genetic(InDir,WeightsDir):
                 
                 
         for mutant in offspring:
-            if random.random() < MUTPB:
+#             if random.random() < MUTPB:
                 print('Calling mutate')
                 print('mutant',mutant)
                 

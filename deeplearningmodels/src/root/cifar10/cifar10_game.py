@@ -1,3 +1,4 @@
+import sys
 import tensorflow as tf
 import numpy as np
 import Image
@@ -61,16 +62,18 @@ def main(argv=None):
     precision = cifar10_eval.evaluate()
     print('initial precision of cifar10_eval',precision)
     
-    eps = 0.0001
-    maxiters = 11
+    eps = 0.01
+#     maxiters = 11
     LoopingFlag = True
-    total_iters = 0
+#     total_iters = 0
     adv_payoff_highest = 0
+    gen = 0
     
 #     alphastar = np.zeros((32, 32, 3))
     finalresults = []
     
-    finalresults.append((0, precision, total_iters))
+    finalresults.append((0, (1-precision),1+(1-precision), precision, gen))
+
     
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
     WeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output'
@@ -102,9 +105,14 @@ def main(argv=None):
     toolbox.register("imagepopulation", cifar10_adversary_train.initImagePopulation, toolbox.individualImage, InDir)
     imagespopulation = toolbox.imagepopulation()
 
+
+
+    print('imagespopulation',imagespopulation)
+    print('alphaspopulation',alphaspopulation)
+    print('alphaspopulation[0].fitness.weights',alphaspopulation[0].fitness.weights)
+
     print('Initialization completed')
 
-    gen = 0
 
 #     while(LoopingFlag and total_iters < maxiters):
     while(LoopingFlag and gen < FLAGS.numgens):
@@ -134,9 +142,15 @@ def main(argv=None):
         curralpha = bestalpha
         adv_payoff = curralpha.fitness.weights[0]
         precision = 1-curralpha.fitness.error
+        
+        
+        print('curralpha',curralpha)
+        print('curralpha.fitness.weights[0]',curralpha.fitness.weights[0])
+        print('precision',precision)
+        
 
         print('payoff: %f and precision: %f in iteration: %f' % (adv_payoff, precision, gen))
-        finalresults.append((adv_payoff, precision, gen))
+        finalresults.append((adv_payoff, (1-precision),1+(1-precision)-adv_payoff, precision,gen))
 
         if abs(adv_payoff - adv_payoff_highest) > eps:
             adv_payoff_highest = adv_payoff

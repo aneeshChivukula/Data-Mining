@@ -44,7 +44,7 @@ tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
 tf.app.flags.DEFINE_integer('numalphas', 20,
                             """Number of search solutions in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('numgens', 40,
+tf.app.flags.DEFINE_integer('numgens', 10,
                             """Number of generations in the GA algorithm.""")
 
 length = 3073
@@ -366,7 +366,7 @@ def binarizer(CurrDir,population,OutFile):
 
 def tensornorm(curralpha):    
 #     return (np.sqrt(np.sum(np.square(curralpha)))) # Divide by avg of l2 norm of training data to get within range of 0,1
-    return (np.sqrt(np.sum(np.square(curralpha))/(32*32*3)) / 256)
+    return float(np.sqrt(np.sum(np.square(curralpha))/(32*32*3)) / 256)
 #     return (np.sqrt(np.sum(np.square(curralpha))/(32*32*3*256)))
 
 def distorted_image(x,curralpha):
@@ -402,10 +402,14 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
 #         alphaspopulation[index].fitness.payoff = fit
         alphaspopulation[index].fitness.weights = (fit,)
         alphaspopulation[index].fitness.values = [fit]
+        print('Reset fitnesses in alphasfitnesses')
+        
+        print('error in alphasfitnesses',error)
+        print('tensornorm(curralpha) in alphasfitnesses',tensornorm(curralpha))
 
 
     print('len(alphaspopulation) in alphasfitnesses',len(alphaspopulation))
-    print('fitnesses in alphasfitnesses',fitnesses)
+    print('fit in alphasfitnesses',fit)
 
 #     return fitnesses / sum(fitnesses)
 #     return np.divide(fitnesses, np.sum(fitnesses))

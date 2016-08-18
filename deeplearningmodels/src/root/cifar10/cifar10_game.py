@@ -180,7 +180,9 @@ def main(argv=None):
     
     print('adv_payoff_highest',adv_payoff_highest)
 #     print('total_iters',total_iters)
-    print('maxiters',maxiters)
+    print('gen',gen)
+    print('FLAGS.numgens',FLAGS.numgens)
+    print('FLAGS.numalphas',FLAGS.numalphas)
     print('finalresults',finalresults)
 
 #     distortedimages = []

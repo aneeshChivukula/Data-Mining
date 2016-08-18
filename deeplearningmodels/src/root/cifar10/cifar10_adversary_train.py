@@ -36,6 +36,8 @@ tf.app.flags.DEFINE_integer('low', -255,
                             """Lower limit for pixel value.""")
 tf.app.flags.DEFINE_integer('high', 255,
                             """Upper limit for pixel value.""")
+tf.app.flags.DEFINE_integer('dividend', 1,
+                            """Factor to control the GA norm initialization boundaries.""")
 tf.app.flags.DEFINE_integer('steplow', -10,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('stephigh', 10,
@@ -293,7 +295,7 @@ def initIndividualImage(filename):
 def initIndividual(meanimage):
 #     return meanimage + np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
 #     return meanimage + np.random.randint(low=FLAGS.steplow,high=FLAGS.stephigh, size=(32, 32, 3))
-    return meanimage + np.random.randint(low=random.randint(FLAGS.low),high=random.randint(FLAGS.high), size=(32, 32, 3))
+    return meanimage + np.random.randint(low=random.randint(math.floor(FLAGS.low/FLAGS.dividend),0),high=random.randint(0,math.ceil(FLAGS.high/FLAGS.dividend)), size=(32, 32, 3))
 
 def initImagePopulation(ind_init, InDir):
     images = list()
@@ -333,7 +335,11 @@ def select(population):
 #     else:
 #         pr = np.round(np.divide(np.subtract(fitnesses, min(fitnesses)),max(fitnesses) - min(fitnesses)),2)
     
-    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=np.round(np.divide(fitnesses,sum(fitnesses)),2))
+    print('np.round(np.divide(fitnesses,sum(fitnesses)),2)',np.round(np.divide(fitnesses,sum(fitnesses)),2))
+    
+    
+    
+    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p= fitnesses / np.linalg.norm(fitnesses,1))
     
 #     L = [population[i] for i in randompopindices]
 #     return ([population[i] for i in randompopindices],[population[i] for i in popindices if i not in randompopindices])

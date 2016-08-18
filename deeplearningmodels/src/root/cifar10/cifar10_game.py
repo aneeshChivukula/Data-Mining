@@ -105,9 +105,9 @@ def main(argv=None):
     alphaspopulation = toolbox.population()
 
 
-    print('imagespopulation',imagespopulation)
-    print('alphaspopulation',alphaspopulation)
-    print('alphaspopulation[0].fitness.weights',alphaspopulation[0].fitness.weights)
+#     print('imagespopulation',imagespopulation)
+#     print('alphaspopulation',alphaspopulation)
+#     print('alphaspopulation[0].fitness.weights',alphaspopulation[0].fitness.weights)
 
     print('Initialization completed')
 

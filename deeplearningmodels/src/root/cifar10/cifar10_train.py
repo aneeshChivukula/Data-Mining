@@ -106,12 +106,12 @@ def train():
     tf.train.start_queue_runners(sess=sess)
 
     summary_writer = tf.train.SummaryWriter(FLAGS.train_dir, sess.graph)
-    losses = []
+#     losses = []
     for step in xrange(FLAGS.max_steps):
       start_time = time.time()
       _, loss_value = sess.run([train_op, loss])
       duration = time.time() - start_time
-      losses.append(loss_value)
+#       losses.append(loss_value)
       assert not np.isnan(loss_value), 'Model diverged with loss = NaN'
 
       if step % 10 == 0:
@@ -169,7 +169,7 @@ def train():
     np.save(os.path.join(FLAGS.out_dir, 'softmax_linear-biases.npy'), sess.run(variables_to_restore['softmax_linear/biases/ExponentialMovingAverage']))
     
     
-    return sum(losses) / len(losses)
+#     return sum(losses) / len(losses)
 
 def main(argv=None):  # pylint: disable=unused-argument
 #   print('Before - Calling maybe_download_and_extract')

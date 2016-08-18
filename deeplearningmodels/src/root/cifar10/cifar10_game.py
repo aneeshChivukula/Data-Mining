@@ -10,6 +10,12 @@ from root.cifar10 import cifar10_adversary_train
 from root.cnns import createdataset
 
 from os import listdir
+from deap import base
+from deap import creator
+from deap import tools
+
+FLAGS = tf.app.flags.FLAGS
+
 
 def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
     if tf.gfile.Exists(AdvInDir):
@@ -45,7 +51,7 @@ def main(argv=None):
     if tf.gfile.Exists(TrainWeightsDir):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
     tf.gfile.MakeDirs(TrainWeightsDir)
-    avg_loss = cifar10_train.train()
+    cifar10_train.train()
 
     createdataset.binarizer(InDir,'TestSplit/','test.bin')
     EvalDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_eval'
@@ -53,7 +59,7 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     precision = cifar10_eval.evaluate()
-    print('initial precision of cifar10_eval on alphastar',precision)
+    print('initial precision of cifar10_eval',precision)
     
     eps = 0.0001
     maxiters = 11
@@ -61,10 +67,10 @@ def main(argv=None):
     total_iters = 0
     adv_payoff_highest = 0
     
-    alphastar = np.zeros((32, 32, 3))
+#     alphastar = np.zeros((32, 32, 3))
     finalresults = []
     
-    finalresults.append((avg_loss, precision, total_iters))
+    finalresults.append((0, precision, total_iters))
     
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
     WeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output'
@@ -75,11 +81,40 @@ def main(argv=None):
     labels = listdir(InDir)
     labels.sort()
 
-    while(LoopingFlag and total_iters < maxiters):
-        total_iters = total_iters + 1
-        (alphaspopulation,imagespopulation) = cifar10_adversary_train.adversary_train_genetic(InDir,WeightsDir)
+
+    creator.create("FitnessMax", base.Fitness, weights=(0.0,),error=0.0)
+    creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+    
+    toolbox = base.Toolbox()
+    toolbox.register("attribute",cifar10_adversary_train.initIndividual)
+    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
+
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=FLAGS.numalphas)
+    
+    alphaspopulation = toolbox.population()
+    
+    toolbox.register("mutate", cifar10_adversary_train.mutation)
+    toolbox.register("mate", cifar10_adversary_train.crossover)
+    toolbox.register("evaluate", cifar10_adversary_train.evaluate)
+    toolbox.register("select", cifar10_adversary_train.select)
+    
+    toolbox.register("individualImage", cifar10_adversary_train.initIndividualImage)
+    toolbox.register("imagepopulation", cifar10_adversary_train.initImagePopulation, toolbox.individualImage, InDir)
+    imagespopulation = toolbox.imagepopulation()
+
+    print('Initialization completed')
+
+    gen = 0
+
+#     while(LoopingFlag and total_iters < maxiters):
+    while(LoopingFlag and gen < FLAGS.numgens):
+        print('gen',gen)
         
+        
+        cifar10_adversary_train.alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
+        print('len(alphaspopulation)',len(alphaspopulation))
         print('alphaspopulation selected for game',alphaspopulation)
+        
         bestalphafitness = 0.0
         bestalpha = alphaspopulation[0]
         for index,_ in enumerate(alphaspopulation):
@@ -90,51 +125,72 @@ def main(argv=None):
         
         print('bestalpha selected for game',bestalpha)
         print('bestalphafitness selected for game',bestalphafitness)
-#         import sys
-#         sys.exit()
+        
+        
+#         total_iters = total_iters + 1
+#         (alphaspopulation,imagespopulation) = cifar10_adversary_train.adversary_train_genetic(InDir,WeightsDir)
+        
             
         curralpha = bestalpha
-#         curralpha = alphaspopulation[0]
-    
-#         binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
-#         if tf.gfile.Exists(EvalDir):
-#           tf.gfile.DeleteRecursively(EvalDir)
-#         tf.gfile.MakeDirs(EvalDir)
-#         precision = cifar10_eval.evaluate()
-
-#         distortedimages = []
-#         for x in imagespopulation:
-#             distortedimages.append((cifar10_adversary_train.distorted_image(x[1],curralpha),x[0]))
-#         precision = 1-cifar10_adversary_train.evaluate(distortedimages)
-
-        precision = curralpha.fitness.precision
-#         binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
-#         if tf.gfile.Exists(TrainWeightsDir):
-#           tf.gfile.DeleteRecursively(TrainWeightsDir)
-#         tf.gfile.MakeDirs(TrainWeightsDir)
-#         adv_payoff = cifar10_train.train()
-        
         adv_payoff = curralpha.fitness.weights[0]
-        
-        print('payoff: %f and precision: %f in iteration: %f' % (adv_payoff, precision, total_iters))
-        finalresults.append((adv_payoff, precision, total_iters))
+        precision = 1-curralpha.fitness.error
+
+        print('payoff: %f and precision: %f in iteration: %f' % (adv_payoff, precision, gen))
+        finalresults.append((adv_payoff, precision, gen))
 
         if abs(adv_payoff - adv_payoff_highest) > eps:
             adv_payoff_highest = adv_payoff
-            alphastar = alphastar + curralpha
-            alphastar[alphastar>255] = 255
-            alphastar[alphastar<0] = 0
+
+            selectedoffspring = toolbox.select(alphaspopulation)
+            parents = cifar10_adversary_train.copyindividuals(selectedoffspring,toolbox)
+            offspring = cifar10_adversary_train.copyindividuals(selectedoffspring,toolbox)
+
+            for child1, child2 in zip(offspring[::2], offspring[1::2]):
+                print('Calling mate')
+                toolbox.mate(child1, child2)
+                del child1.fitness.values
+                child1.fitness.weights = (0.0,)
+                del child2.fitness.values
+                child2.fitness.weights = (0.0,)
+                print('Reset mate weights')
+
+            for mutant in offspring:
+                print('Calling mutate')
+                toolbox.mutate(mutant)
+                del mutant.fitness.values
+                mutant.fitness.weights = (0.0,)
+                print('Reset mutant weights')
+                
+            invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+            if(len(invalid_ind) != 0):
+                cifar10_adversary_train.alphasfitnesses(invalid_ind,imagespopulation,toolbox)
+            alphaspopulation[:] = cifar10_adversary_train.copyindividuals(parents + offspring,toolbox)
+
+            
+            binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
+            if tf.gfile.Exists(TrainWeightsDir):
+              tf.gfile.DeleteRecursively(TrainWeightsDir)
+            tf.gfile.MakeDirs(TrainWeightsDir)
+            cifar10_train.train()
+            
         else:
             LoopingFlag = False
         
+        gen = gen + 1 
     
     print('adv_payoff_highest',adv_payoff_highest)
-    print('alphastar',alphastar)
-    print('total_iters',total_iters)
+#     print('total_iters',total_iters)
     print('maxiters',maxiters)
     print('finalresults',finalresults)
-    # wstar are neural network weights stored in files on disk
-    # Need to check whether game is converging as expected
+
+#     distortedimages = []
+#     for x in imagespopulation:
+#         distortedimages.append((cifar10_adversary_train.distorted_image(x[1],alphastar),x[0]))
+#     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
+#     print('final precision of cifar10_eval on alphastar',precision)
+    
+# wstar are neural network weights stored in files on disk
+# Need to check whether game is converging as expected
     
 #     curralpha = alphastar
 #     binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')

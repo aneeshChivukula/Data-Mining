@@ -42,7 +42,7 @@ tf.app.flags.DEFINE_integer('stephigh', 10,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-tf.app.flags.DEFINE_integer('numalphas', 20,
+tf.app.flags.DEFINE_integer('numalphas', 10,
                             """Number of search solutions in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numgens', 10,
                             """Number of generations in the GA algorithm.""")
@@ -290,25 +290,28 @@ def initIndividualImage(filename):
 
 
 # def initIndividual(icls):
-def initIndividual():
-    return np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
+def initIndividual(meanimage):
+    return meanimage + np.random.randint(low=FLAGS.steplow,high=FLAGS.stephigh, size=(32, 32, 3))
 
 def initImagePopulation(ind_init, InDir):
-    l = list()
-    ind = 0
+    images = list()
+#     ind = 0
     ls = listdir(InDir)
     ls.sort()
-    
+    positiveimagesmean = np.zeros((32, 32, 3))
 #     d = ls[0]
-    
-    for d in ls:
+    dr = 0
+    for ind,d in enumerate(ls):
         for f in listdir(InDir + d):
             a = ind_init(filename=InDir + d + '/' + f)
             if(len(a.shape) == 3):
-                l.append((ind,ind_init(filename=InDir + d + '/' + f)))
-        ind = ind + 1
+                images.append((ind,a))
+                if(ind==1):
+                    positiveimagesmean = positiveimagesmean + a
+                    dr = dr + 1
+#         ind = ind + 1
 #     print('l',l)
-    return l
+    return images,np.floor(np.divide(positiveimagesmean, dr))
 
 def evaluate(currpopulation):
     binarizer(FLAGS.data_dir + '/imagenet2010-batches-bin/',currpopulation,'test.bin')
@@ -325,7 +328,7 @@ def select(population):
     print('fitnesses in select',fitnesses)
     print('rounded normalized fitnesses in select',np.round(np.divide(fitnesses,sum(fitnesses)),2))
     
-    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=np.round(np.divide(fitnesses,sum(fitnesses)),2))
+    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=np.round(np.divide(np.subtract(fitnesses, min(fitnesses)),max(fitnesses) - min(fitnesses)),2))
     
 #     L = [population[i] for i in randompopindices]
 #     return ([population[i] for i in randompopindices],[population[i] for i in popindices if i not in randompopindices])
@@ -366,8 +369,8 @@ def binarizer(CurrDir,population,OutFile):
 
 def tensornorm(curralpha):    
 #     return (np.sqrt(np.sum(np.square(curralpha)))) # Divide by avg of l2 norm of training data to get within range of 0,1
-    return float(np.sqrt(np.sum(np.square(curralpha))/(32*32*3)) / 256)
-#     return (np.sqrt(np.sum(np.square(curralpha))/(32*32*3*256)))
+    return float(np.sqrt(np.sum(np.square(curralpha))/(32*32*3)) / 255)
+#     return float(np.sqrt(np.sum(np.square(curralpha))/(32*32*3*256)))
 
 def distorted_image(x,curralpha):
     a = (curralpha + x)
@@ -434,12 +437,6 @@ def adversary_train_genetic(InDir,WeightsDir):
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
     
     toolbox = base.Toolbox()
-    toolbox.register("attribute",initIndividual)
-    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
-
-    toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=FLAGS.numalphas)
-    
-    alphaspopulation = toolbox.population()
     
     toolbox.register("mutate", mutation)
     toolbox.register("mate", crossover)
@@ -448,7 +445,13 @@ def adversary_train_genetic(InDir,WeightsDir):
     
     toolbox.register("individualImage", initIndividualImage)
     toolbox.register("imagepopulation", initImagePopulation, toolbox.individualImage, InDir)
-    imagespopulation = toolbox.imagepopulation()
+    imagespopulation,positiveimagesmean = toolbox.imagepopulation()
+
+    toolbox.register("attribute",initIndividual, meanimage=positiveimagesmean)
+    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
+
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=FLAGS.numalphas)
+    alphaspopulation = toolbox.population()
 
     alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
     print('Calling alphasfitnesses before')

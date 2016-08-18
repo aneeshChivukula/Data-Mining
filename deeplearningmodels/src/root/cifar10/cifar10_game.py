@@ -62,7 +62,7 @@ def main(argv=None):
     precision = cifar10_eval.evaluate()
     print('initial precision of cifar10_eval',precision)
     
-    eps = 0.01
+    eps = 0.001
 #     maxiters = 11
     LoopingFlag = True
 #     total_iters = 0
@@ -89,12 +89,6 @@ def main(argv=None):
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
     
     toolbox = base.Toolbox()
-    toolbox.register("attribute",cifar10_adversary_train.initIndividual)
-    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
-
-    toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=FLAGS.numalphas)
-    
-    alphaspopulation = toolbox.population()
     
     toolbox.register("mutate", cifar10_adversary_train.mutation)
     toolbox.register("mate", cifar10_adversary_train.crossover)
@@ -103,8 +97,12 @@ def main(argv=None):
     
     toolbox.register("individualImage", cifar10_adversary_train.initIndividualImage)
     toolbox.register("imagepopulation", cifar10_adversary_train.initImagePopulation, toolbox.individualImage, InDir)
-    imagespopulation = toolbox.imagepopulation()
+    imagespopulation,positiveimagesmean = toolbox.imagepopulation()
 
+    toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=positiveimagesmean)
+    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=FLAGS.numalphas)
+    alphaspopulation = toolbox.population()
 
 
     print('imagespopulation',imagespopulation)
@@ -113,7 +111,7 @@ def main(argv=None):
 
     print('Initialization completed')
 
-
+#     sys.exit()
 #     while(LoopingFlag and total_iters < maxiters):
     while(LoopingFlag and gen < FLAGS.numgens):
         print('gen',gen)

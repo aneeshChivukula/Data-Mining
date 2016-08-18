@@ -291,7 +291,9 @@ def initIndividualImage(filename):
 
 # def initIndividual(icls):
 def initIndividual(meanimage):
-    return meanimage + np.random.randint(low=FLAGS.steplow,high=FLAGS.stephigh, size=(32, 32, 3))
+#     return meanimage + np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
+#     return meanimage + np.random.randint(low=FLAGS.steplow,high=FLAGS.stephigh, size=(32, 32, 3))
+    return meanimage + np.random.randint(low=random.randint(FLAGS.low),high=random.randint(FLAGS.high), size=(32, 32, 3))
 
 def initImagePopulation(ind_init, InDir):
     images = list()
@@ -324,11 +326,14 @@ def select(population):
     fitnesses = []
     for p in population:
         fitnesses.append(p.fitness.weights[0])
-        
-    print('fitnesses in select',fitnesses)
-    print('rounded normalized fitnesses in select',np.round(np.divide(fitnesses,sum(fitnesses)),2))
     
-    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=np.round(np.divide(np.subtract(fitnesses, min(fitnesses)),max(fitnesses) - min(fitnesses)),2))
+#     pr = np.round(np.divide(fitnesses,max(fitnesses)),2)
+#     if(sum(np.round(np.divide(fitnesses,sum(fitnesses)),2)) == 1):
+#         pr = np.round(np.divide(fitnesses,max(fitnesses)),2)
+#     else:
+#         pr = np.round(np.divide(np.subtract(fitnesses, min(fitnesses)),max(fitnesses) - min(fitnesses)),2)
+    
+    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p=np.round(np.divide(fitnesses,sum(fitnesses)),2))
     
 #     L = [population[i] for i in randompopindices]
 #     return ([population[i] for i in randompopindices],[population[i] for i in popindices if i not in randompopindices])

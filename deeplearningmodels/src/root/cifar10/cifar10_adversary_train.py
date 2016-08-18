@@ -334,10 +334,7 @@ def select(population):
 #         pr = np.round(np.divide(fitnesses,max(fitnesses)),2)
 #     else:
 #         pr = np.round(np.divide(np.subtract(fitnesses, min(fitnesses)),max(fitnesses) - min(fitnesses)),2)
-    
-    print('np.round(np.divide(fitnesses,sum(fitnesses)),2)',np.round(np.divide(fitnesses,sum(fitnesses)),2))
-    
-    
+#     print('np.round(np.divide(fitnesses,sum(fitnesses)),2)',np.round(np.divide(fitnesses,sum(fitnesses)),2))
     
     randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p= fitnesses / np.linalg.norm(fitnesses,1))
     

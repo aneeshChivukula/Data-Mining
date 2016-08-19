@@ -44,10 +44,18 @@ tf.app.flags.DEFINE_integer('stephigh', 10,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-tf.app.flags.DEFINE_integer('numalphas', 50,
+tf.app.flags.DEFINE_integer('numalphas', 10,
                             """Number of search solutions in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numgens', 10,
                             """Number of generations in the GA algorithm.""")
+tf.app.flags.DEFINE_integer('myepsilon', 0.001,
+                            """Parameter determining game iterations.""")
+tf.app.flags.DEFINE_integer('mylambda', 1,
+                            """Parameter determining weight of the error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('mylambda', 0.1,
+#                             """Parameter determining weight of the error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('mylambda', 0.01,
+#                             """Parameter determining weight of the error term in fitness function.""")
 
 length = 3073
 
@@ -405,7 +413,7 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
             distortedimages.append((distorted_image(x[1],curralpha),x[0]))
 #         np.append(fitnesses,1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
         print('Reset fitnesses in alphasfitnesses')
-        error = toolbox.evaluate(distortedimages)
+        error = FLAGS.mylambda * toolbox.evaluate(distortedimages)
         fit = 1 + error - tensornorm(curralpha)
         fitnesses.append(fit)
 #         fitnesses.append(1 + error - (alphanorms[index]/totnorm))

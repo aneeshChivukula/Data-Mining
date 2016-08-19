@@ -2,6 +2,7 @@ import sys
 import tensorflow as tf
 import numpy as np
 import Image
+from shutil import copyfile
 
 from root.cifar10 import cifar10
 
@@ -62,7 +63,6 @@ def main(argv=None):
     precision = cifar10_eval.evaluate()
     print('initial precision of cifar10_eval',precision)
     
-    eps = 0.001
 #     maxiters = 11
     LoopingFlag = True
 #     total_iters = 0
@@ -150,7 +150,7 @@ def main(argv=None):
         print('payoff: %f and precision: %f in iteration: %f' % (adv_payoff, precision, gen))
         finalresults.append((adv_payoff, (1-precision),1+(1-precision)-adv_payoff, precision,gen))
 
-        if abs(adv_payoff - adv_payoff_highest) > eps:
+        if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
             adv_payoff_highest = adv_payoff
 
             selectedoffspring = toolbox.select(alphaspopulation)
@@ -195,13 +195,41 @@ def main(argv=None):
     print('gen',gen)
     print('FLAGS.numgens',FLAGS.numgens)
     print('FLAGS.numalphas',FLAGS.numalphas)
+    print('FLAGS.myepsilon',FLAGS.myepsilon)
+    print('FLAGS.mylambda',FLAGS.mylambda)
     print('finalresults',finalresults)
+    print('bestalpha',bestalpha)
 
-#     distortedimages = []
-#     for x in imagespopulation:
-#         distortedimages.append((cifar10_adversary_train.distorted_image(x[1],alphastar),x[0]))
-#     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
-#     print('final precision of cifar10_eval on alphastar',precision)
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
+    imagespopulation,positiveimagesmean = toolbox.imagepopulation()
+    binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha,labels,'train.bin')
+    if tf.gfile.Exists(TrainWeightsDir):
+      tf.gfile.DeleteRecursively(TrainWeightsDir)
+    tf.gfile.MakeDirs(TrainWeightsDir)
+    cifar10_train.train()
+    
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+    imagespopulation,positiveimagesmean = toolbox.imagepopulation()
+    distortedimages = []
+    for x in imagespopulation:
+        distortedimages.append((cifar10_adversary_train.distorted_image(x[1],bestalpha),x[0]))
+    precision = 1-cifar10_adversary_train.evaluate(distortedimages)
+    print('final manipulated precision of cifar10_eval with alphastar',precision)
+    finalresults.append((0, (1-precision),1+(1-precision), precision, gen))
+
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
+    createdataset.binarizer(InDir,'TrainSplit/','train.bin')
+    copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
+    if tf.gfile.Exists(TrainWeightsDir):
+      tf.gfile.DeleteRecursively(TrainWeightsDir)
+    tf.gfile.MakeDirs(TrainWeightsDir)
+    cifar10_train.train()
+
+    precision = 1-cifar10_adversary_train.evaluate(distortedimages)
+    print('final manipulated precision of cifar10_eval without alphastar',precision)
+    finalresults.append((0, (1-precision),1+(1-precision), precision, gen))
+
+
     
 # wstar are neural network weights stored in files on disk
 # Need to check whether game is converging as expected

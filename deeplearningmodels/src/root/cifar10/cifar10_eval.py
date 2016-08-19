@@ -97,16 +97,16 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
 #     print(os.path.join(FLAGS.data_dir, 'conv1-weights.npy'))
 #     print(sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
 
-    np.save(os.path.join(FLAGS.out_dir, 'conv1-weights.npy'), sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
-    np.save(os.path.join(FLAGS.out_dir, 'conv1-biases.npy'), sess.run(variables_to_restore['conv1/biases/ExponentialMovingAverage']))
-    np.save(os.path.join(FLAGS.out_dir, 'conv2-weights.npy'), sess.run(variables_to_restore['conv2/weights/ExponentialMovingAverage']))
-    np.save(os.path.join(FLAGS.out_dir, 'conv2-biases.npy'), sess.run(variables_to_restore['conv2/biases/ExponentialMovingAverage']))
-    np.save(os.path.join(FLAGS.out_dir, 'local3-weights.npy'), sess.run(variables_to_restore['local3/weights/ExponentialMovingAverage']))
-    np.save(os.path.join(FLAGS.out_dir, 'local3-biases.npy'), sess.run(variables_to_restore['local3/biases/ExponentialMovingAverage']))
-    np.save(os.path.join(FLAGS.out_dir, 'local4-weights.npy'), sess.run(variables_to_restore['local4/weights/ExponentialMovingAverage']))
-    np.save(os.path.join(FLAGS.out_dir, 'local4-biases.npy'), sess.run(variables_to_restore['local4/biases/ExponentialMovingAverage']))
-    np.save(os.path.join(FLAGS.out_dir, 'softmax_linear-weights.npy'), sess.run(variables_to_restore['softmax_linear/weights/ExponentialMovingAverage']))
-    np.save(os.path.join(FLAGS.out_dir, 'softmax_linear-biases.npy'), sess.run(variables_to_restore['softmax_linear/biases/ExponentialMovingAverage']))
+#     np.save(os.path.join(FLAGS.out_dir, 'conv1-weights.npy'), sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
+#     np.save(os.path.join(FLAGS.out_dir, 'conv1-biases.npy'), sess.run(variables_to_restore['conv1/biases/ExponentialMovingAverage']))
+#     np.save(os.path.join(FLAGS.out_dir, 'conv2-weights.npy'), sess.run(variables_to_restore['conv2/weights/ExponentialMovingAverage']))
+#     np.save(os.path.join(FLAGS.out_dir, 'conv2-biases.npy'), sess.run(variables_to_restore['conv2/biases/ExponentialMovingAverage']))
+#     np.save(os.path.join(FLAGS.out_dir, 'local3-weights.npy'), sess.run(variables_to_restore['local3/weights/ExponentialMovingAverage']))
+#     np.save(os.path.join(FLAGS.out_dir, 'local3-biases.npy'), sess.run(variables_to_restore['local3/biases/ExponentialMovingAverage']))
+#     np.save(os.path.join(FLAGS.out_dir, 'local4-weights.npy'), sess.run(variables_to_restore['local4/weights/ExponentialMovingAverage']))
+#     np.save(os.path.join(FLAGS.out_dir, 'local4-biases.npy'), sess.run(variables_to_restore['local4/biases/ExponentialMovingAverage']))
+#     np.save(os.path.join(FLAGS.out_dir, 'softmax_linear-weights.npy'), sess.run(variables_to_restore['softmax_linear/weights/ExponentialMovingAverage']))
+#     np.save(os.path.join(FLAGS.out_dir, 'softmax_linear-biases.npy'), sess.run(variables_to_restore['softmax_linear/biases/ExponentialMovingAverage']))
     
 #     print('Separating here')
 #     print(np.load(os.path.join(FLAGS.data_dir, 'conv1-weights.npy')).shape)
@@ -131,17 +131,38 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
                                          start=True))
 
       num_iter = int(math.ceil(FLAGS.num_examples / FLAGS.batch_size))
+
+#       true_positives_count = 0
+#       false_positives_count = 0
+#       true_negatives_count = 0
+#       false_negatives_count = 0
+      
       true_count = 0  # Counts the number of correct predictions.
       total_sample_count = num_iter * FLAGS.batch_size
       step = 0
       while step < num_iter and not coord.should_stop():
+
+        is_label_one = sess.run(labels).astype(bool)
+        is_label_zero = np.logical_not(is_label_one)
+        
+        
+        correct_prediction = sess.run([top_k_op])
+        false_prediction = np.logical_not(correct_prediction)
+        
+#         true_positives_count += np.sum(np.logical_and(correct_prediction,is_label_one))
+#         false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
+#         
+#         
+#         true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
+#         false_negatives_count = np.sum(np.logical_and(false_prediction, is_label_one))     
         predictions = sess.run([top_k_op])
         true_count += np.sum(predictions)
-#         print('predictions',predictions)
+        print('predictions',predictions)
         step += 1
 
       # Compute precision @ 1.
       precision = true_count / total_sample_count
+#       precision = float(true_positives_count) / float(true_positives_count+false_positives_count)
 #       print('logits',sess.run(logits))
 #       print('labels',sess.run(labels))
 

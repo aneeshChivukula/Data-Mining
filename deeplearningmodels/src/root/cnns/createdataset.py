@@ -86,6 +86,8 @@ def binarizer(CurrDir,ValDir,OutFile):
     numpy.concatenate(L).astype('int16').tofile(binfile)
 #     file.write(numpy.concatenate(L).astype('int16'))
     binfile.close()
+    
+    
 
     
 
@@ -101,6 +103,8 @@ if __name__ == '__main__':
         
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
+    GameInDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_data/imagenet2010-batches-bin/'
+
 #     partitoner(InDir)
    
 #     resizer(InDir+'TrainSplit/BrownDog/')
@@ -110,6 +114,8 @@ if __name__ == '__main__':
 #     resizer(InDir+'TestSplit/BlackDog/')
 
     binarizer(InDir,'TrainSplit/','train.bin')
+    copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
+    
     binarizer(InDir,'TestSplit/','test.bin')
-
+    copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
 

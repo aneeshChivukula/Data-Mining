@@ -44,7 +44,7 @@ tf.app.flags.DEFINE_integer('stephigh', 10,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-tf.app.flags.DEFINE_integer('numalphas', 20,
+tf.app.flags.DEFINE_integer('numalphas', 50,
                             """Number of search solutions in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numgens', 10,
                             """Number of generations in the GA algorithm.""")

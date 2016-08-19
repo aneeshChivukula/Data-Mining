@@ -190,15 +190,6 @@ def main(argv=None):
         
         gen = gen + 1 
     
-    print('adv_payoff_highest',adv_payoff_highest)
-#     print('total_iters',total_iters)
-    print('gen',gen)
-    print('FLAGS.numgens',FLAGS.numgens)
-    print('FLAGS.numalphas',FLAGS.numalphas)
-    print('FLAGS.myepsilon',FLAGS.myepsilon)
-    print('FLAGS.mylambda',FLAGS.mylambda)
-    print('finalresults',finalresults)
-    print('bestalpha',bestalpha)
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
     imagespopulation,positiveimagesmean = toolbox.imagepopulation()
@@ -229,6 +220,14 @@ def main(argv=None):
     print('final manipulated precision of cifar10_eval without alphastar',precision)
     finalresults.append((0, (1-precision),1+(1-precision), precision, gen))
 
+    print('bestalpha',bestalpha)
+    print('adv_payoff_highest',adv_payoff_highest)
+    print('gen',gen)
+    print('FLAGS.numgens',FLAGS.numgens)
+    print('FLAGS.numalphas',FLAGS.numalphas)
+    print('FLAGS.myepsilon',FLAGS.myepsilon)
+    print('FLAGS.mylambda',FLAGS.mylambda)
+    print('finalresults',finalresults)
 
     
 # wstar are neural network weights stored in files on disk

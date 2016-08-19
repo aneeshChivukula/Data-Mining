@@ -460,8 +460,8 @@ def adversary_train_genetic(InDir,WeightsDir):
     toolbox.register("select", select)
     
     toolbox.register("individualImage", initIndividualImage)
-    toolbox.register("imagepopulation", initImagePopulation, toolbox.individualImage, InDir)
-    imagespopulation,positiveimagesmean = toolbox.imagepopulation()
+    toolbox.register("imagepopulation", initImagePopulation, toolbox.individualImage)
+    imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
 
     toolbox.register("attribute",initIndividual, meanimage=positiveimagesmean)
     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)

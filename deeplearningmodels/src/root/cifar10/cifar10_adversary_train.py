@@ -45,7 +45,7 @@ tf.app.flags.DEFINE_integer('stephigh', 10,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-tf.app.flags.DEFINE_integer('numalphas', 10,
+tf.app.flags.DEFINE_integer('numalphas', 20,
                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 20,
 #                             """Number of search solutions in the GA algorithm.""")
@@ -55,7 +55,7 @@ tf.app.flags.DEFINE_integer('numalphas', 10,
 #                             """Number of search solutions in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numgens', 10,
                             """Number of generations in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('myepsilon', 0.001,
+tf.app.flags.DEFINE_integer('myepsilon', 0.0001,
                             """Parameter determining game iterations.""")
 tf.app.flags.DEFINE_integer('mylambda', 1,
                             """Parameter determining weight of the error term in fitness function.""")
@@ -76,8 +76,8 @@ tf.app.flags.DEFINE_integer('mylambda', 1,
 
 length = 3073
 # perfmetric = "precision"
-perfmetric = "recall"
-# perfmetric = "f1score"
+# perfmetric = "recall"
+perfmetric = "f1score"
 # perfmetric = "tpr"
 # perfmetric = "fpr"
 

@@ -19,8 +19,8 @@ from deap import tools
 FLAGS = tf.app.flags.FLAGS
 
 # perfmetric = "precision"
-perfmetric = "recall"
-# perfmetric = "f1score"
+# perfmetric = "recall"
+perfmetric = "f1score"
 # perfmetric = "tpr"
 # perfmetric = "fpr"
 
@@ -86,9 +86,9 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     perfmetrics = cifar10_eval.evaluate()
-    precision = perfmetrics[str(perfmetric)]
-    print('initial original training data precision of cifar10_eval without alphastar on original training data',precision)
-    finalresults.append((1, (1-precision),1+(1-precision), precision, perfmetrics, gen))
+    perf = perfmetrics[str(perfmetric)]
+    print('initial original training data performance of cifar10_eval without alphastar on original training data',perf)
+    finalresults.append((1, 0, 1, perf, perfmetrics, gen))
     
     createdataset.binarizer(InDir,'TestSplit/','test.bin')
     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
@@ -96,9 +96,9 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     perfmetrics = cifar10_eval.evaluate()
-    precision = perfmetrics[str(perfmetric)]
-    print('initial original testing data precision of cifar10_eval without alphastar on original training data',precision)
-    finalresults.append((0, (1-precision),1+(1-precision), precision, perfmetrics, gen))
+    perf = perfmetrics[str(perfmetric)]
+    print('initial original testing data precision of cifar10_eval without alphastar on original training data',perf)
+    finalresults.append((0, 0, 1, perf, perfmetrics, gen))
     
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
     labels = listdir(InDir)
@@ -159,7 +159,7 @@ def main(argv=None):
             
         curralpha = bestalpha
         adv_payoff = curralpha.fitness.weights[0]
-        precision = 1-curralpha.fitness.error
+        error = curralpha.fitness.error
         
         perfmetrics = {}
         perfmetrics['precision'] = curralpha.fitness.precision
@@ -167,14 +167,15 @@ def main(argv=None):
         perfmetrics['f1score'] = curralpha.fitness.f1score
         perfmetrics['tpr'] = curralpha.fitness.tpr
         perfmetrics['fpr'] = curralpha.fitness.fpr
+        perf = perfmetrics[str(perfmetric)]
         
         print('curralpha',curralpha)
         print('curralpha.fitness.weights[0]',curralpha.fitness.weights[0])
-        print('precision',precision)
+        print('perf',perf)
         
 
-        print('payoff: %f and precision: %f in iteration: %f' % (adv_payoff, precision, gen))
-        finalresults.append((adv_payoff, (1-precision),1+(1-precision)-adv_payoff, precision, perfmetrics, gen))
+        print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
+        finalresults.append((adv_payoff, error,1+error-adv_payoff, perf, perfmetrics, gen))
         print('finalresults',finalresults)
 
         if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
@@ -234,14 +235,15 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     perfmetrics = cifar10_eval.evaluate()
-    precision = perfmetrics[str(perfmetric)]
+    perf = perfmetrics[str(perfmetric)]
+    error = curralpha.fitness.error
 #     precision = cifar10_eval.evaluate()
 #     distortedimages = []
 #     for x in imagespopulation:
 #         distortedimages.append((cifar10_adversary_train.distorted_image(x[1],bestalpha),x[0]))
 #     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
-    print('final manipulated testing data precision of cifar10_eval with alphastar on manipulated training data',precision)
-    finalresults.append((0, (1-precision),1+(1-precision), precision, perfmetrics, gen))
+    print('final manipulated testing data precision of cifar10_eval with alphastar on manipulated training data',perf)
+    finalresults.append((0, error, 1+error, perf, perfmetrics, gen))
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
     createdataset.binarizer(InDir,'TrainSplit/','train.bin')
@@ -258,11 +260,12 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     perfmetrics = cifar10_eval.evaluate()
-    precision = perfmetrics[str(perfmetric)]
+    perf = perfmetrics[str(perfmetric)]
+    error = curralpha.fitness.error
 #     precision = cifar10_eval.evaluate()
 #     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
-    print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',precision)
-    finalresults.append((0, (1-precision),1+(1-precision), precision, perfmetrics, gen))
+    print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',perf)
+    finalresults.append((0, error, 1+error, perf, perfmetrics, gen))
 
 
     print('bestalpha',curralpha)

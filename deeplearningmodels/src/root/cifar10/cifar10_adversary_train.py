@@ -45,7 +45,7 @@ tf.app.flags.DEFINE_integer('stephigh', 10,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-tf.app.flags.DEFINE_integer('numalphas', 20,
+tf.app.flags.DEFINE_integer('numalphas', 4,
                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 20,
 #                             """Number of search solutions in the GA algorithm.""")
@@ -258,7 +258,7 @@ def adversary_test_cnn():
         coord.request_stop()
         coord.join(threads, stop_grace_period_secs=10)
         
-        print('%s: adversary training error @ 1 = %.3f' % (datetime.now(), 1-precision))
+        print('%s: adversary training error @ 1 = %.3f' % (datetime.now(), FLAGS.mylambda * perfmetrics[str(perfmetric)]))
         
 #         return(1-precision)
         return perfmetrics
@@ -406,17 +406,34 @@ def select(population):
 def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
+    print('individual before',individual)
     individual[0][mask] = individual[0][mask] + r[mask]
+    print('individual after',individual)
+    print('individual[0] after',individual[0])
     return individual
 
 def crossover(individual1,individual2):
-    heightstartind = np.random.randint(low=0,high=32)
-    heightendind = np.random.randint(heightstartind,32)
+    heightstartind = np.random.randint(low=0,high=32/2)
+    heightendind = np.random.randint(heightstartind + 1,32)
     
-    widthstartind = np.random.randint(low=0,high=32)
-    widthendind = np.random.randint(widthstartind,32)
+    widthstartind = np.random.randint(low=0,high=32/2)
+    widthendind = np.random.randint(widthstartind+1,32)
+
+    print('individual1 before',individual1[0][heightstartind:heightendind,widthstartind:widthendind,])
+    print('individual2 before',individual2[0][heightstartind:heightendind,widthstartind:widthendind,])
     
-    individual2[heightstartind:heightendind,widthstartind:widthendind,], individual1[heightstartind:heightendind,widthstartind:widthendind,] = individual1[heightstartind:heightendind,widthstartind:widthendind,].copy(), individual2[heightstartind:heightendind,widthstartind:widthendind,].copy()
+    individual2[0][heightstartind:heightendind,widthstartind:widthendind,], individual1[0][heightstartind:heightendind,widthstartind:widthendind,] = individual1[0][heightstartind:heightendind,widthstartind:widthendind,].copy(), individual2[0][heightstartind:heightendind,widthstartind:widthendind,].copy()
+
+    print('individual1 after',individual1[0][heightstartind:heightendind,widthstartind:widthendind,])
+    print('individual2 after',individual2[0][heightstartind:heightendind,widthstartind:widthendind,])
+
+    print('heightstartind',heightstartind)
+    print('heightendind',heightendind)
+    print('widthstartind',widthstartind)
+    print('widthendind',widthendind)
+
+
+    sys.exit()
 
     return (individual1, individual2)
 
@@ -506,6 +523,11 @@ def copyindividuals(offspring,toolbox):
         indc.fitness.weights = (fit,)
         indc.fitness.values = [fit]
         indc.fitness.error = ind.fitness.error
+        indc.fitness.precision = ind.fitness.precision
+        indc.fitness.recall = ind.fitness.recall
+        indc.fitness.f1score = ind.fitness.f1score
+        indc.fitness.tpr = ind.fitness.tpr
+        indc.fitness.fpr = ind.fitness.fpr
 #         indc.fitness.payoff = ind.fitness.payoff
         indcs.append(indc)
     return indcs
@@ -565,8 +587,9 @@ def adversary_train_genetic(InDir,WeightsDir):
                 print('Calling mate')
                 print('child1',child1)
                 print('child2',child2)
+                print('child2.fitness.error',child2.fitness.error)
 
-                toolbox.mate(child1, child2)
+                (child1,child2) = toolbox.mate(child1, child2)
                 del child1.fitness.values
                 child1.fitness.weights = (0.0,)
                 del child2.fitness.values
@@ -574,9 +597,9 @@ def adversary_train_genetic(InDir,WeightsDir):
                 print('Reset mate weights')
                 print('child1',child1)
                 print('child2',child2)
-
-#                 import sys
-#                 sys.exit()
+                print('child2.fitness.error',child2.fitness.error)
+                
+                sys.exit()
                 
                 
         for mutant in offspring:
@@ -584,14 +607,14 @@ def adversary_train_genetic(InDir,WeightsDir):
                 print('Calling mutate')
                 print('mutant',mutant)
                 
-                toolbox.mutate(mutant)
+                mutant = toolbox.mutate(mutant)
                 del mutant.fitness.values
                 mutant.fitness.weights = (0.0,)
                 print('Reset mutant weights')
                 print('mutant',mutant)
+                print('mutant.fitness.error',mutant.fitness.error)
                 
-#                 import sys
-#                 sys.exit()
+                sys.exit()
         
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
         print('len(invalid_ind)',len(invalid_ind))

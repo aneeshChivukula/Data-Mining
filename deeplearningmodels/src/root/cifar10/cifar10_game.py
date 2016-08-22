@@ -193,6 +193,8 @@ def main(argv=None):
                 del child2.fitness.values
                 child2.fitness.weights = (0.0,)
                 print('Reset mate weights')
+                
+                sys.exit()
 
             for mutant in offspring:
                 print('Calling mutate')

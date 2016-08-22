@@ -413,29 +413,52 @@ def mutation(individual):
     return individual
 
 def crossover(individual1,individual2):
-    heightstartind = np.random.randint(low=0,high=32/2)
-    heightendind = np.random.randint(heightstartind + 1,32)
     
-    widthstartind = np.random.randint(low=0,high=32/2)
-    widthendind = np.random.randint(widthstartind+1,32)
-
-    print('individual1 before',individual1[0][heightstartind:heightendind,widthstartind:widthendind,])
-    print('individual2 before',individual2[0][heightstartind:heightendind,widthstartind:widthendind,])
+    loopFlag = True
     
-    individual2[0][heightstartind:heightendind,widthstartind:widthendind,], individual1[0][heightstartind:heightendind,widthstartind:widthendind,] = individual1[0][heightstartind:heightendind,widthstartind:widthendind,].copy(), individual2[0][heightstartind:heightendind,widthstartind:widthendind,].copy()
+    while loopFlag:
+        heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+        heightendind = np.random.randint(heightstartind + 1,32)
+        
+        widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+        widthendind = np.random.randint(widthstartind + 1,32)
 
-    print('individual1 after',individual1[0][heightstartind:heightendind,widthstartind:widthendind,])
-    print('individual2 after',individual2[0][heightstartind:heightendind,widthstartind:widthendind,])
+        sumbefore1 = np.sum(individual1[0])
+        sumbefore2 = np.sum(individual2[0])
 
-    print('heightstartind',heightstartind)
-    print('heightendind',heightendind)
-    print('widthstartind',widthstartind)
-    print('widthendind',widthendind)
+        print('individual1 before',sumbefore1)
+        print('individual2 before',sumbefore2)
+        print('individual1[0].fitness.error before',individual1[0].fitness.error)
+        
+        temp = np.copy(individual1[0][heightstartind:heightendind,widthstartind:widthendind,])
+        individual1[0][heightstartind:heightendind,widthstartind:widthendind,] = individual2[0][heightstartind:heightendind,widthstartind:widthendind,]
+        individual2[0][heightstartind:heightendind,widthstartind:widthendind,] = temp
+        
+    #     individual2[0][heightstartind:heightendind,widthstartind:widthendind,], individual1[0][heightstartind:heightendind,widthstartind:widthendind,] = individual1[0][heightstartind:heightendind,widthstartind:widthendind,].copy(), individual2[0][heightstartind:heightendind,widthstartind:widthendind,].copy()
 
+        sumafter1 = np.sum(individual1[0])
+        sumafter2 = np.sum(individual2[0])
 
+        print('individual1 after',sumafter1)
+        print('individual2 after',sumafter2)
+        print('individual1[0].fitness.error after',individual1[0].fitness.error)
+
+        if(float(sumbefore1-sumafter1) !=0 and float(sumbefore2-sumafter2) != 0):
+            loopFlag = False
+     
+    #     print('heightstartind',heightstartind)
+    #     print('heightendind',heightendind)
+    #     print('widthstartind',widthstartind)
+    #     print('widthendind',widthendind)
+    
+    print('sumafter1 - sumbefore1',sumafter1 - sumbefore1)
+    print('sumafter2 - sumbefore2',sumafter2 - sumbefore2)
+    
+    
     sys.exit()
-
-    return (individual1, individual2)
+    
+    return (individual1[0], individual2[0])
+#     return (individual1[0], individual2[0])
 
 # def selection(individual1,individual2):
 
@@ -579,25 +602,52 @@ def adversary_train_genetic(InDir,WeightsDir):
         print('Initialization completed')
         
         
+        
+        print('offspring[0].fitness.values',offspring[0].fitness.values)
+        print('offspring[0].fitness.error',offspring[0].fitness.error)
+        print('offspring[0].fitness.precision',offspring[0].fitness.precision)
+#         sys.exit()
+        
         print('len(alphaspopulation)',len(alphaspopulation))
         print('len(offspring)',len(offspring))
         
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
 #             if random.random() < CXPB:
                 print('Calling mate')
+                
+                sumbefore1 = np.sum(child1[0])
+                sumbefore2 = np.sum(child2[0])
+                
                 print('child1',child1)
                 print('child2',child2)
                 print('child2.fitness.error',child2.fitness.error)
+#                 sys.exit()
 
                 (child1,child2) = toolbox.mate(child1, child2)
+                sumafter1 = np.sum(child1[0])
+                sumafter2 = np.sum(child2[0])
+                
+                print('sumafter1 - sumbefore1 in mate',sumafter1 - sumbefore1)
+                print('sumafter2 - sumbefore2 in mate',sumafter2 - sumbefore2)
                 del child1.fitness.values
                 child1.fitness.weights = (0.0,)
                 del child2.fitness.values
                 child2.fitness.weights = (0.0,)
                 print('Reset mate weights')
+
+                print('child2.fitness.error',child2.fitness.error)
+                
+                sys.exit()
+
                 print('child1',child1)
                 print('child2',child2)
-                print('child2.fitness.error',child2.fitness.error)
+                
+                print('np.linalg.norm(child3 - child1)',np.sum(child3 - child1))
+                print('np.linalg.norm(child4 - child2)',np.linalg.norm(child4 - child2))
+                
+                print('child1.shape',child1.shape)
+                print('child3.shape',child3.shape)
+                
                 
                 sys.exit()
                 

@@ -18,6 +18,12 @@ from deap import tools
 
 FLAGS = tf.app.flags.FLAGS
 
+# perfmetric = "precision"
+perfmetric = "recall"
+# perfmetric = "f1score"
+# perfmetric = "tpr"
+# perfmetric = "fpr"
+
 
 def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
     if tf.gfile.Exists(AdvInDir):
@@ -73,15 +79,26 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
     tf.gfile.MakeDirs(TrainWeightsDir)
     cifar10_train.train()
+
+    createdataset.binarizer(InDir,'TrainSplit/','test.bin')
+    copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
+    if tf.gfile.Exists(EvalDir):
+      tf.gfile.DeleteRecursively(EvalDir)
+    tf.gfile.MakeDirs(EvalDir)
+    perfmetrics = cifar10_eval.evaluate()
+    precision = perfmetrics[str(perfmetric)]
+    print('initial original training data precision of cifar10_eval without alphastar on original training data',precision)
+    finalresults.append((1, (1-precision),1+(1-precision), precision, perfmetrics, gen))
     
     createdataset.binarizer(InDir,'TestSplit/','test.bin')
     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
-    precision = cifar10_eval.evaluate()
-    print('final original testing data precision of cifar10_eval without alphastar on original training data',precision)
-    finalresults.append((0, (1-precision),1+(1-precision), precision, gen))
+    perfmetrics = cifar10_eval.evaluate()
+    precision = perfmetrics[str(perfmetric)]
+    print('initial original testing data precision of cifar10_eval without alphastar on original training data',precision)
+    finalresults.append((0, (1-precision),1+(1-precision), precision, perfmetrics, gen))
     
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
     labels = listdir(InDir)
@@ -144,6 +161,12 @@ def main(argv=None):
         adv_payoff = curralpha.fitness.weights[0]
         precision = 1-curralpha.fitness.error
         
+        perfmetrics = {}
+        perfmetrics['precision'] = curralpha.fitness.precision
+        perfmetrics['recall'] = curralpha.fitness.recall
+        perfmetrics['f1score'] = curralpha.fitness.f1score
+        perfmetrics['tpr'] = curralpha.fitness.tpr
+        perfmetrics['fpr'] = curralpha.fitness.fpr
         
         print('curralpha',curralpha)
         print('curralpha.fitness.weights[0]',curralpha.fitness.weights[0])
@@ -151,7 +174,8 @@ def main(argv=None):
         
 
         print('payoff: %f and precision: %f in iteration: %f' % (adv_payoff, precision, gen))
-        finalresults.append((adv_payoff, (1-precision),1+(1-precision)-adv_payoff, precision,gen))
+        finalresults.append((adv_payoff, (1-precision),1+(1-precision)-adv_payoff, precision, perfmetrics, gen))
+        print('finalresults',finalresults)
 
         if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
             adv_payoff_highest = adv_payoff
@@ -162,7 +186,7 @@ def main(argv=None):
 
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
                 print('Calling mate')
-                toolbox.mate(child1, child2)
+                (child1, child2) = toolbox.mate(child1, child2)
                 del child1.fitness.values
                 child1.fitness.weights = (0.0,)
                 del child2.fitness.values
@@ -171,7 +195,7 @@ def main(argv=None):
 
             for mutant in offspring:
                 print('Calling mutate')
-                toolbox.mutate(mutant)
+                mutant = toolbox.mutate(mutant)
                 del mutant.fitness.values
                 mutant.fitness.weights = (0.0,)
                 print('Reset mutant weights')
@@ -181,7 +205,7 @@ def main(argv=None):
                 cifar10_adversary_train.alphasfitnesses(invalid_ind,imagespopulation,toolbox)
             alphaspopulation[:] = cifar10_adversary_train.copyindividuals(parents + offspring,toolbox)
 
-            
+            print('alphaspopulation',alphaspopulation)
             binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
             if tf.gfile.Exists(TrainWeightsDir):
               tf.gfile.DeleteRecursively(TrainWeightsDir)
@@ -197,7 +221,7 @@ def main(argv=None):
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
     imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
-    binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha,labels,'train.bin')
+    binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
     if tf.gfile.Exists(TrainWeightsDir):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
     tf.gfile.MakeDirs(TrainWeightsDir)
@@ -205,17 +229,19 @@ def main(argv=None):
     
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
     imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
-    binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha,labels,'test.bin')
+    binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
-    precision = cifar10_eval.evaluate()
+    perfmetrics = cifar10_eval.evaluate()
+    precision = perfmetrics[str(perfmetric)]
+#     precision = cifar10_eval.evaluate()
 #     distortedimages = []
 #     for x in imagespopulation:
 #         distortedimages.append((cifar10_adversary_train.distorted_image(x[1],bestalpha),x[0]))
 #     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
     print('final manipulated testing data precision of cifar10_eval with alphastar on manipulated training data',precision)
-    finalresults.append((0, (1-precision),1+(1-precision), precision, gen))
+    finalresults.append((0, (1-precision),1+(1-precision), precision, perfmetrics, gen))
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
     createdataset.binarizer(InDir,'TrainSplit/','train.bin')
@@ -225,16 +251,21 @@ def main(argv=None):
     tf.gfile.MakeDirs(TrainWeightsDir)
     cifar10_train.train()
 
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+    imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
+    binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
-    precision = cifar10_eval.evaluate()
+    perfmetrics = cifar10_eval.evaluate()
+    precision = perfmetrics[str(perfmetric)]
+#     precision = cifar10_eval.evaluate()
 #     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
     print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',precision)
-    finalresults.append((0, (1-precision),1+(1-precision), precision, gen))
+    finalresults.append((0, (1-precision),1+(1-precision), precision, perfmetrics, gen))
 
 
-    print('bestalpha',bestalpha)
+    print('bestalpha',curralpha)
     print('adv_payoff_highest',adv_payoff_highest)
     print('gen',gen)
     print('FLAGS.numgens',FLAGS.numgens)

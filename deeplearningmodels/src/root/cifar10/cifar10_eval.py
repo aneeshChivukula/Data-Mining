@@ -69,6 +69,8 @@ tf.app.flags.DEFINE_integer('num_examples', 810,
 #                          """Whether to run eval only once.""")
 tf.app.flags.DEFINE_boolean('run_once', True,
                          """Whether to run eval only once.""")
+tf.app.flags.DEFINE_boolean('max_iter_eval', 100,
+                         """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
 
 
 def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,logits,labels):
@@ -130,12 +132,14 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
         threads.extend(qr.create_threads(sess, coord=coord, daemon=True,
                                          start=True))
 
-      num_iter = int(math.ceil(FLAGS.num_examples / FLAGS.batch_size))
+#       num_iter = int(math.ceil(FLAGS.num_examples / FLAGS.batch_size))
 
-#       true_positives_count = 0
-#       false_positives_count = 0
-#       true_negatives_count = 0
-#       false_negatives_count = 0
+      num_iter = FLAGS.max_iter_eval
+      true_positives_count = 0
+      false_positives_count = 0
+      true_negatives_count = 0
+      false_negatives_count = 0
+      perfmetrics = {}
       
       true_count = 0  # Counts the number of correct predictions.
       total_sample_count = num_iter * FLAGS.batch_size
@@ -149,20 +153,41 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
         correct_prediction = sess.run([top_k_op])
         false_prediction = np.logical_not(correct_prediction)
         
-#         true_positives_count += np.sum(np.logical_and(correct_prediction,is_label_one))
-#         false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
-#         
-#         
-#         true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
-#         false_negatives_count = np.sum(np.logical_and(false_prediction, is_label_one))     
-        predictions = sess.run([top_k_op])
-        true_count += np.sum(predictions)
-        print('predictions',predictions)
+        true_positives_count += np.sum(np.logical_and(correct_prediction,is_label_one))
+        false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
+         
+         
+        true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
+        false_negatives_count = np.sum(np.logical_and(false_prediction, is_label_one))     
+#         predictions = sess.run([top_k_op])
+#         true_count += np.sum(predictions)
+#         print('predictions',predictions)
         step += 1
-
+#         print('step',step)
+#         print('correct_prediction',correct_prediction)
+#         print('np.logical_and(correct_prediction,is_label_one)',np.logical_and(correct_prediction,is_label_one))
+      
       # Compute precision @ 1.
-      precision = true_count / total_sample_count
-#       precision = float(true_positives_count) / float(true_positives_count+false_positives_count)
+#       precision = true_count / total_sample_count
+
+
+      print('max_iter_eval',FLAGS.max_iter_eval)
+      print('true_positives_count',true_positives_count)
+      print('false_positives_count',false_positives_count)
+      print('false_negatives_count',false_negatives_count)
+      print('true_negatives_count',true_negatives_count)
+      precision = float(true_positives_count) / float(true_positives_count+false_positives_count)
+      recall = float(true_positives_count) / float(true_positives_count+false_negatives_count)
+      f1score = 2*float(true_positives_count) / (2*float(true_positives_count)+float(false_positives_count + false_negatives_count))
+      tpr = float(true_positives_count) / float(true_positives_count+false_negatives_count)
+      fpr = float(false_positives_count) / float(false_positives_count+true_negatives_count)
+      
+      perfmetrics['precision'] = precision
+      perfmetrics['recall'] = recall
+      perfmetrics['f1score'] = f1score
+      perfmetrics['tpr'] = tpr
+      perfmetrics['fpr'] = fpr
+      
 #       print('logits',sess.run(logits))
 #       print('labels',sess.run(labels))
 
@@ -178,7 +203,8 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
     coord.request_stop()
     coord.join(threads, stop_grace_period_secs=10)
 
-    return precision
+#     return precision
+    return perfmetrics
 
 def evaluate():
   """Eval CIFAR-10 for a number of steps."""

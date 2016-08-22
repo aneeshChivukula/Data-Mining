@@ -213,7 +213,7 @@ def distorted_inputs(data_dir, batch_size):
   # Generate a batch of images and labels by building up a queue of examples.
   return _generate_image_and_label_batch(float_image, read_input.label,
                                          min_queue_examples, batch_size,
-                                         shuffle=True)
+                                         shuffle=False)
 
 
 def inputs(eval_data, data_dir, batch_size):
@@ -239,7 +239,7 @@ def inputs(eval_data, data_dir, batch_size):
     num_examples_per_epoch = NUM_EXAMPLES_PER_EPOCH_FOR_EVAL
 
 
-#   print('filenames',filenames)
+  print('filenames',filenames)
 #   import sys
 #   sys.exit()
 

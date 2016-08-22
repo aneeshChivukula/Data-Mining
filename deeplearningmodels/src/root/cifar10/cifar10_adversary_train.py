@@ -15,6 +15,7 @@ import time
 
 import numpy as np
 from root.cifar10 import cifar10
+from root.cifar10 import cifar10_eval
 import tensorflow as tf
 
 
@@ -46,6 +47,12 @@ tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
 tf.app.flags.DEFINE_integer('numalphas', 10,
                             """Number of search solutions in the GA algorithm.""")
+# tf.app.flags.DEFINE_integer('numalphas', 20,
+#                             """Number of search solutions in the GA algorithm.""")
+# tf.app.flags.DEFINE_integer('numalphas', 50,
+#                             """Number of search solutions in the GA algorithm.""")
+# tf.app.flags.DEFINE_integer('numalphas', 100,
+#                             """Number of search solutions in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numgens', 10,
                             """Number of generations in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('myepsilon', 0.001,
@@ -56,8 +63,23 @@ tf.app.flags.DEFINE_integer('mylambda', 1,
 #                             """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 0.01,
 #                             """Parameter determining weight of the error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('perfmetric', 'precision',
+#                             """Parameter determining error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('perfmetric', "recall",
+#                             """Parameter determining error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('perfmetric', 'f1score',
+#                             """Parameter determining error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('perfmetric', 'tpr',
+#                             """Parameter determining error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('perfmetric', 'fpr',
+#                             """Parameter determining error term in fitness function.""")
 
 length = 3073
+# perfmetric = "precision"
+perfmetric = "recall"
+# perfmetric = "f1score"
+# perfmetric = "tpr"
+# perfmetric = "fpr"
 
 def train(total_loss, global_step):
     # Put following code in a function that is called until convergence with all the train parameters : global_step
@@ -175,6 +197,10 @@ def adversary_test_cnn():
 #             true_count = 0
             true_positives_count = 0
             false_positives_count = 0
+            true_negatives_count = 0
+            false_negatives_count = 0
+            perfmetrics = {}
+
 #             total_sample_count = num_iter * FLAGS.batch_size
             step = 0
             
@@ -189,16 +215,40 @@ def adversary_test_cnn():
                 
                 true_positives_count += np.sum(np.logical_and(correct_prediction,is_label_one))
                 false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
+
+                true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
+                false_negatives_count = np.sum(np.logical_and(false_prediction, is_label_one))     
+
+#                 print('labels',sess.run(labels))
                 
 #                 true_count += np.sum(predictions)
                 step += 1
-                
+#                 print('is_label_one',is_label_one)
 #                 print('sess.run(softmax_linear)',sess.run(softmax_linear))
 #                 print('predictions',predictions)
 #                 print('labels',labels)
-            
+
+
+
+#             sys.exit()            
+            print('true_positives_count',true_positives_count)
+            print('false_positives_count',false_positives_count)
+            print('false_negatives_count',false_negatives_count)
+            print('true_negatives_count',true_negatives_count)
             
             precision = float(true_positives_count) / float(true_positives_count+false_positives_count)
+            recall = float(true_positives_count) / float(true_positives_count+false_negatives_count)
+            f1score = 2*float(true_positives_count) / (2*float(true_positives_count)+float(false_positives_count + false_negatives_count))
+            tpr = float(true_positives_count) / float(true_positives_count+false_negatives_count)
+            fpr = float(false_positives_count) / float(false_positives_count+true_negatives_count)
+
+            perfmetrics['precision'] = precision
+            perfmetrics['recall'] = recall
+            perfmetrics['f1score'] = f1score
+            perfmetrics['tpr'] = tpr
+            perfmetrics['fpr'] = fpr
+
+
             
 #             precision = (true_count / total_sample_count)
 #             print('%s: adversary_test_cnn precision @ 1 = %.3f' % (datetime.now(), precision))
@@ -210,7 +260,8 @@ def adversary_test_cnn():
         
         print('%s: adversary training error @ 1 = %.3f' % (datetime.now(), 1-precision))
         
-        return(1-precision)
+#         return(1-precision)
+        return perfmetrics
         
         
 def adversary_train_cnn():
@@ -313,7 +364,8 @@ def initImagePopulation(ind_init, InDir):
     positiveimagesmean = np.zeros((32, 32, 3))
 #     d = ls[0]
     dr = 0
-    for ind,d in enumerate(ls):
+    for d in ls:
+        ind = ls.index(d)
         for f in listdir(InDir + d):
             a = ind_init(filename=InDir + d + '/' + f)
             if(len(a.shape) == 3):
@@ -355,7 +407,7 @@ def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
     individual[0][mask] = individual[0][mask] + r[mask]
-    return (individual,)
+    return individual
 
 def crossover(individual1,individual2):
     heightstartind = np.random.randint(low=0,high=32)
@@ -411,9 +463,14 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
         distortedimages = []
         for x in imagespopulation:
             distortedimages.append((distorted_image(x[1],curralpha),x[0]))
+#             print('x[0]',x[0])
 #         np.append(fitnesses,1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
         print('Reset fitnesses in alphasfitnesses')
-        error = FLAGS.mylambda * toolbox.evaluate(distortedimages)
+#         print('distortedimages',distortedimages)
+        
+                
+        perfmetrics = toolbox.evaluate(distortedimages)
+        error = FLAGS.mylambda * perfmetrics[str(perfmetric)]
         fit = 1 + error - tensornorm(curralpha)
         fitnesses.append(fit)
 #         fitnesses.append(1 + error - (alphanorms[index]/totnorm))
@@ -421,6 +478,13 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
 #         alphaspopulation[index].fitness.payoff = fit
         alphaspopulation[index].fitness.weights = (fit,)
         alphaspopulation[index].fitness.values = [fit]
+
+        alphaspopulation[index].fitness.precision = perfmetrics['precision']
+        alphaspopulation[index].fitness.recall = perfmetrics['recall']
+        alphaspopulation[index].fitness.f1score = perfmetrics['f1score']
+        alphaspopulation[index].fitness.tpr = perfmetrics['tpr']
+        alphaspopulation[index].fitness.fpr = perfmetrics['fpr']
+        
         print('Reset fitnesses in alphasfitnesses')
         
         print('error in alphasfitnesses',error)
@@ -449,7 +513,7 @@ def copyindividuals(offspring,toolbox):
 def adversary_train_genetic(InDir,WeightsDir):
 
 #     creator.create("FitnessMax", base.Fitness, weights=(0.0,),precision=0.0,payoff=0.0)
-    creator.create("FitnessMax", base.Fitness, weights=(0.0,),error=0.0)
+    creator.create("FitnessMax", base.Fitness, weights=(0.0,),error=0.0,precision=0.0,recall=0.0,f1score=0.0,tpr=0.0,fpr=0.0)
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
     
     toolbox = base.Toolbox()

@@ -187,28 +187,48 @@ def main(argv=None):
 
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
                 print('Calling mate')
-                (child1, child2) = toolbox.mate(child1, child2)
+
+                (child1m,child2m) = toolbox.clone(toolbox.mate(child1, child2))
+                child1[0] = np.copy(child1m[0])
+                child2[0] = np.copy(child2m[0])
+                child1 = toolbox.clone(child1)
+                child2 = toolbox.clone(child2)
+                
+                
+#                 (child1, child2) = toolbox.mate(child1, child2)
                 del child1.fitness.values
                 child1.fitness.weights = (0.0,)
                 del child2.fitness.values
                 child2.fitness.weights = (0.0,)
                 print('Reset mate weights')
+                print('child1.fitness.valid',child1.fitness.valid)
+                print('child2.fitness.valid',child2.fitness.valid)
                 
-                sys.exit()
+#                 sys.exit()
 
             for mutant in offspring:
                 print('Calling mutate')
-                mutant = toolbox.mutate(mutant)
+
+                mutantm = toolbox.mutate(mutant)
+                mutant[0] = np.copy(mutantm[0])
+                mutant = toolbox.clone(mutant)
+                
+#                 mutant = toolbox.mutate(mutant)
                 del mutant.fitness.values
                 mutant.fitness.weights = (0.0,)
                 print('Reset mutant weights')
+                print('mutant.fitness.valid',mutant.fitness.valid)
+
+
+            cifar10_adversary_train.alphasfitnesses(offspring,imagespopulation,toolbox)
                 
-            invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-            if(len(invalid_ind) != 0):
-                cifar10_adversary_train.alphasfitnesses(invalid_ind,imagespopulation,toolbox)
+#             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+#             if(len(invalid_ind) != 0):
+#                 cifar10_adversary_train.alphasfitnesses(invalid_ind,imagespopulation,toolbox)
             alphaspopulation[:] = cifar10_adversary_train.copyindividuals(parents + offspring,toolbox)
 
-            print('alphaspopulation',alphaspopulation)
+#             print('alphaspopulation',alphaspopulation)
+            
             binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
             if tf.gfile.Exists(TrainWeightsDir):
               tf.gfile.DeleteRecursively(TrainWeightsDir)

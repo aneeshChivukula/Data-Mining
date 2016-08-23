@@ -391,6 +391,7 @@ def select(population):
     for p in population:
         fitnesses.append(p.fitness.weights[0])
     
+#     fitnesses = [0.25,0.5,0.15,0.1]    
 #     pr = np.round(np.divide(fitnesses,max(fitnesses)),2)
 #     if(sum(np.round(np.divide(fitnesses,sum(fitnesses)),2)) == 1):
 #         pr = np.round(np.divide(fitnesses,max(fitnesses)),2)
@@ -398,7 +399,15 @@ def select(population):
 #         pr = np.round(np.divide(np.subtract(fitnesses, min(fitnesses)),max(fitnesses) - min(fitnesses)),2)
 #     print('np.round(np.divide(fitnesses,sum(fitnesses)),2)',np.round(np.divide(fitnesses,sum(fitnesses)),2))
     
-    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=True,p= fitnesses / np.linalg.norm(fitnesses,1))
+    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=False,p= fitnesses / np.linalg.norm(fitnesses,1))
+    
+#     print('popindices',popindices)
+#     print('randompopindices',randompopindices)
+#     print('fitnesses / np.linalg.norm(fitnesses,1)',fitnesses / np.linalg.norm(fitnesses,1))
+#     print('fitnesses',fitnesses)
+#     print('population',population)
+#     sys.exit()
+    
     
 #     L = [population[i] for i in randompopindices]
 #     return ([population[i] for i in randompopindices],[population[i] for i in popindices if i not in randompopindices])
@@ -424,18 +433,25 @@ def crossover(individual1,individual2):
     widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
     widthendind = np.random.randint(widthstartind + np.random.randint(2,10),32)
     
-    before1 = np.copy(individual1)
-    before2 = np.copy(individual2)
+    before1 = np.copy(individual1[0])
+    before2 = np.copy(individual2[0])
+#     print('individual1 before',individual1[0])
+#     print('individual2 before',individual2[0])
     
-    individual1[0][heightstartind:heightendind,widthstartind:widthendind,], individual2[0][heightstartind:heightendind,widthstartind:widthendind,] = individual2[0][heightstartind:heightendind,widthstartind:widthendind,].copy(), individual1[0][heightstartind:heightendind,widthstartind:widthendind,].copy()    
+    individual1[0][heightstartind:heightendind,widthstartind:widthendind,], individual2[0][heightstartind:heightendind,widthstartind:widthendind,] = individual2[0][heightstartind:heightendind,widthstartind:widthendind,].copy(), (individual1[0][heightstartind:heightendind,widthstartind:widthendind,]).copy()
     
-    after1 = np.copy(individual1)
-    after2 = np.copy(individual2)
+    after1 = np.copy(individual1[0])
+    after2 = np.copy(individual2[0])
+#     print('individual1 after',individual1[0])
+#     print('individual2 after',individual2[0])
     
-    print('np.count_nonzero(after1-before1) == 0',np.count_nonzero(after1-before1) == 0)
-    print('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0)
+#     print('np.count_nonzero(after1-before1) == 0',np.count_nonzero(after1-before1) == 0)
+#     print('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0)
+
+    if((np.count_nonzero(after1-before1) == 0 or np.count_nonzero(after2-before2) == 0)):
+       print('Skipped a mutation. Check for logical bugs.')
+       sys.exit() 
     
-    sys.exit()    
     return (individual1, individual2)
 
 
@@ -580,7 +596,7 @@ def adversary_train_genetic(InDir,WeightsDir):
 #         parents = map(toolbox.clone, offspring)
 
         print('Initialization completed')
-        
+            
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
 #             if random.random() < CXPB:
                 print('Calling mate')

@@ -2455,5 +2455,130 @@ def adversary_train_genetic(InDir,WeightsDir):
 #     print('fitnesses',fitnesses)
 
 
+#         print('individual1 after',after1)
+#         print('individual2 after',after2)
+#         print('individual1[0].fitness.error after',individual1[0].fitness.error)
+
+#         print('(after1)',(after1))
+#         print('(after2)',(after2))
+#         sys.exit()
+
+        
+#         print('(after1-before1)',(after1-before1))
+#         print('(after2-before2)',(after2-before2))
+# 
+#         print('np.count_nonzero(after1-before1) == 0',np.count_nonzero(after1-before1) == 0)
+#         print('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0)
+# 
+#         print('heightstartind',heightstartind)
+#         print('heightendind',heightendind)
+#         print('widthstartind',widthstartind)
+#         print('widthendind',widthendind)
+#         
+#         sys.exit()
+
+
+#         print('individual1 before',before1)
+#         print('individual2 before',before2)
+#         print('individual1[0].fitness.error before',individual1[0].fitness.error)
+        
+#         
+#     #     individual2[0][heightstartind:heightendind,widthstartind:widthendind,], individual1[0][heightstartind:heightendind,widthstartind:widthendind,] = individual1[0][heightstartind:heightendind,widthstartind:widthendind,].copy(), individual2[0][heightstartind:heightendind,widthstartind:widthendind,].copy()
+# 
+
+
+#     print('Exiting mutation')
+#     sys.exit()
+            
+    #     print('heightstartind',heightstartind)
+    #     print('heightendind',heightendind)
+    #     print('widthstartind',widthstartind)
+    #     print('widthendind',widthendind)
     
+#     sys.exit()
+#     return (individual1[0], individual2[0])
+
+
+
+
+
+def crossover(individual1,individual2):
+	np.random.seed(current_milli_time())
+
+	heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+	heightendind = np.random.randint(heightstartind + np.random.randint(2,10),32)
+
+	widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+	widthendind = np.random.randint(widthstartind + np.random.randint(2,10),32)
+	
+	before1 = np.copy(individual1)
+	before2 = np.copy(individual2)
+	
+	individual1[0][heightstartind:heightendind,widthstartind:widthendind,], individual2[0][heightstartind:heightendind,widthstartind:widthendind,] = individual2[0][heightstartind:heightendind,widthstartind:widthendind,].copy(), individual1[0][heightstartind:heightendind,widthstartind:widthendind,].copy()	
+	
+	after1 = np.copy(individual1)
+	after2 = np.copy(individual2)
+	
+	
+	print('np.count_nonzero(after1-before1) == 0',np.count_nonzero(after1-before1) == 0)
+	print('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0)
+	
+	sys.exit()	
+    return (individual1, individual2)
+	
+
+def crossover(individual1,individual2):
+    
+    loopFlag = True
+    seedt = 0
+    
+    initialInd1 = np.copy(individual1)
+    initialInd2 = np.copy(individual2)
+    
+    while loopFlag:
+
+        seedc = current_milli_time()
+        np.random.seed(int(seedc + seedt))
+        
+        heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+        heightendind = np.random.randint(heightstartind + np.random.randint(2,10),32)
+        
+        widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+        widthendind = np.random.randint(widthstartind + np.random.randint(2,10),32)
+
+        before1 = np.copy(individual1)
+        before2 = np.copy(individual2)
+
+        temp1 = np.copy(individual1[0][heightstartind:heightendind,widthstartind:widthendind,])
+        temp2 = np.copy(individual2[0][heightstartind:heightendind,widthstartind:widthendind,])
+        
+        individual1[0][heightstartind:heightendind,widthstartind:widthendind,] = np.copy(temp2)
+        individual2[0][heightstartind:heightendind,widthstartind:widthendind,] = np.copy(temp1)
+        
+        after1 = np.copy(individual1)
+        after2 = np.copy(individual2)
+        
+        if(not (np.count_nonzero(after1-before1) == 0 or np.count_nonzero(after2-before2) == 0)):
+            loopFlag = False
+        else:
+            seedt = current_milli_time() + np.random.randint(1,1000) 
+            individual1 = np.copy(initialInd1)
+            individual2 = np.copy(initialInd2)
+            del temp1
+            del temp2
+            print('Skipped a mutation')
+            print('np.count_nonzero(after1-before1) == 0',np.count_nonzero(after1-before1) == 0)
+            print('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0)
+            print('(before1)',(before1))
+            print('(after1)',(after1))
+            print('(before2)',(before2))
+            print('(after2)',(after2))
+    
+    return (individual1.astype(np.int64, copy=False), individual2.astype(np.int64, copy=False))
+
+http://deap.readthedocs.io/en/1.0.x/tutorials/advanced/numpy.html    
+http://stackoverflow.com/questions/9954413/swap-array-data-in-numpy
+http://stackoverflow.com/questions/14836228/is-there-a-standardized-method-to-swap-two-variables-in-python
+
+
 '''

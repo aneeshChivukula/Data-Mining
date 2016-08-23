@@ -413,60 +413,31 @@ def mutation(individual):
     individual[0][mask] = individual[0][mask] + r[mask]
 #     print('individual[0] after',np.sum(individual[0]))
 #     print('individual[0] shape after',(individual[0]).shape)
-    return individual
+    return individual.astype(np.int64, copy=False)
 
 def crossover(individual1,individual2):
+    np.random.seed(current_milli_time())
+
+    heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+    heightendind = np.random.randint(heightstartind + np.random.randint(2,10),32)
+
+    widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+    widthendind = np.random.randint(widthstartind + np.random.randint(2,10),32)
     
-    loopFlag = True
-    while loopFlag:
-
-        seedc = current_milli_time()
-        np.random.seed(seedc)
-        
-        heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
-        heightendind = np.random.randint(heightstartind + 1,32)
-        
-        widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
-        widthendind = np.random.randint(widthstartind + 1,32)
-
-        sumbefore1 = np.sum(individual1[0])
-        sumbefore2 = np.sum(individual2[0])
-
-        print('individual1 before',sumbefore1)
-        print('individual2 before',sumbefore2)
-#         print('individual1[0].fitness.error before',individual1[0].fitness.error)
-        
-        temp = np.copy(individual1[0][heightstartind:heightendind,widthstartind:widthendind,])
-        individual1[0][heightstartind:heightendind,widthstartind:widthendind,] = individual2[0][heightstartind:heightendind,widthstartind:widthendind,]
-        individual2[0][heightstartind:heightendind,widthstartind:widthendind,] = temp
-        
-    #     individual2[0][heightstartind:heightendind,widthstartind:widthendind,], individual1[0][heightstartind:heightendind,widthstartind:widthendind,] = individual1[0][heightstartind:heightendind,widthstartind:widthendind,].copy(), individual2[0][heightstartind:heightendind,widthstartind:widthendind,].copy()
-
-        sumafter1 = np.sum(individual1[0])
-        sumafter2 = np.sum(individual2[0])
-
-        print('individual1 after',sumafter1)
-        print('individual2 after',sumafter2)
-#         print('individual1[0].fitness.error after',individual1[0].fitness.error)
-
-        if(float(sumbefore1-sumafter1) !=0 and float(sumbefore2-sumafter2) != 0):
-            loopFlag = False
-     
-    #     print('heightstartind',heightstartind)
-    #     print('heightendind',heightendind)
-    #     print('widthstartind',widthstartind)
-    #     print('widthendind',widthendind)
+    before1 = np.copy(individual1)
+    before2 = np.copy(individual2)
     
-    print('sumafter1 - sumbefore1',sumafter1 - sumbefore1)
-    print('sumafter2 - sumbefore2',sumafter2 - sumbefore2)
+    individual1[0][heightstartind:heightendind,widthstartind:widthendind,], individual2[0][heightstartind:heightendind,widthstartind:widthendind,] = individual2[0][heightstartind:heightendind,widthstartind:widthendind,].copy(), individual1[0][heightstartind:heightendind,widthstartind:widthendind,].copy()    
     
+    after1 = np.copy(individual1)
+    after2 = np.copy(individual2)
     
-#     sys.exit()
+    print('np.count_nonzero(after1-before1) == 0',np.count_nonzero(after1-before1) == 0)
+    print('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0)
     
+    sys.exit()    
     return (individual1, individual2)
-#     return (individual1[0], individual2[0])
 
-# def selection(individual1,individual2):
 
 def binarizer(CurrDir,population,OutFile):
     
@@ -617,15 +588,13 @@ def adversary_train_genetic(InDir,WeightsDir):
 #                 sumbefore1 = np.sum(child1[0])
 #                 sumbefore2 = np.sum(child2[0])
 
-#                 (child1m,child2m) = toolbox.clone(toolbox.mate(child1, child2))
-#                 child1[0] = np.copy(child1m[0])
-#                 child2[0] = np.copy(child2m[0])
-
-#                 child1 = toolbox.clone(child1)
-#                 child2 = toolbox.clone(child2)
-
+                (child1m,child2m) = toolbox.clone(toolbox.mate(child1, child2))
+                child1[0] = np.copy(child1m[0])
+                child2[0] = np.copy(child2m[0])
+                child1 = toolbox.clone(child1)
+                child2 = toolbox.clone(child2)
                 
-                (child1,child2) = toolbox.clone(toolbox.mate(child1, child2))
+#                 (child1,child2) = toolbox.clone(toolbox.mate(child1, child2))
 
                 print('Reset mate weights')
                 del child1.fitness.values
@@ -660,8 +629,11 @@ def adversary_train_genetic(InDir,WeightsDir):
 #                 print('mutant[0] before',np.sum(mutant[0]))
 #                 print('mutant[0] shape before',(mutant[0]).shape)
                 
-                mutant = toolbox.clone(toolbox.mutate(mutant))
-
+                mutantm = toolbox.mutate(mutant)
+                mutant[0] = np.copy(mutantm[0])
+                mutant = toolbox.clone(mutant)
+#                 mutant = toolbox.clone(toolbox.mutate(mutant))
+                
                 print('Reset mutant weights')
                 del mutant.fitness.values
                 mutant.fitness.weights = (0.0,)

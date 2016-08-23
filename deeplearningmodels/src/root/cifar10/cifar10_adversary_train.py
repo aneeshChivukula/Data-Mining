@@ -17,6 +17,7 @@ import numpy as np
 from root.cifar10 import cifar10
 from root.cifar10 import cifar10_eval
 import tensorflow as tf
+import time
 
 
 FLAGS = tf.app.flags.FLAGS
@@ -80,6 +81,7 @@ length = 3073
 perfmetric = "f1score"
 # perfmetric = "tpr"
 # perfmetric = "fpr"
+current_milli_time = lambda: int(round(time.time()))
 
 def train(total_loss, global_step):
     # Put following code in a function that is called until convergence with all the train parameters : global_step
@@ -406,17 +408,21 @@ def select(population):
 def mutation(individual):
     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
-    print('individual before',individual)
+#     print('individual[0] before',np.sum(individual[0]))
+#     print('individual[0] shape before',(individual[0]).shape)
     individual[0][mask] = individual[0][mask] + r[mask]
-    print('individual after',individual)
-    print('individual[0] after',individual[0])
+#     print('individual[0] after',np.sum(individual[0]))
+#     print('individual[0] shape after',(individual[0]).shape)
     return individual
 
 def crossover(individual1,individual2):
     
     loopFlag = True
-    
     while loopFlag:
+
+        seedc = current_milli_time()
+        np.random.seed(seedc)
+        
         heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
         heightendind = np.random.randint(heightstartind + 1,32)
         
@@ -591,72 +597,93 @@ def adversary_train_genetic(InDir,WeightsDir):
     while (gen < FLAGS.numgens):
         print('gen',gen)
         
+        popsumbefore = np.sum(alphaspopulation)
+
         selectedoffspring = toolbox.select(alphaspopulation)
         
         parents = copyindividuals(selectedoffspring,toolbox)
-        offspring = []
+        offspring = copyindividuals(selectedoffspring,toolbox)
+#         offspring = []
         
 #         offspring = map(toolbox.clone, offspring)
 #         parents = map(toolbox.clone, offspring)
 
         print('Initialization completed')
         
-        offspringsumbefore = np.sum(parents)
-        
-        for child1, child2 in zip(parents[::2], parents[1::2]):
+        for child1, child2 in zip(offspring[::2], offspring[1::2]):
 #             if random.random() < CXPB:
                 print('Calling mate')
                 
-                sumbefore1 = np.sum(child1[0])
-                sumbefore2 = np.sum(child2[0])
+#                 sumbefore1 = np.sum(child1[0])
+#                 sumbefore2 = np.sum(child2[0])
 
-                (child1m,child2m) = toolbox.mate(child1, child2)
-                
-                child1[0] = np.copy(child1m[0])
-                child2[0] = np.copy(child2m[0])
+#                 (child1m,child2m) = toolbox.clone(toolbox.mate(child1, child2))
+#                 child1[0] = np.copy(child1m[0])
+#                 child2[0] = np.copy(child2m[0])
 
-                sumafter1 = np.sum(child1[0])
-                sumafter2 = np.sum(child2[0])
+#                 child1 = toolbox.clone(child1)
+#                 child2 = toolbox.clone(child2)
+
                 
+                (child1,child2) = toolbox.clone(toolbox.mate(child1, child2))
+
                 print('Reset mate weights')
-
-                child1c = toolbox.clone(child1)
-                child2c = toolbox.clone(child2)
-
-                offspring.append(child1c)
-                offspring.append(child2c)
-
-        offspringsumafter = np.sum(offspring)
-        
-        print('offspringsumbefore',offspringsumbefore)
-        print('offspringsumafter',offspringsumafter)
-
-        sys.exit()
-
+                del child1.fitness.values
+                child1.fitness.weights = (0.0,)
+                
+                del child2.fitness.values
+                child2.fitness.weights = (0.0,)
+                
+                print('child1.fitness.valid',child1.fitness.valid)
+                print('child2.fitness.valid',child2.fitness.valid)
+                
+#                 print('child2.fitness.error',child2.fitness.error)
+#                 child1c = toolbox.clone(child1)
+#                 child2c = toolbox.clone(child2)
+#                 sumafter1 = np.sum(child1[0])
+#                 sumafter2 = np.sum(child2[0])
+#                 print('sumafter1 - sumbefore1',sumafter1 - sumbefore1)
+#                 print('sumafter2 - sumbefore2',sumafter2 - sumbefore2)
+#                 offspring.append(child1c)
+#                 offspring.append(child2c)
+#                 print('np.sum(parents[0])',np.sum(parents[0]))
+#                 print('np.sum(child1c)',np.sum(child1c))
+#                 sys.exit()
+#         print('np.sum(parents[0])',np.sum(parents[0]))
+#         print('np.sum(offspring[0])',np.sum(offspring[0]))
+# 
+#         sys.exit()
                 
         for mutant in offspring:
 #             if random.random() < MUTPB:
                 print('Calling mutate')
-                print('mutant',mutant)
+#                 print('mutant[0] before',np.sum(mutant[0]))
+#                 print('mutant[0] shape before',(mutant[0]).shape)
                 
-                mutant = toolbox.mutate(mutant)
+                mutant = toolbox.clone(toolbox.mutate(mutant))
+
+                print('Reset mutant weights')
                 del mutant.fitness.values
                 mutant.fitness.weights = (0.0,)
-                print('Reset mutant weights')
-                print('mutant',mutant)
-                print('mutant.fitness.error',mutant.fitness.error)
                 
-                sys.exit()
+#                 print('mutant.fitness.valid',mutant.fitness.valid)
+#                 print('mutant.fitness.weights',mutant.fitness.weights)
+#                 print('mutant[0] after',np.sum(mutant[0]))
+#                 print('mutant[0] shape after',(mutant[0]).shape)
         
-        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-        print('len(invalid_ind)',len(invalid_ind))
         print('Calling alphasfitnesses after')
-        print('len(alphaspopulation)',len(alphaspopulation))
+        alphasfitnesses(offspring,imagespopulation,toolbox)
+        
+#         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+#         print('len(invalid_ind)',len(invalid_ind))
+#         print('len(offspring)',len(offspring))
+#         print('len(parents)',len(parents))
+#         sys.exit()
+#         print('len(alphaspopulation)',len(alphaspopulation))
 #         print('alphaspopulation after',(alphaspopulation))
 #         print('len(alphaspopulation) after',len(alphaspopulation))
-
-        if(len(invalid_ind) != 0):
-            alphasfitnesses(invalid_ind,imagespopulation,toolbox)
+#         if(len(invalid_ind) != 0):
+#             alphasfitnesses(invalid_ind,imagespopulation,toolbox)
 #             fitnesses = []
 #             for p in invalid_ind:
 #                 print('p.fitness.weights',p.fitness.weights)
@@ -666,7 +693,13 @@ def adversary_train_genetic(InDir,WeightsDir):
 
         alphaspopulation[:] = copyindividuals(parents + offspring,toolbox)
 
-        
+
+        popsumafter = np.sum(alphaspopulation)
+
+
+        print('popsumbefore',popsumbefore)
+        print('popsumafter',popsumafter)
+#         sys.exit()
 #         fitnesses = []
 #         for p in parents:
 #             fitnesses.append(p.fitness.weights[0])
@@ -696,7 +729,7 @@ def adversary_train_genetic(InDir,WeightsDir):
 #             exitLoop = True
         gen = gen + 1
         
-        
+    
     return (alphaspopulation,imagespopulation)
         
 

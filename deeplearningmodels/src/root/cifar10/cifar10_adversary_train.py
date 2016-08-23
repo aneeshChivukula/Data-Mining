@@ -428,7 +428,7 @@ def crossover(individual1,individual2):
 
         print('individual1 before',sumbefore1)
         print('individual2 before',sumbefore2)
-        print('individual1[0].fitness.error before',individual1[0].fitness.error)
+#         print('individual1[0].fitness.error before',individual1[0].fitness.error)
         
         temp = np.copy(individual1[0][heightstartind:heightendind,widthstartind:widthendind,])
         individual1[0][heightstartind:heightendind,widthstartind:widthendind,] = individual2[0][heightstartind:heightendind,widthstartind:widthendind,]
@@ -441,7 +441,7 @@ def crossover(individual1,individual2):
 
         print('individual1 after',sumafter1)
         print('individual2 after',sumafter2)
-        print('individual1[0].fitness.error after',individual1[0].fitness.error)
+#         print('individual1[0].fitness.error after',individual1[0].fitness.error)
 
         if(float(sumbefore1-sumafter1) !=0 and float(sumbefore2-sumafter2) != 0):
             loopFlag = False
@@ -455,9 +455,9 @@ def crossover(individual1,individual2):
     print('sumafter2 - sumbefore2',sumafter2 - sumbefore2)
     
     
-    sys.exit()
+#     sys.exit()
     
-    return (individual1[0], individual2[0])
+    return (individual1, individual2)
 #     return (individual1[0], individual2[0])
 
 # def selection(individual1,individual2):
@@ -594,63 +594,45 @@ def adversary_train_genetic(InDir,WeightsDir):
         selectedoffspring = toolbox.select(alphaspopulation)
         
         parents = copyindividuals(selectedoffspring,toolbox)
-        offspring = copyindividuals(selectedoffspring,toolbox)
+        offspring = []
         
 #         offspring = map(toolbox.clone, offspring)
 #         parents = map(toolbox.clone, offspring)
 
         print('Initialization completed')
         
+        offspringsumbefore = np.sum(parents)
         
-        
-        print('offspring[0].fitness.values',offspring[0].fitness.values)
-        print('offspring[0].fitness.error',offspring[0].fitness.error)
-        print('offspring[0].fitness.precision',offspring[0].fitness.precision)
-#         sys.exit()
-        
-        print('len(alphaspopulation)',len(alphaspopulation))
-        print('len(offspring)',len(offspring))
-        
-        for child1, child2 in zip(offspring[::2], offspring[1::2]):
+        for child1, child2 in zip(parents[::2], parents[1::2]):
 #             if random.random() < CXPB:
                 print('Calling mate')
                 
                 sumbefore1 = np.sum(child1[0])
                 sumbefore2 = np.sum(child2[0])
-                
-                print('child1',child1)
-                print('child2',child2)
-                print('child2.fitness.error',child2.fitness.error)
-#                 sys.exit()
 
-                (child1,child2) = toolbox.mate(child1, child2)
+                (child1m,child2m) = toolbox.mate(child1, child2)
+                
+                child1[0] = np.copy(child1m[0])
+                child2[0] = np.copy(child2m[0])
+
                 sumafter1 = np.sum(child1[0])
                 sumafter2 = np.sum(child2[0])
                 
-                print('sumafter1 - sumbefore1 in mate',sumafter1 - sumbefore1)
-                print('sumafter2 - sumbefore2 in mate',sumafter2 - sumbefore2)
-                del child1.fitness.values
-                child1.fitness.weights = (0.0,)
-                del child2.fitness.values
-                child2.fitness.weights = (0.0,)
                 print('Reset mate weights')
 
-                print('child2.fitness.error',child2.fitness.error)
-                
-                sys.exit()
+                child1c = toolbox.clone(child1)
+                child2c = toolbox.clone(child2)
 
-                print('child1',child1)
-                print('child2',child2)
-                
-                print('np.linalg.norm(child3 - child1)',np.sum(child3 - child1))
-                print('np.linalg.norm(child4 - child2)',np.linalg.norm(child4 - child2))
-                
-                print('child1.shape',child1.shape)
-                print('child3.shape',child3.shape)
-                
-                
-                sys.exit()
-                
+                offspring.append(child1c)
+                offspring.append(child2c)
+
+        offspringsumafter = np.sum(offspring)
+        
+        print('offspringsumbefore',offspringsumbefore)
+        print('offspringsumafter',offspringsumafter)
+
+        sys.exit()
+
                 
         for mutant in offspring:
 #             if random.random() < MUTPB:

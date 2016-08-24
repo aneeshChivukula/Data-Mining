@@ -40,24 +40,34 @@ tf.app.flags.DEFINE_integer('high', 255,
                             """Upper limit for pixel value.""")
 tf.app.flags.DEFINE_integer('dividend', 1,
                             """Factor to control the GA norm initialization boundaries.""")
-tf.app.flags.DEFINE_integer('steplow', -10,
+tf.app.flags.DEFINE_integer('steplow', -50,
                             """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('stephigh', 10,
+tf.app.flags.DEFINE_integer('stephigh', 50,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 50,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-tf.app.flags.DEFINE_integer('numalphas', 10,
-                            """Number of search solutions in the GA algorithm.""")
-# tf.app.flags.DEFINE_integer('numalphas', 20,
+# tf.app.flags.DEFINE_integer('numalphas', 2,
 #                             """Number of search solutions in the GA algorithm.""")
+# tf.app.flags.DEFINE_integer('numalphas', 10,
+#                             """Number of search solutions in the GA algorithm.""")
+tf.app.flags.DEFINE_integer('numalphas', 20,
+                            """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 50,
 #                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 100,
 #                             """Number of search solutions in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numgens', 10,
                             """Number of generations in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('myepsilon', 0.0001,
+# tf.app.flags.DEFINE_integer('numgens', 20,
+#                             """Number of generations in the GA algorithm.""")
+# tf.app.flags.DEFINE_integer('numgens', 50,
+#                             """Number of generations in the GA algorithm.""")
+# tf.app.flags.DEFINE_integer('numgens', 100,
+#                             """Number of generations in the GA algorithm.""")
+tf.app.flags.DEFINE_integer('myepsilon', 0.001,
                             """Parameter determining game iterations.""")
+# tf.app.flags.DEFINE_integer('myepsilon', 0.0001,
+#                             """Parameter determining game iterations.""")
 tf.app.flags.DEFINE_integer('mylambda', 1,
                             """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 0.1,
@@ -82,6 +92,7 @@ perfmetric = "f1score"
 # perfmetric = "tpr"
 # perfmetric = "fpr"
 current_milli_time = lambda: int(round(time.time()))
+StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
 
 def train(total_loss, global_step):
     # Put following code in a function that is called until convergence with all the train parameters : global_step
@@ -211,16 +222,21 @@ def adversary_test_cnn():
 
                 is_label_one = sess.run(labels).astype(bool)
                 is_label_zero = np.logical_not(is_label_one)
-
+                
                 correct_prediction = sess.run([top_k_op])
                 false_prediction = np.logical_not(correct_prediction)
                 
                 true_positives_count += np.sum(np.logical_and(correct_prediction,is_label_one))
                 false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
-
+                 
                 true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
-                false_negatives_count = np.sum(np.logical_and(false_prediction, is_label_one))     
-
+                false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))     
+                
+#                 true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
+#                 false_positives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
+#  
+#                 true_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))
+#                 false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_zero))     
 #                 print('labels',sess.run(labels))
                 
 #                 true_count += np.sum(predictions)
@@ -229,9 +245,6 @@ def adversary_test_cnn():
 #                 print('sess.run(softmax_linear)',sess.run(softmax_linear))
 #                 print('predictions',predictions)
 #                 print('labels',labels)
-
-
-
 #             sys.exit()            
             print('true_positives_count',true_positives_count)
             print('false_positives_count',false_positives_count)
@@ -250,7 +263,9 @@ def adversary_test_cnn():
             perfmetrics['tpr'] = tpr
             perfmetrics['fpr'] = fpr
 
-
+            print('precision',precision)
+            print('recall',recall)
+            print('f1score',f1score)
             
 #             precision = (true_count / total_sample_count)
 #             print('%s: adversary_test_cnn precision @ 1 = %.3f' % (datetime.now(), precision))
@@ -422,9 +437,12 @@ def mutation(individual):
     individual[0][mask] = individual[0][mask] + r[mask]
 #     print('individual[0] after',np.sum(individual[0]))
 #     print('individual[0] shape after',(individual[0]).shape)
-    return individual.astype(np.int64, copy=False)
+    return individual
 
 def crossover(individual1,individual2):
+    
+    fp = open(StdoutFile,'a')
+    
     np.random.seed(current_milli_time())
 
     heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
@@ -450,7 +468,21 @@ def crossover(individual1,individual2):
 
     if((np.count_nonzero(after1-before1) == 0 or np.count_nonzero(after2-before2) == 0)):
        print('Skipped a mutation. Check for logical bugs.')
-       sys.exit() 
+       print('np.count_nonzero(after1-before1) == 0',np.count_nonzero(after1-before1) == 0)
+       print('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0)
+       fp.write('Skipped a mutation. Check for logical bugs.' + '\n')
+       fp.write('np.count_nonzero(after1-before1) == 0',np.count_nonzero(after1-before1) == 0 + '\n')
+       fp.write('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0 + '\n')
+       fp.write('before1',before1 + '\n')
+       fp.write('before2',before2 + '\n')
+       fp.write('after1',after1 + '\n')
+       fp.write('after2',after2 + '\n')
+       fp.write('heightstartind',heightstartind + '\n')
+       fp.write('heightendind',heightendind + '\n')
+       fp.write('widthstartind',widthstartind + '\n')
+       fp.write('widthendind',widthendind + '\n')
+       fp.close()
+#        sys.exit() 
     
     return (individual1, individual2)
 

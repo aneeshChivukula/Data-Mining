@@ -15,6 +15,7 @@ from os import listdir
 from deap import base
 from deap import creator
 from deap import tools
+import cPickle as pickle
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -51,13 +52,17 @@ def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
     
 
 def main(argv=None):
-
+    
+    
     WeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output'
     AdvInDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplit/'
     GameInDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_data/imagenet2010-batches-bin/'
     EvalDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_eval'
     TrainWeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
-    
+    StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
+    AlphasFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphas.pkl'
+    fp1 = open(StdoutFile,'w')
+    fp2 = open(AlphasFile,'wb')
 #     maxiters = 11
     LoopingFlag = True
 #     total_iters = 0
@@ -105,7 +110,7 @@ def main(argv=None):
     labels.sort()
 
 
-    creator.create("FitnessMax", base.Fitness, weights=(0.0,),error=0.0)
+    creator.create("FitnessMax", base.Fitness, weights=(0.0,),error=0.0,precision=0.0,recall=0.0,f1score=0.0,tpr=0.0,fpr=0.0)
     creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
     
     toolbox = base.Toolbox()
@@ -123,21 +128,19 @@ def main(argv=None):
     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=FLAGS.numalphas)
     alphaspopulation = toolbox.population()
-
+    pickle.dump(alphaspopulation,fp2)
 
 #     print('imagespopulation',imagespopulation)
 #     print('alphaspopulation',alphaspopulation)
 #     print('alphaspopulation[0].fitness.weights',alphaspopulation[0].fitness.weights)
 
+    cifar10_adversary_train.alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
     print('Initialization completed')
 
 #     sys.exit()
 #     while(LoopingFlag and total_iters < maxiters):
     while(LoopingFlag and gen < FLAGS.numgens):
         print('gen',gen)
-        
-        
-        cifar10_adversary_train.alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
         print('len(alphaspopulation)',len(alphaspopulation))
         print('alphaspopulation selected for game',alphaspopulation)
         
@@ -148,10 +151,10 @@ def main(argv=None):
             if(alphaspopulation[index].fitness.weights > bestalphafitness):
                 bestalphafitness = alphaspopulation[index].fitness.weights
                 bestalpha = alphaspopulation[index]
+                print('alphaspopulation[index].fitness.weights',alphaspopulation[index].fitness.weights)
         
         print('bestalpha selected for game',bestalpha)
         print('bestalphafitness selected for game',bestalphafitness)
-        
         
 #         total_iters = total_iters + 1
 #         (alphaspopulation,imagespopulation) = cifar10_adversary_train.adversary_train_genetic(InDir,WeightsDir)
@@ -177,7 +180,7 @@ def main(argv=None):
         print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
         finalresults.append((adv_payoff, error,1+error-adv_payoff, perf, perfmetrics, gen))
         print('finalresults',finalresults)
-
+        fp1.write(finalresults + '\n')
         if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
             adv_payoff_highest = adv_payoff
 
@@ -188,14 +191,14 @@ def main(argv=None):
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
                 print('Calling mate')
 
-                (child1m,child2m) = toolbox.clone(toolbox.mate(child1, child2))
+                (child1m,child2m) = toolbox.mate(child1, child2)
                 child1[0] = np.copy(child1m[0])
                 child2[0] = np.copy(child2m[0])
                 child1 = toolbox.clone(child1)
                 child2 = toolbox.clone(child2)
                 
                 
-#                 (child1, child2) = toolbox.mate(child1, child2)
+#                 (child1, child2) = tollbox.clone(toolbox.mate(child1, child2))
                 del child1.fitness.values
                 child1.fitness.weights = (0.0,)
                 del child2.fitness.values
@@ -226,7 +229,7 @@ def main(argv=None):
 #             if(len(invalid_ind) != 0):
 #                 cifar10_adversary_train.alphasfitnesses(invalid_ind,imagespopulation,toolbox)
             alphaspopulation[:] = cifar10_adversary_train.copyindividuals(parents + offspring,toolbox)
-
+            pickle.dump(alphaspopulation,fp2)
 #             print('alphaspopulation',alphaspopulation)
             
             binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
@@ -298,7 +301,10 @@ def main(argv=None):
     print('FLAGS.myepsilon',FLAGS.myepsilon)
     print('FLAGS.mylambda',FLAGS.mylambda)
     print('finalresults',finalresults)
+    fp1.write(finalresults + '\n')
 
+    fp1.close()
+    fp2.close()
     
 # wstar are neural network weights stored in files on disk
 # Need to check whether game is converging as expected

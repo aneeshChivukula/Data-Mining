@@ -66,6 +66,7 @@ tf.app.flags.DEFINE_boolean('log_device_placement', False,
 
 
 def train():
+  print('Calling train')
   """Train CIFAR-10 for a number of steps."""
   with tf.Graph().as_default():
     global_step = tf.Variable(0, trainable=False)

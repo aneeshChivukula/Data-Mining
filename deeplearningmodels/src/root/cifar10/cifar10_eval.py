@@ -158,7 +158,7 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
          
          
         true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
-        false_negatives_count = np.sum(np.logical_and(false_prediction, is_label_one))     
+        false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))     
 #         predictions = sess.run([top_k_op])
 #         true_count += np.sum(predictions)
 #         print('predictions',predictions)

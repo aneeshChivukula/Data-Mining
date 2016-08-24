@@ -2581,4 +2581,11 @@ http://stackoverflow.com/questions/9954413/swap-array-data-in-numpy
 http://stackoverflow.com/questions/14836228/is-there-a-standardized-method-to-swap-two-variables-in-python
 
 
+
+true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
+false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
+
+true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
+false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))
+
 '''

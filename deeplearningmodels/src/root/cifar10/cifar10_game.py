@@ -61,7 +61,7 @@ def main(argv=None):
     TrainWeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
     StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
     AlphasFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphas.pkl'
-    fp1 = open(StdoutFile,'w')
+    fp1 = open(StdoutFile,'wb')
     fp2 = open(AlphasFile,'wb')
 #     maxiters = 11
     LoopingFlag = True
@@ -180,8 +180,7 @@ def main(argv=None):
         print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
         finalresults.append((adv_payoff, error,1+error-adv_payoff, perf, perfmetrics, gen))
         print('finalresults',finalresults)
-        fp1.write(finalresults)
-        fp1.write('\n')
+        pickle.dump(finalresults,fp1)
         if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
             adv_payoff_highest = adv_payoff
 
@@ -302,7 +301,8 @@ def main(argv=None):
     print('FLAGS.myepsilon',FLAGS.myepsilon)
     print('FLAGS.mylambda',FLAGS.mylambda)
     print('finalresults',finalresults)
-    fp1.write(finalresults + '\n')
+    
+    pickle.dump(finalresults,fp1)
 
     fp1.close()
     fp2.close()

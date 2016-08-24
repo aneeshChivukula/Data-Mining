@@ -50,21 +50,21 @@ tf.app.flags.DEFINE_integer('max_iter_test', 50,
 #                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 10,
 #                             """Number of search solutions in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('numalphas', 2,
-                            """Number of search solutions in the GA algorithm.""")
-# tf.app.flags.DEFINE_integer('numalphas', 50,
+# tf.app.flags.DEFINE_integer('numalphas', 20,
 #                             """Number of search solutions in the GA algorithm.""")
+tf.app.flags.DEFINE_integer('numalphas', 50,
+                            """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 100,
 #                             """Number of search solutions in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('numgens', 10,
-                            """Number of generations in the GA algorithm.""")
-# tf.app.flags.DEFINE_integer('numgens', 20,
+# tf.app.flags.DEFINE_integer('numgens', 10,
 #                             """Number of generations in the GA algorithm.""")
+tf.app.flags.DEFINE_integer('numgens', 20,
+                            """Number of generations in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numgens', 50,
 #                             """Number of generations in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numgens', 100,
 #                             """Number of generations in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('myepsilon', 0.001,
+tf.app.flags.DEFINE_integer('myepsilon', 0.0001,
                             """Parameter determining game iterations.""")
 # tf.app.flags.DEFINE_integer('myepsilon', 0.0001,
 #                             """Parameter determining game iterations.""")

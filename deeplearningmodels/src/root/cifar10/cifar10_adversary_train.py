@@ -50,7 +50,7 @@ tf.app.flags.DEFINE_integer('max_iter_test', 50,
 #                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 10,
 #                             """Number of search solutions in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('numalphas', 20,
+tf.app.flags.DEFINE_integer('numalphas', 2,
                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 50,
 #                             """Number of search solutions in the GA algorithm.""")

@@ -180,7 +180,8 @@ def main(argv=None):
         print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
         finalresults.append((adv_payoff, error,1+error-adv_payoff, perf, perfmetrics, gen))
         print('finalresults',finalresults)
-        fp1.write(finalresults + '\n')
+        fp1.write(finalresults)
+        fp1.write('\n')
         if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
             adv_payoff_highest = adv_payoff
 

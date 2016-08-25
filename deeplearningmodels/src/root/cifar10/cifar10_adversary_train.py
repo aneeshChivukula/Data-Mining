@@ -52,10 +52,10 @@ tf.app.flags.DEFINE_integer('max_iter_test', 50,
 #                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 20,
 #                             """Number of search solutions in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('numalphas', 50,
-                            """Number of search solutions in the GA algorithm.""")
-# tf.app.flags.DEFINE_integer('numalphas', 100,
+# tf.app.flags.DEFINE_integer('numalphas', 50,
 #                             """Number of search solutions in the GA algorithm.""")
+tf.app.flags.DEFINE_integer('numalphas', 100,
+                            """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numgens', 10,
 #                             """Number of generations in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numgens', 20,
@@ -226,7 +226,7 @@ def adversary_test_cnn():
                 correct_prediction = sess.run([top_k_op])
                 false_prediction = np.logical_not(correct_prediction)
                 
-                true_positives_count += np.sum(np.logical_and(correct_prediction,is_label_one))
+                true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
                 false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
                  
                 true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))

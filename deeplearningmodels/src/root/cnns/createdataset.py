@@ -183,9 +183,16 @@ def ttest():
         
 
     ttest=stats.ttest_ind(l1,l2,equal_var=True)
-    print 't-statistic independent = %6.3f pvalue = %6.4f' % ttest
+    print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated testing' % ttest
 #     ttest=stats.ttest_rel(l1,l2)
 #     print 't-statistic dependent = %6.3f pvalue = %6.4f' % ttest
+    
+    ttest=stats.ttest_ind(l1,l3,equal_var=True)
+    print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated training and manipulated testing' % ttest
+
+    ttest=stats.ttest_ind(l2,l3,equal_var=True)
+    print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated testing and manipulated training/testing' % ttest
+
     print('l1',l1)
     print('l2',l2)
     print('l3',l3)

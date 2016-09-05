@@ -156,7 +156,6 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
         true_positives_count += np.sum(np.logical_and(correct_prediction,is_label_one))
         false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
          
-         
         true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
         false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))     
 #         predictions = sess.run([top_k_op])
@@ -237,19 +236,19 @@ def evaluate():
     summary_writer = tf.train.SummaryWriter(FLAGS.eval_dir, g)
 
     while True:
-      precision = eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,logits,labels)
+      perfmetrics = eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,logits,labels)
       if FLAGS.run_once:
         break
       time.sleep(FLAGS.eval_interval_secs)
       
-    return precision
+    return perfmetrics
 
 def main(argv=None):  # pylint: disable=unused-argument
 #   cifar10.maybe_download_and_extract()
   if tf.gfile.Exists(FLAGS.eval_dir):
     tf.gfile.DeleteRecursively(FLAGS.eval_dir)
   tf.gfile.MakeDirs(FLAGS.eval_dir)
-  precision = evaluate()
+  perfmetrics = evaluate()
 
 
 if __name__ == '__main__':

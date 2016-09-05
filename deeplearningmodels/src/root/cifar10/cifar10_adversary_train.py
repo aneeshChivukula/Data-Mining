@@ -44,7 +44,7 @@ tf.app.flags.DEFINE_integer('steplow', -50,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('stephigh', 50,
                             """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('max_iter_test', 50,
+tf.app.flags.DEFINE_integer('max_iter_test', 100,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
 # tf.app.flags.DEFINE_integer('numalphas', 2,
 #                             """Number of search solutions in the GA algorithm.""")
@@ -52,6 +52,7 @@ tf.app.flags.DEFINE_integer('max_iter_test', 50,
 #                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 20,
 #                             """Number of search solutions in the GA algorithm.""")
+# Next experiment : #
 # tf.app.flags.DEFINE_integer('numalphas', 50,
 #                             """Number of search solutions in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numalphas', 100,
@@ -66,9 +67,17 @@ tf.app.flags.DEFINE_integer('numgens', 20,
 #                             """Number of generations in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('myepsilon', 0.0001,
                             """Parameter determining game iterations.""")
-# tf.app.flags.DEFINE_integer('myepsilon', 0.0001,
+# tf.app.flags.DEFINE_integer('myepsilon', 0.001,
 #                             """Parameter determining game iterations.""")
-tf.app.flags.DEFINE_integer('mylambda', 1,
+# tf.app.flags.DEFINE_integer('mylambda', 10, # Use this for mylambda
+#                             """Parameter determining weight of the error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('mylambda', 5,
+#                             """Parameter determining weight of the error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('mylambda', 1,
+#                             """Parameter determining weight of the error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('mylambda', 0.5,
+#                             """Parameter determining weight of the error term in fitness function.""")
+tf.app.flags.DEFINE_integer('mylambda', 0.2,
                             """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 0.1,
 #                             """Parameter determining weight of the error term in fitness function.""")
@@ -87,12 +96,15 @@ tf.app.flags.DEFINE_integer('mylambda', 1,
 
 length = 3073
 # perfmetric = "precision"
-# perfmetric = "recall"
-perfmetric = "f1score"
+perfmetric = "recall"
+# perfmetric = "f1score"
 # perfmetric = "tpr"
 # perfmetric = "fpr"
 current_milli_time = lambda: int(round(time.time()))
-StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
+StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/StdoutGeneticOps.txt'
+fp = open(StdoutFile,'w')
+fp.close()
+
 
 def train(total_loss, global_step):
     # Put following code in a function that is called until convergence with all the train parameters : global_step
@@ -441,8 +453,6 @@ def mutation(individual):
 
 def crossover(individual1,individual2):
     
-    fp = open(StdoutFile,'a')
-    
     np.random.seed(current_milli_time())
 
     heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
@@ -467,16 +477,17 @@ def crossover(individual1,individual2):
 #     print('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0)
 
     if((np.count_nonzero(after1-before1) == 0 or np.count_nonzero(after2-before2) == 0)):
+       fp = open(StdoutFile,'a')
        print('Skipped a mutation. Check for logical bugs.')
        print('np.count_nonzero(after1-before1) == 0',np.count_nonzero(after1-before1) == 0)
        print('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0)
        fp.write('Skipped a mutation. Check for logical bugs.' + '\n')
        fp.write('np.count_nonzero(after1-before1) == 0',np.count_nonzero(after1-before1) == 0 + '\n')
        fp.write('np.count_nonzero(after2-before2) == 0',np.count_nonzero(after2-before2) == 0 + '\n')
-       fp.write('before1',before1 + '\n')
-       fp.write('before2',before2 + '\n')
-       fp.write('after1',after1 + '\n')
-       fp.write('after2',after2 + '\n')
+#        fp.write('before1',before1 + '\n')
+#        fp.write('before2',before2 + '\n')
+#        fp.write('after1',after1 + '\n')
+#        fp.write('after2',after2 + '\n')
        fp.write('heightstartind',heightstartind + '\n')
        fp.write('heightendind',heightendind + '\n')
        fp.write('widthstartind',widthstartind + '\n')

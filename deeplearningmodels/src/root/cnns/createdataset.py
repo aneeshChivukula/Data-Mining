@@ -8,6 +8,7 @@ from shutil import copyfile
 import sys
 import pandas as pd
 from scipy import stats
+import numpy as np
 
 width = 32
 height = 32
@@ -303,6 +304,10 @@ def ttest():
 
     ttest=stats.ttest_ind(l2,l3,equal_var=True)
     print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated testing and manipulated training/testing' % ttest
+
+    a = np.array([l1,l2,l3])
+    friedmantest = stats.friedmanchisquare(*(a[i, :] for i in range(a.shape[0])))
+    print 'friedmantest-statistic = %6.3f pvalue = %6.4f' % friedmantest
 
     print('l1',l1)
     print('l2',l2)

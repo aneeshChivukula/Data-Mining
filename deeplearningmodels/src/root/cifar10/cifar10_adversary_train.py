@@ -46,17 +46,17 @@ tf.app.flags.DEFINE_integer('stephigh', 50,
                             """Small step limit for mutation operator.""")
 tf.app.flags.DEFINE_integer('max_iter_test', 100,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-# tf.app.flags.DEFINE_integer('numalphas', 2,
+# tf.app.flags.DEFINE_integer('numalphas', 4,
 #                             """Number of search solutions in the GA algorithm.""")
-# tf.app.flags.DEFINE_integer('numalphas', 10,
-#                             """Number of search solutions in the GA algorithm.""")
+tf.app.flags.DEFINE_integer('numalphas', 10,
+                            """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 20,
 #                             """Number of search solutions in the GA algorithm.""")
 # Next experiment : #
 # tf.app.flags.DEFINE_integer('numalphas', 50,
 #                             """Number of search solutions in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('numalphas', 100,
-                            """Number of search solutions in the GA algorithm.""")
+# tf.app.flags.DEFINE_integer('numalphas', 100,
+#                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numgens', 10,
 #                             """Number of generations in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numgens', 20,
@@ -69,14 +69,14 @@ tf.app.flags.DEFINE_integer('myepsilon', 0.0001,
                             """Parameter determining game iterations.""")
 # tf.app.flags.DEFINE_integer('myepsilon', 0.001,
 #                             """Parameter determining game iterations.""")
-tf.app.flags.DEFINE_integer('mylambda', 20,
-                            """Parameter determining weight of the error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('mylambda', 20,
+#                             """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 10, # Use this for mylambda
 #                             """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 5,
 #                             """Parameter determining weight of the error term in fitness function.""")
-# tf.app.flags.DEFINE_integer('mylambda', 1,
-#                             """Parameter determining weight of the error term in fitness function.""")
+tf.app.flags.DEFINE_integer('mylambda', 1,
+                            """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 0.5,
 #                             """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 0.2,
@@ -548,7 +548,7 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
         
                 
         perfmetrics = toolbox.evaluate(distortedimages)
-        error = FLAGS.mylambda * perfmetrics[str(perfmetric)]
+        error = FLAGS.mylambda * (1-perfmetrics[str(perfmetric)])
         fit = 1 + error - tensornorm(curralpha)
         fitnesses.append(fit)
 #         fitnesses.append(1 + error - (alphanorms[index]/totnorm))
@@ -647,13 +647,37 @@ def adversary_train_genetic(InDir,WeightsDir):
                 print('Calling mate')
                 
 #                 sumbefore1 = np.sum(child1[0])
+#                 child1before = np.copy(offspring[0])
+                                
 #                 sumbefore2 = np.sum(child2[0])
+#                 print('child1 before',child1)
 
-                (child1m,child2m) = toolbox.clone(toolbox.mate(child1, child2))
+                (child1m,child2m) = toolbox.mate(child1, child2)
                 child1[0] = np.copy(child1m[0])
                 child2[0] = np.copy(child2m[0])
                 child1 = toolbox.clone(child1)
                 child2 = toolbox.clone(child2)
+#                 (child1, child2) = tollbox.clone(toolbox.mate(child1, child2))
+
+
+#                 sumafter1 = np.sum(child1[0])
+#                 child1after = np.copy(offspring[0])
+
+                
+#                 print('child1 after',child1)
+#                 print('offspring[0] after',offspring[0])
+
+#                 print('sumbefore1',sumbefore1)
+#                 print('sumafter1',sumafter1)
+#                 print('child1after - child1before',np.sum(child1after - child1before))
+
+                
+#                 print('offspring[0] - child1 after',sum(offspring[0] - child1))
+#                 print('offspring[0] - child1m after',sum(offspring[0] - child1m))
+
+#                 sys.exit()
+
+
                 
 #                 (child1,child2) = toolbox.clone(toolbox.mate(child1, child2))
 

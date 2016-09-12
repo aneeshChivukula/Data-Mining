@@ -54,12 +54,12 @@ def resizer(CurrDir):
         print(img.size)
         
         
-def colourtograyscale(InDir,OutDir):
-    os.chdir(InDir)
-    for f in listdir(InDir):
-        img = Image.open(f)
-        # http://stackoverflow.com/questions/12201577/how-can-i-convert-an-rgb-image-into-grayscale-in-python
-        # http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
+# def colourtograyscale(InDir,OutDir):
+#     os.chdir(InDir)
+#     for f in listdir(InDir):
+#         img = Image.open(f)
+#         # http://stackoverflow.com/questions/12201577/how-can-i-convert-an-rgb-image-into-grayscale-in-python
+#         # http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
         
 
 

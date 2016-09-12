@@ -173,15 +173,15 @@ def train():
     np.save(os.path.join(FLAGS.out_dir, 'softmax_linear-weights.npy'), sess.run(variables_to_restore['softmax_linear/weights/ExponentialMovingAverage']))
     np.save(os.path.join(FLAGS.out_dir, 'softmax_linear-biases.npy'), sess.run(variables_to_restore['softmax_linear/biases/ExponentialMovingAverage']))
     
-    print('conv1/weights/ExponentialMovingAverage',sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
-    print('conv1/biases/ExponentialMovingAverage',sess.run(variables_to_restore['conv1/biases/ExponentialMovingAverage']))
-    print('conv2/weights/ExponentialMovingAverage',sess.run(variables_to_restore['conv2/weights/ExponentialMovingAverage']))
-    print('conv2/biases/ExponentialMovingAverage',sess.run(variables_to_restore['conv2/biases/ExponentialMovingAverage']))
-    print('local3/weights/ExponentialMovingAverage',sess.run(variables_to_restore['local3/weights/ExponentialMovingAverage']))
-    print('local4/weights/ExponentialMovingAverage',sess.run(variables_to_restore['local4/weights/ExponentialMovingAverage']))
-    print('local4/biases/ExponentialMovingAverage',sess.run(variables_to_restore['local4/biases/ExponentialMovingAverage']))
-    print('softmax_linear/weights/ExponentialMovingAverage',sess.run(variables_to_restore['softmax_linear/weights/ExponentialMovingAverage']))
-    print('softmax_linear/biases/ExponentialMovingAverage',sess.run(variables_to_restore['softmax_linear/biases/ExponentialMovingAverage']))
+#     print('conv1/weights/ExponentialMovingAverage',sess.run(variables_to_restore['conv1/weights/ExponentialMovingAverage']))
+#     print('conv1/biases/ExponentialMovingAverage',sess.run(variables_to_restore['conv1/biases/ExponentialMovingAverage']))
+#     print('conv2/weights/ExponentialMovingAverage',sess.run(variables_to_restore['conv2/weights/ExponentialMovingAverage']))
+#     print('conv2/biases/ExponentialMovingAverage',sess.run(variables_to_restore['conv2/biases/ExponentialMovingAverage']))
+#     print('local3/weights/ExponentialMovingAverage',sess.run(variables_to_restore['local3/weights/ExponentialMovingAverage']))
+#     print('local4/weights/ExponentialMovingAverage',sess.run(variables_to_restore['local4/weights/ExponentialMovingAverage']))
+#     print('local4/biases/ExponentialMovingAverage',sess.run(variables_to_restore['local4/biases/ExponentialMovingAverage']))
+#     print('softmax_linear/weights/ExponentialMovingAverage',sess.run(variables_to_restore['softmax_linear/weights/ExponentialMovingAverage']))
+#     print('softmax_linear/biases/ExponentialMovingAverage',sess.run(variables_to_restore['softmax_linear/biases/ExponentialMovingAverage']))
 
 
 

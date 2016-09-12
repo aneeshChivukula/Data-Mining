@@ -147,15 +147,7 @@ def main(argv=None):
 #     print('imagespopulation',imagespopulation)
 #     print('alphaspopulation',alphaspopulation)
 
-    for index,curralpha in enumerate(alphaspopulation):
-        print('alphaspopulation[index].fitness.weights',alphaspopulation[index].fitness.weights)
-
-    print('Initialization to be started')
     cifar10_adversary_train.alphasfitnesses(alphaspopulation,imagespopulation,toolbox)
-    for index,curralpha in enumerate(alphaspopulation):
-        print('alphaspopulation[index].fitness.weights',alphaspopulation[index].fitness.weights)
-    print('Initialization completed')
-
     print('finalresults',finalresults)
 #     sys.exit()
 #     while(LoopingFlag and total_iters < maxiters):
@@ -179,21 +171,26 @@ def main(argv=None):
 #         total_iters = total_iters + 1
 #         (alphaspopulation,imagespopulation) = cifar10_adversary_train.adversary_train_genetic(InDir,WeightsDir)
         
+        binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha,labels,'train.bin')
+        if tf.gfile.Exists(TrainWeightsDir):
+          tf.gfile.DeleteRecursively(TrainWeightsDir)
+        tf.gfile.MakeDirs(TrainWeightsDir)
+        cifar10_train.train()
             
-        curralpha = bestalpha
-        adv_payoff = curralpha.fitness.weights[0]
-        error = curralpha.fitness.error
+        alphastar = bestalpha
+        adv_payoff = alphastar.fitness.weights[0]
+        error = alphastar.fitness.error
         
         perfmetrics = {}
-        perfmetrics['precision'] = curralpha.fitness.precision
-        perfmetrics['recall'] = curralpha.fitness.recall
-        perfmetrics['f1score'] = curralpha.fitness.f1score
-        perfmetrics['tpr'] = curralpha.fitness.tpr
-        perfmetrics['fpr'] = curralpha.fitness.fpr
+        perfmetrics['precision'] = alphastar.fitness.precision
+        perfmetrics['recall'] = alphastar.fitness.recall
+        perfmetrics['f1score'] = alphastar.fitness.f1score
+        perfmetrics['tpr'] = alphastar.fitness.tpr
+        perfmetrics['fpr'] = alphastar.fitness.fpr
         perf = perfmetrics[str(perfmetric)]
         
-        print('curralpha',curralpha)
-        print('curralpha.fitness.weights[0]',curralpha.fitness.weights[0])
+        print('alphastar',alphastar)
+        print('alphastar.fitness.weights[0]',alphastar.fitness.weights[0])
         print('perf',perf)
         
 
@@ -253,19 +250,9 @@ def main(argv=None):
 #             print('alphaspopulation',alphaspopulation)
             
             
-            for index,curralpha in enumerate(alphaspopulation):
-                print('alphaspopulation[index].fitness.weights',alphaspopulation[index].fitness.weights)
             print('Iteration completed')
             
 #             sys.exit()
-            
-            
-            
-            binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
-            if tf.gfile.Exists(TrainWeightsDir):
-              tf.gfile.DeleteRecursively(TrainWeightsDir)
-            tf.gfile.MakeDirs(TrainWeightsDir)
-            cifar10_train.train()
             
         else:
             LoopingFlag = False
@@ -276,7 +263,7 @@ def main(argv=None):
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
     imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
-    binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'train.bin')
+    binarizer(GameInDir,AdvInDir,imagespopulation,alphastar,labels,'train.bin')
     if tf.gfile.Exists(TrainWeightsDir):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
     tf.gfile.MakeDirs(TrainWeightsDir)
@@ -284,14 +271,14 @@ def main(argv=None):
     
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
     imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
-    binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
+    binarizer(GameInDir,AdvInDir,imagespopulation,alphastar,labels,'test.bin')
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     perfmetrics = cifar10_eval.evaluate()
     perf = perfmetrics[str(perfmetric)]
-    error = curralpha.fitness.error
-    adv_payoff = curralpha.fitness.weights[0]
+    error = alphastar.fitness.error
+    adv_payoff = alphastar.fitness.weights[0]
 
 #     precision = cifar10_eval.evaluate()
 #     distortedimages = []
@@ -311,22 +298,22 @@ def main(argv=None):
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
     imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
-    binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
+    binarizer(GameInDir,AdvInDir,imagespopulation,alphastar,labels,'test.bin')
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     perfmetrics = cifar10_eval.evaluate()
     perf = perfmetrics[str(perfmetric)]
-    error = curralpha.fitness.error
-    adv_payoff = curralpha.fitness.weights[0]
+    error = alphastar.fitness.error
+    adv_payoff = alphastar.fitness.weights[0]
 #     precision = cifar10_eval.evaluate()
 #     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
     print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',perf)
     finalresults.append((adv_payoff, error, 1+error-adv_payoff, perf, perfmetrics, gen))
 
 
-    print('bestalpha',curralpha)
-    print('bestalpha.fitness.weights[0]',curralpha.fitness.weights[0])
+    print('bestalpha',alphastar)
+    print('bestalpha.fitness.weights[0]',alphastar.fitness.weights[0])
     print('adv_payoff_highest',adv_payoff_highest)
     print('gen',gen)
     print('FLAGS.numgens',FLAGS.numgens)
@@ -343,8 +330,8 @@ def main(argv=None):
 # wstar are neural network weights stored in files on disk
 # Need to check whether game is converging as expected
     
-#     curralpha = alphastar
-#     binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,'test.bin')
+#     alphastar = alphastar
+#     binarizer(GameInDir,AdvInDir,imagespopulation,alphastar,labels,'test.bin')
 #     if tf.gfile.Exists(EvalDir):
 #       tf.gfile.DeleteRecursively(EvalDir)
 #     tf.gfile.MakeDirs(EvalDir)

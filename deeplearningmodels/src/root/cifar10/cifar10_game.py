@@ -170,27 +170,26 @@ def main(argv=None):
         
 #         total_iters = total_iters + 1
 #         (alphaspopulation,imagespopulation) = cifar10_adversary_train.adversary_train_genetic(InDir,WeightsDir)
-        
+            
         binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha,labels,'train.bin')
         if tf.gfile.Exists(TrainWeightsDir):
           tf.gfile.DeleteRecursively(TrainWeightsDir)
         tf.gfile.MakeDirs(TrainWeightsDir)
         cifar10_train.train()
-            
-        alphastar = bestalpha
-        adv_payoff = alphastar.fitness.weights[0]
-        error = alphastar.fitness.error
+        
+        adv_payoff = bestalpha.fitness.weights[0]
+        error = bestalpha.fitness.error
         
         perfmetrics = {}
-        perfmetrics['precision'] = alphastar.fitness.precision
-        perfmetrics['recall'] = alphastar.fitness.recall
-        perfmetrics['f1score'] = alphastar.fitness.f1score
-        perfmetrics['tpr'] = alphastar.fitness.tpr
-        perfmetrics['fpr'] = alphastar.fitness.fpr
+        perfmetrics['precision'] = bestalpha.fitness.precision
+        perfmetrics['recall'] = bestalpha.fitness.recall
+        perfmetrics['f1score'] = bestalpha.fitness.f1score
+        perfmetrics['tpr'] = bestalpha.fitness.tpr
+        perfmetrics['fpr'] = bestalpha.fitness.fpr
         perf = perfmetrics[str(perfmetric)]
         
-        print('alphastar',alphastar)
-        print('alphastar.fitness.weights[0]',alphastar.fitness.weights[0])
+        print('bestalpha',bestalpha)
+        print('bestalpha.fitness.weights[0]',bestalpha.fitness.weights[0])
         print('perf',perf)
         
 
@@ -260,6 +259,13 @@ def main(argv=None):
         gen = gen + 1 
     
 
+    bestalphafitness = 0.0
+    bestalpha = alphaspopulation[0]
+    for index,_ in enumerate(alphaspopulation):
+        if(alphaspopulation[index].fitness.weights > bestalphafitness):
+            bestalphafitness = alphaspopulation[index].fitness.weights
+            bestalpha = alphaspopulation[index]
+    alphastar = bestalpha
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
     imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)

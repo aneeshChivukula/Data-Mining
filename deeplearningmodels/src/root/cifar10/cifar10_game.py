@@ -153,17 +153,13 @@ def main(argv=None):
 #     while(LoopingFlag and total_iters < maxiters):
     while(LoopingFlag and gen < FLAGS.numgens):
         print('gen',gen)
-        print('len(alphaspopulation)',len(alphaspopulation))
-        print('alphaspopulation selected for game',alphaspopulation)
         
         bestalphafitness = 0.0
         bestalpha = alphaspopulation[0]
         for index,_ in enumerate(alphaspopulation):
-            print('alphaspopulation[index].fitness.weights selected for game',alphaspopulation[index].fitness.weights)
             if(alphaspopulation[index].fitness.weights > bestalphafitness):
                 bestalphafitness = alphaspopulation[index].fitness.weights
                 bestalpha = alphaspopulation[index]
-                print('alphaspopulation[index].fitness.weights',alphaspopulation[index].fitness.weights)
         
         print('bestalpha selected for game',bestalpha)
         print('bestalphafitness selected for game',bestalphafitness)
@@ -187,11 +183,6 @@ def main(argv=None):
         perfmetrics['tpr'] = bestalpha.fitness.tpr
         perfmetrics['fpr'] = bestalpha.fitness.fpr
         perf = perfmetrics[str(perfmetric)]
-        
-        print('bestalpha',bestalpha)
-        print('bestalpha.fitness.weights[0]',bestalpha.fitness.weights[0])
-        print('perf',perf)
-        
 
         print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
         finalresults.append((adv_payoff, error,1+error-adv_payoff, perf, perfmetrics, gen))
@@ -238,9 +229,7 @@ def main(argv=None):
                 print('Reset mutant weights')
                 print('mutant.fitness.valid',mutant.fitness.valid)
 
-
             cifar10_adversary_train.alphasfitnesses(offspring,imagespopulation,toolbox)
-                
 #             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
 #             if(len(invalid_ind) != 0):
 #                 cifar10_adversary_train.alphasfitnesses(invalid_ind,imagespopulation,toolbox)

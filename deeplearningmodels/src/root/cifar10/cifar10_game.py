@@ -167,11 +167,6 @@ def main(argv=None):
 #         total_iters = total_iters + 1
 #         (alphaspopulation,imagespopulation) = cifar10_adversary_train.adversary_train_genetic(InDir,WeightsDir)
             
-        binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha,labels,'train.bin')
-        if tf.gfile.Exists(TrainWeightsDir):
-          tf.gfile.DeleteRecursively(TrainWeightsDir)
-        tf.gfile.MakeDirs(TrainWeightsDir)
-        cifar10_train.train()
         
         adv_payoff = bestalpha.fitness.weights[0]
         error = bestalpha.fitness.error
@@ -228,6 +223,12 @@ def main(argv=None):
                 mutant.fitness.weights = (0.0,)
                 print('Reset mutant weights')
                 print('mutant.fitness.valid',mutant.fitness.valid)
+
+            binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha,labels,'train.bin')
+            if tf.gfile.Exists(TrainWeightsDir):
+              tf.gfile.DeleteRecursively(TrainWeightsDir)
+            tf.gfile.MakeDirs(TrainWeightsDir)
+            cifar10_train.train()
 
             cifar10_adversary_train.alphasfitnesses(offspring,imagespopulation,toolbox)
 #             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]

@@ -1,7 +1,8 @@
 import sys
 import tensorflow as tf
 import numpy as np
-import Image
+import PIL
+from PIL import Image
 from shutil import copyfile
 
 from root.cifar10 import cifar10
@@ -18,6 +19,7 @@ from deap import tools
 import cPickle as pickle
 
 FLAGS = tf.app.flags.FLAGS
+PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 # perfmetric = "precision"
 perfmetric = "recall"

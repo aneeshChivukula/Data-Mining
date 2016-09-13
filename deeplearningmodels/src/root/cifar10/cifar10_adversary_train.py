@@ -79,12 +79,12 @@ tf.app.flags.DEFINE_integer('myepsilon', 0.0001,
 #                             """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 0.5,
 #                             """Parameter determining weight of the error term in fitness function.""")
-tf.app.flags.DEFINE_integer('mylambda', 0.2,
-                            """Parameter determining weight of the error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('mylambda', 0.2,
+#                             """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 0.1,
 #                             """Parameter determining weight of the error term in fitness function.""")
-# tf.app.flags.DEFINE_integer('mylambda', 0.01,
-#                             """Parameter determining weight of the error term in fitness function.""")
+tf.app.flags.DEFINE_integer('mylambda', 0.01,
+                            """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('perfmetric', 'precision',
 #                             """Parameter determining error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('perfmetric', "recall",

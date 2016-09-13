@@ -19,7 +19,6 @@ from deap import tools
 import cPickle as pickle
 
 FLAGS = tf.app.flags.FLAGS
-PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 # perfmetric = "precision"
 perfmetric = "recall"

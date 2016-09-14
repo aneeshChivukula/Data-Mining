@@ -8,6 +8,8 @@ from shutil import copyfile
 import sys
 from scipy import stats
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import plot, title, xlabel, ylabel, savefig, legend
 
 width = 32
 height = 32
@@ -18,6 +20,13 @@ length = 3073
 
 #width = 300
 #height = 100
+
+# perfmetric = "precision"
+# perfmetric = "recall"
+# perfmetric = "f1score"
+# perfmetric = "tpr"
+perfmetric = "fpr"
+
 
 def partitoner(Dir):
     os.chdir(Dir)
@@ -245,13 +254,46 @@ def generatereports():
 #     mylambda = 0.5
 #     final_payoff = 0.8320489630237852
 
-    rls = [(1, 0, 1, 0.6053577262332571, {'recall': 0.6053577262332571, 'fpr': 0.17999794640106787, 'f1score': 0.5558722063896805, 'precision': 0.5138657792567942, 'tpr': 0.6053577262332571}, 0), (0, 0, 1, 0.8316929133858267, {'recall': 0.8316929133858267, 'fpr': 0.1379837067209776, 'f1score': 0.48465729853742473, 'precision': 0.3419668150546338, 'tpr': 0.8316929133858267}, 0), (0.8284613089456938, 0.09125326370757181, 0.262791954761878, 0.543733681462141, {'recall': 0.543733681462141, 'fpr': 0.17142563681183237, 'f1score': 0.5207063603688076, 'precision': 0.49955022488755624, 'tpr': 0.543733681462141}, 0), (0.8284613089456938, 0.09125326370757181, 0.262791954761878, 0.543733681462141, {'recall': 0.543733681462141, 'fpr': 0.17142563681183237, 'f1score': 0.5207063603688076, 'precision': 0.49955022488755624, 'tpr': 0.543733681462141}, 1), (0.8284613089456938, 0.09125326370757181, 0.262791954761878, 0.7704280155642024, {'recall': 0.7704280155642024, 'fpr': 0.2610431532449881, 'f1score': 0.3237277743715512, 'precision': 0.20491591203104786, 'tpr': 0.7704280155642024}, 2), (0.8284613089456938, 0.09125326370757181, 0.262791954761878, 0.8446411012782694, {'recall': 0.8446411012782694, 'fpr': 0.09657981838241535, 'f1score': 0.5700066357000664, 'precision': 0.4301452178267401, 'tpr': 0.8446411012782694}, 2)]
-    gen = 2
+#     rls = [(1, 0, 1, 0.6053577262332571, {'recall': 0.6053577262332571, 'fpr': 0.17999794640106787, 'f1score': 0.5558722063896805, 'precision': 0.5138657792567942, 'tpr': 0.6053577262332571}, 0), (0, 0, 1, 0.8316929133858267, {'recall': 0.8316929133858267, 'fpr': 0.1379837067209776, 'f1score': 0.48465729853742473, 'precision': 0.3419668150546338, 'tpr': 0.8316929133858267}, 0), (0.8284613089456938, 0.09125326370757181, 0.262791954761878, 0.543733681462141, {'recall': 0.543733681462141, 'fpr': 0.17142563681183237, 'f1score': 0.5207063603688076, 'precision': 0.49955022488755624, 'tpr': 0.543733681462141}, 0), (0.8284613089456938, 0.09125326370757181, 0.262791954761878, 0.543733681462141, {'recall': 0.543733681462141, 'fpr': 0.17142563681183237, 'f1score': 0.5207063603688076, 'precision': 0.49955022488755624, 'tpr': 0.543733681462141}, 1), (0.8284613089456938, 0.09125326370757181, 0.262791954761878, 0.7704280155642024, {'recall': 0.7704280155642024, 'fpr': 0.2610431532449881, 'f1score': 0.3237277743715512, 'precision': 0.20491591203104786, 'tpr': 0.7704280155642024}, 2), (0.8284613089456938, 0.09125326370757181, 0.262791954761878, 0.8446411012782694, {'recall': 0.8446411012782694, 'fpr': 0.09657981838241535, 'f1score': 0.5700066357000664, 'precision': 0.4301452178267401, 'tpr': 0.8446411012782694}, 2)]
+#     gen = 2
+#     numgens = 20
+#     numalphas = 50
+#     myepsilon = 0.0001
+#     mylambda = 0.2
+#     final_payoff = 0.8284613089456938 
+
+#     rls = [(1, 0, 1, 0.6018246985988921, {'recall': 0.6018246985988921, 'fpr': 0.18518137909772892, 'f1score': 0.549866031557011, 'precision': 0.506166072896684, 'tpr': 0.6018246985988921}, 0), (0, 0, 1, 0.8091528724440117, {'recall': 0.8091528724440117, 'fpr': 0.1299583793425635, 'f1score': 0.49055489964580873, 'precision': 0.3519695044472681, 'tpr': 0.8091528724440117}, 0), (0.7672730381542716, 0.004607684856312561, 0.23733464670204096, 0.539231514368744, {'recall': 0.539231514368744, 'fpr': 0.17066886529939193, 'f1score': 0.5200062276194924, 'precision': 0.50210463018641, 'tpr': 0.539231514368744}, 0), (0.7543424797643027, 0.004323616115296429, 0.24998113635099373, 0.5676383884703571, {'recall': 0.5676383884703571, 'fpr': 0.2774186929311583, 'f1score': 0.46275033377837116, 'precision': 0.3905792201938247, 'tpr': 0.5676383884703571}, 1), (0.731421660653315, 0.004809791597750579, 0.2733881309444355, 0.5190208402249421, {'recall': 0.5190208402249421, 'fpr': 0.17070676076506086, 'f1score': 0.5011978917105894, 'precision': 0.4845583693638048, 'tpr': 0.5190208402249421}, 2), (0.744277083189356, 0.005, 0.26072291681064386, 0.5, {'recall': 0.5, 'fpr': 0.19691358024691358, 'f1score': 0.4713804713804714, 'precision': 0.445859872611465, 'tpr': 0.5}, 3), (0.731421660653315, 0.004809791597750579, 0.2733881309444355, 0.5190208402249421, {'recall': 0.5190208402249421, 'fpr': 0.17070676076506086, 'f1score': 0.5011978917105894, 'precision': 0.4845583693638048, 'tpr': 0.5190208402249421}, 4), (0.731421660653315, 0.004809791597750579, 0.2733881309444355, 0.5190208402249421, {'recall': 0.5190208402249421, 'fpr': 0.17070676076506086, 'f1score': 0.5011978917105894, 'precision': 0.4845583693638048, 'tpr': 0.5190208402249421}, 5), (0.731421660653315, 0.004809791597750579, 0.2733881309444355, 0.8226120857699805, {'recall': 0.8226120857699805, 'fpr': 0.2221844742653304, 'f1score': 0.3762817654926438, 'precision': 0.24393063583815028, 'tpr': 0.8226120857699805}, 6), (0.731421660653315, 0.004809791597750579, 0.2733881309444355, 0.8620019436345967, {'recall': 0.8620019436345967, 'fpr': 0.07569450344065924, 'f1score': 0.6319914499465622, 'precision': 0.49887514060742405, 'tpr': 0.8620019436345967}, 6)]
+#     gen = 6
+#     numgens = 20
+#     numalphas = 50
+#     myepsilon = 0.0001
+#     mylambda = 0.01
+#     final_payoff = 0.731421660653315
+
+#     rls = [(1, 0, 1, 0.5846153846153846, {'recall': 0.5846153846153846, 'fpr': 0.1762955361723961, 'f1score': 0.5445952126848606, 'precision': 0.509703196347032, 'tpr': 0.5846153846153846}, 0), (0, 0, 1, 0.8163064833005894, {'recall': 0.8163064833005894, 'fpr': 0.12374809030724834, 'f1score': 0.5025703054127608, 'precision': 0.36304062909567497, 'tpr': 0.8163064833005894}, 0), (5.530996766216198, 4.839973873285435, 0.30897710706923665, 0.5160026126714565, {'recall': 0.5160026126714565, 'fpr': 0.1671801191209694, 'f1score': 0.5039872408293461, 'precision': 0.4925187032418953, 'tpr': 0.5160026126714565}, 0), (8.301517026209632, 7.812704649639817, 0.5111876234301835, 0.21872953503601833, {'recall': 0.21872953503601833, 'fpr': 0.46306176893084344, 'f1score': 0.16223436551305404, 'precision': 0.1289326384867786, 'tpr': 0.21872953503601833}, 1), (7.4670826745024055, 6.983349657198826, 0.5162669826964201, 0.30166503428011754, {'recall': 0.30166503428011754, 'fpr': 0.3636643730101674, 'f1score': 0.2454835281615303, 'precision': 0.20694288913773795, 'tpr': 0.30166503428011754}, 2), (7.898058462965916, 7.397975840679073, 0.4999173777131576, 0.2602024159320927, {'recall': 0.2602024159320927, 'fpr': 0.48166786484543495, 'f1score': 0.1864327485380117, 'precision': 0.14525241479861492, 'tpr': 0.2602024159320927}, 3), (7.898058462965916, 7.397975840679073, 0.4999173777131576, 0.2602024159320927, {'recall': 0.2602024159320927, 'fpr': 0.48166786484543495, 'f1score': 0.1864327485380117, 'precision': 0.14525241479861492, 'tpr': 0.2602024159320927}, 4), (7.898058462965916, 7.397975840679073, 0.4999173777131576, 0.733847637415622, {'recall': 0.733847637415622, 'fpr': 0.3433647878942447, 'f1score': 0.26075038547198903, 'precision': 0.15854166666666666, 'tpr': 0.733847637415622}, 5), (7.898058462965916, 7.397975840679073, 0.4999173777131576, 0.84106614017769, {'recall': 0.84106614017769, 'fpr': 0.07627046746415543, 'f1score': 0.6164978292329957, 'precision': 0.48657909765848084, 'tpr': 0.84106614017769}, 5)]
+#     gen = 5
+#     numgens = 20
+#     numalphas = 100
+#     myepsilon = 0.0001
+#     mylambda = 10
+#     final_payoff = 7.898058462965916
+
+#     rls = [(1, 0, 1, 0.5864217776320105, {'recall': 0.5864217776320105, 'fpr': 0.1755717362321813, 'f1score': 0.5460375629867156, 'precision': 0.5108571428571429, 'tpr': 0.5864217776320105}, 0), (0, 0, 1, 0.8212180746561886, {'recall': 0.8212180746561886, 'fpr': 0.13664912578509592, 'f1score': 0.48267898383371827, 'precision': 0.3417825020441537, 'tpr': 0.8212180746561886}, 0), (5.4084124530589985, 4.728808054563169, 0.32039560150417046, 0.5271191945436831, {'recall': 0.5271191945436831, 'fpr': 0.16623804135377018, 'f1score': 0.5137701804368471, 'precision': 0.5010805804260574, 'tpr': 0.5271191945436831}, 0), (7.056313129027419, 6.615434924787442, 0.5591217957600225, 0.3384565075212557, {'recall': 0.3384565075212557, 'fpr': 0.33781564360500926, 'f1score': 0.2803358613217768, 'precision': 0.239251040221914, 'tpr': 0.3384565075212557}, 1), (6.66867472800063, 6.280209013716524, 0.6115342857158943, 0.3719790986283475, {'recall': 0.3719790986283475, 'fpr': 0.2929759704251386, 'f1score': 0.3229373405160193, 'precision': 0.2853206412825651, 'tpr': 0.3719790986283475}, 2), (7.622312829417546, 7.157310704960835, 0.5349978755432891, 0.28426892950391647, {'recall': 0.28426892950391647, 'fpr': 0.39800739523418244, 'f1score': 0.22304737516005121, 'precision': 0.1835229667088074, 'tpr': 0.28426892950391647}, 3), (6.66867472800063, 6.280209013716524, 0.6115342857158943, 0.3719790986283475, {'recall': 0.3719790986283475, 'fpr': 0.2929759704251386, 'f1score': 0.3229373405160193, 'precision': 0.2853206412825651, 'tpr': 0.3719790986283475}, 4), (6.66867472800063, 6.280209013716524, 0.6115342857158943, 0.3719790986283475, {'recall': 0.3719790986283475, 'fpr': 0.2929759704251386, 'f1score': 0.3229373405160193, 'precision': 0.2853206412825651, 'tpr': 0.3719790986283475}, 5), (6.66867472800063, 6.280209013716524, 0.6115342857158943, 0.8382352941176471, {'recall': 0.8382352941176471, 'fpr': 0.21103565365025467, 'f1score': 0.39211190094015136, 'precision': 0.25591140377132593, 'tpr': 0.8382352941176471}, 6), (6.66867472800063, 6.280209013716524, 0.6115342857158943, 0.8458536585365853, {'recall': 0.8458536585365853, 'fpr': 0.07940552016985138, 'f1score': 0.6133710647329325, 'precision': 0.4811320754716981, 'tpr': 0.8458536585365853}, 6)]
+#     gen = 6
+#     numgens = 20
+#     numalphas = 20
+#     myepsilon = 0.0001
+#     mylambda = 10
+#     final_payoff = 6.66867472800063
+
+    rls = [(1, 0, 1, 0.5872656755009696, {'recall': 0.5872656755009696, 'fpr': 0.17494333402019369, 'f1score': 0.5498562566197609, 'precision': 0.5169274537695591, 'tpr': 0.5872656755009696}, 0), (0, 0, 1, 0.841948310139165, {'recall': 0.841948310139165, 'fpr': 0.11446498219433611, 'f1score': 0.528879175772713, 'precision': 0.38552571688666365, 'tpr': 0.841948310139165}, 0), (5.613622059272161, 4.936211972522081, 0.3225899132499199, 0.5063788027477919, {'recall': 0.5063788027477919, 'fpr': 0.16463101714051115, 'f1score': 0.4986310194878402, 'precision': 0.49111675126903553, 'tpr': 0.5063788027477919}, 0), (5.41478418963845, 4.8249918220477594, 0.4102076324093096, 0.517500817795224, {'recall': 0.517500817795224, 'fpr': 0.16832597762496151, 'f1score': 0.5039018952062431, 'precision': 0.4909993792675357, 'tpr': 0.517500817795224}, 1), (6.391601202706889, 5.976408912188729, 0.58480770948184, 0.40235910878112713, {'recall': 0.40235910878112713, 'fpr': 0.3090890439064424, 'f1score': 0.3367612779377485, 'precision': 0.2895543503890592, 'tpr': 0.40235910878112713}, 2), (5.210716244515645, 4.779627815866797, 0.5689115713511521, 0.5220372184133203, {'recall': 0.5220372184133203, 'fpr': 0.16853240217726198, 'f1score': 0.5073774393146121, 'precision': 0.4935185185185185, 'tpr': 0.5220372184133203}, 3), (6.057424570435412, 5.702614379084967, 0.6451898086495547, 0.4297385620915033, {'recall': 0.4297385620915033, 'fpr': 0.2557494866529774, 'f1score': 0.3830468977570638, 'precision': 0.34550709406200736, 'tpr': 0.4297385620915033}, 4), (6.057424570435412, 5.702614379084967, 0.6451898086495547, 0.4297385620915033, {'recall': 0.4297385620915033, 'fpr': 0.2557494866529774, 'f1score': 0.3830468977570638, 'precision': 0.34550709406200736, 'tpr': 0.4297385620915033}, 5), (6.057424570435412, 5.702614379084967, 0.6451898086495547, 0.8442703232125367, {'recall': 0.8442703232125367, 'fpr': 0.09848034637914933, 'f1score': 0.5665461715412422, 'precision': 0.42631058358061324, 'tpr': 0.8442703232125367}, 6), (6.057424570435412, 5.702614379084967, 0.6451898086495547, 0.8381046396841066, {'recall': 0.8381046396841066, 'fpr': 0.0749130397895987, 'f1score': 0.6185792349726776, 'precision': 0.49018475750577367, 'tpr': 0.8381046396841066}, 6)]
+    gen = 6
     numgens = 20
-    numalphas = 50
+    numalphas = 10
     myepsilon = 0.0001
-    mylambda = 0.2
-    final_payoff = 0.8284613089456938 
+    mylambda = 10
+    final_payoff = 6.057424570435412
+
     
     results = {}
 
@@ -282,15 +324,332 @@ def generatereports():
     print('mylambda',mylambda)
     print('final_payoff',final_payoff)
 
+    
+    print('rls[2:-2]',rls[2:-2])
+    
+    trainingresults = []
+    precisions = []
+    recalls = []
+    f1scores = []
+    tprs = []
+    fprs = []
+    errors = []
+    payoffs = []
+    norms = []
 
- 
+    tup = rls[0]
+    tup[4]['payoff'] = tup[0]
+    tup[4]['error'] = tup[1]
+    tup[4]['norm'] = tup[2]
+
+    trainingresults.append(tup[4])
+    precisions.append(tup[4]['precision'])
+    recalls.append(tup[4]['recall'])
+    f1scores.append(tup[4]['f1score'])
+    tprs.append(tup[4]['tpr'])
+    fprs.append(tup[4]['fpr'])
+    errors.append(tup[4]['error'])
+    payoffs.append(tup[4]['payoff'])
+    norms.append(tup[4]['norm'])
+
+    for tup in rls[2:-2]:
+        tup[4]['payoff'] = tup[0]
+        tup[4]['error'] = tup[1]
+        tup[4]['norm'] = tup[2]
+        trainingresults.append(tup[4])
+        precisions.append(tup[4]['precision'])
+        recalls.append(tup[4]['recall'])
+        f1scores.append(tup[4]['f1score'])
+        tprs.append(tup[4]['tpr'])
+        fprs.append(tup[4]['fpr'])
+        errors.append(tup[4]['error'])
+        payoffs.append(tup[4]['payoff'])
+        norms.append(tup[4]['norm'])
+    
+    print('trainingresults',trainingresults)
+    print('precisions',precisions)
+    print('recalls',recalls)
+    print('f1scores',f1scores)
+    print('tprs',tprs)
+    print('fprs',fprs)
+    print('errors',errors)
+    print('payoffs',payoffs)
+    print('norms',norms)
+
+    
+    
+    
+    
+    
+    
 #     l = [(1, 0, 1, 0.6558079725675097, {'recall': 0.9788867562380038, 'fpr': 0.1597440844927389, 'f1score': 0.6558079725675097, 'precision': 0.49307122139864645, 'tpr': 0.9788867562380038}, 0), (0, 0, 1, 0.6569626394953906, {'recall': 0.9849660523763336, 'fpr': 0.22784258148915296, 'f1score': 0.6569626394953906, 'precision': 0.49284154331472946, 'tpr': 0.9849660523763336}, 0), (1.3651282317376676, 0.6470588235294118, 0.28193059179174407, 0.6470588235294118, {'recall': 1.0, 'fpr': 0.14109347442680775, 'f1score': 0.6470588235294118, 'precision': 0.4782608695652174, 'tpr': 1.0}, 0), (1.3770177921928193, 0.6589483839845635, 0.28193059179174407, 0.6589483839845635, {'recall': 1.0, 'fpr': 0.13903638151425762, 'f1score': 0.6589483839845635, 'precision': 0.4913669064748201, 'tpr': 1.0}, 1), (1.3670707027532045, 0.6504312531709792, 0.2833605504177745, 0.6504312531709792, {'recall': 1.0, 'fpr': 0.13517755542475965, 'f1score': 0.6504312531709792, 'precision': 0.48195488721804514, 'tpr': 1.0}, 2), (1.334106515817929, 0.6475531389026199, 0.31344662308469085, 0.6475531389026199, {'recall': 1.0, 'fpr': 0.13974911799294396, 'f1score': 0.6475531389026199, 'precision': 0.4788011695906433, 'tpr': 1.0}, 3), (1.3367129605099304, 0.6523855890944499, 0.3156726285845195, 0.6523855890944499, {'recall': 1.0, 'fpr': 0.14013738959764474, 'f1score': 0.6523855890944499, 'precision': 0.4841040462427746, 'tpr': 1.0}, 4), (1.3295978726282573, 0.6608015640273704, 0.331203691399113, 0.6608015640273704, {'recall': 1.0, 'fpr': 0.136560409287682, 'f1score': 0.6608015640273704, 'precision': 0.49343065693430654, 'tpr': 1.0}, 5), (1.3165120446414962, 0.6477157360406092, 0.331203691399113, 0.6477157360406092, {'recall': 1.0, 'fpr': 0.1360517545579298, 'f1score': 0.6477157360406092, 'precision': 0.47897897897897895, 'tpr': 1.0}, 6), (1.3282022491949466, 0.6594059405940594, 0.331203691399113, 0.6594059405940594, {'recall': 1.0, 'fpr': 0.13532651455546812, 'f1score': 0.6594059405940594, 'precision': 0.4918759231905465, 'tpr': 1.0}, 7), (1.3164966405117453, 0.6477003319108582, 0.331203691399113, 0.6477003319108582, {'recall': 1.0, 'fpr': 0.14560062708210855, 'f1score': 0.6477003319108582, 'precision': 0.4789621318373071, 'tpr': 1.0}, 8), (1.323519509394276, 0.656641604010025, 0.33312209461574915, 0.656641604010025, {'recall': 1.0, 'fpr': 0.13463050314465408, 'f1score': 0.656641604010025, 'precision': 0.48880597014925375, 'tpr': 1.0}, 9), (0, 0.656641604010025, 1.6566416040100251, 0.6645489199491741, {'recall': 0.9840075258701787, 'fpr': 0.22742694538688848, 'f1score': 0.6645489199491741, 'precision': 0.5016786570743406, 'tpr': 0.9840075258701787}, 10), (0, 0.656641604010025, 1.6566416040100251, 0.6633472534532605, {'recall': 0.9833333333333333, 'fpr': 0.22549234135667395, 'f1score': 0.6633472534532605, 'precision': 0.5004847309743092, 'tpr': 0.9833333333333333}, 10)]
 #     numgens = 10
 #     numalphas = 10
 #     myepsilon = 0.0001
 #     mylambda = 1
 
+def trainplots():
+    mylambda1 = 1
+    numalphas1 = 10
+    precisions1 = [0.5096426545660806, 0.5014014325755216, 0.20039187744923406, 0.20039187744923406]
+    recalls1 = [0.586105675146771, 0.5230669265756985, 0.367047308319739, 0.367047308319739]
+    f1scores1 = [0.5452063106796117, 0.5120050882493242, 0.25924645696508813, 0.25924645696508813]
+    tprs1 = [0.586105675146771, 0.5230669265756985, 0.367047308319739, 0.367047308319739]
+    fprs1 = [0.1776248202177933, 0.16467804978399506, 0.4611196712891628, 0.4611196712891628]
+    errors1 = [0, 0.47693307342430147, 0.632952691680261, 0.632952691680261]
+    payoffs1 = [0, 1.1780682070157824, 1.2807443361825106, 1.2807443361825106]
+    norms1 = [0, 0.29886486640851917, 0.3522083554977504, 0.3522083554977504]
+        
+
+    mylambda2 = 10
+    numalphas2 = 50
+    precisions2 = [0.5028702640642939, 0.49523809523809526, 0.11420118343195267, 0.11420118343195267]
+    recalls2 = [0.5706840390879478, 0.5084745762711864, 0.18786502271252434, 0.18786502271252434]
+    f1scores2 = [0.5346353371986573, 0.5017690575747829, 0.14205103042198233, 0.14205103042198233]
+    tprs2 = [0.5706840390879478, 0.5084745762711864, 0.18786502271252434, 0.18786502271252434]
+    fprs2 = [0.17800616649537512, 0.16337854500616522, 0.46213212595184194, 0.46213212595184194]
+    errors2 = [0, 4.915254237288136, 8.121349772874757, 8.121349772874757]
+    payoffs2 = [0, 5.576203915910264, 8.439891588190555, 8.439891588190555]
+    norms2 = [0, 0.33905032137787217, 0.6814581846842014, 0.6814581846842014]
+
+
+    mylambda3 = 20
+    numalphas3 = 100
+    precisions3 = [0.5175611126720989, 0.49548387096774194, 0.0805012015104703, 0.2182476794204211, 0.1365079365079365, 0.011857707509881422, 0.011857707509881422]
+    recalls3 = [0.6, 0.5003257328990228, 0.15124153498871332, 0.31596197967879386, 0.25261096605744127, 0.025440313111545987, 0.025440313111545987]
+    f1scores3 = [0.5557399306079348, 0.4978930307941653, 0.1050744931107875, 0.258168184252812, 0.17723837874971377, 0.016175860638739114, 0.016175860638739114]
+    tprs3 = [0.6, 0.5003257328990228, 0.15124153498871332, 0.31596197967879386, 0.25261096605744127, 0.025440313111545987, 0.025440313111545987]
+    fprs3 = [0.176464542651593, 0.16073997944501542, 0.5523249819569028, 0.3541901733511129, 0.5028759244042728, 0.6677624820217793, 0.6677624820217793]
+    errors3 = [0, 9.993485342019543, 16.975169300225733, 13.680760406424124, 14.947780678851174, 19.49119373776908, 19.49119373776908]
+    payoffs3 = [0, 10.632242406180278, 17.317661081614002, 14.284966059257641, 15.261417308524516, 19.931919382044768, 19.931919382044768]
+    norms3 = [0, 0.3612429358392646, 0.6575082186117314, 0.39579434716648265, 0.6863633703266583, 0.5592743557243125, 0.5592743557243125]
+
+
+    mylambda4 = 0.5
+    numalphas4 = 20
+    precisions4 = [0.5039846111569113, 0.49710982658959535, 0.4849693251533742, 0.4425007169486665, 0.4425007169486665]
+    recalls4 = [0.6009174311926605, 0.531036724081898, 0.518360655737705, 0.5037544890630101, 0.5037544890630101]
+    f1scores4 = [0.5481990733821551, 0.5135135135135135, 0.5011093502377179, 0.47114503816793896, 0.47114503816793896]
+    tprs4 = [0.6009174311926605, 0.531036724081898, 0.518360655737705, 0.5037544890630101, 0.5037544890630101]
+    fprs4 = [0.18516618793598688, 0.17000925640234496, 0.1722051282051282, 0.19965081647324637, 0.19965081647324637]
+    errors4 = [0, 0.23448163795905103, 0.24081967213114752, 0.24812275546849494, 0.24812275546849494]
+    payoffs4 = [0, 0.9222687909075138, 0.8541820534283024, 0.8320489630237852, 0.8320489630237852]
+    norms4 = [0, 0.3122128470515373, 0.3866376187028451, 0.41607379244470966, 0.41607379244470966]
+        
+
+    mylambda5 = 0.2
+    numalphas5 = 50
+    precisions5 = [0.5138657792567942, 0.49955022488755624, 0.49955022488755624]
+    recalls5 = [0.6053577262332571, 0.543733681462141, 0.543733681462141]
+    f1scores5 = [0.5558722063896805, 0.5207063603688076, 0.5207063603688076]
+    tprs5 = [0.6053577262332571, 0.543733681462141, 0.543733681462141]
+    fprs5 = [0.17999794640106787, 0.17142563681183237, 0.17142563681183237]
+    errors5 = [0, 0.09125326370757181, 0.09125326370757181]
+    payoffs5 = [0, 0.8284613089456938, 0.8284613089456938]
+    norms5 = [0, 0.262791954761878, 0.262791954761878]
+        
+
+    mylambda6 = 0.01
+    numalphas6 = 50
+    precisions6 = [0.506166072896684, 0.50210463018641, 0.3905792201938247, 0.4845583693638048, 0.445859872611465, 0.4845583693638048, 0.4845583693638048]
+    recalls6 = [0.6018246985988921, 0.539231514368744, 0.5676383884703571, 0.5190208402249421, 0.5, 0.5190208402249421, 0.5190208402249421]
+    f1scores6 = [0.549866031557011, 0.5200062276194924, 0.46275033377837116, 0.5011978917105894, 0.4713804713804714, 0.5011978917105894, 0.5011978917105894]
+    tprs6 = [0.6018246985988921, 0.539231514368744, 0.5676383884703571, 0.5190208402249421, 0.5, 0.5190208402249421, 0.5190208402249421]
+    fprs6 = [0.18518137909772892, 0.17066886529939193, 0.2774186929311583, 0.17070676076506086, 0.19691358024691358, 0.17070676076506086, 0.17070676076506086]
+    errors6 = [0, 0.004607684856312561, 0.004323616115296429, 0.004809791597750579, 0.005, 0.004809791597750579, 0.004809791597750579]
+    payoffs6 = [0, 0.7672730381542716, 0.7543424797643027, 0.731421660653315, 0.744277083189356, 0.731421660653315, 0.731421660653315]
+    norms6 = [0, 0.23733464670204096, 0.24998113635099373, 0.2733881309444355, 0.26072291681064386, 0.2733881309444355, 0.2733881309444355]
+        
+
+    mylambda7 = 10
+    numalphas7 = 100
+    precisions7 = [0.509703196347032, 0.4925187032418953, 0.1289326384867786, 0.20694288913773795, 0.14525241479861492, 0.14525241479861492]
+    recalls7 = [0.5846153846153846, 0.5160026126714565, 0.21872953503601833, 0.30166503428011754, 0.2602024159320927, 0.2602024159320927]
+    f1scores7 = [0.5445952126848606, 0.5039872408293461, 0.16223436551305404, 0.2454835281615303, 0.1864327485380117, 0.1864327485380117]
+    tprs7 = [0.5846153846153846, 0.5160026126714565, 0.21872953503601833, 0.30166503428011754, 0.2602024159320927, 0.2602024159320927]
+    fprs7 = [0.1762955361723961, 0.1671801191209694, 0.46306176893084344, 0.3636643730101674, 0.48166786484543495, 0.48166786484543495]
+    errors7 = [0, 4.839973873285435, 7.812704649639817, 6.983349657198826, 7.397975840679073, 7.397975840679073]
+    payoffs7 = [0, 5.530996766216198, 8.301517026209632, 7.4670826745024055, 7.898058462965916, 7.898058462965916]
+    norms7 = [0, 0.30897710706923665, 0.5111876234301835, 0.5162669826964201, 0.4999173777131576, 0.4999173777131576]
+        
+
+    mylambda8 = 10
+    numalphas8 = 20
+    precisions8 = [0.5108571428571429, 0.5010805804260574, 0.239251040221914, 0.2853206412825651, 0.1835229667088074, 0.2853206412825651, 0.2853206412825651]
+    recalls8 = [0.5864217776320105, 0.5271191945436831, 0.3384565075212557, 0.3719790986283475, 0.28426892950391647, 0.3719790986283475, 0.3719790986283475]
+    f1scores8 = [0.5460375629867156, 0.5137701804368471, 0.2803358613217768, 0.3229373405160193, 0.22304737516005121, 0.3229373405160193, 0.3229373405160193]
+    tprs8 = [0.5864217776320105, 0.5271191945436831, 0.3384565075212557, 0.3719790986283475, 0.28426892950391647, 0.3719790986283475, 0.3719790986283475]
+    fprs8 = [0.1755717362321813, 0.16623804135377018, 0.33781564360500926, 0.2929759704251386, 0.39800739523418244, 0.2929759704251386, 0.2929759704251386]
+    errors8 = [0, 4.728808054563169, 6.615434924787442, 6.280209013716524, 7.157310704960835, 6.280209013716524, 6.280209013716524]
+    payoffs8 = [0, 5.4084124530589985, 7.056313129027419, 6.66867472800063, 7.622312829417546, 6.66867472800063, 6.66867472800063]
+    norms8 = [0, 0.32039560150417046, 0.5591217957600225, 0.6115342857158943, 0.5349978755432891, 0.6115342857158943, 0.6115342857158943]
+        
+
+    mylambda9 = 10
+    numalphas9 = 10
+    precisions9 = [0.5169274537695591, 0.49111675126903553, 0.4909993792675357, 0.2895543503890592, 0.4935185185185185, 0.34550709406200736, 0.34550709406200736]
+    recalls9 = [0.5872656755009696, 0.5063788027477919, 0.517500817795224, 0.40235910878112713, 0.5220372184133203, 0.4297385620915033, 0.4297385620915033]
+    f1scores9 = [0.5498562566197609, 0.4986310194878402, 0.5039018952062431, 0.3367612779377485, 0.5073774393146121, 0.3830468977570638, 0.3830468977570638]
+    tprs9 = [0.5872656755009696, 0.5063788027477919, 0.517500817795224, 0.40235910878112713, 0.5220372184133203, 0.4297385620915033, 0.4297385620915033]
+    fprs9 = [0.17494333402019369, 0.16463101714051115, 0.16832597762496151, 0.3090890439064424, 0.16853240217726198, 0.2557494866529774, 0.2557494866529774]
+    errors9 = [0, 4.936211972522081, 4.8249918220477594, 5.976408912188729, 4.779627815866797, 5.702614379084967, 5.702614379084967]
+    payoffs9 = [0, 5.613622059272161, 5.41478418963845, 6.391601202706889, 5.210716244515645, 6.057424570435412, 6.057424570435412]
+    norms9 = [0, 0.3225899132499199, 0.4102076324093096, 0.58480770948184, 0.5689115713511521, 0.6451898086495547, 0.6451898086495547]
     
+    iterationnum = range(0,11)
+    
+    plt.plot(iterationnum[0:len(precisions1)],precisions1, label=str(mylambda1)+','+str(numalphas1))
+    plt.plot(iterationnum[0:len(precisions2)],precisions2, label=str(mylambda2)+','+str(numalphas2))
+    plt.plot(iterationnum[0:len(precisions3)],precisions3, label=str(mylambda3)+','+str(numalphas3))
+    plt.plot(iterationnum[0:len(precisions4)],precisions4, label=str(mylambda4)+','+str(numalphas4))
+    plt.plot(iterationnum[0:len(precisions5)],precisions5, label=str(mylambda5)+','+str(numalphas5))
+    plt.plot(iterationnum[0:len(precisions6)],precisions6, label=str(mylambda6)+','+str(numalphas6))
+    plt.plot(iterationnum[0:len(precisions7)],precisions7, label=str(mylambda7)+','+str(numalphas7))
+    plt.plot(iterationnum[0:len(precisions8)],precisions8, label=str(mylambda8)+','+str(numalphas8))
+    plt.plot(iterationnum[0:len(precisions9)],precisions9, label=str(mylambda9)+','+str(numalphas9))
+    title('Training Precisions')
+    xlabel('Iteration')
+    ylabel('Precision')
+#     legend = plt.legend(loc='upper center', shadow=True)
+#     plt.legend(loc=2)
+#     legend.get_frame().set_facecolor('#00FFCC')
+    plt.legend()
+    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingPrecisions.png")
+    plt.show()
+
+    plt.plot(iterationnum[0:len(recalls1)],recalls1, label=str(mylambda1)+','+str(numalphas1))
+    plt.plot(iterationnum[0:len(recalls2)],recalls2, label=str(mylambda2)+','+str(numalphas2))
+    plt.plot(iterationnum[0:len(recalls3)],recalls3, label=str(mylambda3)+','+str(numalphas3))
+    plt.plot(iterationnum[0:len(recalls4)],recalls4, label=str(mylambda4)+','+str(numalphas4))
+    plt.plot(iterationnum[0:len(recalls5)],recalls5, label=str(mylambda5)+','+str(numalphas5))
+    plt.plot(iterationnum[0:len(recalls6)],recalls6, label=str(mylambda6)+','+str(numalphas6))
+    plt.plot(iterationnum[0:len(recalls7)],recalls7, label=str(mylambda7)+','+str(numalphas7))
+    plt.plot(iterationnum[0:len(recalls8)],recalls8, label=str(mylambda8)+','+str(numalphas8))
+    plt.plot(iterationnum[0:len(recalls9)],recalls9, label=str(mylambda9)+','+str(numalphas9))
+    title('Training Recalls')
+    xlabel('Iteration')
+    ylabel('Recall')
+    plt.legend()
+    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingRecalls.png")
+    plt.show()
+    
+    plt.plot(iterationnum[0:len(f1scores1)],f1scores1, label=str(mylambda1)+','+str(numalphas1))
+    plt.plot(iterationnum[0:len(f1scores2)],f1scores2, label=str(mylambda2)+','+str(numalphas2))
+    plt.plot(iterationnum[0:len(f1scores3)],f1scores3, label=str(mylambda3)+','+str(numalphas3))
+    plt.plot(iterationnum[0:len(f1scores4)],f1scores4, label=str(mylambda4)+','+str(numalphas4))
+    plt.plot(iterationnum[0:len(f1scores5)],f1scores5, label=str(mylambda5)+','+str(numalphas5))
+    plt.plot(iterationnum[0:len(f1scores6)],f1scores6, label=str(mylambda6)+','+str(numalphas6))
+    plt.plot(iterationnum[0:len(f1scores7)],f1scores7, label=str(mylambda7)+','+str(numalphas7))
+    plt.plot(iterationnum[0:len(f1scores8)],f1scores8, label=str(mylambda8)+','+str(numalphas8))
+    plt.plot(iterationnum[0:len(f1scores9)],f1scores9, label=str(mylambda9)+','+str(numalphas9))
+    title('Training F1Scores')
+    xlabel('Iteration')
+    ylabel('F1Score')
+    plt.legend()
+    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingF1Scores.png")
+    plt.show()
+
+    plt.plot(iterationnum[0:len(tprs1)],tprs1, label=str(mylambda1)+','+str(numalphas1))
+    plt.plot(iterationnum[0:len(tprs2)],tprs2, label=str(mylambda2)+','+str(numalphas2))
+    plt.plot(iterationnum[0:len(tprs3)],tprs3, label=str(mylambda3)+','+str(numalphas3))
+    plt.plot(iterationnum[0:len(tprs4)],tprs4, label=str(mylambda4)+','+str(numalphas4))
+    plt.plot(iterationnum[0:len(tprs5)],tprs5, label=str(mylambda5)+','+str(numalphas5))
+    plt.plot(iterationnum[0:len(tprs6)],tprs6, label=str(mylambda6)+','+str(numalphas6))
+    plt.plot(iterationnum[0:len(tprs7)],tprs7, label=str(mylambda7)+','+str(numalphas7))
+    plt.plot(iterationnum[0:len(tprs8)],tprs8, label=str(mylambda8)+','+str(numalphas8))
+    plt.plot(iterationnum[0:len(tprs9)],tprs9, label=str(mylambda9)+','+str(numalphas9))
+    title('Training TPRs')
+    xlabel('Iteration')
+    ylabel('TPR')
+    plt.legend()
+    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingTPRs.png")
+    plt.show()
+
+
+    plt.plot(iterationnum[0:len(fprs1)],fprs1, label=str(mylambda1)+','+str(numalphas1))
+    plt.plot(iterationnum[0:len(fprs2)],fprs2, label=str(mylambda2)+','+str(numalphas2))
+    plt.plot(iterationnum[0:len(fprs3)],fprs3, label=str(mylambda3)+','+str(numalphas3))
+    plt.plot(iterationnum[0:len(fprs4)],fprs4, label=str(mylambda4)+','+str(numalphas4))
+    plt.plot(iterationnum[0:len(fprs5)],fprs5, label=str(mylambda5)+','+str(numalphas5))
+    plt.plot(iterationnum[0:len(fprs6)],fprs6, label=str(mylambda6)+','+str(numalphas6))
+    plt.plot(iterationnum[0:len(fprs7)],fprs7, label=str(mylambda7)+','+str(numalphas7))
+    plt.plot(iterationnum[0:len(fprs8)],fprs8, label=str(mylambda8)+','+str(numalphas8))
+    plt.plot(iterationnum[0:len(fprs9)],fprs9, label=str(mylambda9)+','+str(numalphas9))
+    title('Training FPRs')
+    xlabel('Iteration')
+    ylabel('FPR')
+    plt.legend()
+    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingFPRs.png")
+    plt.show()
+
+
+    plt.plot(iterationnum[0:len(errors1)],errors1, label=str(mylambda1)+','+str(numalphas1))
+    plt.plot(iterationnum[0:len(errors2)],errors2, label=str(mylambda2)+','+str(numalphas2))
+    plt.plot(iterationnum[0:len(errors3)],errors3, label=str(mylambda3)+','+str(numalphas3))
+    plt.plot(iterationnum[0:len(errors4)],errors4, label=str(mylambda4)+','+str(numalphas4))
+    plt.plot(iterationnum[0:len(errors5)],errors5, label=str(mylambda5)+','+str(numalphas5))
+    plt.plot(iterationnum[0:len(errors6)],errors6, label=str(mylambda6)+','+str(numalphas6))
+    plt.plot(iterationnum[0:len(errors7)],errors7, label=str(mylambda7)+','+str(numalphas7))
+    plt.plot(iterationnum[0:len(errors8)],errors8, label=str(mylambda8)+','+str(numalphas8))
+    plt.plot(iterationnum[0:len(errors9)],errors9, label=str(mylambda9)+','+str(numalphas9))
+    title('Training Errors')
+    xlabel('Iteration')
+    ylabel('Error')
+    plt.legend()
+    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingErrors.png")
+    plt.show()
+
+
+    plt.plot(iterationnum[0:len(payoffs1)],payoffs1, label=str(mylambda1)+','+str(numalphas1))
+    plt.plot(iterationnum[0:len(payoffs2)],payoffs2, label=str(mylambda2)+','+str(numalphas2))
+    plt.plot(iterationnum[0:len(payoffs3)],payoffs3, label=str(mylambda3)+','+str(numalphas3))
+    plt.plot(iterationnum[0:len(payoffs4)],payoffs4, label=str(mylambda4)+','+str(numalphas4))
+    plt.plot(iterationnum[0:len(payoffs5)],payoffs5, label=str(mylambda5)+','+str(numalphas5))
+    plt.plot(iterationnum[0:len(payoffs6)],payoffs6, label=str(mylambda6)+','+str(numalphas6))
+    plt.plot(iterationnum[0:len(payoffs7)],payoffs7, label=str(mylambda7)+','+str(numalphas7))
+    plt.plot(iterationnum[0:len(payoffs8)],payoffs8, label=str(mylambda8)+','+str(numalphas8))
+    plt.plot(iterationnum[0:len(payoffs9)],payoffs9, label=str(mylambda9)+','+str(numalphas9))
+    title('Training Payoffs')
+    xlabel('Iteration')
+    ylabel('Payoff')
+    plt.legend()
+    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingPayoffs.png")
+    plt.show()
+
+
+    plt.plot(iterationnum[0:len(norms1)],norms1, label=str(mylambda1)+','+str(numalphas1))
+    plt.plot(iterationnum[0:len(norms2)],norms2, label=str(mylambda2)+','+str(numalphas2))
+    plt.plot(iterationnum[0:len(norms3)],norms3, label=str(mylambda3)+','+str(numalphas3))
+    plt.plot(iterationnum[0:len(norms4)],norms4, label=str(mylambda4)+','+str(numalphas4))
+    plt.plot(iterationnum[0:len(norms5)],norms5, label=str(mylambda5)+','+str(numalphas5))
+    plt.plot(iterationnum[0:len(norms6)],norms6, label=str(mylambda6)+','+str(numalphas6))
+    plt.plot(iterationnum[0:len(norms7)],norms7, label=str(mylambda7)+','+str(numalphas7))
+    plt.plot(iterationnum[0:len(norms8)],norms8, label=str(mylambda8)+','+str(numalphas8))
+    plt.plot(iterationnum[0:len(norms9)],norms9, label=str(mylambda9)+','+str(numalphas9))
+    title('Training Norms')
+    xlabel('Iteration')
+    ylabel('Norm')
+    plt.legend()
+    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingNorms.png")
+    plt.show()
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
 def ttest():
     records = []
 #     record = {'testing error on original training data and original testing data': {'recall': 0.8410206084396468, 'error': 0, 'precision': 0.49394812680115274, 'tpr': 0.8410206084396468, 'fpr': 0.07452678040913335, 'f1score': 0.6223674655047204, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8500486854917235, 'error': 0.5251798561151079, 'precision': 0.4980034227039361, 'tpr': 0.8500486854917235, 'fpr': 0.07474730315127835, 'f1score': 0.6280575539568345, 'norm': 1.5251798561151078, 'payoff': 0}, 'training error on original training data and original testing data': {'recall': 0.5127952755905512, 'error': 0, 'precision': 0.48935504070131497, 'tpr': 0.5127952755905512, 'fpr': 0.16724774405250206, 'f1score': 0.5008010253123999, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8516377649325626, 'error': 0.5251798561151079, 'precision': 0.5042783799201369, 'tpr': 0.8516377649325626, 'fpr': 0.07388199285835742, 'f1score': 0.6334647079899678, 'norm': 1.5251798561151078, 'payoff': 0}}
@@ -334,19 +693,26 @@ def ttest():
     records.append(record)
     record = {'testing error on original training data and original testing data': {'recall': 0.8316929133858267, 'error': 0, 'precision': 0.3419668150546338, 'tpr': 0.8316929133858267, 'fpr': 0.1379837067209776, 'f1score': 0.48465729853742473, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8446411012782694, 'error': 0.09125326370757181, 'precision': 0.4301452178267401, 'tpr': 0.8446411012782694, 'fpr': 0.09657981838241535, 'f1score': 0.5700066357000664, 'norm': 0.262791954761878, 'payoff': 0.8284613089456938}, 'training error on original training data and original testing data': {'recall': 0.6053577262332571, 'error': 0, 'precision': 0.5138657792567942, 'tpr': 0.6053577262332571, 'fpr': 0.17999794640106787, 'f1score': 0.5558722063896805, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.7704280155642024, 'error': 0.09125326370757181, 'precision': 0.20491591203104786, 'tpr': 0.7704280155642024, 'fpr': 0.2610431532449881, 'f1score': 0.3237277743715512, 'norm': 0.262791954761878, 'payoff': 0.8284613089456938}}
     records.append(record)
-    
+    record = {'testing error on original training data and original testing data': {'recall': 0.8091528724440117, 'error': 0, 'precision': 0.3519695044472681, 'tpr': 0.8091528724440117, 'fpr': 0.1299583793425635, 'f1score': 0.49055489964580873, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8620019436345967, 'error': 0.004809791597750579, 'precision': 0.49887514060742405, 'tpr': 0.8620019436345967, 'fpr': 0.07569450344065924, 'f1score': 0.6319914499465622, 'norm': 0.2733881309444355, 'payoff': 0.731421660653315}, 'training error on original training data and original testing data': {'recall': 0.6018246985988921, 'error': 0, 'precision': 0.506166072896684, 'tpr': 0.6018246985988921, 'fpr': 0.18518137909772892, 'f1score': 0.549866031557011, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8226120857699805, 'error': 0.004809791597750579, 'precision': 0.24393063583815028, 'tpr': 0.8226120857699805, 'fpr': 0.2221844742653304, 'f1score': 0.3762817654926438, 'norm': 0.2733881309444355, 'payoff': 0.731421660653315}}
+    records.append(record)
+    record = {'testing error on original training data and original testing data': {'recall': 0.8163064833005894, 'error': 0, 'precision': 0.36304062909567497, 'tpr': 0.8163064833005894, 'fpr': 0.12374809030724834, 'f1score': 0.5025703054127608, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.84106614017769, 'error': 7.397975840679073, 'precision': 0.48657909765848084, 'tpr': 0.84106614017769, 'fpr': 0.07627046746415543, 'f1score': 0.6164978292329957, 'norm': 0.4999173777131576, 'payoff': 7.898058462965916}, 'training error on original training data and original testing data': {'recall': 0.5846153846153846, 'error': 0, 'precision': 0.509703196347032, 'tpr': 0.5846153846153846, 'fpr': 0.1762955361723961, 'f1score': 0.5445952126848606, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.733847637415622, 'error': 7.397975840679073, 'precision': 0.15854166666666666, 'tpr': 0.733847637415622, 'fpr': 0.3433647878942447, 'f1score': 0.26075038547198903, 'norm': 0.4999173777131576, 'payoff': 7.898058462965916}}
+    records.append(record)
+    record = {'testing error on original training data and original testing data': {'recall': 0.8212180746561886, 'error': 0, 'precision': 0.3417825020441537, 'tpr': 0.8212180746561886, 'fpr': 0.13664912578509592, 'f1score': 0.48267898383371827, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8458536585365853, 'error': 6.280209013716524, 'precision': 0.4811320754716981, 'tpr': 0.8458536585365853, 'fpr': 0.07940552016985138, 'f1score': 0.6133710647329325, 'norm': 0.6115342857158943, 'payoff': 6.66867472800063}, 'training error on original training data and original testing data': {'recall': 0.5864217776320105, 'error': 0, 'precision': 0.5108571428571429, 'tpr': 0.5864217776320105, 'fpr': 0.1755717362321813, 'f1score': 0.5460375629867156, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8382352941176471, 'error': 6.280209013716524, 'precision': 0.25591140377132593, 'tpr': 0.8382352941176471, 'fpr': 0.21103565365025467, 'f1score': 0.39211190094015136, 'norm': 0.6115342857158943, 'payoff': 6.66867472800063}}
+    records.append(record)
+    record = {'testing error on original training data and original testing data': {'recall': 0.841948310139165, 'error': 0, 'precision': 0.38552571688666365, 'tpr': 0.841948310139165, 'fpr': 0.11446498219433611, 'f1score': 0.528879175772713, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8381046396841066, 'error': 5.702614379084967, 'precision': 0.49018475750577367, 'tpr': 0.8381046396841066, 'fpr': 0.0749130397895987, 'f1score': 0.6185792349726776, 'norm': 0.6451898086495547, 'payoff': 6.057424570435412}, 'training error on original training data and original testing data': {'recall': 0.5872656755009696, 'error': 0, 'precision': 0.5169274537695591, 'tpr': 0.5872656755009696, 'fpr': 0.17494333402019369, 'f1score': 0.5498562566197609, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8442703232125367, 'error': 5.702614379084967, 'precision': 0.42631058358061324, 'tpr': 0.8442703232125367, 'fpr': 0.09848034637914933, 'f1score': 0.5665461715412422, 'norm': 0.6451898086495547, 'payoff': 6.057424570435412}}
+    records.append(record)
     
     l1 = []
     l2 = []
     l3 = []
     
     for record in records:
-        l1.append(record['testing error on original training data and original testing data']['precision'])
-        l2.append(record['testing error on original training data and manipulated testing data']['precision'])
-        l3.append(record['testing error on manipulated training data and manipulated testing data']['precision'])
+        l1.append(record['testing error on original training data and original testing data'][str(perfmetric)])
+        l2.append(record['testing error on original training data and manipulated testing data'][str(perfmetric)])
+        l3.append(record['testing error on manipulated training data and manipulated testing data'][str(perfmetric)])
 #         l.append(record['training error on original training data and original testing data']['precision'])
         
-
+    print('Output results for ',perfmetric)
     ttest=stats.ttest_ind(l1,l2,equal_var=True)
     print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated testing' % ttest
 #     ttest=stats.ttest_rel(l1,l2)
@@ -403,6 +769,7 @@ if __name__ == '__main__':
 # #      
 #     binarizer(InDir,'TestSplit/','test.bin')
 #     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')    generatereports()
+
 #     generatereports()
-    
+#     trainplots()
     ttest()

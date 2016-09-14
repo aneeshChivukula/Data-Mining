@@ -2588,4 +2588,10 @@ false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
 true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
 false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))
 
+
+Adding legends to matplotlib
+http://matplotlib.org/examples/api/legend_demo.html#api-legend-demo
+http://matplotlib.org/examples/pylab_examples/scatter_symbol.html#pylab-examples-scatter-symbol
+
+
 '''

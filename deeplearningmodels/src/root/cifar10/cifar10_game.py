@@ -18,6 +18,9 @@ from deap import creator
 from deap import tools
 import cPickle as pickle
 
+import shutil
+import os
+
 FLAGS = tf.app.flags.FLAGS
 
 # perfmetric = "precision"
@@ -89,9 +92,9 @@ def main(argv=None):
     tf.gfile.MakeDirs(TrainWeightsDir)
     cifar10_train.train()
     
-    if(InitialCheckpointsDir):
-        delete(InitialCheckpointsDir)
-    copydir(CheckpointsDir,InitialCheckpointsDir)
+    if(os.path.exists(InitialCheckpointsDir)):
+        shutil.rmtree(InitialCheckpointsDir)
+    shutil.copytree(CheckpointsDir, InitialCheckpointsDir)
     # For 2 class problem, change input bin file to include 2 classes and train over 2000 iterations
     # For 1000 class problem, change input bin file to include 1000 classes and train over 10000 iterations
 
@@ -299,8 +302,9 @@ def main(argv=None):
 #       tf.gfile.DeleteRecursively(TrainWeightsDir)
 #     tf.gfile.MakeDirs(TrainWeightsDir)
 #     cifar10_train.train()
-    delete(CheckpointsDir)
-    copydir(InitialCheckpointsDir,CheckpointsDir)
+    if(os.path.exists(CheckpointsDir)):
+        shutil.rmtree(CheckpointsDir)
+    shutil.copytree(InitialCheckpointsDir,CheckpointsDir, CheckpointsDir)
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
     imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)

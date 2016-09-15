@@ -60,6 +60,9 @@ def main(argv=None):
     GameInDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_data/imagenet2010-batches-bin/'
     EvalDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_eval'
     TrainWeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
+    CheckpointsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
+    InitialCheckpointsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train_initial'
+    
     StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
     AlphasFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphas.pkl'
     fp1 = open(StdoutFile,'wb')
@@ -85,6 +88,10 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
     tf.gfile.MakeDirs(TrainWeightsDir)
     cifar10_train.train()
+    
+    if(InitialCheckpointsDir):
+        delete(InitialCheckpointsDir)
+    copydir(CheckpointsDir,InitialCheckpointsDir)
     # For 2 class problem, change input bin file to include 2 classes and train over 2000 iterations
     # For 1000 class problem, change input bin file to include 1000 classes and train over 10000 iterations
 
@@ -285,13 +292,15 @@ def main(argv=None):
     print('final manipulated testing data precision of cifar10_eval with alphastar on manipulated training data',perf)
     finalresults.append((adv_payoff, error, 1+error-adv_payoff, perf, perfmetrics, gen))
 
-    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
-    createdataset.binarizer(InDir,'TrainSplit/','train.bin')
-    copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
-    if tf.gfile.Exists(TrainWeightsDir):
-      tf.gfile.DeleteRecursively(TrainWeightsDir)
-    tf.gfile.MakeDirs(TrainWeightsDir)
-    cifar10_train.train()
+#     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
+#     createdataset.binarizer(InDir,'TrainSplit/','train.bin')
+#     copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
+#     if tf.gfile.Exists(TrainWeightsDir):
+#       tf.gfile.DeleteRecursively(TrainWeightsDir)
+#     tf.gfile.MakeDirs(TrainWeightsDir)
+#     cifar10_train.train()
+    delete(CheckpointsDir)
+    copydir(InitialCheckpointsDir,CheckpointsDir)
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
     imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)

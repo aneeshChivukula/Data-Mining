@@ -294,13 +294,21 @@ def generatereports():
 #     mylambda = 10
 #     final_payoff = 6.057424570435412
 
-    rls = [(1, 0, 1, 0.6139717940308298, {'recall': 0.6139717940308298, 'fpr': 0.18264793354527742, 'f1score': 0.55863921217547, 'precision': 0.5124555160142349, 'tpr': 0.6139717940308298}, 0), (0, 0, 1, 0.8214285714285714, {'recall': 0.8214285714285714, 'fpr': 0.14187351241074464, 'f1score': 0.47862767154105734, 'precision': 0.3376984126984127, 'tpr': 0.8214285714285714}, 0), (1.004525986978824, 0.23230668414154654, 0.22778069716272253, 0.5353866317169069, {'recall': 0.5353866317169069, 'fpr': 0.17336889618383258, 'f1score': 0.5125470514429109, 'precision': 0.4915764139590854, 'tpr': 0.5353866317169069}, 0), (0.9979098447629909, 0.22866839043309634, 0.23075854567010545, 0.5426632191338073, {'recall': 0.5426632191338073, 'fpr': 0.17113125901504225, 'f1score': 0.5219148274790177, 'precision': 0.5026946107784431, 'tpr': 0.5426632191338073}, 1), (0.9976697759933637, 0.30346631785480704, 0.30579654186144345, 0.39306736429038586, {'recall': 0.39306736429038586, 'fpr': 0.2762266475056457, 'f1score': 0.3458495180549561, 'precision': 0.30875931158489595, 'tpr': 0.39306736429038586}, 2), (0.9982853407607597, 0.24886141834743009, 0.25057607758667033, 0.5022771633051398, {'recall': 0.5022771633051398, 'fpr': 0.18846391116594693, 'f1score': 0.4786854751201364, 'precision': 0.45721054190109567, 'tpr': 0.5022771633051398}, 3), (1.053429735573995, 0.4550653594771242, 0.4016356239031291, 0.08986928104575163, {'recall': 0.08986928104575163, 'fpr': 0.6237166324435318, 'f1score': 0.05844845908607864, 'precision': 0.04330708661417323, 'tpr': 0.08986928104575163}, 4), (1.053429735573995, 0.4550653594771242, 0.4016356239031291, 0.08986928104575163, {'recall': 0.08986928104575163, 'fpr': 0.6237166324435318, 'f1score': 0.05844845908607864, 'precision': 0.04330708661417323, 'tpr': 0.08986928104575163}, 5), (1.053429735573995, 0.4550653594771242, 0.4016356239031291, 0.7573385518590998, {'recall': 0.7573385518590998, 'fpr': 0.31796569876040076, 'f1score': 0.2793719545208446, 'precision': 0.1712768311573357, 'tpr': 0.7573385518590998}, 6), (1.053429735573995, 0.4550653594771242, 0.4016356239031291, 0.8501945525291829, {'recall': 0.8501945525291829, 'fpr': 0.07628270472307169, 'f1score': 0.6242857142857143, 'precision': 0.4932279909706546, 'tpr': 0.8501945525291829}, 6)]
-    gen = 6
+#     rls = [(1, 0, 1, 0.6139717940308298, {'recall': 0.6139717940308298, 'fpr': 0.18264793354527742, 'f1score': 0.55863921217547, 'precision': 0.5124555160142349, 'tpr': 0.6139717940308298}, 0), (0, 0, 1, 0.8214285714285714, {'recall': 0.8214285714285714, 'fpr': 0.14187351241074464, 'f1score': 0.47862767154105734, 'precision': 0.3376984126984127, 'tpr': 0.8214285714285714}, 0), (1.004525986978824, 0.23230668414154654, 0.22778069716272253, 0.5353866317169069, {'recall': 0.5353866317169069, 'fpr': 0.17336889618383258, 'f1score': 0.5125470514429109, 'precision': 0.4915764139590854, 'tpr': 0.5353866317169069}, 0), (0.9979098447629909, 0.22866839043309634, 0.23075854567010545, 0.5426632191338073, {'recall': 0.5426632191338073, 'fpr': 0.17113125901504225, 'f1score': 0.5219148274790177, 'precision': 0.5026946107784431, 'tpr': 0.5426632191338073}, 1), (0.9976697759933637, 0.30346631785480704, 0.30579654186144345, 0.39306736429038586, {'recall': 0.39306736429038586, 'fpr': 0.2762266475056457, 'f1score': 0.3458495180549561, 'precision': 0.30875931158489595, 'tpr': 0.39306736429038586}, 2), (0.9982853407607597, 0.24886141834743009, 0.25057607758667033, 0.5022771633051398, {'recall': 0.5022771633051398, 'fpr': 0.18846391116594693, 'f1score': 0.4786854751201364, 'precision': 0.45721054190109567, 'tpr': 0.5022771633051398}, 3), (1.053429735573995, 0.4550653594771242, 0.4016356239031291, 0.08986928104575163, {'recall': 0.08986928104575163, 'fpr': 0.6237166324435318, 'f1score': 0.05844845908607864, 'precision': 0.04330708661417323, 'tpr': 0.08986928104575163}, 4), (1.053429735573995, 0.4550653594771242, 0.4016356239031291, 0.08986928104575163, {'recall': 0.08986928104575163, 'fpr': 0.6237166324435318, 'f1score': 0.05844845908607864, 'precision': 0.04330708661417323, 'tpr': 0.08986928104575163}, 5), (1.053429735573995, 0.4550653594771242, 0.4016356239031291, 0.7573385518590998, {'recall': 0.7573385518590998, 'fpr': 0.31796569876040076, 'f1score': 0.2793719545208446, 'precision': 0.1712768311573357, 'tpr': 0.7573385518590998}, 6), (1.053429735573995, 0.4550653594771242, 0.4016356239031291, 0.8501945525291829, {'recall': 0.8501945525291829, 'fpr': 0.07628270472307169, 'f1score': 0.6242857142857143, 'precision': 0.4932279909706546, 'tpr': 0.8501945525291829}, 6)]
+#     gen = 6
+#     numgens = 20
+#     numalphas = 100
+#     myepsilon = 0.0001
+#     mylambda = 0.5
+#     final_payoff = 1.053429735573995
+
+    rls = [(1, 0, 1, 0.6066536203522505, {'recall': 0.6066536203522505, 'fpr': 0.181631395109924, 'f1score': 0.5557215416791156, 'precision': 0.5126791620727673, 'tpr': 0.6066536203522505}, 0), (0, 0, 1, 0.8287937743190662, {'recall': 0.8287937743190662, 'fpr': 0.13685015290519878, 'f1score': 0.48811228874248064, 'precision': 0.3459196102314251, 'tpr': 0.8287937743190662}, 0), (1.179715160662358, 0.43461160275319566, 0.2548964420908377, 0.5653883972468043, {'recall': 0.5653883972468043, 'fpr': 0.17488973228023388, 'f1score': 0.5323252584477705, 'precision': 0.5029154518950437, 'tpr': 0.5653883972468043}, 0), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.5397135416666666, {'recall': 0.5397135416666666, 'fpr': 0.17321134868421054, 'f1score': 0.5169134840218238, 'precision': 0.4959617110379898, 'tpr': 0.5397135416666666}, 1), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.5397135416666666, {'recall': 0.5397135416666666, 'fpr': 0.17321134868421054, 'f1score': 0.5169134840218238, 'precision': 0.4959617110379898, 'tpr': 0.5397135416666666}, 2), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.81648675171737, {'recall': 0.81648675171737, 'fpr': 0.1817332993803582, 'f1score': 0.4168336673346693, 'precision': 0.2798520013454423, 'tpr': 0.81648675171737}, 3), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.8526829268292683, {'recall': 0.8526829268292683, 'fpr': 0.08008492569002124, 'f1score': 0.6150598170302604, 'precision': 0.4810126582278481, 'tpr': 0.8526829268292683}, 3)]
+    gen = 3
     numgens = 20
-    numalphas = 100
+    numalphas = 10
     myepsilon = 0.0001
-    mylambda = 0.5
-    final_payoff = 1.053429735573995
+    mylambda = 1
+    final_payoff = 1.1363456471017066
     
     results = {}
 
@@ -514,6 +522,17 @@ def trainplots():
     errors10 = [0, 0.23230668414154654, 0.22866839043309634, 0.30346631785480704, 0.24886141834743009, 0.4550653594771242, 0.4550653594771242]
     payoffs10 = [0, 1.004525986978824, 0.9979098447629909, 0.9976697759933637, 0.9982853407607597, 1.053429735573995, 1.053429735573995]
     norms10 = [0, 0.22778069716272253, 0.23075854567010545, 0.30579654186144345, 0.25057607758667033, 0.4016356239031291, 0.4016356239031291]
+
+    mylambda11 = 1
+    numalphas11 = 10
+    precisions11 = [0.5126791620727673, 0.5029154518950437, 0.4959617110379898, 0.4959617110379898]
+    recalls11 = [0.6066536203522505, 0.5653883972468043, 0.5397135416666666, 0.5397135416666666]
+    f1scores11 = [0.5557215416791156, 0.5323252584477705, 0.5169134840218238, 0.5169134840218238]
+    tprs11 = [0.6066536203522505, 0.5653883972468043, 0.5397135416666666, 0.5397135416666666]
+    fprs11 = [0.181631395109924, 0.17488973228023388, 0.17321134868421054, 0.17321134868421054]
+    errors11 = [0, 0.43461160275319566, 0.46028645833333337, 0.46028645833333337]
+    payoffs11 = [0, 1.179715160662358, 1.1363456471017066, 1.1363456471017066]
+    norms11 = [0, 0.2548964420908377, 0.3239408112316269, 0.3239408112316269]
     
     iterationnum = range(0,11)
     
@@ -526,6 +545,8 @@ def trainplots():
     plt.plot(iterationnum[0:len(precisions7)],precisions7, label=str(mylambda7)+','+str(numalphas7))
     plt.plot(iterationnum[0:len(precisions8)],precisions8, label=str(mylambda8)+','+str(numalphas8))
     plt.plot(iterationnum[0:len(precisions9)],precisions9, label=str(mylambda9)+','+str(numalphas9))
+    plt.plot(iterationnum[0:len(precisions10)],precisions10, label=str(mylambda10)+','+str(numalphas10))
+    plt.plot(iterationnum[0:len(precisions11)],precisions11, label=str(mylambda11)+','+str(numalphas11))
     title('Training Precisions')
     xlabel('Iteration')
     ylabel('Precision')
@@ -545,6 +566,8 @@ def trainplots():
     plt.plot(iterationnum[0:len(recalls7)],recalls7, label=str(mylambda7)+','+str(numalphas7))
     plt.plot(iterationnum[0:len(recalls8)],recalls8, label=str(mylambda8)+','+str(numalphas8))
     plt.plot(iterationnum[0:len(recalls9)],recalls9, label=str(mylambda9)+','+str(numalphas9))
+    plt.plot(iterationnum[0:len(recalls10)],recalls10, label=str(mylambda10)+','+str(numalphas10))
+    plt.plot(iterationnum[0:len(recalls11)],recalls11, label=str(mylambda11)+','+str(numalphas11))
     title('Training Recalls')
     xlabel('Iteration')
     ylabel('Recall')
@@ -561,6 +584,8 @@ def trainplots():
     plt.plot(iterationnum[0:len(f1scores7)],f1scores7, label=str(mylambda7)+','+str(numalphas7))
     plt.plot(iterationnum[0:len(f1scores8)],f1scores8, label=str(mylambda8)+','+str(numalphas8))
     plt.plot(iterationnum[0:len(f1scores9)],f1scores9, label=str(mylambda9)+','+str(numalphas9))
+    plt.plot(iterationnum[0:len(f1scores10)],f1scores10, label=str(mylambda10)+','+str(numalphas10))
+    plt.plot(iterationnum[0:len(f1scores11)],f1scores11, label=str(mylambda11)+','+str(numalphas11))
     title('Training F1Scores')
     xlabel('Iteration')
     ylabel('F1Score')
@@ -577,6 +602,8 @@ def trainplots():
     plt.plot(iterationnum[0:len(tprs7)],tprs7, label=str(mylambda7)+','+str(numalphas7))
     plt.plot(iterationnum[0:len(tprs8)],tprs8, label=str(mylambda8)+','+str(numalphas8))
     plt.plot(iterationnum[0:len(tprs9)],tprs9, label=str(mylambda9)+','+str(numalphas9))
+    plt.plot(iterationnum[0:len(tprs10)],tprs10, label=str(mylambda10)+','+str(numalphas10))
+    plt.plot(iterationnum[0:len(tprs11)],tprs11, label=str(mylambda11)+','+str(numalphas11))
     title('Training TPRs')
     xlabel('Iteration')
     ylabel('TPR')
@@ -594,6 +621,8 @@ def trainplots():
     plt.plot(iterationnum[0:len(fprs7)],fprs7, label=str(mylambda7)+','+str(numalphas7))
     plt.plot(iterationnum[0:len(fprs8)],fprs8, label=str(mylambda8)+','+str(numalphas8))
     plt.plot(iterationnum[0:len(fprs9)],fprs9, label=str(mylambda9)+','+str(numalphas9))
+    plt.plot(iterationnum[0:len(fprs10)],fprs10, label=str(mylambda10)+','+str(numalphas10))
+    plt.plot(iterationnum[0:len(fprs11)],fprs11, label=str(mylambda11)+','+str(numalphas11))
     title('Training FPRs')
     xlabel('Iteration')
     ylabel('FPR')
@@ -611,6 +640,8 @@ def trainplots():
     plt.plot(iterationnum[0:len(errors7)],errors7, label=str(mylambda7)+','+str(numalphas7))
     plt.plot(iterationnum[0:len(errors8)],errors8, label=str(mylambda8)+','+str(numalphas8))
     plt.plot(iterationnum[0:len(errors9)],errors9, label=str(mylambda9)+','+str(numalphas9))
+    plt.plot(iterationnum[0:len(errors10)],errors10, label=str(mylambda10)+','+str(numalphas10))
+    plt.plot(iterationnum[0:len(errors11)],errors11, label=str(mylambda11)+','+str(numalphas11))
     title('Training Errors')
     xlabel('Iteration')
     ylabel('Error')
@@ -628,6 +659,8 @@ def trainplots():
     plt.plot(iterationnum[0:len(payoffs7)],payoffs7, label=str(mylambda7)+','+str(numalphas7))
     plt.plot(iterationnum[0:len(payoffs8)],payoffs8, label=str(mylambda8)+','+str(numalphas8))
     plt.plot(iterationnum[0:len(payoffs9)],payoffs9, label=str(mylambda9)+','+str(numalphas9))
+    plt.plot(iterationnum[0:len(payoffs10)],payoffs10, label=str(mylambda10)+','+str(numalphas10))
+    plt.plot(iterationnum[0:len(payoffs11)],payoffs11, label=str(mylambda11)+','+str(numalphas11))
     title('Training Payoffs')
     xlabel('Iteration')
     ylabel('Payoff')
@@ -645,6 +678,8 @@ def trainplots():
     plt.plot(iterationnum[0:len(norms7)],norms7, label=str(mylambda7)+','+str(numalphas7))
     plt.plot(iterationnum[0:len(norms8)],norms8, label=str(mylambda8)+','+str(numalphas8))
     plt.plot(iterationnum[0:len(norms9)],norms9, label=str(mylambda9)+','+str(numalphas9))
+    plt.plot(iterationnum[0:len(norms10)],norms10, label=str(mylambda10)+','+str(numalphas10))
+    plt.plot(iterationnum[0:len(norms11)],norms11, label=str(mylambda11)+','+str(numalphas11))
     title('Training Norms')
     xlabel('Iteration')
     ylabel('Norm')
@@ -721,6 +756,8 @@ def ttest():
     record = {'testing error on original training data and original testing data': {'recall': 0.841948310139165, 'error': 0, 'precision': 0.38552571688666365, 'tpr': 0.841948310139165, 'fpr': 0.11446498219433611, 'f1score': 0.528879175772713, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8381046396841066, 'error': 5.702614379084967, 'precision': 0.49018475750577367, 'tpr': 0.8381046396841066, 'fpr': 0.0749130397895987, 'f1score': 0.6185792349726776, 'norm': 0.6451898086495547, 'payoff': 6.057424570435412}, 'training error on original training data and original testing data': {'recall': 0.5872656755009696, 'error': 0, 'precision': 0.5169274537695591, 'tpr': 0.5872656755009696, 'fpr': 0.17494333402019369, 'f1score': 0.5498562566197609, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8442703232125367, 'error': 5.702614379084967, 'precision': 0.42631058358061324, 'tpr': 0.8442703232125367, 'fpr': 0.09848034637914933, 'f1score': 0.5665461715412422, 'norm': 0.6451898086495547, 'payoff': 6.057424570435412}}
     records.append(record)
     record = {'testing error on original training data and original testing data': {'recall': 0.8214285714285714, 'error': 0, 'precision': 0.3376984126984127, 'tpr': 0.8214285714285714, 'fpr': 0.14187351241074464, 'f1score': 0.47862767154105734, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8501945525291829, 'error': 0.4550653594771242, 'precision': 0.4932279909706546, 'tpr': 0.8501945525291829, 'fpr': 0.07628270472307169, 'f1score': 0.6242857142857143, 'norm': 0.4016356239031291, 'payoff': 1.053429735573995}, 'training error on original training data and original testing data': {'recall': 0.6139717940308298, 'error': 0, 'precision': 0.5124555160142349, 'tpr': 0.6139717940308298, 'fpr': 0.18264793354527742, 'f1score': 0.55863921217547, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.7573385518590998, 'error': 0.4550653594771242, 'precision': 0.1712768311573357, 'tpr': 0.7573385518590998, 'fpr': 0.31796569876040076, 'f1score': 0.2793719545208446, 'norm': 0.4016356239031291, 'payoff': 1.053429735573995}}
+    records.append(record)
+    record = {'testing error on original training data and original testing data': {'recall': 0.8287937743190662, 'error': 0, 'precision': 0.3459196102314251, 'tpr': 0.8287937743190662, 'fpr': 0.13685015290519878, 'f1score': 0.48811228874248064, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8526829268292683, 'error': 0.46028645833333337, 'precision': 0.4810126582278481, 'tpr': 0.8526829268292683, 'fpr': 0.08008492569002124, 'f1score': 0.6150598170302604, 'norm': 0.3239408112316269, 'payoff': 1.1363456471017066}, 'training error on original training data and original testing data': {'recall': 0.6066536203522505, 'error': 0, 'precision': 0.5126791620727673, 'tpr': 0.6066536203522505, 'fpr': 0.181631395109924, 'f1score': 0.5557215416791156, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.81648675171737, 'error': 0.46028645833333337, 'precision': 0.2798520013454423, 'tpr': 0.81648675171737, 'fpr': 0.1817332993803582, 'f1score': 0.4168336673346693, 'norm': 0.3239408112316269, 'payoff': 1.1363456471017066}}
     records.append(record)
 
     l1 = []

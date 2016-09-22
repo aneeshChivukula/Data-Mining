@@ -688,7 +688,7 @@ def trainplots():
 #     plt.show()
 
 
-    print('Successfully saved all plots')
+    print('Successfully saved all plots one at a time')
 
 
 

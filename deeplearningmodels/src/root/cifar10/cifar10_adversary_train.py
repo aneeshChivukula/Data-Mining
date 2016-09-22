@@ -40,23 +40,43 @@ tf.app.flags.DEFINE_integer('high', 255,
                             """Upper limit for pixel value.""")
 tf.app.flags.DEFINE_integer('dividend', 1,
                             """Factor to control the GA norm initialization boundaries.""")
-tf.app.flags.DEFINE_integer('steplow', -50,
+# tf.app.flags.DEFINE_integer('steplow', -50,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 50,
+#                             """Small step limit for mutation operator.""")
+
+tf.app.flags.DEFINE_integer('steplow', -5,
                             """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('stephigh', 50,
+tf.app.flags.DEFINE_integer('stephigh', +5,
                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -10,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 10,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -20,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 20,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -100,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 100,
+#                             """Small step limit for mutation operator.""")
+
+
+
 tf.app.flags.DEFINE_integer('max_iter_test', 100,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
 # tf.app.flags.DEFINE_integer('numalphas', 2,
 #                             """Number of search solutions in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('numalphas', 10,
-                            """Number of search solutions in the GA algorithm.""")
+# tf.app.flags.DEFINE_integer('numalphas', 10,
+#                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 20,
 #                             """Number of search solutions in the GA algorithm.""")
 # Next experiment : #
 # tf.app.flags.DEFINE_integer('numalphas', 50,
 #                             """Number of search solutions in the GA algorithm.""")
-# tf.app.flags.DEFINE_integer('numalphas', 100,
-#                             """Number of search solutions in the GA algorithm.""")
+tf.app.flags.DEFINE_integer('numalphas', 100,
+                            """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numgens', 10,
 #                             """Number of generations in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numgens', 20,
@@ -71,12 +91,12 @@ tf.app.flags.DEFINE_integer('myepsilon', 0.0001,
 #                             """Parameter determining game iterations.""")
 # tf.app.flags.DEFINE_integer('mylambda', 20,
 #                             """Parameter determining weight of the error term in fitness function.""")
-# tf.app.flags.DEFINE_integer('mylambda', 10, # Use this for mylambda
-#                             """Parameter determining weight of the error term in fitness function.""")
+tf.app.flags.DEFINE_integer('mylambda', 10, # Use this for mylambda
+                            """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 5,
 #                             """Parameter determining weight of the error term in fitness function.""")
-tf.app.flags.DEFINE_integer('mylambda', 1,
-                            """Parameter determining weight of the error term in fitness function.""")
+# tf.app.flags.DEFINE_integer('mylambda', 1,
+#                             """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 0.5,
 #                             """Parameter determining weight of the error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('mylambda', 0.2,

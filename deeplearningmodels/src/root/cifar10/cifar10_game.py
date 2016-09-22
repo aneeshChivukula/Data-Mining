@@ -179,15 +179,15 @@ def main(argv=None):
 #         (alphaspopulation,imagespopulation) = cifar10_adversary_train.adversary_train_genetic(InDir,WeightsDir)
             
         
-        adv_payoff = bestalpha.fitness.weights[0]
-        error = bestalpha.fitness.error
+        adv_payoff = round(bestalpha.fitness.weights[0],FLAGS.numdecimalplaces)
+        error = round(bestalpha.fitness.error,FLAGS.numdecimalplaces)
         
         perfmetrics = {}
-        perfmetrics['precision'] = bestalpha.fitness.precision
-        perfmetrics['recall'] = bestalpha.fitness.recall
-        perfmetrics['f1score'] = bestalpha.fitness.f1score
-        perfmetrics['tpr'] = bestalpha.fitness.tpr
-        perfmetrics['fpr'] = bestalpha.fitness.fpr
+        perfmetrics['precision'] = round(bestalpha.fitness.precision,FLAGS.numdecimalplaces)
+        perfmetrics['recall'] = round(bestalpha.fitness.recall,FLAGS.numdecimalplaces)
+        perfmetrics['f1score'] = round(bestalpha.fitness.f1score,FLAGS.numdecimalplaces)
+        perfmetrics['tpr'] = round(bestalpha.fitness.tpr,FLAGS.numdecimalplaces)
+        perfmetrics['fpr'] = round(bestalpha.fitness.fpr,FLAGS.numdecimalplaces)
         perf = perfmetrics[str(perfmetric)]
 
         print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
@@ -284,8 +284,8 @@ def main(argv=None):
     tf.gfile.MakeDirs(EvalDir)
     perfmetrics = cifar10_eval.evaluate()
     perf = perfmetrics[str(perfmetric)]
-    error = alphastar.fitness.error
-    adv_payoff = alphastar.fitness.weights[0]
+    error = round(alphastar.fitness.error,FLAGS.numdecimalplaces)
+    adv_payoff = round(alphastar.fitness.weights[0],FLAGS.numdecimalplaces)
 
 #     precision = cifar10_eval.evaluate()
 #     distortedimages = []

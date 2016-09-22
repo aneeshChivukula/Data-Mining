@@ -556,7 +556,7 @@ def trainplots():
     plt.legend()
     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingPrecisions.png")
 #     plt.show()
-
+ 
     plt.plot(iterationnum[0:len(recalls1)],recalls1, label=str(mylambda1)+','+str(numalphas1))
     plt.plot(iterationnum[0:len(recalls2)],recalls2, label=str(mylambda2)+','+str(numalphas2))
     plt.plot(iterationnum[0:len(recalls3)],recalls3, label=str(mylambda3)+','+str(numalphas3))
@@ -574,7 +574,7 @@ def trainplots():
     plt.legend()
     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingRecalls.png")
 #     plt.show()
-    
+      
     plt.plot(iterationnum[0:len(f1scores1)],f1scores1, label=str(mylambda1)+','+str(numalphas1))
     plt.plot(iterationnum[0:len(f1scores2)],f1scores2, label=str(mylambda2)+','+str(numalphas2))
     plt.plot(iterationnum[0:len(f1scores3)],f1scores3, label=str(mylambda3)+','+str(numalphas3))
@@ -592,7 +592,7 @@ def trainplots():
     plt.legend()
     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingF1Scores.png")
 #     plt.show()
-
+  
     plt.plot(iterationnum[0:len(tprs1)],tprs1, label=str(mylambda1)+','+str(numalphas1))
     plt.plot(iterationnum[0:len(tprs2)],tprs2, label=str(mylambda2)+','+str(numalphas2))
     plt.plot(iterationnum[0:len(tprs3)],tprs3, label=str(mylambda3)+','+str(numalphas3))
@@ -610,8 +610,8 @@ def trainplots():
     plt.legend()
     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingTPRs.png")
 #     plt.show()
-
-
+  
+   
     plt.plot(iterationnum[0:len(fprs1)],fprs1, label=str(mylambda1)+','+str(numalphas1))
     plt.plot(iterationnum[0:len(fprs2)],fprs2, label=str(mylambda2)+','+str(numalphas2))
     plt.plot(iterationnum[0:len(fprs3)],fprs3, label=str(mylambda3)+','+str(numalphas3))
@@ -629,8 +629,8 @@ def trainplots():
     plt.legend()
     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingFPRs.png")
 #     plt.show()
-
-
+  
+  
     plt.plot(iterationnum[0:len(errors1)],errors1, label=str(mylambda1)+','+str(numalphas1))
     plt.plot(iterationnum[0:len(errors2)],errors2, label=str(mylambda2)+','+str(numalphas2))
     plt.plot(iterationnum[0:len(errors3)],errors3, label=str(mylambda3)+','+str(numalphas3))
@@ -648,8 +648,8 @@ def trainplots():
     plt.legend()
     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingErrors.png")
 #     plt.show()
-
-
+  
+  
     plt.plot(iterationnum[0:len(payoffs1)],payoffs1, label=str(mylambda1)+','+str(numalphas1))
     plt.plot(iterationnum[0:len(payoffs2)],payoffs2, label=str(mylambda2)+','+str(numalphas2))
     plt.plot(iterationnum[0:len(payoffs3)],payoffs3, label=str(mylambda3)+','+str(numalphas3))
@@ -667,8 +667,8 @@ def trainplots():
     plt.legend()
     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingPayoffs.png")
 #     plt.show()
-
-
+  
+  
     plt.plot(iterationnum[0:len(norms1)],norms1, label=str(mylambda1)+','+str(numalphas1))
     plt.plot(iterationnum[0:len(norms2)],norms2, label=str(mylambda2)+','+str(numalphas2))
     plt.plot(iterationnum[0:len(norms3)],norms3, label=str(mylambda3)+','+str(numalphas3))
@@ -829,5 +829,5 @@ if __name__ == '__main__':
 #     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')    generatereports()
 
 #     generatereports()
-#     trainplots()
-    ttest()
+    trainplots()
+#     ttest()

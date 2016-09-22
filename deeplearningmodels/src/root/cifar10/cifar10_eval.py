@@ -71,6 +71,8 @@ tf.app.flags.DEFINE_boolean('run_once', True,
                          """Whether to run eval only once.""")
 tf.app.flags.DEFINE_boolean('max_iter_eval', 100,
                          """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
+tf.app.flags.DEFINE_boolean('numdecimalplaces', 4,
+                         """Number of decimal places to retain in the performance metrics.""")
 
 
 def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,logits,labels):
@@ -181,11 +183,11 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
       tpr = float(true_positives_count) / float(true_positives_count+false_negatives_count)
       fpr = float(false_positives_count) / float(false_positives_count+true_negatives_count)
       
-      perfmetrics['precision'] = precision
-      perfmetrics['recall'] = recall
-      perfmetrics['f1score'] = f1score
-      perfmetrics['tpr'] = tpr
-      perfmetrics['fpr'] = fpr
+      perfmetrics['precision'] = round(precision,FLAGS.numdecimalplaces)
+      perfmetrics['recall'] = round(recall,FLAGS.numdecimalplaces)
+      perfmetrics['f1score'] = round(f1score,FLAGS.numdecimalplaces)
+      perfmetrics['tpr'] = round(tpr,FLAGS.numdecimalplaces)
+      perfmetrics['fpr'] = round(fpr,FLAGS.numdecimalplaces)
       
 #       print('logits',sess.run(logits))
 #       print('labels',sess.run(labels))

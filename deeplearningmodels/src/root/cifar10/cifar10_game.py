@@ -188,17 +188,17 @@ def main(argv=None):
         perfmetrics['f1score'] = round(bestalpha.fitness.f1score,FLAGS.numdecimalplaces)
         perfmetrics['tpr'] = round(bestalpha.fitness.tpr,FLAGS.numdecimalplaces)
         perfmetrics['fpr'] = round(bestalpha.fitness.fpr,FLAGS.numdecimalplaces)
-        perf = perfmetrics[str(perfmetric)]
+        perf = round(perfmetrics[str(perfmetric)],FLAGS.numdecimalplaces)
 
         print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
-        finalresults.append((adv_payoff, error,1+error-adv_payoff, perf, perfmetrics, gen))
+        finalresults.append((adv_payoff, error,round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
         print('finalresults',finalresults)
         pickle.dump(finalresults,fp1)
         if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
             adv_payoff_highest = adv_payoff
 
-            selectedoffspring = toolbox.select(alphaspopulation)
-            parents = cifar10_adversary_train.copyindividuals(selectedoffspring,toolbox)
+            parents,selectedoffspring = toolbox.select(alphaspopulation)
+#             parents = cifar10_adversary_train.copyindividuals(selectedparents,toolbox)
             offspring = cifar10_adversary_train.copyindividuals(selectedoffspring,toolbox)
 
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
@@ -283,7 +283,7 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     perfmetrics = cifar10_eval.evaluate()
-    perf = perfmetrics[str(perfmetric)]
+    perf = round(perfmetrics[str(perfmetric)],FLAGS.numdecimalplaces)
     error = round(alphastar.fitness.error,FLAGS.numdecimalplaces)
     adv_payoff = round(alphastar.fitness.weights[0],FLAGS.numdecimalplaces)
 
@@ -293,7 +293,7 @@ def main(argv=None):
 #         distortedimages.append((cifar10_adversary_train.distorted_image(x[1],bestalpha),x[0]))
 #     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
     print('final manipulated testing data precision of cifar10_eval with alphastar on manipulated training data',perf)
-    finalresults.append((adv_payoff, error, 1+error-adv_payoff, perf, perfmetrics, gen))
+    finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
 
 #     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
 #     createdataset.binarizer(InDir,'TrainSplit/','train.bin')
@@ -313,19 +313,24 @@ def main(argv=None):
       tf.gfile.DeleteRecursively(EvalDir)
     tf.gfile.MakeDirs(EvalDir)
     perfmetrics = cifar10_eval.evaluate()
-    perf = perfmetrics[str(perfmetric)]
-    error = alphastar.fitness.error
-    adv_payoff = alphastar.fitness.weights[0]
+    perf = round(perfmetrics[str(perfmetric)],FLAGS.numdecimalplaces)
+    error = round(alphastar.fitness.error,FLAGS.numdecimalplaces)
+    adv_payoff = round(alphastar.fitness.weights[0],FLAGS.numdecimalplaces)
 #     precision = cifar10_eval.evaluate()
 #     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
     print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',perf)
-    finalresults.append((adv_payoff, error, 1+error-adv_payoff, perf, perfmetrics, gen))
+    finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
 
 
     print('bestalpha',alphastar)
     print('bestalpha.fitness.weights[0]',alphastar.fitness.weights[0])
     print('adv_payoff_highest',adv_payoff_highest)
     print('gen',gen)
+    print('FLAGS.steplow',FLAGS.steplow)
+    print('FLAGS.stephigh',FLAGS.stephigh)
+    print('FLAGS.minwidthstartidx',FLAGS.minwidthstartidx)
+    print('FLAGS.minwidthenddx',FLAGS.minwidthenddx)
+    print('FLAGS.offspringsizefactor',FLAGS.offspringsizefactor)
     print('FLAGS.numgens',FLAGS.numgens)
     print('FLAGS.numalphas',FLAGS.numalphas)
     print('FLAGS.myepsilon',FLAGS.myepsilon)

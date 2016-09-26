@@ -40,28 +40,66 @@ tf.app.flags.DEFINE_integer('high', 255,
                             """Upper limit for pixel value.""")
 tf.app.flags.DEFINE_integer('dividend', 1,
                             """Factor to control the GA norm initialization boundaries.""")
-# tf.app.flags.DEFINE_integer('steplow', -50,
-#                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('stephigh', 50,
-#                             """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('steplow', -50,
+                            """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('stephigh', 50,
+                            """Small step limit for mutation operator.""")
 
-tf.app.flags.DEFINE_integer('steplow', -5,
-                            """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('stephigh', +5,
-                            """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -5,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', +5,
+#                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('steplow', -10,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', 10,
 #                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('steplow', -20,
+# tf.app.flags.DEFINE_integer('steplow', -80,
 #                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('stephigh', 20,
+# tf.app.flags.DEFINE_integer('stephigh', 80,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -70,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 70,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('steplow', -100,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', 100,
 #                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -200,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 200,
+#                             """Small step limit for mutation operator.""")
 
+tf.app.flags.DEFINE_integer('minwidthstartidx', 2,
+                            """Minimum window width start idx for the crossover op.""")
+# tf.app.flags.DEFINE_integer('minwidthstartidx', 3,
+#                             """Minimum window width start idx for the crossover op.""")
+# tf.app.flags.DEFINE_integer('minwidthstartidx', 4,
+#                             """Minimum window width start idx for the crossover op.""")
+# tf.app.flags.DEFINE_integer('minwidthstartidx', 5,
+#                             """Minimum window width start idx for the crossover op.""")
+# tf.app.flags.DEFINE_integer('minwidthstartidx', 6,
+#                             """Minimum window width start idx for the crossover op.""")
+# tf.app.flags.DEFINE_integer('minwidthstartidx', 7,
+#                             """Minimum window width start idx for the crossover op.""")
+# tf.app.flags.DEFINE_integer('minwidthstartidx', 8,
+#                             """Minimum window width start idx for the crossover op.""")
+# tf.app.flags.DEFINE_integer('minwidthstartidx', 9,
+#                             """Minimum window width start idx for the crossover op.""")
+tf.app.flags.DEFINE_integer('minwidthenddx', 10,
+                            """Minimum window width end idx for the crossover op.""")
+tf.app.flags.DEFINE_integer('offspringsizefactor', 100/20,
+                            """offspring size varying from 20% to 80% (increment by 10%)""")
+# tf.app.flags.DEFINE_integer('offspringsizefactor', 100/30,
+#                             """offspring size varying from 20% to 80% (increment by 10%)""")
+# tf.app.flags.DEFINE_integer('offspringsizefactor', 100/40,
+#                             """offspring size varying from 20% to 80% (increment by 10%)""")
+# tf.app.flags.DEFINE_integer('offspringsizefactor', 100/60,
+#                             """offspring size varying from 20% to 80% (increment by 10%)""")
+# tf.app.flags.DEFINE_integer('offspringsizefactor', 100/70,
+#                             """offspring size varying from 20% to 80% (increment by 10%)""")
+# tf.app.flags.DEFINE_integer('offspringsizefactor', 100/80,
+#                             """offspring size varying from 20% to 80% (increment by 10%)""")
 
 
 tf.app.flags.DEFINE_integer('max_iter_test', 100,
@@ -448,8 +486,17 @@ def select(population):
 #         pr = np.round(np.divide(np.subtract(fitnesses, min(fitnesses)),max(fitnesses) - min(fitnesses)),2)
 #     print('np.round(np.divide(fitnesses,sum(fitnesses)),2)',np.round(np.divide(fitnesses,sum(fitnesses)),2))
     
-    randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=False,p= fitnesses / np.linalg.norm(fitnesses,1))
+#     randompopindices = np.random.choice(a=popindices,size=int(popsize/2),replace=False,p= fitnesses / np.linalg.norm(fitnesses,1))
+    randompopindices = np.random.choice(a=popindices,size=int(popsize/FLAGS.offspringsizefactor),replace=False,p= fitnesses / np.linalg.norm(fitnesses,1))
     
+    selectedparents = []
+    selectedoffspring = []
+    for i,p in enumerate(population):
+        if i in randompopindices:
+            selectedoffspring.append(p)
+        else:
+            selectedparents.append(p)
+    return selectedparents,selectedoffspring
 #     print('popindices',popindices)
 #     print('randompopindices',randompopindices)
 #     print('fitnesses / np.linalg.norm(fitnesses,1)',fitnesses / np.linalg.norm(fitnesses,1))
@@ -460,7 +507,7 @@ def select(population):
     
 #     L = [population[i] for i in randompopindices]
 #     return ([population[i] for i in randompopindices],[population[i] for i in popindices if i not in randompopindices])
-    return [population[i] for i in randompopindices]
+#     return [population[i] for i in randompopindices]
 #     return L
 
 def mutation(individual):
@@ -478,10 +525,10 @@ def crossover(individual1,individual2):
     np.random.seed(current_milli_time())
 
     heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
-    heightendind = np.random.randint(heightstartind + np.random.randint(2,10),32)
+    heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
 
     widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
-    widthendind = np.random.randint(widthstartind + np.random.randint(2,10),32)
+    widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
     
     before1 = np.copy(individual1[0])
     before2 = np.copy(individual2[0])

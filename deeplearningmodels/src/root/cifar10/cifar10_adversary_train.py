@@ -49,17 +49,37 @@ tf.app.flags.DEFINE_integer('stephigh', 50,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', +5,
 #                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('steplow', -10,
+tf.app.flags.DEFINE_integer('steplow', -10,
+                            """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('stephigh', 10,
+                            """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -20,
 #                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('stephigh', 10,
+# tf.app.flags.DEFINE_integer('stephigh', 20,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -30,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 30,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -40,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 40,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -60,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 60,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -70,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 70,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('steplow', -80,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', 80,
 #                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('steplow', -70,
+# tf.app.flags.DEFINE_integer('steplow', -90,
 #                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('stephigh', 70,
+# tf.app.flags.DEFINE_integer('stephigh', 90,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('steplow', -100,
 #                             """Small step limit for mutation operator.""")
@@ -88,12 +108,14 @@ tf.app.flags.DEFINE_integer('minwidthstartidx', 2,
 #                             """Minimum window width start idx for the crossover op.""")
 tf.app.flags.DEFINE_integer('minwidthenddx', 10,
                             """Minimum window width end idx for the crossover op.""")
-tf.app.flags.DEFINE_integer('offspringsizefactor', 100/20,
-                            """offspring size varying from 20% to 80% (increment by 10%)""")
+# tf.app.flags.DEFINE_integer('offspringsizefactor', 100/20,
+#                             """offspring size varying from 20% to 80% (increment by 10%)""")
 # tf.app.flags.DEFINE_integer('offspringsizefactor', 100/30,
 #                             """offspring size varying from 20% to 80% (increment by 10%)""")
 # tf.app.flags.DEFINE_integer('offspringsizefactor', 100/40,
 #                             """offspring size varying from 20% to 80% (increment by 10%)""")
+tf.app.flags.DEFINE_integer('offspringsizefactor', 100/50,
+                            """offspring size varying from 20% to 80% (increment by 10%)""")
 # tf.app.flags.DEFINE_integer('offspringsizefactor', 100/60,
 #                             """offspring size varying from 20% to 80% (increment by 10%)""")
 # tf.app.flags.DEFINE_integer('offspringsizefactor', 100/70,

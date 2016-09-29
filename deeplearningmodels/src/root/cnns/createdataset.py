@@ -696,13 +696,91 @@ def trainplots():
 
 
         
+def gaplots():
+#     mutationx = []
+#     mutationy = []
+#     
+#     mutationx.append(5)
+#     mutationy.append(0.3571)
+# 
+#     mutationx.append(20)
+#     mutationy.append(0.2815)
+# 
+#     mutationx.append(50)
+#     mutationy.append(0.2607)
+# 
+#     mutationx.append(80)
+#     mutationy.append(0.6241)
+# 
+#     mutationx.append(100)
+#     mutationy.append(0.4541)
+# 
+#     mutationx.append(200)
+#     mutationy.append(0.4123)
+# 
+#     plt.plot(mutationx,mutationy)
+#     title('Parameter Tuning : Mutation Operation')
+#     xlabel('Upper Bound for Mutation')
+#     ylabel('Manipulated testing f1score on manipulated training data')
+#     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/MutationParams.png")
+
+#     crossoverx = []
+#     crossovery = []
+#  
+#     crossoverx.append(2)
+#     crossovery.append(0.2607)
+#  
+#     crossoverx.append(3)
+#     crossovery.append(0.6202)
+#  
+#     crossoverx.append(4)
+#     crossovery.append(0.2084)
+#  
+#     crossoverx.append(6)
+#     crossovery.append(0.2735)
+#  
+#     crossoverx.append(8)
+#     crossovery.append(0.5463)
+# 
+#     plt.plot(crossoverx,crossovery)
+#     title('Parameter Tuning : Crossover Operation')
+#     xlabel('Minimum width for Crossover')
+#     ylabel('Manipulated testing f1score on manipulated training data')
+#     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/CrossoverParams.png")
 
 
 
 
+ 
+    selectionx = []
+    selectiony = []
+ 
+    selectionx.append(20)
+    selectiony.append(0.32)
+ 
+    selectionx.append(30)
+    selectiony.append(0.5542)
+     
+    selectionx.append(50)
+    selectiony.append(0.2607)
+ 
+    selectionx.append(60)
+    selectiony.append(0.5016)
+ 
+    selectionx.append(70)
+    selectiony.append(0.4137)
+ 
+    selectionx.append(80)
+    selectiony.append(0.2806)
+
+    plt.plot(selectionx,selectiony)
+    title('Parameter Tuning : Selection Operation')
+    xlabel('Percentage offspring size for Selection')
+    ylabel('Manipulated testing f1score on manipulated training data')
+    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/SelectionParams.png")
 
 
-
+    print('Successfully saved all plots one at a time')
 
 def ttest():
     records = []
@@ -829,5 +907,6 @@ if __name__ == '__main__':
 #     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')    generatereports()
 
 #     generatereports()
-    trainplots()
+#     trainplots()
 #     ttest()
+    gaplots()

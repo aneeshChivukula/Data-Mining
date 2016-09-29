@@ -40,10 +40,10 @@ tf.app.flags.DEFINE_integer('high', 255,
                             """Upper limit for pixel value.""")
 tf.app.flags.DEFINE_integer('dividend', 1,
                             """Factor to control the GA norm initialization boundaries.""")
-tf.app.flags.DEFINE_integer('steplow', -50,
-                            """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('stephigh', 50,
-                            """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -50,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 50,
+#                             """Small step limit for mutation operator.""")
 
 # tf.app.flags.DEFINE_integer('steplow', -5,
 #                             """Small step limit for mutation operator.""")

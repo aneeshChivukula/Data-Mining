@@ -554,7 +554,7 @@ def trainplots():
 #     plt.legend(loc=2)
 #     legend.get_frame().set_facecolor('#00FFCC')
     plt.legend()
-    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingPrecisions.png")
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingPrecisions.png")
 #     plt.show()
  
     plt.plot(iterationnum[0:len(recalls1)],recalls1, label=str(mylambda1)+','+str(numalphas1))
@@ -572,7 +572,7 @@ def trainplots():
     xlabel('Iteration')
     ylabel('Recall')
     plt.legend()
-    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingRecalls.png")
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingRecalls.png")
 #     plt.show()
       
     plt.plot(iterationnum[0:len(f1scores1)],f1scores1, label=str(mylambda1)+','+str(numalphas1))
@@ -590,7 +590,7 @@ def trainplots():
     xlabel('Iteration')
     ylabel('F1Score')
     plt.legend()
-    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingF1Scores.png")
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingF1Scores.png")
 #     plt.show()
   
     plt.plot(iterationnum[0:len(tprs1)],tprs1, label=str(mylambda1)+','+str(numalphas1))
@@ -608,7 +608,7 @@ def trainplots():
     xlabel('Iteration')
     ylabel('TPR')
     plt.legend()
-    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingTPRs.png")
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingTPRs.png")
 #     plt.show()
   
    
@@ -627,7 +627,7 @@ def trainplots():
     xlabel('Iteration')
     ylabel('FPR')
     plt.legend()
-    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingFPRs.png")
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingFPRs.png")
 #     plt.show()
   
   
@@ -646,7 +646,7 @@ def trainplots():
     xlabel('Iteration')
     ylabel('Error')
     plt.legend()
-    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingErrors.png")
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingErrors.png")
 #     plt.show()
   
   
@@ -665,7 +665,7 @@ def trainplots():
     xlabel('Iteration')
     ylabel('Payoff')
     plt.legend()
-    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingPayoffs.png")
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingPayoffs.png")
 #     plt.show()
   
   
@@ -684,7 +684,7 @@ def trainplots():
     xlabel('Iteration')
     ylabel('Norm')
     plt.legend()
-    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/TrainingNorms.png")
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingNorms.png")
 #     plt.show()
 
 
@@ -697,32 +697,70 @@ def trainplots():
 
         
 def gaplots():
-#     mutationx = []
-#     mutationy = []
-#     
-#     mutationx.append(5)
-#     mutationy.append(0.3571)
-# 
-#     mutationx.append(20)
-#     mutationy.append(0.2815)
-# 
-#     mutationx.append(50)
-#     mutationy.append(0.2607)
-# 
-#     mutationx.append(80)
-#     mutationy.append(0.6241)
-# 
-#     mutationx.append(100)
-#     mutationy.append(0.4541)
-# 
-#     mutationx.append(200)
-#     mutationy.append(0.4123)
-# 
-#     plt.plot(mutationx,mutationy)
-#     title('Parameter Tuning : Mutation Operation')
-#     xlabel('Upper Bound for Mutation')
-#     ylabel('Manipulated testing f1score on manipulated training data')
-#     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/MutationParams.png")
+    mutationx1 = []
+    mutationy1 = []
+      
+    mutationx1.append(5)
+    mutationy1.append(0.3571)
+ 
+    mutationx1.append(10)
+    mutationy1.append(0.2625)
+  
+    mutationx1.append(20)
+    mutationy1.append(0.2815)
+  
+    mutationx1.append(30)
+    mutationy1.append(0.2165)
+  
+    mutationx1.append(40)
+    mutationy1.append(0.2534)
+  
+    mutationx1.append(50)
+    mutationy1.append(0.2607)
+  
+    mutationx1.append(60)
+    mutationy1.append(0.4142)
+  
+    mutationx1.append(70)
+    mutationy1.append(0.3376)
+  
+    mutationx1.append(80)
+    mutationy1.append(0.4153)
+#     mutationx1.append(80)
+#     mutationy1.append(0.6241)
+  
+    mutationx1.append(90)
+    mutationy1.append(0.4951)
+  
+    mutationx1.append(100)
+    mutationy1.append(0.4541)
+  
+    mutationx1.append(200)
+    mutationy1.append(0.4123)
+  
+
+    mutationx2 = []
+    mutationy2 = []
+    mutationx2.append(5)
+    mutationy2.append(0.2551)
+
+#     mutationx3 = []
+#     mutationy3 = []
+#     mutationx3.append(5)
+#     mutationy3.append(0.0)
+    
+    plt.plot(mutationx1,mutationy1, label=str(10))
+    plt.plot(mutationx2,mutationy2, label=str(1))
+#     plt.plot(mutationx2,mutationy2, label=str(0.1))
+    title('Parameter Tuning : Mutation Operation')
+    xlabel('Upper Bound for Mutation')
+    ylabel('Manipulated testing f1score on manipulated training data')
+    plt.legend()
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/MutationParams.png")
+
+
+
+
 
 #     crossoverx = []
 #     crossovery = []
@@ -736,8 +774,14 @@ def gaplots():
 #     crossoverx.append(4)
 #     crossovery.append(0.2084)
 #  
+#     crossoverx.append(5)
+#     crossovery.append(0.241)
+#  
 #     crossoverx.append(6)
 #     crossovery.append(0.2735)
+#  
+#     crossoverx.append(7)
+#     crossovery.append(0.2489)
 #  
 #     crossoverx.append(8)
 #     crossovery.append(0.5463)
@@ -746,38 +790,41 @@ def gaplots():
 #     title('Parameter Tuning : Crossover Operation')
 #     xlabel('Minimum width for Crossover')
 #     ylabel('Manipulated testing f1score on manipulated training data')
-#     savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/CrossoverParams.png")
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/CrossoverParams.png")
 
 
 
 
  
-    selectionx = []
-    selectiony = []
- 
-    selectionx.append(20)
-    selectiony.append(0.32)
- 
-    selectionx.append(30)
-    selectiony.append(0.5542)
-     
-    selectionx.append(50)
-    selectiony.append(0.2607)
- 
-    selectionx.append(60)
-    selectiony.append(0.5016)
- 
-    selectionx.append(70)
-    selectiony.append(0.4137)
- 
-    selectionx.append(80)
-    selectiony.append(0.2806)
-
-    plt.plot(selectionx,selectiony)
-    title('Parameter Tuning : Selection Operation')
-    xlabel('Percentage offspring size for Selection')
-    ylabel('Manipulated testing f1score on manipulated training data')
-    savefig("/home/aneesh/Documents/AAAI Paper/AAAI/images/SelectionParams.png")
+#     selectionx = []
+#     selectiony = []
+#   
+#     selectionx.append(20)
+#     selectiony.append(0.32)
+#   
+#     selectionx.append(30)
+#     selectiony.append(0.5542)
+#       
+#     selectionx.append(40)
+#     selectiony.append(0.2459)
+# 
+#     selectionx.append(50)
+#     selectiony.append(0.2607)
+#   
+#     selectionx.append(60)
+#     selectiony.append(0.5016)
+#   
+#     selectionx.append(70)
+#     selectiony.append(0.4137)
+#   
+#     selectionx.append(80)
+#     selectiony.append(0.2806)
+#  
+#     plt.plot(selectionx,selectiony)
+#     title('Parameter Tuning : Selection Operation')
+#     xlabel('Percentage offspring size for Selection')
+#     ylabel('Manipulated testing f1score on manipulated training data')
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png")
 
 
     print('Successfully saved all plots one at a time')

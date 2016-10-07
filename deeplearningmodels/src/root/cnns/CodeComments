@@ -2594,4 +2594,94 @@ http://matplotlib.org/examples/api/legend_demo.html#api-legend-demo
 http://matplotlib.org/examples/pylab_examples/scatter_symbol.html#pylab-examples-scatter-symbol
 
 
+
+Server permissions :
+
+[achivuku@vulcan1 cifar10]$ chmod -R 755 ~/Documents/AdversarialLearningDatasets/ILSVRC2010/
+
+permissions to delete the files and directories from inside python script
+group does not have write permissions on file
+not put dirs in home but scratch or tmp
+
+
+Server parameters :
+
+executeonserver = True
+
+cifar_game
+
+WeightsDir = '/scratch/cifar10/cifar10_output'
+AdvInDir = '/scratch/cifar10/AdversarialSplit/'
+GameInDir = '/scratch/cifar10/cifar10_data/imagenet2010-batches-bin/'
+EvalDir = '/scratch/cifar10/cifar10_eval'
+TrainWeightsDir = '/scratch/cifar10/cifar10_train'
+CheckpointsDir = '/scratch/cifar10/cifar10_train'
+InitialCheckpointsDir = '/scratch/cifar10/cifar10_train_initial'
+
+StdoutFile = '/scratch/cifar10/cifar10_train/Stdout.txt'
+AlphasFile = '/scratch/cifar10/cifar10_train/alphas.pkl'
+
+cifar10
+'data_dir', '/scratch/cifar10/cifar10_data'
+'out_dir', '/scratch/cifar10/cifar10_output'
+
+cifar10_train
+'train_dir', '/scratch/cifar10/cifar10_train'
+
+cifar10_eval
+'eval_dir', '/scratch/cifar10/cifar10_eval'
+'checkpoint_dir', '/scratch/cifar10/cifar10_train'
+
+cifar10_adversary_train
+'adv_train_dir', '/scratch/cifar10/cifar10_adversary_train'
+StdoutFile = '/scratch/cifar10/cifar10_train/StdoutGeneticOps.txt'
+
+
+In directory deeplearningmodels, 
+grep -rl 'aneesh' ./ | xargs sed -i 's/aneesh/achivuku/g'
+grep -rl '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010' ./ | xargs sed -i 's/\/home\/aneesh\/Documents\/AdversarialLearningDatasets\/ILSVRC2010/\/scratch\/cifar10/g'
+grep -rl '/home/achivuku/Documents/AdversarialLearningDatasets/ILSVRC2010' ./ | xargs sed -i 's/\/home\/achivuku\/Documents\/AdversarialLearningDatasets\/ILSVRC2010/\/scratch\/cifar10/g'
+
+
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_1/g'
+mkdir -p /scratch/cifar10/cifar10_data/imagenet2010-batches-bin
+mkdir /scratch/cifar10/cifar10_output
+mkdir /scratch/cifar10/cifar10_eval
+mkdir /scratch/cifar10/cifar10_train_initial
+mkdir -p /scratch/cifar10/cifar10_adversary_data/imagenet2010-batches-bin
+mkdir -p /scratch/cifar10/cifar10_adversary_data/AdversarySplit
+mkdir -p /scratch/cifar10/cifar10_adversary_train
+
+mkdir /scratch/cifar10_2
+cp -r /scratch/cifar10/* /scratch/cifar10_2/
+mkdir /home/achivuku/workspace/deeplearningmodels_6
+cp -r /home/achivuku/workspace/deeplearningmodels/* /home/achivuku/workspace/deeplearningmodels_2/
+
+
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_1/g'
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_2/g'
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_3/g'
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_4/g'
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_5/g'
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_6/g'
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_7/g'
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_8/g'
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_9/g'
+grep -rl '/scratch/cifar10/' ./ | xargs sed -i 's/\/scratch\/cifar10/\/scratch\/cifar10_10/g'
+
+
+
+[achivuku@vulcan1 cifar10]$ python cifar10_game.py
+cd /home/achivuku/workspace/deeplearningmodels_1/src/root/cifar10
+python cifar10_game.py > out.txt does not create output file until end of the process. Instead use following command to redicrect stdout.
+stdbuf -oL python cifar10_game.py > out.txt
+tail -F out.txt
+
+For multiple runs on server(five at a time), change directories in all files and copy code in different directories of workspace.
+Have 5-10 parallel processes running on same server at same time.
+HAve max 3 servers for max 30 processs.
+Complete 1 run correctly before putting 5-10 runs simultaneously.
+Run each job on separate tensorflow 0.9 cpu shell.
+According to server limits only 5 jobs can be executed at a time
+
 '''

@@ -66,10 +66,6 @@ def main(argv=None):
     CheckpointsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
     InitialCheckpointsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train_initial'
     
-    StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
-    AlphasFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphas.pkl'
-    fp1 = open(StdoutFile,'wb')
-    fp2 = open(AlphasFile,'wb')
 #     maxiters = 11
     LoopingFlag = True
 #     total_iters = 0
@@ -90,6 +86,12 @@ def main(argv=None):
     if tf.gfile.Exists(TrainWeightsDir):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
     tf.gfile.MakeDirs(TrainWeightsDir)
+
+    StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
+    AlphasFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphas.pkl'
+    fp1 = open(StdoutFile,'wb')
+    fp2 = open(AlphasFile,'wb')
+    
     cifar10_train.train()
     
     if(os.path.exists(InitialCheckpointsDir)):

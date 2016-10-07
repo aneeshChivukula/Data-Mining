@@ -18,7 +18,7 @@ from root.cifar10 import cifar10
 from root.cifar10 import cifar10_eval
 import tensorflow as tf
 import time
-import cv2
+# import cv2
 
 
 FLAGS = tf.app.flags.FLAGS
@@ -176,8 +176,6 @@ tf.app.flags.DEFINE_integer('mylambda', 1,
 #                             """Parameter determining error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('perfmetric', 'fpr',
 #                             """Parameter determining error term in fitness function.""")
-tf.app.flags.DEFINE_integer('executeonserver', 'False',
-                            """Parameter determining error term in fitness function.""")
 
 length = 3073
 # perfmetric = "precision"
@@ -185,6 +183,9 @@ perfmetric = "recall"
 # perfmetric = "f1score"
 # perfmetric = "tpr"
 # perfmetric = "fpr"
+executeonserver = False
+
+
 current_milli_time = lambda: int(round(time.time()))
 StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/StdoutGeneticOps.txt'
 fp = open(StdoutFile,'w')
@@ -458,7 +459,7 @@ def adversary_train_cnn():
 
 def initIndividualImage(filename):
 #     return icls(Image.open(filename).getdata()).reshape((32,32,3))
-    if(FLAGS.executeonserver == False):
+    if(executeonserver == False):
         img = Image.open(filename)
         img.load()
     else:

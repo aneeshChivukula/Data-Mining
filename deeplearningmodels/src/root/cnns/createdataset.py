@@ -773,7 +773,7 @@ def gaplots():
     mutationy2.append(0.2684)
 
     mutationx2.append(80)
-    mutationy2.append()
+    mutationy2.append(0.2302)
 
     mutationx2.append(90)
     mutationy2.append()
@@ -784,14 +784,46 @@ def gaplots():
     mutationx2.append(200)
     mutationy2.append()
 
-#     mutationx3 = []
-#     mutationy3 = []
-#     mutationx3.append(5)
-#     mutationy3.append(0.0)
+    mutationx3 = []
+    mutationy3 = []
+    
+    mutationx3.append(5)
+    mutationy3.append(0.3809)
+
+    mutationx3.append(10)
+    mutationy3.append(0.0)
+
+    mutationx3.append(20)
+    mutationy3.append(0.0)
+
+    mutationx3.append(30)
+    mutationy3.append(0.0)
+
+    mutationx3.append(40)
+    mutationy3.append(0.0)
+
+    mutationx3.append(50)
+    mutationy3.append(0.0)
+
+    mutationx3.append(60)
+    mutationy3.append(0.0)
+
+    mutationx3.append(70)
+    mutationy3.append(0.0)
+
+    mutationx3.append(80)
+    mutationy3.append(0.0)
+
+    mutationx3.append(90)
+    mutationy3.append(0.0)
+
+    mutationx3.append(100)
+    mutationy3.append(0.0)
+
     
     plt.plot(mutationx1,mutationy1, label=str(10))
     plt.plot(mutationx2,mutationy2, label=str(1))
-#     plt.plot(mutationx2,mutationy2, label=str(0.1))
+    plt.plot(mutationx3,mutationy3, label=str(0.1))
     title('Parameter Tuning : Mutation Operation')
     xlabel('Upper Bound for Mutation')
     ylabel('Manipulated testing f1score on manipulated training data')

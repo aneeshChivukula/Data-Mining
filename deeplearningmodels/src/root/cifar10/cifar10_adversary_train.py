@@ -74,14 +74,14 @@ tf.app.flags.DEFINE_integer('dividend', 1,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', 70,
 #                             """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('steplow', -80,
-                            """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('stephigh', 80,
-                            """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('steplow', -90,
+# tf.app.flags.DEFINE_integer('steplow', -80,
 #                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('stephigh', 90,
+# tf.app.flags.DEFINE_integer('stephigh', 80,
 #                             """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('steplow', -90,
+                            """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('stephigh', 90,
+                            """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('steplow', -100,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', 100,

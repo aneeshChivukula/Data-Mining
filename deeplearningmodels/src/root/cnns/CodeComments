@@ -2716,6 +2716,17 @@ grep -rl 'deeplearningmodels_5' ./ | xargs sed -i 's/deeplearningmodels_5/deeple
 grep -rl 'deeplearningmodels_5' ./ | xargs sed -i 's/deeplearningmodels_5/deeplearningmodels_9/g'
 grep -rl 'deeplearningmodels_5' ./ | xargs sed -i 's/deeplearningmodels_5/deeplearningmodels_10/g'
 
+grep -rl '/scratch/cifar10_10/' ./ | xargs sed -i 's/\/scratch\/cifar10_10/\/scratch\/cifar10_11/g'
+grep -rl '/scratch/cifar10_10/' ./ | xargs sed -i 's/\/scratch\/cifar10_10/\/scratch\/cifar10_12/g'
+grep -rl '/scratch/cifar10_10/' ./ | xargs sed -i 's/\/scratch\/cifar10_10/\/scratch\/cifar10_13/g'
+grep -rl '/scratch/cifar10_10/' ./ | xargs sed -i 's/\/scratch\/cifar10_10/\/scratch\/cifar10_14/g'
+grep -rl '/scratch/cifar10_10/' ./ | xargs sed -i 's/\/scratch\/cifar10_10/\/scratch\/cifar10_15/g'
+
+grep -rl 'deeplearningmodels_10' ./ | xargs sed -i 's/deeplearningmodels_10/deeplearningmodels_11/g'
+grep -rl 'deeplearningmodels_10' ./ | xargs sed -i 's/deeplearningmodels_10/deeplearningmodels_12/g'
+grep -rl 'deeplearningmodels_10' ./ | xargs sed -i 's/deeplearningmodels_10/deeplearningmodels_13/g'
+grep -rl 'deeplearningmodels_10' ./ | xargs sed -i 's/deeplearningmodels_10/deeplearningmodels_14/g'
+grep -rl 'deeplearningmodels_10' ./ | xargs sed -i 's/deeplearningmodels_10/deeplearningmodels_15/g'
 
 [achivuku@vulcan1 cifar10]$ python cifar10_game.py
 cd /home/achivuku/workspace/deeplearningmodels_1/src/root/cifar10
@@ -2731,4 +2742,8 @@ Run each job on separate tensorflow 0.9 cpu shell.
 According to server limits only 5 jobs can be executed at a time
 
 Need to change imports so that expected methods are called. Otherwise all the methods are calling only first adversary parameters.
+
+Redo :
+deeplearningmodels_5
+
 '''

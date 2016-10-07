@@ -10,6 +10,7 @@ from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import plot, title, xlabel, ylabel, savefig, legend
+import cv2
 
 width = 32
 height = 32
@@ -26,6 +27,8 @@ length = 3073
 # perfmetric = "f1score"
 # perfmetric = "tpr"
 perfmetric = "fpr"
+executeonserver = False
+
 
 
 def partitoner(Dir):
@@ -84,8 +87,12 @@ def binarizer(CurrDir,ValDir,OutFile):
     for d in ls:
         os.chdir(CurrDir + ValDir + d)
         for f in listdir(CurrDir + ValDir + d):
-            img = Image.open(f)
-            l = numpy.insert(numpy.array(img.getdata()).flatten(order='F'),0, ind)
+            if not executeonserver:
+                img = Image.open(f)
+                l = numpy.insert(numpy.array(img.getdata()).flatten(order='F'),0, ind)
+            else:
+                img = cv2.imread(f)
+                l = numpy.insert(numpy.array(img).flatten(order='F'),0, ind)
             if(len(l) == length):
                 L.append(l)
         ind = ind + 1
@@ -743,6 +750,39 @@ def gaplots():
     mutationy2 = []
     mutationx2.append(5)
     mutationy2.append(0.2551)
+
+    mutationx2.append(10)
+    mutationy2.append(0.3948)
+
+    mutationx2.append(20)
+    mutationy2.append(0.3583)
+
+    mutationx2.append(30)
+    mutationy2.append(0.2614)
+
+    mutationx2.append(40)
+    mutationy2.append(0.2366)
+
+    mutationx2.append(50)
+    mutationy2.append(0.2145)
+
+    mutationx2.append(60)
+    mutationy2.append(0.5632)
+
+    mutationx2.append(70)
+    mutationy2.append(0.2684)
+
+    mutationx2.append(80)
+    mutationy2.append()
+
+    mutationx2.append(90)
+    mutationy2.append()
+
+    mutationx2.append(100)
+    mutationy2.append()
+
+    mutationx2.append(200)
+    mutationy2.append()
 
 #     mutationx3 = []
 #     mutationy3 = []

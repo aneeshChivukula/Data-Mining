@@ -18,6 +18,7 @@ from root.cifar10 import cifar10
 from root.cifar10 import cifar10_eval
 import tensorflow as tf
 import time
+import cv2
 
 
 FLAGS = tf.app.flags.FLAGS
@@ -49,10 +50,10 @@ tf.app.flags.DEFINE_integer('dividend', 1,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', +5,
 #                             """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('steplow', -10,
-                            """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('stephigh', 10,
-                            """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -10,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 10,
+#                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('steplow', -20,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', 20,
@@ -73,10 +74,10 @@ tf.app.flags.DEFINE_integer('stephigh', 10,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', 70,
 #                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('steplow', -80,
-#                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('stephigh', 80,
-#                             """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('steplow', -80,
+                            """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('stephigh', 80,
+                            """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('steplow', -90,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', 90,
@@ -175,6 +176,8 @@ tf.app.flags.DEFINE_integer('mylambda', 1,
 #                             """Parameter determining error term in fitness function.""")
 # tf.app.flags.DEFINE_integer('perfmetric', 'fpr',
 #                             """Parameter determining error term in fitness function.""")
+tf.app.flags.DEFINE_integer('executeonserver', 'False',
+                            """Parameter determining error term in fitness function.""")
 
 length = 3073
 # perfmetric = "precision"
@@ -455,8 +458,11 @@ def adversary_train_cnn():
 
 def initIndividualImage(filename):
 #     return icls(Image.open(filename).getdata()).reshape((32,32,3))
-    img = Image.open(filename)
-    img.load()
+    if(FLAGS.executeonserver == False):
+        img = Image.open(filename)
+        img.load()
+    else:
+        img = cv2.imread(filename)
     return np.asarray( img, dtype="int32" )
 #     return np.array(Image.open(filename).getdata()).reshape((32,32,3))
 

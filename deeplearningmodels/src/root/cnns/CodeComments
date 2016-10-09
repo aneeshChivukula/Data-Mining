@@ -2728,6 +2728,10 @@ grep -rl 'deeplearningmodels_10' ./ | xargs sed -i 's/deeplearningmodels_10/deep
 grep -rl 'deeplearningmodels_10' ./ | xargs sed -i 's/deeplearningmodels_10/deeplearningmodels_14/g'
 grep -rl 'deeplearningmodels_10' ./ | xargs sed -i 's/deeplearningmodels_10/deeplearningmodels_15/g'
 
+grep -rl '/scratch/cifar10_15/' ./ | xargs sed -i 's/\/scratch\/cifar10_15/\/scratch\/cifar10_16/g'
+grep -rl 'deeplearningmodels_15' ./ | xargs sed -i 's/deeplearningmodels_15/deeplearningmodels_16/g'
+
+
 [achivuku@vulcan1 cifar10]$ python cifar10_game.py
 cd /home/achivuku/workspace/deeplearningmodels_1/src/root/cifar10
 python cifar10_game.py > out.txt does not create output file until end of the process. Instead use following command to redicrect stdout.
@@ -2744,6 +2748,6 @@ According to server limits only 5 jobs can be executed at a time
 Need to change imports so that expected methods are called. Otherwise all the methods are calling only first adversary parameters.
 
 Redo :
-deeplearningmodels_5
+
 
 '''

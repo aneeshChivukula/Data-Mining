@@ -41,10 +41,10 @@ tf.app.flags.DEFINE_integer('high', 255,
                             """Upper limit for pixel value.""")
 tf.app.flags.DEFINE_integer('dividend', 1,
                             """Factor to control the GA norm initialization boundaries.""")
-# tf.app.flags.DEFINE_integer('steplow', -50,
-#                             """Small step limit for mutation operator.""")
-# tf.app.flags.DEFINE_integer('stephigh', 50,
-#                             """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('steplow', -50,
+                            """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('stephigh', 50,
+                            """Small step limit for mutation operator.""")
 
 # tf.app.flags.DEFINE_integer('steplow', -5,
 #                             """Small step limit for mutation operator.""")
@@ -78,10 +78,10 @@ tf.app.flags.DEFINE_integer('dividend', 1,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', 80,
 #                             """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('steplow', -90,
-                            """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('stephigh', 90,
-                            """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('steplow', -90,
+#                             """Small step limit for mutation operator.""")
+# tf.app.flags.DEFINE_integer('stephigh', 90,
+#                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('steplow', -100,
 #                             """Small step limit for mutation operator.""")
 # tf.app.flags.DEFINE_integer('stephigh', 100,
@@ -91,10 +91,10 @@ tf.app.flags.DEFINE_integer('stephigh', 90,
 # tf.app.flags.DEFINE_integer('stephigh', 200,
 #                             """Small step limit for mutation operator.""")
 
-tf.app.flags.DEFINE_integer('minwidthstartidx', 2,
-                            """Minimum window width start idx for the crossover op.""")
-# tf.app.flags.DEFINE_integer('minwidthstartidx', 3,
+# tf.app.flags.DEFINE_integer('minwidthstartidx', 2,
 #                             """Minimum window width start idx for the crossover op.""")
+tf.app.flags.DEFINE_integer('minwidthstartidx', 3,
+                            """Minimum window width start idx for the crossover op.""")
 # tf.app.flags.DEFINE_integer('minwidthstartidx', 4,
 #                             """Minimum window width start idx for the crossover op.""")
 # tf.app.flags.DEFINE_integer('minwidthstartidx', 5,

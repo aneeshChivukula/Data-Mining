@@ -862,14 +862,14 @@ def gaplots():
     crossovery1.append(0.5463)
 
     crossoverx1.append(9)
-    crossovery1.append()
+    crossovery1.append(0.6222)
 
 
     crossoverx2 = []
     crossovery2 = []
   
     crossoverx2.append(2)
-    crossovery2.append(0.2724)
+    crossovery2.append(0.2844)
   
     crossoverx2.append(3)
     crossovery2.append(0.3393)
@@ -898,7 +898,7 @@ def gaplots():
     crossovery3 = []
   
     crossoverx3.append(2)
-    crossovery3.append()
+    crossovery3.append(0.4352)
   
     crossoverx3.append(3)
     crossovery3.append(0.339)
@@ -917,6 +917,9 @@ def gaplots():
   
     crossoverx3.append(8)
     crossovery3.append(0.361)
+
+    crossoverx2.append(9)
+    crossovery2.append()
  
     plt.plot(crossoverx1,crossovery1, label=str(10))
     plt.plot(crossoverx2,crossovery2, label=str(1))
@@ -967,7 +970,7 @@ def gaplots():
     selectiony2.append(0.3048)
    
     selectionx2.append(30)
-    selectiony2.append()
+    selectiony2.append(0.2981)
        
     selectionx2.append(40)
     selectiony2.append(0.2724)
@@ -979,10 +982,10 @@ def gaplots():
     selectiony2.append(0.2609)
    
     selectionx2.append(70)
-    selectiony2.append()
+    selectiony2.append(0.6294)
    
     selectionx2.append(80)
-    selectiony2.append()
+    selectiony2.append(0.4988)
 
 
 
@@ -996,7 +999,7 @@ def gaplots():
     selectiony3 = []
    
     selectionx3.append(20)
-    selectiony3.append()
+    selectiony3.append(0.4722)
    
     selectionx3.append(30)
     selectiony3.append(0.3063)
@@ -1014,7 +1017,7 @@ def gaplots():
     selectiony3.append()
    
     selectionx3.append(80)
-    selectiony3.append()
+    selectiony3.append(0.2806)
 
 
   

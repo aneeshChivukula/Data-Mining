@@ -861,6 +861,8 @@ def gaplots():
     crossoverx1.append(8)
     crossovery1.append(0.5463)
 
+    crossoverx1.append(9)
+    crossovery1.append()
 
 
     crossoverx2 = []
@@ -876,17 +878,19 @@ def gaplots():
     crossovery2.append()
   
     crossoverx2.append(5)
-    crossovery2.append()
+    crossovery2.append(0.2538)
   
     crossoverx2.append(6)
-    crossovery2.append()
+    crossovery2.append(0.2549)
   
     crossoverx2.append(7)
-    crossovery2.append()
+    crossovery2.append(0.2813)
   
     crossoverx2.append(8)
     crossovery2.append()
 
+    crossoverx2.append(9)
+    crossovery2.append(0.5541)
 
 
 
@@ -897,7 +901,7 @@ def gaplots():
     crossovery3.append()
   
     crossoverx3.append(3)
-    crossovery3.append()
+    crossovery3.append(0.339)
   
     crossoverx3.append(4)
     crossovery3.append(0.3997)
@@ -906,7 +910,7 @@ def gaplots():
     crossovery3.append(0.297)
   
     crossoverx3.append(6)
-    crossovery3.append()
+    crossovery3.append(0.2066)
   
     crossoverx3.append(7)
     crossovery3.append()
@@ -928,35 +932,100 @@ def gaplots():
 
 
  
-#     selectionx = []
-#     selectiony = []
-#   
-#     selectionx.append(20)
-#     selectiony.append(0.32)
-#   
-#     selectionx.append(30)
-#     selectiony.append(0.5542)
-#       
-#     selectionx.append(40)
-#     selectiony.append(0.2459)
-# 
-#     selectionx.append(50)
-#     selectiony.append(0.2607)
-#   
-#     selectionx.append(60)
-#     selectiony.append(0.5016)
-#   
-#     selectionx.append(70)
-#     selectiony.append(0.4137)
-#   
-#     selectionx.append(80)
-#     selectiony.append(0.2806)
-#  
-#     plt.plot(selectionx,selectiony)
-#     title('Parameter Tuning : Selection Operation')
-#     xlabel('Percentage offspring size for Selection')
-#     ylabel('Manipulated testing f1score on manipulated training data')
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png")
+    selectionx1 = []
+    selectiony1 = []
+   
+    selectionx1.append(20)
+    selectiony1.append(0.32)
+   
+    selectionx1.append(30)
+    selectiony1.append(0.5542)
+       
+    selectionx1.append(40)
+    selectiony1.append(0.2459)
+ 
+    selectionx1.append(50)
+    selectiony1.append(0.2607)
+   
+    selectionx1.append(60)
+    selectiony1.append(0.5016)
+   
+    selectionx1.append(70)
+    selectiony1.append(0.4137)
+   
+    selectionx1.append(80)
+    selectiony1.append(0.2806)
+
+
+
+
+
+    selectionx2 = []
+    selectiony2 = []
+   
+    selectionx2.append(20)
+    selectiony2.append()
+   
+    selectionx2.append(30)
+    selectiony2.append()
+       
+    selectionx2.append(40)
+    selectiony2.append()
+ 
+    selectionx2.append(50)
+    selectiony2.append()
+   
+    selectionx2.append(60)
+    selectiony2.append()
+   
+    selectionx2.append(70)
+    selectiony2.append()
+   
+    selectionx2.append(80)
+    selectiony2.append()
+
+
+
+
+
+
+
+
+
+    selectionx3 = []
+    selectiony3 = []
+   
+    selectionx3.append(20)
+    selectiony3.append()
+   
+    selectionx3.append(30)
+    selectiony3.append(0.3063)
+       
+    selectionx3.append(40)
+    selectiony3.append(0.261)
+ 
+    selectionx3.append(50)
+    selectiony3.append(0.2502)
+   
+    selectionx3.append(60)
+    selectiony3.append(0.3142)
+   
+    selectionx3.append(70)
+    selectiony3.append()
+   
+    selectionx3.append(80)
+    selectiony3.append()
+
+
+  
+    plt.plot(selectionx1,selectiony1, label=str(10))
+    plt.plot(selectionx2,selectiony2, label=str(1))
+    plt.plot(selectionx3,selectiony3, label=str(0.1))
+    title('Parameter Tuning : Selection Operation')
+    xlabel('Percentage offspring size for Selection')
+    ylabel('Manipulated testing f1score on manipulated training data')
+    plt.legend()
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png")
 
 
     print('Successfully saved all plots one at a time')

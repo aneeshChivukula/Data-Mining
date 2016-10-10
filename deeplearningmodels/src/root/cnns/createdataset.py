@@ -704,134 +704,134 @@ def trainplots():
 
         
 def gaplots():
-#     mutationx1 = []
-#     mutationy1 = []
-#        
-#     mutationx1.append(5)
-#     mutationy1.append(0.3571)
-#   
-#     mutationx1.append(10)
-#     mutationy1.append(0.2625)
-#    
-#     mutationx1.append(20)
-#     mutationy1.append(0.2815)
-#    
-#     mutationx1.append(30)
-#     mutationy1.append(0.2165)
-#    
-#     mutationx1.append(40)
-#     mutationy1.append(0.2534)
-#    
-#     mutationx1.append(50)
-#     mutationy1.append(0.2607)
-#    
-#     mutationx1.append(60)
-#     mutationy1.append(0.4142)
-#    
-#     mutationx1.append(70)
-#     mutationy1.append(0.3376)
-#    
+    mutationx1 = []
+    mutationy1 = []
+        
+    mutationx1.append(5)
+    mutationy1.append(0.3571)
+   
+    mutationx1.append(10)
+    mutationy1.append(0.2625)
+    
+    mutationx1.append(20)
+    mutationy1.append(0.2815)
+    
+    mutationx1.append(30)
+    mutationy1.append(0.2165)
+    
+    mutationx1.append(40)
+    mutationy1.append(0.2534)
+    
+    mutationx1.append(50)
+    mutationy1.append(0.2607)
+    
+    mutationx1.append(60)
+    mutationy1.append(0.4142)
+    
+    mutationx1.append(70)
+    mutationy1.append(0.3376)
+    
+    mutationx1.append(80)
+    mutationy1.append(0.4153)
 #     mutationx1.append(80)
-#     mutationy1.append(0.4153)
-# #     mutationx1.append(80)
-# #     mutationy1.append(0.6241)
-#    
-#     mutationx1.append(90)
-#     mutationy1.append(0.4951)
-#    
-#     mutationx1.append(100)
-#     mutationy1.append(0.4541)
-#    
-#     mutationx1.append(200)
-#     mutationy1.append(0.4123)
-#    
-#  
-#     mutationx2 = []
-#     mutationy2 = []
-#     mutationx2.append(5)
-#     mutationy2.append(0.2551)
-#  
-#     mutationx2.append(10)
-#     mutationy2.append(0.3948)
-#  
-#     mutationx2.append(20)
-#     mutationy2.append(0.3583)
-#  
-#     mutationx2.append(30)
-#     mutationy2.append(0.2614)
-#  
-#     mutationx2.append(40)
-#     mutationy2.append(0.2366)
-#  
-#     mutationx2.append(50)
-#     mutationy2.append(0.2145)
-#  
-#     mutationx2.append(60)
-#     mutationy2.append(0.5632)
-#  
-#     mutationx2.append(70)
-#     mutationy2.append(0.2684)
-#  
-#     mutationx2.append(80)
-#     mutationy2.append(0.2302)
-#  
-#     mutationx2.append(90)
-#     mutationy2.append(0.618)
-#  
-#     mutationx2.append(100)
-#     mutationy2.append(0.616)
-#   
-#     mutationx2.append(200)
-#     mutationy2.append(0.296)
-#  
-#     mutationx3 = []
-#     mutationy3 = []
-#      
-#     mutationx3.append(5)
-#     mutationy3.append(0.3809)
-#  
-#     mutationx3.append(10)
-#     mutationy3.append(0.3279)
-#  
-#     mutationx3.append(20)
-#     mutationy3.append(0.308)
-#  
-#     mutationx3.append(30)
-#     mutationy3.append(0.4022)
-#  
-#     mutationx3.append(40)
-#     mutationy3.append(0.2397)
-#  
-#     mutationx3.append(50)
-#     mutationy3.append(0.2502)
-#  
-#     mutationx3.append(60)
-#     mutationy3.append(0.3692)
-#   
-#     mutationx3.append(70)
-#     mutationy3.append(0.4666)
-#   
-#     mutationx3.append(80)
-#     mutationy3.append(0.5171)
-#   
-#     mutationx3.append(90)
-#     mutationy3.append(0.3482)
-#   
-#     mutationx3.append(100)
-#     mutationy3.append(0.2292)
-#   
-#     mutationx3.append(200)
-#     mutationy3.append()
-#      
-#         
-#     plt.plot(mutationx1,mutationy1, label=str(10))
-#     plt.plot(mutationx2,mutationy2, label=str(1))
-#     plt.plot(mutationx3,mutationy3, label=str(0.1))
-#     title('Parameter Tuning : Mutation Operation')
-#     xlabel('Upper Bound for Mutation')
-#     ylabel('Manipulated testing f1score on manipulated training data')
-#     plt.legend()
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/MutationParams.png")
+#     mutationy1.append(0.6241)
+    
+    mutationx1.append(90)
+    mutationy1.append(0.4951)
+    
+    mutationx1.append(100)
+    mutationy1.append(0.4541)
+    
+    mutationx1.append(200)
+    mutationy1.append(0.4123)
+    
+  
+    mutationx2 = []
+    mutationy2 = []
+    mutationx2.append(5)
+    mutationy2.append(0.2551)
+  
+    mutationx2.append(10)
+    mutationy2.append(0.3948)
+  
+    mutationx2.append(20)
+    mutationy2.append(0.3583)
+  
+    mutationx2.append(30)
+    mutationy2.append(0.2614)
+  
+    mutationx2.append(40)
+    mutationy2.append(0.2366)
+  
+    mutationx2.append(50)
+    mutationy2.append(0.2145)
+  
+    mutationx2.append(60)
+    mutationy2.append(0.5632)
+  
+    mutationx2.append(70)
+    mutationy2.append(0.2684)
+  
+    mutationx2.append(80)
+    mutationy2.append(0.2302)
+  
+    mutationx2.append(90)
+    mutationy2.append(0.618)
+  
+    mutationx2.append(100)
+    mutationy2.append(0.616)
+   
+    mutationx2.append(200)
+    mutationy2.append(0.296)
+  
+    mutationx3 = []
+    mutationy3 = []
+      
+    mutationx3.append(5)
+    mutationy3.append(0.3809)
+  
+    mutationx3.append(10)
+    mutationy3.append(0.3279)
+  
+    mutationx3.append(20)
+    mutationy3.append(0.308)
+  
+    mutationx3.append(30)
+    mutationy3.append(0.4022)
+  
+    mutationx3.append(40)
+    mutationy3.append(0.2397)
+  
+    mutationx3.append(50)
+    mutationy3.append(0.2502)
+  
+    mutationx3.append(60)
+    mutationy3.append(0.3692)
+   
+    mutationx3.append(70)
+    mutationy3.append(0.4666)
+   
+    mutationx3.append(80)
+    mutationy3.append(0.5171)
+   
+    mutationx3.append(90)
+    mutationy3.append(0.3482)
+   
+    mutationx3.append(100)
+    mutationy3.append(0.2292)
+   
+    mutationx3.append(200)
+    mutationy3.append(0.2000)
+      
+         
+    plt.plot(mutationx1,mutationy1, label=str(10))
+    plt.plot(mutationx2,mutationy2, label=str(1))
+    plt.plot(mutationx3,mutationy3, label=str(0.1))
+    title('Parameter Tuning : Mutation Operation')
+    xlabel('Upper Bound for Mutation')
+    ylabel('Manipulated testing f1score on manipulated training data')
+    plt.legend()
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/MutationParams.png")
 
 
 
@@ -935,100 +935,100 @@ def gaplots():
 
 
  
-#     selectionx1 = []
-#     selectiony1 = []
-#    
-#     selectionx1.append(20)
-#     selectiony1.append(0.32)
-#    
-#     selectionx1.append(30)
-#     selectiony1.append(0.5542)
-#        
-#     selectionx1.append(40)
-#     selectiony1.append(0.2459)
-#  
-#     selectionx1.append(50)
-#     selectiony1.append(0.2607)
-#    
-#     selectionx1.append(60)
-#     selectiony1.append(0.5016)
-#    
-#     selectionx1.append(70)
-#     selectiony1.append(0.4137)
-#    
-#     selectionx1.append(80)
-#     selectiony1.append(0.2806)
-# 
-# 
-# 
-# 
-# 
-#     selectionx2 = []
-#     selectiony2 = []
-#    
-#     selectionx2.append(20)
-#     selectiony2.append(0.3048)
-#    
-#     selectionx2.append(30)
-#     selectiony2.append(0.2981)
-#        
-#     selectionx2.append(40)
-#     selectiony2.append(0.2724)
-#  
-#     selectionx2.append(50)
-#     selectiony2.append(0.3293)
-#    
-#     selectionx2.append(60)
-#     selectiony2.append(0.2609)
-#    
-#     selectionx2.append(70)
-#     selectiony2.append(0.6294)
-#    
-#     selectionx2.append(80)
-#     selectiony2.append(0.4988)
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-#     selectionx3 = []
-#     selectiony3 = []
-#    
-#     selectionx3.append(20)
-#     selectiony3.append(0.4722)
-#    
-#     selectionx3.append(30)
-#     selectiony3.append(0.3063)
-#        
-#     selectionx3.append(40)
-#     selectiony3.append(0.261)
-#  
-#     selectionx3.append(50)
-#     selectiony3.append(0.2502)
-#    
-#     selectionx3.append(60)
-#     selectiony3.append(0.3142)
-#    
-#     selectionx3.append(70)
-#     selectiony3.append(0.2541)
-#    
-#     selectionx3.append(80)
-#     selectiony3.append(0.2806)
-# 
-# 
-#   
-#     plt.plot(selectionx1,selectiony1, label=str(10))
-#     plt.plot(selectionx2,selectiony2, label=str(1))
-#     plt.plot(selectionx3,selectiony3, label=str(0.1))
-#     title('Parameter Tuning : Selection Operation')
-#     xlabel('Percentage offspring size for Selection')
-#     ylabel('Manipulated testing f1score on manipulated training data')
-#     plt.legend()
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png")
+    selectionx1 = []
+    selectiony1 = []
+    
+    selectionx1.append(20)
+    selectiony1.append(0.32)
+    
+    selectionx1.append(30)
+    selectiony1.append(0.5542)
+        
+    selectionx1.append(40)
+    selectiony1.append(0.2459)
+  
+    selectionx1.append(50)
+    selectiony1.append(0.2607)
+    
+    selectionx1.append(60)
+    selectiony1.append(0.5016)
+    
+    selectionx1.append(70)
+    selectiony1.append(0.4137)
+    
+    selectionx1.append(80)
+    selectiony1.append(0.2806)
+ 
+ 
+ 
+ 
+ 
+    selectionx2 = []
+    selectiony2 = []
+    
+    selectionx2.append(20)
+    selectiony2.append(0.3048)
+    
+    selectionx2.append(30)
+    selectiony2.append(0.2981)
+        
+    selectionx2.append(40)
+    selectiony2.append(0.2724)
+  
+    selectionx2.append(50)
+    selectiony2.append(0.3293)
+    
+    selectionx2.append(60)
+    selectiony2.append(0.2609)
+    
+    selectionx2.append(70)
+    selectiony2.append(0.6294)
+    
+    selectionx2.append(80)
+    selectiony2.append(0.4988)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    selectionx3 = []
+    selectiony3 = []
+    
+    selectionx3.append(20)
+    selectiony3.append(0.4722)
+    
+    selectionx3.append(30)
+    selectiony3.append(0.3063)
+        
+    selectionx3.append(40)
+    selectiony3.append(0.261)
+  
+    selectionx3.append(50)
+    selectiony3.append(0.2502)
+    
+    selectionx3.append(60)
+    selectiony3.append(0.3142)
+    
+    selectionx3.append(70)
+    selectiony3.append(0.2541)
+    
+    selectionx3.append(80)
+    selectiony3.append(0.2806)
+ 
+ 
+   
+    plt.plot(selectionx1,selectiony1, label=str(10))
+    plt.plot(selectionx2,selectiony2, label=str(1))
+    plt.plot(selectionx3,selectiony3, label=str(0.1))
+    title('Parameter Tuning : Selection Operation')
+    xlabel('Percentage offspring size for Selection')
+    ylabel('Manipulated testing f1score on manipulated training data')
+    plt.legend()
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png")
 
 
     print('Successfully saved all plots one at a time')

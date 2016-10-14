@@ -1,19 +1,24 @@
 from PIL import Image
 import io
 import math
+from matplotlib.pyplot import plot, title, xlabel, ylabel, savefig, legend
 import numpy
 from os import listdir
 import os
+from scipy import stats
 from shutil import copyfile
 import sys
-from scipy import stats
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import plot, title, xlabel, ylabel, savefig, legend
-# import cv2
 
-width = 32
-height = 32
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import cm
+
+
+# import cv2
+# width = 32
+# height = 32
+width = 1024
+height = 1024
 length = 3073
 
 # width = 224
@@ -542,157 +547,203 @@ def trainplots():
     norms11 = [0, 0.2548964420908377, 0.3239408112316269, 0.3239408112316269]
     
     iterationnum = range(0,11)
+    colormap = plt.cm.gist_ncar
+    colors = [colormap(i) for i in np.linspace(0, 1,20)]
+
+    plt.gca().set_color_cycle([colormap(i) for i in np.linspace(0, 0.9, 11)])
     
-    plt.plot(iterationnum[0:len(precisions1)],precisions1, label=str(mylambda1)+','+str(numalphas1))
-    plt.plot(iterationnum[0:len(precisions2)],precisions2, label=str(mylambda2)+','+str(numalphas2))
-    plt.plot(iterationnum[0:len(precisions3)],precisions3, label=str(mylambda3)+','+str(numalphas3))
-    plt.plot(iterationnum[0:len(precisions4)],precisions4, label=str(mylambda4)+','+str(numalphas4))
-    plt.plot(iterationnum[0:len(precisions5)],precisions5, label=str(mylambda5)+','+str(numalphas5))
-    plt.plot(iterationnum[0:len(precisions6)],precisions6, label=str(mylambda6)+','+str(numalphas6))
-    plt.plot(iterationnum[0:len(precisions7)],precisions7, label=str(mylambda7)+','+str(numalphas7))
-    plt.plot(iterationnum[0:len(precisions8)],precisions8, label=str(mylambda8)+','+str(numalphas8))
-    plt.plot(iterationnum[0:len(precisions9)],precisions9, label=str(mylambda9)+','+str(numalphas9))
-    plt.plot(iterationnum[0:len(precisions10)],precisions10, label=str(mylambda10)+','+str(numalphas10))
-    plt.plot(iterationnum[0:len(precisions11)],precisions11, label=str(mylambda11)+','+str(numalphas11))
-    title('Training Precisions')
-    xlabel('Iteration')
-    ylabel('Precision')
-#     legend = plt.legend(loc='upper center', shadow=True)
-#     plt.legend(loc=2)
-#     legend.get_frame().set_facecolor('#00FFCC')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingPrecisions.png")
-#     plt.show()
- 
-    plt.plot(iterationnum[0:len(recalls1)],recalls1, label=str(mylambda1)+','+str(numalphas1))
-    plt.plot(iterationnum[0:len(recalls2)],recalls2, label=str(mylambda2)+','+str(numalphas2))
-    plt.plot(iterationnum[0:len(recalls3)],recalls3, label=str(mylambda3)+','+str(numalphas3))
-    plt.plot(iterationnum[0:len(recalls4)],recalls4, label=str(mylambda4)+','+str(numalphas4))
-    plt.plot(iterationnum[0:len(recalls5)],recalls5, label=str(mylambda5)+','+str(numalphas5))
-    plt.plot(iterationnum[0:len(recalls6)],recalls6, label=str(mylambda6)+','+str(numalphas6))
-    plt.plot(iterationnum[0:len(recalls7)],recalls7, label=str(mylambda7)+','+str(numalphas7))
-    plt.plot(iterationnum[0:len(recalls8)],recalls8, label=str(mylambda8)+','+str(numalphas8))
-    plt.plot(iterationnum[0:len(recalls9)],recalls9, label=str(mylambda9)+','+str(numalphas9))
-    plt.plot(iterationnum[0:len(recalls10)],recalls10, label=str(mylambda10)+','+str(numalphas10))
-    plt.plot(iterationnum[0:len(recalls11)],recalls11, label=str(mylambda11)+','+str(numalphas11))
-    title('Training Recalls')
-    xlabel('Iteration')
-    ylabel('Recall')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingRecalls.png")
-#     plt.show()
-      
-    plt.plot(iterationnum[0:len(f1scores1)],f1scores1, label=str(mylambda1)+','+str(numalphas1))
-    plt.plot(iterationnum[0:len(f1scores2)],f1scores2, label=str(mylambda2)+','+str(numalphas2))
-    plt.plot(iterationnum[0:len(f1scores3)],f1scores3, label=str(mylambda3)+','+str(numalphas3))
-    plt.plot(iterationnum[0:len(f1scores4)],f1scores4, label=str(mylambda4)+','+str(numalphas4))
-    plt.plot(iterationnum[0:len(f1scores5)],f1scores5, label=str(mylambda5)+','+str(numalphas5))
-    plt.plot(iterationnum[0:len(f1scores6)],f1scores6, label=str(mylambda6)+','+str(numalphas6))
-    plt.plot(iterationnum[0:len(f1scores7)],f1scores7, label=str(mylambda7)+','+str(numalphas7))
-    plt.plot(iterationnum[0:len(f1scores8)],f1scores8, label=str(mylambda8)+','+str(numalphas8))
-    plt.plot(iterationnum[0:len(f1scores9)],f1scores9, label=str(mylambda9)+','+str(numalphas9))
-    plt.plot(iterationnum[0:len(f1scores10)],f1scores10, label=str(mylambda10)+','+str(numalphas10))
-    plt.plot(iterationnum[0:len(f1scores11)],f1scores11, label=str(mylambda11)+','+str(numalphas11))
+#     plt.plot(iterationnum[0:len(precisions1)],precisions1, label=str(mylambda1)+','+str(numalphas1), linestyle='-', marker='o', linewidth=2)
+#     plt.plot(iterationnum[0:len(precisions2)],precisions2, label=str(mylambda2)+','+str(numalphas2), linestyle='-', marker='v', linewidth=2)
+#     plt.plot(iterationnum[0:len(precisions3)],precisions3, label=str(mylambda3)+','+str(numalphas3), linestyle='-', marker='^', linewidth=2)
+#     plt.plot(iterationnum[0:len(precisions4)],precisions4, label=str(mylambda4)+','+str(numalphas4), linestyle='-', marker='<', linewidth=2)
+#     plt.plot(iterationnum[0:len(precisions5)],precisions5, label=str(mylambda5)+','+str(numalphas5), linestyle='-', marker='>', linewidth=2)
+#     plt.plot(iterationnum[0:len(precisions6)],precisions6, label=str(mylambda6)+','+str(numalphas6), linestyle='-', marker='s', linewidth=2)
+#     plt.plot(iterationnum[0:len(precisions7)],precisions7, label=str(mylambda7)+','+str(numalphas7), linestyle='-', marker='p', linewidth=2)
+#     plt.plot(iterationnum[0:len(precisions8)],precisions8, label=str(mylambda8)+','+str(numalphas8), linestyle='-', marker='H', linewidth=2)
+#     plt.plot(iterationnum[0:len(precisions9)],precisions9, label=str(mylambda9)+','+str(numalphas9), linestyle='-', marker='d', linewidth=2)
+#     plt.plot(iterationnum[0:len(precisions10)],precisions10, label=str(mylambda10)+','+str(numalphas10), linestyle='-', marker='x', linewidth=2)
+#     plt.plot(iterationnum[0:len(precisions11)],precisions11, label=str(mylambda11)+','+str(numalphas11), linestyle='-', marker='D', linewidth=2)
+#     title('Training Precisions')
+#     xlabel('Iteration')
+#     ylabel('Precision')
+# #     legend = plt.legend(loc='upper center', shadow=True)
+# #     plt.legend(loc=2)
+# #     legend.get_frame().set_facecolor('#00FFCC')
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# #     plt.legend()
+#     plt.grid()
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingPrecisions.png", dpi=300)
+# #     plt.show()
+  
+#     plt.plot(iterationnum[0:len(recalls1)],recalls1, label=str(mylambda1)+','+str(numalphas1), linestyle='-', marker='o', linewidth=2)
+#     plt.plot(iterationnum[0:len(recalls2)],recalls2, label=str(mylambda2)+','+str(numalphas2), linestyle='-', marker='v', linewidth=2)
+#     plt.plot(iterationnum[0:len(recalls3)],recalls3, label=str(mylambda3)+','+str(numalphas3), linestyle='-', marker='^', linewidth=2)
+#     plt.plot(iterationnum[0:len(recalls4)],recalls4, label=str(mylambda4)+','+str(numalphas4), linestyle='-', marker='<', linewidth=2)
+#     plt.plot(iterationnum[0:len(recalls5)],recalls5, label=str(mylambda5)+','+str(numalphas5), linestyle='-', marker='>', linewidth=2)
+#     plt.plot(iterationnum[0:len(recalls6)],recalls6, label=str(mylambda6)+','+str(numalphas6), linestyle='-', marker='s', linewidth=2)
+#     plt.plot(iterationnum[0:len(recalls7)],recalls7, label=str(mylambda7)+','+str(numalphas7), linestyle='-', marker='p', linewidth=2)
+#     plt.plot(iterationnum[0:len(recalls8)],recalls8, label=str(mylambda8)+','+str(numalphas8), linestyle='-', marker='H', linewidth=2)
+#     plt.plot(iterationnum[0:len(recalls9)],recalls9, label=str(mylambda9)+','+str(numalphas9), linestyle='-', marker='d', linewidth=2)
+#     plt.plot(iterationnum[0:len(recalls10)],recalls10, label=str(mylambda10)+','+str(numalphas10), linestyle='-', marker='x', linewidth=2)
+#     plt.plot(iterationnum[0:len(recalls11)],recalls11, label=str(mylambda11)+','+str(numalphas11), linestyle='-', marker='D', linewidth=2)
+#     title('Training Recalls')
+#     xlabel('Iteration')
+#     ylabel('Recall')
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# #     plt.legend()
+#     plt.grid()
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingRecalls.png", dpi=300)
+# #     plt.show()
+#       
+    plt.plot(iterationnum[0:len(f1scores1)],f1scores1, label=str(mylambda1)+','+str(numalphas1), linestyle='-', marker='o', linewidth=2)
+    plt.plot(iterationnum[0:len(f1scores2)],f1scores2, label=str(mylambda2)+','+str(numalphas2), linestyle='-', marker='v', linewidth=2)
+    plt.plot(iterationnum[0:len(f1scores3)],f1scores3, label=str(mylambda3)+','+str(numalphas3), linestyle='-', marker='^', linewidth=2)
+    plt.plot(iterationnum[0:len(f1scores4)],f1scores4, label=str(mylambda4)+','+str(numalphas4), linestyle='-', marker='<', linewidth=2)
+    plt.plot(iterationnum[0:len(f1scores5)],f1scores5, label=str(mylambda5)+','+str(numalphas5), linestyle='-', marker='>', linewidth=2)
+    plt.plot(iterationnum[0:len(f1scores6)],f1scores6, label=str(mylambda6)+','+str(numalphas6), linestyle='-', marker='s', linewidth=2)
+    plt.plot(iterationnum[0:len(f1scores7)],f1scores7, label=str(mylambda7)+','+str(numalphas7), linestyle='-', marker='p', linewidth=2)
+    plt.plot(iterationnum[0:len(f1scores8)],f1scores8, label=str(mylambda8)+','+str(numalphas8), linestyle='-', marker='H', linewidth=2)
+    plt.plot(iterationnum[0:len(f1scores9)],f1scores9, label=str(mylambda9)+','+str(numalphas9), linestyle='-', marker='d', linewidth=2)
+    plt.plot(iterationnum[0:len(f1scores10)],f1scores10, label=str(mylambda10)+','+str(numalphas10), linestyle='-', marker='x', linewidth=2)
+    plt.plot(iterationnum[0:len(f1scores11)],f1scores11, label=str(mylambda11)+','+str(numalphas11), linestyle='-', marker='D', linewidth=2)
     title('Training F1Scores')
     xlabel('Iteration')
     ylabel('F1Score')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingF1Scores.png")
+
+    ax = plt.subplot(111)
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+#     plt.legend()
+    plt.grid()
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingF1Scores.png", dpi=300)
 #     plt.show()
-  
-    plt.plot(iterationnum[0:len(tprs1)],tprs1, label=str(mylambda1)+','+str(numalphas1))
-    plt.plot(iterationnum[0:len(tprs2)],tprs2, label=str(mylambda2)+','+str(numalphas2))
-    plt.plot(iterationnum[0:len(tprs3)],tprs3, label=str(mylambda3)+','+str(numalphas3))
-    plt.plot(iterationnum[0:len(tprs4)],tprs4, label=str(mylambda4)+','+str(numalphas4))
-    plt.plot(iterationnum[0:len(tprs5)],tprs5, label=str(mylambda5)+','+str(numalphas5))
-    plt.plot(iterationnum[0:len(tprs6)],tprs6, label=str(mylambda6)+','+str(numalphas6))
-    plt.plot(iterationnum[0:len(tprs7)],tprs7, label=str(mylambda7)+','+str(numalphas7))
-    plt.plot(iterationnum[0:len(tprs8)],tprs8, label=str(mylambda8)+','+str(numalphas8))
-    plt.plot(iterationnum[0:len(tprs9)],tprs9, label=str(mylambda9)+','+str(numalphas9))
-    plt.plot(iterationnum[0:len(tprs10)],tprs10, label=str(mylambda10)+','+str(numalphas10))
-    plt.plot(iterationnum[0:len(tprs11)],tprs11, label=str(mylambda11)+','+str(numalphas11))
-    title('Training TPRs')
-    xlabel('Iteration')
-    ylabel('TPR')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingTPRs.png")
-#     plt.show()
-  
    
-    plt.plot(iterationnum[0:len(fprs1)],fprs1, label=str(mylambda1)+','+str(numalphas1))
-    plt.plot(iterationnum[0:len(fprs2)],fprs2, label=str(mylambda2)+','+str(numalphas2))
-    plt.plot(iterationnum[0:len(fprs3)],fprs3, label=str(mylambda3)+','+str(numalphas3))
-    plt.plot(iterationnum[0:len(fprs4)],fprs4, label=str(mylambda4)+','+str(numalphas4))
-    plt.plot(iterationnum[0:len(fprs5)],fprs5, label=str(mylambda5)+','+str(numalphas5))
-    plt.plot(iterationnum[0:len(fprs6)],fprs6, label=str(mylambda6)+','+str(numalphas6))
-    plt.plot(iterationnum[0:len(fprs7)],fprs7, label=str(mylambda7)+','+str(numalphas7))
-    plt.plot(iterationnum[0:len(fprs8)],fprs8, label=str(mylambda8)+','+str(numalphas8))
-    plt.plot(iterationnum[0:len(fprs9)],fprs9, label=str(mylambda9)+','+str(numalphas9))
-    plt.plot(iterationnum[0:len(fprs10)],fprs10, label=str(mylambda10)+','+str(numalphas10))
-    plt.plot(iterationnum[0:len(fprs11)],fprs11, label=str(mylambda11)+','+str(numalphas11))
-    title('Training FPRs')
-    xlabel('Iteration')
-    ylabel('FPR')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingFPRs.png")
-#     plt.show()
+#     plt.plot(iterationnum[0:len(tprs1)],tprs1, label=str(mylambda1)+','+str(numalphas1), linestyle='-', marker='o', linewidth=2)
+#     plt.plot(iterationnum[0:len(tprs2)],tprs2, label=str(mylambda2)+','+str(numalphas2), linestyle='-', marker='v', linewidth=2)
+#     plt.plot(iterationnum[0:len(tprs3)],tprs3, label=str(mylambda3)+','+str(numalphas3), linestyle='-', marker='^', linewidth=2)
+#     plt.plot(iterationnum[0:len(tprs4)],tprs4, label=str(mylambda4)+','+str(numalphas4), linestyle='-', marker='<', linewidth=2)
+#     plt.plot(iterationnum[0:len(tprs5)],tprs5, label=str(mylambda5)+','+str(numalphas5), linestyle='-', marker='>', linewidth=2)
+#     plt.plot(iterationnum[0:len(tprs6)],tprs6, label=str(mylambda6)+','+str(numalphas6), linestyle='-', marker='s', linewidth=2)
+#     plt.plot(iterationnum[0:len(tprs7)],tprs7, label=str(mylambda7)+','+str(numalphas7), linestyle='-', marker='p', linewidth=2)
+#     plt.plot(iterationnum[0:len(tprs8)],tprs8, label=str(mylambda8)+','+str(numalphas8), linestyle='-', marker='H', linewidth=2)
+#     plt.plot(iterationnum[0:len(tprs9)],tprs9, label=str(mylambda9)+','+str(numalphas9), linestyle='-', marker='d', linewidth=2)
+#     plt.plot(iterationnum[0:len(tprs10)],tprs10, label=str(mylambda10)+','+str(numalphas10), linestyle='-', marker='x', linewidth=2)
+#     plt.plot(iterationnum[0:len(tprs11)],tprs11, label=str(mylambda11)+','+str(numalphas11), linestyle='-', marker='D', linewidth=2)
+#     title('Training TPRs')
+#     xlabel('Iteration')
+#     ylabel('TPR')
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# #     plt.legend()
+#     plt.grid()
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingTPRs.png", dpi=300)
+# #     plt.show()
+#   
+#    
+#     plt.plot(iterationnum[0:len(fprs1)],fprs1, label=str(mylambda1)+','+str(numalphas1), linestyle='-', marker='o', linewidth=2)
+#     plt.plot(iterationnum[0:len(fprs2)],fprs2, label=str(mylambda2)+','+str(numalphas2), linestyle='-', marker='v', linewidth=2)
+#     plt.plot(iterationnum[0:len(fprs3)],fprs3, label=str(mylambda3)+','+str(numalphas3), linestyle='-', marker='^', linewidth=2)
+#     plt.plot(iterationnum[0:len(fprs4)],fprs4, label=str(mylambda4)+','+str(numalphas4), linestyle='-', marker='<', linewidth=2)
+#     plt.plot(iterationnum[0:len(fprs5)],fprs5, label=str(mylambda5)+','+str(numalphas5), linestyle='-', marker='>', linewidth=2)
+#     plt.plot(iterationnum[0:len(fprs6)],fprs6, label=str(mylambda6)+','+str(numalphas6), linestyle='-', marker='s', linewidth=2)
+#     plt.plot(iterationnum[0:len(fprs7)],fprs7, label=str(mylambda7)+','+str(numalphas7), linestyle='-', marker='p', linewidth=2)
+#     plt.plot(iterationnum[0:len(fprs8)],fprs8, label=str(mylambda8)+','+str(numalphas8), linestyle='-', marker='H', linewidth=2)
+#     plt.plot(iterationnum[0:len(fprs9)],fprs9, label=str(mylambda9)+','+str(numalphas9), linestyle='-', marker='d', linewidth=2)
+#     plt.plot(iterationnum[0:len(fprs10)],fprs10, label=str(mylambda10)+','+str(numalphas10), linestyle='-', marker='x', linewidth=2)
+#     plt.plot(iterationnum[0:len(fprs11)],fprs11, label=str(mylambda11)+','+str(numalphas11), linestyle='-', marker='D', linewidth=2)
+#     title('Training FPRs')
+#     xlabel('Iteration')
+#     ylabel('FPR')
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# #     plt.legend()
+#     plt.grid()
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingFPRs.png", dpi=300)
+# #     plt.show()
+#   
+#   
+#     plt.plot(iterationnum[0:len(errors1)],errors1, label=str(mylambda1)+','+str(numalphas1), linestyle='-', marker='o', linewidth=2)
+#     plt.plot(iterationnum[0:len(errors2)],errors2, label=str(mylambda2)+','+str(numalphas2), linestyle='-', marker='v', linewidth=2)
+#     plt.plot(iterationnum[0:len(errors3)],errors3, label=str(mylambda3)+','+str(numalphas3), linestyle='-', marker='^', linewidth=2)
+#     plt.plot(iterationnum[0:len(errors4)],errors4, label=str(mylambda4)+','+str(numalphas4), linestyle='-', marker='<', linewidth=2)
+#     plt.plot(iterationnum[0:len(errors5)],errors5, label=str(mylambda5)+','+str(numalphas5), linestyle='-', marker='>', linewidth=2)
+#     plt.plot(iterationnum[0:len(errors6)],errors6, label=str(mylambda6)+','+str(numalphas6), linestyle='-', marker='s', linewidth=2)
+#     plt.plot(iterationnum[0:len(errors7)],errors7, label=str(mylambda7)+','+str(numalphas7), linestyle='-', marker='p', linewidth=2)
+#     plt.plot(iterationnum[0:len(errors8)],errors8, label=str(mylambda8)+','+str(numalphas8), linestyle='-', marker='H', linewidth=2)
+#     plt.plot(iterationnum[0:len(errors9)],errors9, label=str(mylambda9)+','+str(numalphas9), linestyle='-', marker='d', linewidth=2)
+#     plt.plot(iterationnum[0:len(errors10)],errors10, label=str(mylambda10)+','+str(numalphas10), linestyle='-', marker='x', linewidth=2)
+#     plt.plot(iterationnum[0:len(errors11)],errors11, label=str(mylambda11)+','+str(numalphas11), linestyle='-', marker='D', linewidth=2)
+#     title('Training Errors')
+#     xlabel('Iteration')
+#     ylabel('Error')
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# #     plt.legend()
+#     plt.grid()
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingErrors.png", dpi=300)
+# #     plt.show()
+
+#     plt.gca().set_color_cycle([colormap(i) for i in np.linspace(0, 0.9, 15)])
+#   
+#     plt.plot(iterationnum[0:len(payoffs1)],payoffs1, label=str(mylambda1)+','+str(numalphas1), linestyle='-', marker='o', linewidth=2)    
+#     plt.plot(iterationnum[0:len(payoffs2)],payoffs2, label=str(mylambda2)+','+str(numalphas2), linestyle='-', marker='v', linewidth=2)
+#     plt.plot(iterationnum[0:len(payoffs3)],payoffs3, label=str(mylambda3)+','+str(numalphas3), linestyle='-', marker='^', linewidth=2)
+#     plt.plot(iterationnum[0:len(payoffs4)],payoffs4, label=str(mylambda4)+','+str(numalphas4), linestyle='-', marker='<', linewidth=2)
+#     plt.plot(iterationnum[0:len(payoffs5)],payoffs5, label=str(mylambda5)+','+str(numalphas5), linestyle='-', marker='>', linewidth=2)
+#     plt.plot(iterationnum[0:len(payoffs6)],payoffs6, label=str(mylambda6)+','+str(numalphas6), linestyle='-', marker='s', linewidth=2)
+#     plt.plot(iterationnum[0:len(payoffs7)],payoffs7, label=str(mylambda7)+','+str(numalphas7), linestyle='-', marker='p', linewidth=2)
+#     plt.plot(iterationnum[0:len(payoffs8)],payoffs8, label=str(mylambda8)+','+str(numalphas8), linestyle='-', marker='H', linewidth=2)
+#     plt.plot(iterationnum[0:len(payoffs9)],payoffs9, label=str(mylambda9)+','+str(numalphas9), linestyle='-', marker='d', linewidth=2)
+#     plt.plot(iterationnum[0:len(payoffs10)],payoffs10, label=str(mylambda10)+','+str(numalphas10), linestyle='-', marker='x', linewidth=2)
+#     plt.plot(iterationnum[0:len(payoffs11)],payoffs11, label=str(mylambda11)+','+str(numalphas11), linestyle='-', marker='D', linewidth=2)
+#     title('Training Payoffs')
+#     xlabel('Iteration')
+#     ylabel('Payoff')
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# #     plt.legend()
+#     plt.grid()
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingPayoffs.png", dpi=300)
+# #     plt.show()
   
   
-    plt.plot(iterationnum[0:len(errors1)],errors1, label=str(mylambda1)+','+str(numalphas1))
-    plt.plot(iterationnum[0:len(errors2)],errors2, label=str(mylambda2)+','+str(numalphas2))
-    plt.plot(iterationnum[0:len(errors3)],errors3, label=str(mylambda3)+','+str(numalphas3))
-    plt.plot(iterationnum[0:len(errors4)],errors4, label=str(mylambda4)+','+str(numalphas4))
-    plt.plot(iterationnum[0:len(errors5)],errors5, label=str(mylambda5)+','+str(numalphas5))
-    plt.plot(iterationnum[0:len(errors6)],errors6, label=str(mylambda6)+','+str(numalphas6))
-    plt.plot(iterationnum[0:len(errors7)],errors7, label=str(mylambda7)+','+str(numalphas7))
-    plt.plot(iterationnum[0:len(errors8)],errors8, label=str(mylambda8)+','+str(numalphas8))
-    plt.plot(iterationnum[0:len(errors9)],errors9, label=str(mylambda9)+','+str(numalphas9))
-    plt.plot(iterationnum[0:len(errors10)],errors10, label=str(mylambda10)+','+str(numalphas10))
-    plt.plot(iterationnum[0:len(errors11)],errors11, label=str(mylambda11)+','+str(numalphas11))
-    title('Training Errors')
-    xlabel('Iteration')
-    ylabel('Error')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingErrors.png")
-#     plt.show()
-  
-  
-    plt.plot(iterationnum[0:len(payoffs1)],payoffs1, label=str(mylambda1)+','+str(numalphas1))
-    plt.plot(iterationnum[0:len(payoffs2)],payoffs2, label=str(mylambda2)+','+str(numalphas2))
-    plt.plot(iterationnum[0:len(payoffs3)],payoffs3, label=str(mylambda3)+','+str(numalphas3))
-    plt.plot(iterationnum[0:len(payoffs4)],payoffs4, label=str(mylambda4)+','+str(numalphas4))
-    plt.plot(iterationnum[0:len(payoffs5)],payoffs5, label=str(mylambda5)+','+str(numalphas5))
-    plt.plot(iterationnum[0:len(payoffs6)],payoffs6, label=str(mylambda6)+','+str(numalphas6))
-    plt.plot(iterationnum[0:len(payoffs7)],payoffs7, label=str(mylambda7)+','+str(numalphas7))
-    plt.plot(iterationnum[0:len(payoffs8)],payoffs8, label=str(mylambda8)+','+str(numalphas8))
-    plt.plot(iterationnum[0:len(payoffs9)],payoffs9, label=str(mylambda9)+','+str(numalphas9))
-    plt.plot(iterationnum[0:len(payoffs10)],payoffs10, label=str(mylambda10)+','+str(numalphas10))
-    plt.plot(iterationnum[0:len(payoffs11)],payoffs11, label=str(mylambda11)+','+str(numalphas11))
-    title('Training Payoffs')
-    xlabel('Iteration')
-    ylabel('Payoff')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingPayoffs.png")
-#     plt.show()
-  
-  
-    plt.plot(iterationnum[0:len(norms1)],norms1, label=str(mylambda1)+','+str(numalphas1))
-    plt.plot(iterationnum[0:len(norms2)],norms2, label=str(mylambda2)+','+str(numalphas2))
-    plt.plot(iterationnum[0:len(norms3)],norms3, label=str(mylambda3)+','+str(numalphas3))
-    plt.plot(iterationnum[0:len(norms4)],norms4, label=str(mylambda4)+','+str(numalphas4))
-    plt.plot(iterationnum[0:len(norms5)],norms5, label=str(mylambda5)+','+str(numalphas5))
-    plt.plot(iterationnum[0:len(norms6)],norms6, label=str(mylambda6)+','+str(numalphas6))
-    plt.plot(iterationnum[0:len(norms7)],norms7, label=str(mylambda7)+','+str(numalphas7))
-    plt.plot(iterationnum[0:len(norms8)],norms8, label=str(mylambda8)+','+str(numalphas8))
-    plt.plot(iterationnum[0:len(norms9)],norms9, label=str(mylambda9)+','+str(numalphas9))
-    plt.plot(iterationnum[0:len(norms10)],norms10, label=str(mylambda10)+','+str(numalphas10))
-    plt.plot(iterationnum[0:len(norms11)],norms11, label=str(mylambda11)+','+str(numalphas11))
-    title('Training Norms')
-    xlabel('Iteration')
-    ylabel('Norm')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingNorms.png")
-#     plt.show()
+#     plt.plot(iterationnum[0:len(norms1)],norms1, label=str(mylambda1)+','+str(numalphas1), linestyle='-', marker='o', linewidth=2)
+#     plt.plot(iterationnum[0:len(norms2)],norms2, label=str(mylambda2)+','+str(numalphas2), linestyle='-', marker='v', linewidth=2)
+#     plt.plot(iterationnum[0:len(norms3)],norms3, label=str(mylambda3)+','+str(numalphas3), linestyle='-', marker='^', linewidth=2)
+#     plt.plot(iterationnum[0:len(norms4)],norms4, label=str(mylambda4)+','+str(numalphas4), linestyle='-', marker='<', linewidth=2)
+#     plt.plot(iterationnum[0:len(norms5)],norms5, label=str(mylambda5)+','+str(numalphas5), linestyle='-', marker='>', linewidth=2)
+#     plt.plot(iterationnum[0:len(norms6)],norms6, label=str(mylambda6)+','+str(numalphas6), linestyle='-', marker='s', linewidth=2)
+#     plt.plot(iterationnum[0:len(norms7)],norms7, label=str(mylambda7)+','+str(numalphas7), linestyle='-', marker='p', linewidth=2)
+#     plt.plot(iterationnum[0:len(norms8)],norms8, label=str(mylambda8)+','+str(numalphas8), linestyle='-', marker='H', linewidth=2)
+#     plt.plot(iterationnum[0:len(norms9)],norms9, label=str(mylambda9)+','+str(numalphas9), linestyle='-', marker='d', linewidth=2)
+#     plt.plot(iterationnum[0:len(norms10)],norms10, label=str(mylambda10)+','+str(numalphas10), linestyle='-', marker='x', linewidth=2)
+#     plt.plot(iterationnum[0:len(norms11)],norms11, label=str(mylambda11)+','+str(numalphas11), linestyle='-', marker='D', linewidth=2)
+#     title('Training Norms')
+#     xlabel('Iteration')
+#     ylabel('Norm')
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# #     plt.legend()
+#     plt.grid()
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingNorms.png", dpi=300)
+# #     plt.show()
 
 
     print('Successfully saved all plots one at a time')
@@ -704,232 +755,242 @@ def trainplots():
 
         
 def gaplots():
-    mutationx1 = []
-    mutationy1 = []
-        
-    mutationx1.append(5)
-    mutationy1.append(0.3571)
-   
-    mutationx1.append(10)
-    mutationy1.append(0.2625)
-    
-    mutationx1.append(20)
-    mutationy1.append(0.2815)
-    
-    mutationx1.append(30)
-    mutationy1.append(0.2165)
-    
-    mutationx1.append(40)
-    mutationy1.append(0.2534)
-    
-    mutationx1.append(50)
-    mutationy1.append(0.2607)
-    
-    mutationx1.append(60)
-    mutationy1.append(0.4142)
-    
-    mutationx1.append(70)
-    mutationy1.append(0.3376)
-    
-    mutationx1.append(80)
-    mutationy1.append(0.4153)
+#     mutationx1 = []
+#     mutationy1 = []
+#         
+#     mutationx1.append(5)
+#     mutationy1.append(0.3571)
+#    
+#     mutationx1.append(10)
+#     mutationy1.append(0.2625)
+#     
+#     mutationx1.append(20)
+#     mutationy1.append(0.2815)
+#     
+#     mutationx1.append(30)
+#     mutationy1.append(0.2165)
+#     
+#     mutationx1.append(40)
+#     mutationy1.append(0.2534)
+#     
+#     mutationx1.append(50)
+#     mutationy1.append(0.2607)
+#     
+#     mutationx1.append(60)
+#     mutationy1.append(0.4142)
+#     
+#     mutationx1.append(70)
+#     mutationy1.append(0.3376)
+#     
 #     mutationx1.append(80)
-#     mutationy1.append(0.6241)
-    
-    mutationx1.append(90)
-    mutationy1.append(0.4951)
-    
-    mutationx1.append(100)
-    mutationy1.append(0.4541)
-    
-    mutationx1.append(200)
-    mutationy1.append(0.4123)
-    
-  
-    mutationx2 = []
-    mutationy2 = []
-    mutationx2.append(5)
-    mutationy2.append(0.2551)
-  
-    mutationx2.append(10)
-    mutationy2.append(0.3948)
-  
-    mutationx2.append(20)
-    mutationy2.append(0.3583)
-  
-    mutationx2.append(30)
-    mutationy2.append(0.2614)
-  
-    mutationx2.append(40)
-    mutationy2.append(0.2366)
-  
-    mutationx2.append(50)
-    mutationy2.append(0.2145)
-  
-    mutationx2.append(60)
-    mutationy2.append(0.5632)
-  
-    mutationx2.append(70)
-    mutationy2.append(0.2684)
-  
-    mutationx2.append(80)
-    mutationy2.append(0.2302)
-  
-    mutationx2.append(90)
-    mutationy2.append(0.618)
-  
-    mutationx2.append(100)
-    mutationy2.append(0.616)
-   
-    mutationx2.append(200)
-    mutationy2.append(0.296)
-  
-    mutationx3 = []
-    mutationy3 = []
-      
-    mutationx3.append(5)
-    mutationy3.append(0.3809)
-  
-    mutationx3.append(10)
-    mutationy3.append(0.3279)
-  
-    mutationx3.append(20)
-    mutationy3.append(0.308)
-  
-    mutationx3.append(30)
-    mutationy3.append(0.4022)
-  
-    mutationx3.append(40)
-    mutationy3.append(0.2397)
-  
-    mutationx3.append(50)
-    mutationy3.append(0.2502)
-  
-    mutationx3.append(60)
-    mutationy3.append(0.3692)
-   
-    mutationx3.append(70)
-    mutationy3.append(0.4666)
-   
-    mutationx3.append(80)
-    mutationy3.append(0.5171)
-   
-    mutationx3.append(90)
-    mutationy3.append(0.3482)
-   
-    mutationx3.append(100)
-    mutationy3.append(0.2292)
-   
-    mutationx3.append(200)
-    mutationy3.append(0.2000)
-      
-         
-    plt.plot(mutationx1,mutationy1, label=str(10))
-    plt.plot(mutationx2,mutationy2, label=str(1))
-    plt.plot(mutationx3,mutationy3, label=str(0.1))
-    title('Parameter Tuning : Mutation Operation')
-    xlabel('Upper Bound for Mutation')
-    ylabel('Manipulated testing f1score on manipulated training data')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/MutationParams.png")
+#     mutationy1.append(0.4153)
+# #     mutationx1.append(80)
+# #     mutationy1.append(0.6241)
+#     
+#     mutationx1.append(90)
+#     mutationy1.append(0.4951)
+#     
+#     mutationx1.append(100)
+#     mutationy1.append(0.4541)
+#     
+#     mutationx1.append(200)
+#     mutationy1.append(0.4123)
+#     
+#   
+#     mutationx2 = []
+#     mutationy2 = []
+#     mutationx2.append(5)
+#     mutationy2.append(0.2551)
+#   
+#     mutationx2.append(10)
+#     mutationy2.append(0.3948)
+#   
+#     mutationx2.append(20)
+#     mutationy2.append(0.3583)
+#   
+#     mutationx2.append(30)
+#     mutationy2.append(0.2614)
+#   
+#     mutationx2.append(40)
+#     mutationy2.append(0.2366)
+#   
+#     mutationx2.append(50)
+#     mutationy2.append(0.2145)
+#   
+#     mutationx2.append(60)
+#     mutationy2.append(0.5632)
+#   
+#     mutationx2.append(70)
+#     mutationy2.append(0.2684)
+#   
+#     mutationx2.append(80)
+#     mutationy2.append(0.2302)
+#   
+#     mutationx2.append(90)
+#     mutationy2.append(0.618)
+#   
+#     mutationx2.append(100)
+#     mutationy2.append(0.616)
+#    
+#     mutationx2.append(200)
+#     mutationy2.append(0.296)
+#   
+#     mutationx3 = []
+#     mutationy3 = []
+#       
+#     mutationx3.append(5)
+#     mutationy3.append(0.3809)
+#   
+#     mutationx3.append(10)
+#     mutationy3.append(0.3279)
+#   
+#     mutationx3.append(20)
+#     mutationy3.append(0.308)
+#   
+#     mutationx3.append(30)
+#     mutationy3.append(0.4022)
+#   
+#     mutationx3.append(40)
+#     mutationy3.append(0.2397)
+#   
+#     mutationx3.append(50)
+#     mutationy3.append(0.2502)
+#   
+#     mutationx3.append(60)
+#     mutationy3.append(0.3692)
+#    
+#     mutationx3.append(70)
+#     mutationy3.append(0.4666)
+#    
+#     mutationx3.append(80)
+#     mutationy3.append(0.5171)
+#    
+#     mutationx3.append(90)
+#     mutationy3.append(0.3482)
+#    
+#     mutationx3.append(100)
+#     mutationy3.append(0.2292)
+#    
+#     mutationx3.append(200)
+#     mutationy3.append(0.2000)
+#       
+#          
+#     plt.plot(mutationx1,mutationy1, label=str(10), linestyle='-', marker='o', linewidth=2)
+#     plt.plot(mutationx2,mutationy2, label=str(1), linestyle='-', marker='v', linewidth=2)
+#     plt.plot(mutationx3,mutationy3, label=str(0.1), linestyle='-', marker='^', linewidth=2)
+#     title('Parameter Tuning : Mutation Operation')
+#     xlabel('Upper Bound for Mutation')
+#     ylabel('Manipulated testing f1score on manipulated training data')
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# #     plt.legend()
+#     plt.grid()
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/MutationParams.png", dpi=300)
 
 
 
 
 
-    crossoverx1 = []
-    crossovery1 = []
-  
-    crossoverx1.append(2)
-    crossovery1.append(0.2607)
-  
-    crossoverx1.append(3)
-    crossovery1.append(0.6202)
-  
-    crossoverx1.append(4)
-    crossovery1.append(0.2084)
-  
-    crossoverx1.append(5)
-    crossovery1.append(0.241)
-  
-    crossoverx1.append(6)
-    crossovery1.append(0.2735)
-  
-    crossoverx1.append(7)
-    crossovery1.append(0.2489)
-  
-    crossoverx1.append(8)
-    crossovery1.append(0.5463)
-
-    crossoverx1.append(9)
-    crossovery1.append(0.6222)
-
-
-    crossoverx2 = []
-    crossovery2 = []
-  
-    crossoverx2.append(2)
-    crossovery2.append(0.2844)
-  
-    crossoverx2.append(3)
-    crossovery2.append(0.3393)
-  
-    crossoverx2.append(4)
-    crossovery2.append(0.3293)
-  
-    crossoverx2.append(5)
-    crossovery2.append(0.2538)
-  
-    crossoverx2.append(6)
-    crossovery2.append(0.2549)
-  
-    crossoverx2.append(7)
-    crossovery2.append(0.2813)
-  
-    crossoverx2.append(8)
-    crossovery2.append(0.2377)
-
-    crossoverx2.append(9)
-    crossovery2.append(0.5541)
-
-
-
-    crossoverx3 = []
-    crossovery3 = []
-  
-    crossoverx3.append(2)
-    crossovery3.append(0.4352)
-  
-    crossoverx3.append(3)
-    crossovery3.append(0.339)
-  
-    crossoverx3.append(4)
-    crossovery3.append(0.3997)
-  
-    crossoverx3.append(5)
-    crossovery3.append(0.297)
-  
-    crossoverx3.append(6)
-    crossovery3.append(0.2066)
-  
-    crossoverx3.append(7)
-    crossovery3.append(0.3037)
-  
-    crossoverx3.append(8)
-    crossovery3.append(0.361)
-
-    crossoverx3.append(9)
-    crossovery3.append(0.5067)
- 
-    plt.plot(crossoverx1,crossovery1, label=str(10))
-    plt.plot(crossoverx2,crossovery2, label=str(1))
-    plt.plot(crossoverx3,crossovery3, label=str(0.1))
-
-    title('Parameter Tuning : Crossover Operation')
-    xlabel('Minimum width for Crossover')
-    ylabel('Manipulated testing f1score on manipulated training data')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/CrossoverParams.png")
+#     crossoverx1 = []
+#     crossovery1 = []
+#   
+#     crossoverx1.append(2)
+#     crossovery1.append(0.2607)
+#   
+#     crossoverx1.append(3)
+#     crossovery1.append(0.6202)
+#   
+#     crossoverx1.append(4)
+#     crossovery1.append(0.2084)
+#   
+#     crossoverx1.append(5)
+#     crossovery1.append(0.241)
+#   
+#     crossoverx1.append(6)
+#     crossovery1.append(0.2735)
+#   
+#     crossoverx1.append(7)
+#     crossovery1.append(0.2489)
+#   
+#     crossoverx1.append(8)
+#     crossovery1.append(0.5463)
+# 
+#     crossoverx1.append(9)
+#     crossovery1.append(0.6222)
+# 
+# 
+#     crossoverx2 = []
+#     crossovery2 = []
+#   
+#     crossoverx2.append(2)
+#     crossovery2.append(0.2844)
+#   
+#     crossoverx2.append(3)
+#     crossovery2.append(0.3393)
+#   
+#     crossoverx2.append(4)
+#     crossovery2.append(0.3293)
+#   
+#     crossoverx2.append(5)
+#     crossovery2.append(0.2538)
+#   
+#     crossoverx2.append(6)
+#     crossovery2.append(0.2549)
+#   
+#     crossoverx2.append(7)
+#     crossovery2.append(0.2813)
+#   
+#     crossoverx2.append(8)
+#     crossovery2.append(0.2377)
+# 
+#     crossoverx2.append(9)
+#     crossovery2.append(0.5541)
+# 
+# 
+# 
+#     crossoverx3 = []
+#     crossovery3 = []
+#   
+#     crossoverx3.append(2)
+#     crossovery3.append(0.4352)
+#   
+#     crossoverx3.append(3)
+#     crossovery3.append(0.339)
+#   
+#     crossoverx3.append(4)
+#     crossovery3.append(0.3997)
+#   
+#     crossoverx3.append(5)
+#     crossovery3.append(0.297)
+#   
+#     crossoverx3.append(6)
+#     crossovery3.append(0.2066)
+#   
+#     crossoverx3.append(7)
+#     crossovery3.append(0.3037)
+#   
+#     crossoverx3.append(8)
+#     crossovery3.append(0.361)
+# 
+#     crossoverx3.append(9)
+#     crossovery3.append(0.5067)
+#  
+#     plt.plot(crossoverx1,crossovery1, label=str(10), linestyle='-', marker='<', linewidth=2)
+#     plt.plot(crossoverx2,crossovery2, label=str(1), linestyle='-', marker='>', linewidth=2)
+#     plt.plot(crossoverx3,crossovery3, label=str(0.1), linestyle='-', marker='s', linewidth=2)
+# 
+#     title('Parameter Tuning : Crossover Operation')
+#     xlabel('Minimum width for Crossover')
+#     ylabel('Manipulated testing f1score on manipulated training data')
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# #     plt.legend()
+#     plt.grid()
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/CrossoverParams.png", dpi=300)
 
 
 
@@ -1021,14 +1082,19 @@ def gaplots():
  
  
    
-    plt.plot(selectionx1,selectiony1, label=str(10))
-    plt.plot(selectionx2,selectiony2, label=str(1))
-    plt.plot(selectionx3,selectiony3, label=str(0.1))
+    plt.plot(selectionx1,selectiony1, label=str(10), linestyle='-', marker='p', linewidth=2)
+    plt.plot(selectionx2,selectiony2, label=str(1), linestyle='-', marker='H', linewidth=2)
+    plt.plot(selectionx3,selectiony3, label=str(0.1), linestyle='-', marker='d', linewidth=2)
     title('Parameter Tuning : Selection Operation')
     xlabel('Percentage offspring size for Selection')
     ylabel('Manipulated testing f1score on manipulated training data')
-    plt.legend()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png")
+    ax = plt.subplot(111)
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+#     plt.legend()
+    plt.grid()
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png", dpi=300)
 
 
     print('Successfully saved all plots one at a time')
@@ -1160,4 +1226,13 @@ if __name__ == '__main__':
 #     generatereports()
 #     trainplots()
 #     ttest()
-    gaplots()
+#     gaplots()
+
+
+    resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')
+    resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/SmallCat/')
+     
+#     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'TestSplit/BrownDog/')
+#     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'TestSplit/SmallCat/')
+    
+        

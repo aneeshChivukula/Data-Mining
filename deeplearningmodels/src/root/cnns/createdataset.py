@@ -574,7 +574,8 @@ def trainplots():
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 #     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 # #     plt.legend()
-#     plt.grid()
+# #     plt.grid()
+#     plt.grid(linestyle='-', linewidth=0.4)
 #     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingPrecisions.png", dpi=300)
 # #     plt.show()
   
@@ -597,7 +598,8 @@ def trainplots():
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 #     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 # #     plt.legend()
-#     plt.grid()
+# #     plt.grid()
+#     plt.grid(linestyle='-', linewidth=0.4)
 #     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingRecalls.png", dpi=300)
 # #     plt.show()
 #       
@@ -621,7 +623,8 @@ def trainplots():
     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 #     plt.legend()
-    plt.grid()
+# #     plt.grid()
+    plt.grid(linestyle='-', linewidth=0.4)
     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingF1Scores.png", dpi=300)
 #     plt.show()
    
@@ -644,7 +647,8 @@ def trainplots():
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 #     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 # #     plt.legend()
-#     plt.grid()
+# #     plt.grid()
+#     plt.grid(linestyle='-', linewidth=0.4)
 #     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingTPRs.png", dpi=300)
 # #     plt.show()
 #   
@@ -668,7 +672,8 @@ def trainplots():
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 #     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 # #     plt.legend()
-#     plt.grid()
+# #     plt.grid()
+#    plt.grid(linestyle='-', linewidth=0.4)
 #     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingFPRs.png", dpi=300)
 # #     plt.show()
 #   
@@ -692,7 +697,8 @@ def trainplots():
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 #     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 # #     plt.legend()
-#     plt.grid()
+# #     plt.grid()
+#    plt.grid(linestyle='-', linewidth=0.4)
 #     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingErrors.png", dpi=300)
 # #     plt.show()
 
@@ -717,7 +723,8 @@ def trainplots():
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 #     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 # #     plt.legend()
-#     plt.grid()
+# #     plt.grid()
+#    plt.grid(linestyle='-', linewidth=0.4)
 #     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingPayoffs.png", dpi=300)
 # #     plt.show()
   
@@ -741,7 +748,8 @@ def trainplots():
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 #     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 # #     plt.legend()
-#     plt.grid()
+# #     plt.grid()
+#    plt.grid(linestyle='-', linewidth=0.4)
 #     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/TrainingNorms.png", dpi=300)
 # #     plt.show()
 
@@ -755,139 +763,140 @@ def trainplots():
 
         
 def gaplots():
-#     mutationx1 = []
-#     mutationy1 = []
-#         
-#     mutationx1.append(5)
-#     mutationy1.append(0.3571)
-#    
-#     mutationx1.append(10)
-#     mutationy1.append(0.2625)
-#     
-#     mutationx1.append(20)
-#     mutationy1.append(0.2815)
-#     
-#     mutationx1.append(30)
-#     mutationy1.append(0.2165)
-#     
-#     mutationx1.append(40)
-#     mutationy1.append(0.2534)
-#     
-#     mutationx1.append(50)
-#     mutationy1.append(0.2607)
-#     
-#     mutationx1.append(60)
-#     mutationy1.append(0.4142)
-#     
-#     mutationx1.append(70)
-#     mutationy1.append(0.3376)
-#     
+    mutationx1 = []
+    mutationy1 = []
+         
+    mutationx1.append(5)
+    mutationy1.append(0.3571)
+    
+    mutationx1.append(10)
+    mutationy1.append(0.2625)
+     
+    mutationx1.append(20)
+    mutationy1.append(0.2815)
+     
+    mutationx1.append(30)
+    mutationy1.append(0.2165)
+     
+    mutationx1.append(40)
+    mutationy1.append(0.2534)
+     
+    mutationx1.append(50)
+    mutationy1.append(0.2607)
+     
+    mutationx1.append(60)
+    mutationy1.append(0.4142)
+     
+    mutationx1.append(70)
+    mutationy1.append(0.3376)
+     
+    mutationx1.append(80)
+    mutationy1.append(0.4153)
 #     mutationx1.append(80)
-#     mutationy1.append(0.4153)
-# #     mutationx1.append(80)
-# #     mutationy1.append(0.6241)
-#     
-#     mutationx1.append(90)
-#     mutationy1.append(0.4951)
-#     
-#     mutationx1.append(100)
-#     mutationy1.append(0.4541)
-#     
-#     mutationx1.append(200)
-#     mutationy1.append(0.4123)
-#     
-#   
-#     mutationx2 = []
-#     mutationy2 = []
-#     mutationx2.append(5)
-#     mutationy2.append(0.2551)
-#   
-#     mutationx2.append(10)
-#     mutationy2.append(0.3948)
-#   
-#     mutationx2.append(20)
-#     mutationy2.append(0.3583)
-#   
-#     mutationx2.append(30)
-#     mutationy2.append(0.2614)
-#   
-#     mutationx2.append(40)
-#     mutationy2.append(0.2366)
-#   
-#     mutationx2.append(50)
-#     mutationy2.append(0.2145)
-#   
-#     mutationx2.append(60)
-#     mutationy2.append(0.5632)
-#   
-#     mutationx2.append(70)
-#     mutationy2.append(0.2684)
-#   
-#     mutationx2.append(80)
-#     mutationy2.append(0.2302)
-#   
-#     mutationx2.append(90)
-#     mutationy2.append(0.618)
-#   
-#     mutationx2.append(100)
-#     mutationy2.append(0.616)
-#    
-#     mutationx2.append(200)
-#     mutationy2.append(0.296)
-#   
-#     mutationx3 = []
-#     mutationy3 = []
-#       
-#     mutationx3.append(5)
-#     mutationy3.append(0.3809)
-#   
-#     mutationx3.append(10)
-#     mutationy3.append(0.3279)
-#   
-#     mutationx3.append(20)
-#     mutationy3.append(0.308)
-#   
-#     mutationx3.append(30)
-#     mutationy3.append(0.4022)
-#   
-#     mutationx3.append(40)
-#     mutationy3.append(0.2397)
-#   
-#     mutationx3.append(50)
-#     mutationy3.append(0.2502)
-#   
-#     mutationx3.append(60)
-#     mutationy3.append(0.3692)
-#    
-#     mutationx3.append(70)
-#     mutationy3.append(0.4666)
-#    
-#     mutationx3.append(80)
-#     mutationy3.append(0.5171)
-#    
-#     mutationx3.append(90)
-#     mutationy3.append(0.3482)
-#    
-#     mutationx3.append(100)
-#     mutationy3.append(0.2292)
-#    
-#     mutationx3.append(200)
-#     mutationy3.append(0.2000)
-#       
-#          
-#     plt.plot(mutationx1,mutationy1, label=str(10), linestyle='-', marker='o', linewidth=2)
-#     plt.plot(mutationx2,mutationy2, label=str(1), linestyle='-', marker='v', linewidth=2)
-#     plt.plot(mutationx3,mutationy3, label=str(0.1), linestyle='-', marker='^', linewidth=2)
-#     title('Parameter Tuning : Mutation Operation')
-#     xlabel('Upper Bound for Mutation')
-#     ylabel('Manipulated testing f1score on manipulated training data')
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-# #     plt.legend()
+#     mutationy1.append(0.6241)
+     
+    mutationx1.append(90)
+    mutationy1.append(0.4951)
+     
+    mutationx1.append(100)
+    mutationy1.append(0.4541)
+     
+    mutationx1.append(200)
+    mutationy1.append(0.4123)
+     
+   
+    mutationx2 = []
+    mutationy2 = []
+    mutationx2.append(5)
+    mutationy2.append(0.2551)
+   
+    mutationx2.append(10)
+    mutationy2.append(0.3948)
+   
+    mutationx2.append(20)
+    mutationy2.append(0.3583)
+   
+    mutationx2.append(30)
+    mutationy2.append(0.2614)
+   
+    mutationx2.append(40)
+    mutationy2.append(0.2366)
+   
+    mutationx2.append(50)
+    mutationy2.append(0.2145)
+   
+    mutationx2.append(60)
+    mutationy2.append(0.5632)
+   
+    mutationx2.append(70)
+    mutationy2.append(0.2684)
+   
+    mutationx2.append(80)
+    mutationy2.append(0.2302)
+   
+    mutationx2.append(90)
+    mutationy2.append(0.618)
+   
+    mutationx2.append(100)
+    mutationy2.append(0.616)
+    
+    mutationx2.append(200)
+    mutationy2.append(0.296)
+   
+    mutationx3 = []
+    mutationy3 = []
+       
+    mutationx3.append(5)
+    mutationy3.append(0.3809)
+   
+    mutationx3.append(10)
+    mutationy3.append(0.3279)
+   
+    mutationx3.append(20)
+    mutationy3.append(0.308)
+   
+    mutationx3.append(30)
+    mutationy3.append(0.4022)
+   
+    mutationx3.append(40)
+    mutationy3.append(0.2397)
+   
+    mutationx3.append(50)
+    mutationy3.append(0.2502)
+   
+    mutationx3.append(60)
+    mutationy3.append(0.3692)
+    
+    mutationx3.append(70)
+    mutationy3.append(0.4666)
+    
+    mutationx3.append(80)
+    mutationy3.append(0.5171)
+    
+    mutationx3.append(90)
+    mutationy3.append(0.3482)
+    
+    mutationx3.append(100)
+    mutationy3.append(0.2292)
+    
+    mutationx3.append(200)
+    mutationy3.append(0.2000)
+       
+          
+    plt.plot(mutationx1,mutationy1, label=str(10), linestyle='-', marker='o', linewidth=2)
+    plt.plot(mutationx2,mutationy2, label=str(1), linestyle='-', marker='v', linewidth=2)
+    plt.plot(mutationx3,mutationy3, label=str(0.1), linestyle='-', marker='^', linewidth=2)
+    title('Parameter Tuning : Mutation Operation')
+    xlabel('Upper Bound for Mutation')
+    ylabel('Manipulated testing f1score on manipulated training data')
+    ax = plt.subplot(111)
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+#     plt.legend()
 #     plt.grid()
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/MutationParams.png", dpi=300)
+    plt.grid(linestyle='-', linewidth=0.4)
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/MutationParams.png", dpi=300)
 
 
 
@@ -895,92 +904,92 @@ def gaplots():
 
 #     crossoverx1 = []
 #     crossovery1 = []
-#   
+#    
 #     crossoverx1.append(2)
 #     crossovery1.append(0.2607)
-#   
+#    
 #     crossoverx1.append(3)
 #     crossovery1.append(0.6202)
-#   
+#    
 #     crossoverx1.append(4)
 #     crossovery1.append(0.2084)
-#   
+#    
 #     crossoverx1.append(5)
 #     crossovery1.append(0.241)
-#   
+#    
 #     crossoverx1.append(6)
 #     crossovery1.append(0.2735)
-#   
+#    
 #     crossoverx1.append(7)
 #     crossovery1.append(0.2489)
-#   
+#    
 #     crossoverx1.append(8)
 #     crossovery1.append(0.5463)
-# 
+#  
 #     crossoverx1.append(9)
 #     crossovery1.append(0.6222)
-# 
-# 
+#  
+#  
 #     crossoverx2 = []
 #     crossovery2 = []
-#   
+#    
 #     crossoverx2.append(2)
 #     crossovery2.append(0.2844)
-#   
+#    
 #     crossoverx2.append(3)
 #     crossovery2.append(0.3393)
-#   
+#    
 #     crossoverx2.append(4)
 #     crossovery2.append(0.3293)
-#   
+#    
 #     crossoverx2.append(5)
 #     crossovery2.append(0.2538)
-#   
+#    
 #     crossoverx2.append(6)
 #     crossovery2.append(0.2549)
-#   
+#    
 #     crossoverx2.append(7)
 #     crossovery2.append(0.2813)
-#   
+#    
 #     crossoverx2.append(8)
 #     crossovery2.append(0.2377)
-# 
+#  
 #     crossoverx2.append(9)
 #     crossovery2.append(0.5541)
-# 
-# 
-# 
+#  
+#  
+#  
 #     crossoverx3 = []
 #     crossovery3 = []
-#   
+#    
 #     crossoverx3.append(2)
 #     crossovery3.append(0.4352)
-#   
+#    
 #     crossoverx3.append(3)
 #     crossovery3.append(0.339)
-#   
+#    
 #     crossoverx3.append(4)
 #     crossovery3.append(0.3997)
-#   
+#    
 #     crossoverx3.append(5)
 #     crossovery3.append(0.297)
-#   
+#    
 #     crossoverx3.append(6)
 #     crossovery3.append(0.2066)
-#   
+#    
 #     crossoverx3.append(7)
 #     crossovery3.append(0.3037)
-#   
+#    
 #     crossoverx3.append(8)
 #     crossovery3.append(0.361)
-# 
+#  
 #     crossoverx3.append(9)
 #     crossovery3.append(0.5067)
-#  
+#   
 #     plt.plot(crossoverx1,crossovery1, label=str(10), linestyle='-', marker='<', linewidth=2)
 #     plt.plot(crossoverx2,crossovery2, label=str(1), linestyle='-', marker='>', linewidth=2)
 #     plt.plot(crossoverx3,crossovery3, label=str(0.1), linestyle='-', marker='s', linewidth=2)
-# 
+#  
 #     title('Parameter Tuning : Crossover Operation')
 #     xlabel('Minimum width for Crossover')
 #     ylabel('Manipulated testing f1score on manipulated training data')
@@ -989,112 +998,113 @@ def gaplots():
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 #     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 # #     plt.legend()
-#     plt.grid()
+# #     plt.grid()
+#     plt.grid(linestyle='-', linewidth=0.4)
 #     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/CrossoverParams.png", dpi=300)
 
 
 
 
  
-    selectionx1 = []
-    selectiony1 = []
-    
-    selectionx1.append(20)
-    selectiony1.append(0.32)
-    
-    selectionx1.append(30)
-    selectiony1.append(0.5542)
-        
-    selectionx1.append(40)
-    selectiony1.append(0.2459)
-  
-    selectionx1.append(50)
-    selectiony1.append(0.2607)
-    
-    selectionx1.append(60)
-    selectiony1.append(0.5016)
-    
-    selectionx1.append(70)
-    selectiony1.append(0.4137)
-    
-    selectionx1.append(80)
-    selectiony1.append(0.2806)
- 
- 
- 
- 
- 
-    selectionx2 = []
-    selectiony2 = []
-    
-    selectionx2.append(20)
-    selectiony2.append(0.3048)
-    
-    selectionx2.append(30)
-    selectiony2.append(0.2981)
-        
-    selectionx2.append(40)
-    selectiony2.append(0.2724)
-  
-    selectionx2.append(50)
-    selectiony2.append(0.3293)
-    
-    selectionx2.append(60)
-    selectiony2.append(0.2609)
-    
-    selectionx2.append(70)
-    selectiony2.append(0.6294)
-    
-    selectionx2.append(80)
-    selectiony2.append(0.4988)
- 
- 
- 
- 
- 
- 
- 
- 
- 
-    selectionx3 = []
-    selectiony3 = []
-    
-    selectionx3.append(20)
-    selectiony3.append(0.4722)
-    
-    selectionx3.append(30)
-    selectiony3.append(0.3063)
-        
-    selectionx3.append(40)
-    selectiony3.append(0.261)
-  
-    selectionx3.append(50)
-    selectiony3.append(0.2502)
-    
-    selectionx3.append(60)
-    selectiony3.append(0.3142)
-    
-    selectionx3.append(70)
-    selectiony3.append(0.2541)
-    
-    selectionx3.append(80)
-    selectiony3.append(0.2806)
- 
- 
-   
-    plt.plot(selectionx1,selectiony1, label=str(10), linestyle='-', marker='p', linewidth=2)
-    plt.plot(selectionx2,selectiony2, label=str(1), linestyle='-', marker='H', linewidth=2)
-    plt.plot(selectionx3,selectiony3, label=str(0.1), linestyle='-', marker='d', linewidth=2)
-    title('Parameter Tuning : Selection Operation')
-    xlabel('Percentage offspring size for Selection')
-    ylabel('Manipulated testing f1score on manipulated training data')
-    ax = plt.subplot(111)
-    box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-#     plt.legend()
-    plt.grid()
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png", dpi=300)
+#     selectionx1 = []
+#     selectiony1 = []
+#     
+#     selectionx1.append(20)
+#     selectiony1.append(0.32)
+#     
+#     selectionx1.append(30)
+#     selectiony1.append(0.5542)
+#         
+#     selectionx1.append(40)
+#     selectiony1.append(0.2459)
+#   
+#     selectionx1.append(50)
+#     selectiony1.append(0.2607)
+#     
+#     selectionx1.append(60)
+#     selectiony1.append(0.5016)
+#     
+#     selectionx1.append(70)
+#     selectiony1.append(0.4137)
+#     
+#     selectionx1.append(80)
+#     selectiony1.append(0.2806)
+#  
+#  
+#  
+#  
+#  
+#     selectionx2 = []
+#     selectiony2 = []
+#     
+#     selectionx2.append(20)
+#     selectiony2.append(0.3048)
+#     
+#     selectionx2.append(30)
+#     selectiony2.append(0.2981)
+#         
+#     selectionx2.append(40)
+#     selectiony2.append(0.2724)
+#   
+#     selectionx2.append(50)
+#     selectiony2.append(0.3293)
+#     
+#     selectionx2.append(60)
+#     selectiony2.append(0.2609)
+#     
+#     selectionx2.append(70)
+#     selectiony2.append(0.6294)
+#     
+#     selectionx2.append(80)
+#     selectiony2.append(0.4988)
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#  
+#     selectionx3 = []
+#     selectiony3 = []
+#     
+#     selectionx3.append(20)
+#     selectiony3.append(0.4722)
+#     
+#     selectionx3.append(30)
+#     selectiony3.append(0.3063)
+#         
+#     selectionx3.append(40)
+#     selectiony3.append(0.261)
+#   
+#     selectionx3.append(50)
+#     selectiony3.append(0.2502)
+#     
+#     selectionx3.append(60)
+#     selectiony3.append(0.3142)
+#     
+#     selectionx3.append(70)
+#     selectiony3.append(0.2541)
+#     
+#     selectionx3.append(80)
+#     selectiony3.append(0.2806)
+#  
+#  
+#    
+#     plt.plot(selectionx1,selectiony1, label=str(10), linestyle='-', marker='p', linewidth=2)
+#     plt.plot(selectionx2,selectiony2, label=str(1), linestyle='-', marker='H', linewidth=2)
+#     plt.plot(selectionx3,selectiony3, label=str(0.1), linestyle='-', marker='d', linewidth=2)
+#     title('Parameter Tuning : Selection Operation')
+#     xlabel('Percentage offspring size for Selection')
+#     ylabel('Manipulated testing f1score on manipulated training data')
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+# #     plt.legend()color='r', linestyle='-', linewidth=2
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png", dpi=300)
 
 
     print('Successfully saved all plots one at a time')
@@ -1226,11 +1236,11 @@ if __name__ == '__main__':
 #     generatereports()
 #     trainplots()
 #     ttest()
-#     gaplots()
+    gaplots()
 
 
-    resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')
-    resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/SmallCat/')
+#     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')
+#     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/SmallCat/')
      
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'TestSplit/BrownDog/')
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'TestSplit/SmallCat/')

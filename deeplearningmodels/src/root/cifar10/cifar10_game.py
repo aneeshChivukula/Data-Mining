@@ -43,7 +43,7 @@ def transformer(AdvInDir,imagespopulation,curralpha,labels):
         if(x[0] == 0):
             CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
         else:
-            CurrImage = np.array(x[1], np.uint8)[0]
+            CurrImage = np.array(x[1], np.uint8)
         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
     
     
@@ -60,10 +60,12 @@ def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
 #     distortedimages = []
     for i,x in enumerate(imagespopulation):
         CurrLabel = labels[x[0]]
-        if(x[0] == 0):
+        if(int(x[0]) == 0):
             CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
         else:
-            CurrImage = np.array(x[1], np.uint8)[0]
+            CurrImage = np.array(x[1], np.uint8)
+#             Image.fromarray(np.array(x[1], np.uint8)).save(AdvInDir + CurrLabel + "/" + str(i+2) + ".jpeg")
+            
         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
         
         l = np.insert(CurrImage.flatten(order='F'),0, x[0])

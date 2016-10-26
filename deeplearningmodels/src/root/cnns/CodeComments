@@ -2854,4 +2854,20 @@ scp -r ./TrainSplit/ achivuku@atlas8:/scratch/cifar10
 scp -r ./TestSplit/ achivuku@atlas8:/scratch/cifar10
 
 
+
+            print('AdvInDir',AdvInDir)
+            print('CurrLabel',CurrLabel)
+            print('i',i)
+            print('CurrImage',CurrImage)
+            print('x[1]',x[1])
+            
+            print 'np.nonzero(CurrImage)',np.nonzero(CurrImage)
+            print('np.nonzero(x[1])',np.nonzero(x[1]))
+            print('np.nonzero(np.array(x[1], np.uint8))',np.nonzero(np.array(x[1], np.uint8)))
+            print('np.nonzero(np.array(x[1], np.uint8)[0])',np.nonzero(np.array(x[1], np.uint8)[0]))
+            
+            
+            
+            sys.exit()
+
 '''

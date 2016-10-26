@@ -91,10 +91,10 @@ tf.app.flags.DEFINE_integer('stephigh', 50,
 # tf.app.flags.DEFINE_integer('stephigh', 200,
 #                             """Small step limit for mutation operator.""")
 
-# tf.app.flags.DEFINE_integer('minwidthstartidx', 2,
-#                             """Minimum window width start idx for the crossover op.""")
-tf.app.flags.DEFINE_integer('minwidthstartidx', 3,
+tf.app.flags.DEFINE_integer('minwidthstartidx', 2,
                             """Minimum window width start idx for the crossover op.""")
+# tf.app.flags.DEFINE_integer('minwidthstartidx', 3,
+#                             """Minimum window width start idx for the crossover op.""")
 # tf.app.flags.DEFINE_integer('minwidthstartidx', 4,
 #                             """Minimum window width start idx for the crossover op.""")
 # tf.app.flags.DEFINE_integer('minwidthstartidx', 5,
@@ -127,8 +127,8 @@ tf.app.flags.DEFINE_integer('offspringsizefactor', 100/50,
 
 tf.app.flags.DEFINE_integer('max_iter_test', 100,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
-# tf.app.flags.DEFINE_integer('numalphas', 2,
-#                             """Number of search solutions in the GA algorithm.""")
+tf.app.flags.DEFINE_integer('numalphas', 2,
+                            """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 10,
 #                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numalphas', 20,
@@ -136,8 +136,8 @@ tf.app.flags.DEFINE_integer('max_iter_test', 100,
 # Next experiment : #
 # tf.app.flags.DEFINE_integer('numalphas', 50,
 #                             """Number of search solutions in the GA algorithm.""")
-tf.app.flags.DEFINE_integer('numalphas', 100,
-                            """Number of search solutions in the GA algorithm.""")
+# tf.app.flags.DEFINE_integer('numalphas', 100,
+#                             """Number of search solutions in the GA algorithm.""")
 # tf.app.flags.DEFINE_integer('numgens', 10,
 #                             """Number of generations in the GA algorithm.""")
 tf.app.flags.DEFINE_integer('numgens', 20,
@@ -639,7 +639,9 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
             if(x[0] == 0):
                 distortedimages.append((distorted_image(x[1],curralpha),x[0]))
             else:
-                distortedimages.append((x[1],x[0]))
+#                 distortedimages.append((x[1],x[0]))
+                distortedimages.append((distorted_image(x[1],np.zeros(curralpha.shape)),x[0]))
+                
 #             print('x[0]',x[0])
 #         np.append(fitnesses,1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
         print('Reset fitnesses in alphasfitnesses')

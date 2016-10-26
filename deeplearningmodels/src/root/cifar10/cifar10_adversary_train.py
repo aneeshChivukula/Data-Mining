@@ -636,13 +636,16 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
     for index,curralpha in enumerate(alphaspopulation):
         distortedimages = []
         for x in imagespopulation:
-            distortedimages.append((distorted_image(x[1],curralpha),x[0]))
+            if(x[0] == 0):
+                distortedimages.append((distorted_image(x[1],curralpha),x[0]))
+            else:
+                distortedimages.append((x[1],x[0]))
 #             print('x[0]',x[0])
 #         np.append(fitnesses,1 + toolbox.evaluate(distortedimages) - (alphanorms[index]/totnorm))
         print('Reset fitnesses in alphasfitnesses')
 #         print('distortedimages',distortedimages)
         
-                
+        
         perfmetrics = toolbox.evaluate(distortedimages)
         error = FLAGS.mylambda * (1-perfmetrics[str(perfmetric)])
         fit = 1 + error - tensornorm(curralpha)

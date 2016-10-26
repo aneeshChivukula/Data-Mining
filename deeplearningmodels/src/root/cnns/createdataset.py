@@ -12,13 +12,14 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import cm
+from PIL import Image
 
 
 # import cv2
-# width = 32
-# height = 32
-width = 1024
-height = 1024
+width = 32
+height = 32
+# width = 1024
+# height = 1024
 length = 3073
 
 # width = 224
@@ -39,16 +40,25 @@ executeonserver = False
 def partitoner(Dir):
     os.chdir(Dir)
     
+#     InDir = Dir + 'LabelledData/'
+#     classdirs = ['BrownDog/','BlackDog/']
+# 
+#     TrainOutDir = Dir + 'TrainSplit/'
+#     TestOutDir = Dir + 'TestSplit/'
+#     percent = 0.8
+
+
     InDir = Dir + 'LabelledData/'
-    classdirs = ['BrownDog/','BlackDog/']
+    classdirs = ['7/','9/']
 
     TrainOutDir = Dir + 'TrainSplit/'
     TestOutDir = Dir + 'TestSplit/'
+    percent = 0.5
 
     for dir in classdirs:
         files = listdir(InDir + dir)
         
-        splitind = int(math.floor(0.8*len(files)))
+        splitind = int(math.floor(percent*len(files)))
         trainfiles = files[0:splitind]
         testfiles = files[splitind:]
     
@@ -57,7 +67,6 @@ def partitoner(Dir):
 
         for file in testfiles:
             copyfile(InDir+dir+file, TestOutDir+dir+file)
-
 
 def resizer(CurrDir):
     os.chdir(CurrDir)
@@ -1199,6 +1208,39 @@ def ttest():
     print('len(l2)',len(l2))
     print('len(l3)',len(l3))
     print 'Need to have length of l to be 20'
+
+
+
+def mnistimages(TrainFile,TestFile,SaveDir):
+    images = open(TrainFile).readlines()
+    label = 0
+    counter = 0
+    for line in images:
+        print line
+        splitline = line.split(',')
+        label = splitline[0]
+        imarray = np.asfarray(splitline[1:]).reshape((28,28))
+
+        image = Image.fromarray(imarray).convert('RGB').resize((width,height), Image.ANTIALIAS)
+
+        image.save(SaveDir + label + '/' + str(counter) +  '.jpeg')
+        counter = counter + 1
+
+        
+    images = open(TestFile).readlines()
+    for line in images:
+        print line
+        splitline = line.split(',')
+        
+        label = splitline[0]
+        imarray = np.asfarray(splitline[1:]).reshape((28,28))
+        
+        image = Image.fromarray(imarray).convert('RGB').resize((width,height), Image.ANTIALIAS)
+
+        image.save(SaveDir + label + '/' + str(counter) +  '.jpeg')
+        counter = counter + 1
+
+
     
 
     
@@ -1236,7 +1278,7 @@ if __name__ == '__main__':
 #     generatereports()
 #     trainplots()
 #     ttest()
-    gaplots()
+#     gaplots()
 
 
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')
@@ -1245,4 +1287,13 @@ if __name__ == '__main__':
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'TestSplit/BrownDog/')
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'TestSplit/SmallCat/')
     
+#     MnistTrainFile = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/mnist_train.csv'
+#     MnistTestFile = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/mnist_test.csv'
+#     SaveDir = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/DataJpeg/'
+#     mnistimages(MnistTrainFile,MnistTestFile,SaveDir)
+    
+    
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/'
+    partitoner(InDir)
+
         

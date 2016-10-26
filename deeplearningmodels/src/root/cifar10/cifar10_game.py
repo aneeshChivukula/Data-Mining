@@ -30,6 +30,24 @@ perfmetric = "recall"
 # perfmetric = "fpr"
 
 
+def transformer(AdvInDir,imagespopulation,curralpha,labels):
+    if tf.gfile.Exists(AdvInDir):
+      tf.gfile.DeleteRecursively(AdvInDir)
+    tf.gfile.MakeDirs(AdvInDir)
+    
+    for Label in labels:
+        tf.gfile.MakeDirs(AdvInDir + Label)
+    
+    for i,x in enumerate(imagespopulation):
+        CurrLabel = labels[x[0]]
+        if(x[0] == 0):
+            CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
+        else:
+            CurrImage = np.array(x[1], np.uint8)[0]
+        Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
+    
+    
+
 def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
     if tf.gfile.Exists(AdvInDir):
       tf.gfile.DeleteRecursively(AdvInDir)
@@ -42,7 +60,10 @@ def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
 #     distortedimages = []
     for i,x in enumerate(imagespopulation):
         CurrLabel = labels[x[0]]
-        CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
+        if(x[0] == 0):
+            CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
+        else:
+            CurrImage = np.array(x[1], np.uint8)[0]
         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
         
         l = np.insert(CurrImage.flatten(order='F'),0, x[0])
@@ -320,6 +341,17 @@ def main(argv=None):
     adv_payoff = round(alphastar.fitness.weights[0],FLAGS.numdecimalplaces)
 #     precision = cifar10_eval.evaluate()
 #     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
+
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
+    AdvInDirTrain = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTrain/'
+    imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
+    transformer(AdvInDirTrain,imagespopulation,alphastar,labels)
+
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+    AdvInDirTest = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTest/'
+    imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
+    transformer(AdvInDirTest,imagespopulation,alphastar,labels)
+
     print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',perf)
     finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
 

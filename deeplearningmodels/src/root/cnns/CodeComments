@@ -2750,4 +2750,108 @@ Need to change imports so that expected methods are called. Otherwise all the me
 Redo :
 
 
+
+
+[achivuku@atlas8 cifar10_10]$ ll
+total 19356
+drwxr-xr-x 4 achivuku Research     4096 Oct  7 21:41 AdversarialSplit
+drwxr-xr-x 4 achivuku Research     4096 Oct  7 21:41 cifar10_adversary_data
+drwxr-xr-x 2 achivuku Research     4096 Oct  7 21:41 cifar10_adversary_train
+drwxr-xr-x 3 achivuku Research     4096 Oct  7 21:41 cifar10_data
+drwxr-xr-x 2 achivuku Research     4096 Oct  7 21:41 cifar10_eval
+drwxr-xr-x 2 achivuku Research     4096 Oct  7 21:41 cifar10_output
+drwxr-xr-x 2 achivuku Research     4096 Oct  7 21:50 cifar10_train
+drwxr-xr-x 2 achivuku Research     4096 Oct  7 21:41 cifar10_train_initial
+-rw-r--r-- 1 achivuku Research  3423322 Oct  7 21:41 test.bin
+drwxr-xr-x 4 achivuku Research     4096 Oct  7 21:41 TestSplit
+-rw-r--r-- 1 achivuku Research 16354506 Oct  7 21:47 train.bin
+drwxr-xr-x 4 achivuku Research     4096 Oct  7 21:41 TrainSplit
+[achivuku@atlas8 cifar10_10]$ 
+
+/scratch/cifar10_10/cifar10_adversary_data
+imagenet2010-batches-bin
+/scratch/cifar10_10/cifar10_data
+imagenet2010-batches-bin
+
+
+
+
+
+
+
+aneesh@aneesh-Latitude-E5550:~/workspace/deeplearningmodels/src/root/cifar10$ grep -R 'ILSVRC2010' .
+Binary file ./cifar10_adversary_train.pyc matches
+./cifar10_adversary_train.py:tf.app.flags.DEFINE_string('adv_train_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_adversary_train',
+./cifar10_adversary_train.py:StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/StdoutGeneticOps.txt'
+./cifar10_adversary_train.py:  InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
+./cifar10_adversary_train.py:  WeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output'
+./cifar10_train.py:tf.app.flags.DEFINE_string('train_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train',
+./cifar10_eval.py:tf.app.flags.DEFINE_string('eval_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_eval',
+./cifar10_eval.py:tf.app.flags.DEFINE_string('checkpoint_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train',
+./cifar10.py:tf.app.flags.DEFINE_string('data_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_data',
+./cifar10.py:tf.app.flags.DEFINE_string('out_dir', '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output',
+Binary file ./cifar10_eval.pyc matches
+Binary file ./cifar10_train.pyc matches
+Binary file ./cifar10.pyc matches
+./cifar10_game.py:    WeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_output'
+./cifar10_game.py:    AdvInDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplit/'
+./cifar10_game.py:    GameInDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_data/imagenet2010-batches-bin/'
+./cifar10_game.py:    EvalDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_eval'
+./cifar10_game.py:    TrainWeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
+./cifar10_game.py:    CheckpointsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
+./cifar10_game.py:    InitialCheckpointsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train_initial'
+./cifar10_game.py:#     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+./cifar10_game.py:    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
+./cifar10_game.py:    StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
+./cifar10_game.py:    AlphasFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphas.pkl'
+./cifar10_game.py:    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
+./cifar10_game.py:    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
+./cifar10_game.py:    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+./cifar10_game.py:#     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
+./cifar10_game.py:    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+./cifar10_game.py:    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
+./cifar10_game.py:    AdvInDirTrain = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTrain/'
+./cifar10_game.py:    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+./cifar10_game.py:    AdvInDirTest = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTest/'
+aneesh@aneesh-Latitude-E5550:~/workspace/deeplearningmodels/src/root/cifar10$ 
+
+
+
+
+
+
+
+
+aneesh@aneesh-Latitude-E5550:~/workspace/deeplearningmodels/src/root/cnns$ grep -R 'ILSVRC2010' .
+./CodeComments:[achivuku@vulcan1 cifar10]$ chmod -R 755 ~/Documents/AdversarialLearningDatasets/ILSVRC2010/
+./CodeComments:grep -rl '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010' ./ | xargs sed -i 's/\/home\/aneesh\/Documents\/AdversarialLearningDatasets\/ILSVRC2010/\/scratch\/cifar10/g'
+./CodeComments:grep -rl '/home/achivuku/Documents/AdversarialLearningDatasets/ILSVRC2010' ./ | xargs sed -i 's/\/home\/achivuku\/Documents\/AdversarialLearningDatasets\/ILSVRC2010/\/scratch\/cifar10/g'
+./createdataset.py:    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
+./createdataset.py:    GameInDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_data/imagenet2010-batches-bin/'
+./createdataset.py:#     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')
+./createdataset.py:#     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/SmallCat/')
+./createdataset.py:#     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'TestSplit/BrownDog/')
+./createdataset.py:#     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'TestSplit/SmallCat/')
+./adversarialexamplestf.py:InDir = "/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/SerializedClasses/" 
+./adversarialexamplestf.py:test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
+./adversarialexamplestf.py:labels_file = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/Labels.txt'
+Binary file ./createdataset.pyc matches
+./encodeimages.py:train_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit'
+./encodeimages.py:test_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit'
+./encodeimages.py:labels_file = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/Labels.txt'
+./encodeimages.py:output_dir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/SerializedClasses/'
+aneesh@aneesh-Latitude-E5550:~/workspace/deeplearningmodels/src/root/cnns$ 
+
+
+
+
+
+For new data, Overwrite input instead of changing paths(from ILSVRC2010 to MNISTDatabase)
+Only additional code is transformer method in cifar10_game. Manually add this code and method to the server code.
+
+cd /home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase
+scp -r ./TrainSplit/ achivuku@atlas8:/scratch/cifar10
+scp -r ./TestSplit/ achivuku@atlas8:/scratch/cifar10
+
+
 '''

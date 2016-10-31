@@ -1123,7 +1123,7 @@ def gaplots():
     selectiony1.append()
       
     selectionx1.append(70)
-    selectiony1.append()
+    selectiony1.append(0.796)
       
     selectionx1.append(80)
     selectiony1.append(0.7845)
@@ -1151,7 +1151,7 @@ def gaplots():
     selectiony2.append()
       
     selectionx2.append(70)
-    selectiony2.append()
+    selectiony2.append(0.6619)
       
     selectionx2.append(80)
     selectiony2.append(0.613)
@@ -1183,7 +1183,7 @@ def gaplots():
     selectiony3.append()
       
     selectionx3.append(70)
-    selectiony3.append()
+    selectiony3.append(0.9266)
       
     selectionx3.append(80)
     selectiony3.append(0.8918)

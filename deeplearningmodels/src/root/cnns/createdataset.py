@@ -331,13 +331,94 @@ def generatereports():
 #     mylambda = 0.5
 #     final_payoff = 1.053429735573995
 
-    rls = [(1, 0, 1, 0.6066536203522505, {'recall': 0.6066536203522505, 'fpr': 0.181631395109924, 'f1score': 0.5557215416791156, 'precision': 0.5126791620727673, 'tpr': 0.6066536203522505}, 0), (0, 0, 1, 0.8287937743190662, {'recall': 0.8287937743190662, 'fpr': 0.13685015290519878, 'f1score': 0.48811228874248064, 'precision': 0.3459196102314251, 'tpr': 0.8287937743190662}, 0), (1.179715160662358, 0.43461160275319566, 0.2548964420908377, 0.5653883972468043, {'recall': 0.5653883972468043, 'fpr': 0.17488973228023388, 'f1score': 0.5323252584477705, 'precision': 0.5029154518950437, 'tpr': 0.5653883972468043}, 0), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.5397135416666666, {'recall': 0.5397135416666666, 'fpr': 0.17321134868421054, 'f1score': 0.5169134840218238, 'precision': 0.4959617110379898, 'tpr': 0.5397135416666666}, 1), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.5397135416666666, {'recall': 0.5397135416666666, 'fpr': 0.17321134868421054, 'f1score': 0.5169134840218238, 'precision': 0.4959617110379898, 'tpr': 0.5397135416666666}, 2), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.81648675171737, {'recall': 0.81648675171737, 'fpr': 0.1817332993803582, 'f1score': 0.4168336673346693, 'precision': 0.2798520013454423, 'tpr': 0.81648675171737}, 3), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.8526829268292683, {'recall': 0.8526829268292683, 'fpr': 0.08008492569002124, 'f1score': 0.6150598170302604, 'precision': 0.4810126582278481, 'tpr': 0.8526829268292683}, 3)]
-    gen = 3
+#     rls = [(1, 0, 1, 0.6066536203522505, {'recall': 0.6066536203522505, 'fpr': 0.181631395109924, 'f1score': 0.5557215416791156, 'precision': 0.5126791620727673, 'tpr': 0.6066536203522505}, 0), (0, 0, 1, 0.8287937743190662, {'recall': 0.8287937743190662, 'fpr': 0.13685015290519878, 'f1score': 0.48811228874248064, 'precision': 0.3459196102314251, 'tpr': 0.8287937743190662}, 0), (1.179715160662358, 0.43461160275319566, 0.2548964420908377, 0.5653883972468043, {'recall': 0.5653883972468043, 'fpr': 0.17488973228023388, 'f1score': 0.5323252584477705, 'precision': 0.5029154518950437, 'tpr': 0.5653883972468043}, 0), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.5397135416666666, {'recall': 0.5397135416666666, 'fpr': 0.17321134868421054, 'f1score': 0.5169134840218238, 'precision': 0.4959617110379898, 'tpr': 0.5397135416666666}, 1), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.5397135416666666, {'recall': 0.5397135416666666, 'fpr': 0.17321134868421054, 'f1score': 0.5169134840218238, 'precision': 0.4959617110379898, 'tpr': 0.5397135416666666}, 2), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.81648675171737, {'recall': 0.81648675171737, 'fpr': 0.1817332993803582, 'f1score': 0.4168336673346693, 'precision': 0.2798520013454423, 'tpr': 0.81648675171737}, 3), (1.1363456471017066, 0.46028645833333337, 0.3239408112316269, 0.8526829268292683, {'recall': 0.8526829268292683, 'fpr': 0.08008492569002124, 'f1score': 0.6150598170302604, 'precision': 0.4810126582278481, 'tpr': 0.8526829268292683}, 3)]
+#     gen = 3
+#     numgens = 20
+#     numalphas = 10
+#     myepsilon = 0.0001
+#     mylambda = 1
+#     final_payoff = 1.1363456471017066
+    
+
+# Following are results for experiment with handwritten digits data
+    
+    # 7 and 9
+    rls = [(1, 0, 1, 0.9225, {'recall': 0.9225, 'fpr': 0.1089, 'f1score': 0.7943, 'precision': 0.6973, 'tpr': 0.9225}, 0), (0, 0, 1, 0.9098, {'recall': 0.9098, 'fpr': 0.1053, 'f1score': 0.7916, 'precision': 0.7005, 'tpr': 0.9098}, 0), (1.7477, 0.9989, 0.2512, 0.9001, {'recall': 0.9001, 'fpr': 0.2336, 'f1score': 0.6521, 'precision': 0.5112, 'tpr': 0.9001}, 0), (1.7469, 0.9748, 0.2279, 0.9025, {'recall': 0.9025, 'fpr': 0.3139, 'f1score': 0.5908, 'precision': 0.4391, 'tpr': 0.9025}, 1), (1.7024, 0.9134, 0.211, 0.9087, {'recall': 0.9087, 'fpr': 0.2531, 'f1score': 0.639, 'precision': 0.4927, 'tpr': 0.9087}, 2), (1.6971, 0.9264, 0.2293, 0.9074, {'recall': 0.9074, 'fpr': 0.2915, 'f1score': 0.6085, 'precision': 0.4578, 'tpr': 0.9074}, 3), (1.6645, 0.8812, 0.2167, 0.9119, {'recall': 0.9119, 'fpr': 0.2696, 'f1score': 0.628, 'precision': 0.4789, 'tpr': 0.9119}, 4), (1.5166, 0.8547, 0.3381, 0.9145, {'recall': 0.9145, 'fpr': 0.266, 'f1score': 0.6312, 'precision': 0.4819, 'tpr': 0.9145}, 5), (1.3293, 0.808, 0.4787, 0.9192, {'recall': 0.9192, 'fpr': 0.2772, 'f1score': 0.6255, 'precision': 0.474, 'tpr': 0.9192}, 6), (1.3112, 0.6349, 0.3237, 0.9365, {'recall': 0.9365, 'fpr': 0.1507, 'f1score': 0.7511, 'precision': 0.627, 'tpr': 0.9365}, 7), (1.2759, 0.6635, 0.3876, 0.9336, {'recall': 0.9336, 'fpr': 0.1967, 'f1score': 0.7034, 'precision': 0.5642, 'tpr': 0.9336}, 8), (1.2276, 0.5893, 0.3617, 0.9411, {'recall': 0.9411, 'fpr': 0.0761, 'f1score': 0.8473, 'precision': 0.7705, 'tpr': 0.9411}, 9), (1.1989, 0.6508, 0.4519, 0.9349, {'recall': 0.9349, 'fpr': 0.1992, 'f1score': 0.7008, 'precision': 0.5605, 'tpr': 0.9349}, 10), (1.1426, 0.5671, 0.4245, 0.9433, {'recall': 0.9433, 'fpr': 0.0219, 'f1score': 0.9322, 'precision': 0.9214, 'tpr': 0.9433}, 11), (1.1426, 0.5671, 0.4245, 0.9433, {'recall': 0.9433, 'fpr': 0.0219, 'f1score': 0.9322, 'precision': 0.9214, 'tpr': 0.9433}, 12), (1.1426, 0.5671, 0.4245, 0.9883, {'recall': 0.9883, 'fpr': 0.0246, 'f1score': 0.9508, 'precision': 0.916, 'tpr': 0.9883}, 13), (1.1426, 0.5671, 0.4245, 0.9077, {'recall': 0.9077, 'fpr': 0.1886, 'f1score': 0.6973, 'precision': 0.5661, 'tpr': 0.9077}, 13)]
+    gen = 13
     numgens = 20
-    numalphas = 10
+    numalphas = 1000
     myepsilon = 0.0001
-    mylambda = 1
-    final_payoff = 1.1363456471017066
+    mylambda = 10
+    final_payoff = 1.1426
+
+    # 1 and 4
+    rls = [(1, 0, 1, 0.9845, {'recall': 0.9845, 'fpr': 0.0091, 'f1score': 0.9734, 'precision': 0.9626, 'tpr': 0.9845}, 0), (0, 0, 1, 0.9854, {'recall': 0.9854, 'fpr': 0.0081, 'f1score': 0.9758, 'precision': 0.9665, 'tpr': 0.9854}, 0), (1.0797, 0.2803, 0.2006, 0.972, {'recall': 0.972, 'fpr': 0.3742, 'f1score': 0.5487, 'precision': 0.3822, 'tpr': 0.972}, 0), (4.3055, 3.5586, 0.2531, 0.6441, {'recall': 0.6441, 'fpr': 0.0824, 'f1score': 0.647, 'precision': 0.65, 'tpr': 0.6441}, 1), (4.2859, 3.5222, 0.2363, 0.6478, {'recall': 0.6478, 'fpr': 0.0845, 'f1score': 0.6465, 'precision': 0.6451, 'tpr': 0.6478}, 2), (4.0694, 3.3617, 0.2923, 0.6638, {'recall': 0.6638, 'fpr': 0.0851, 'f1score': 0.6572, 'precision': 0.6506, 'tpr': 0.6638}, 3), (1.056, 0.2693, 0.2133, 0.9731, {'recall': 0.9731, 'fpr': 0.3799, 'f1score': 0.544, 'precision': 0.3776, 'tpr': 0.9731}, 4), (4.2485, 3.4961, 0.2476, 0.6504, {'recall': 0.6504, 'fpr': 0.0798, 'f1score': 0.6549, 'precision': 0.6595, 'tpr': 0.6504}, 5), (4.1554, 3.5356, 0.3802, 0.6464, {'recall': 0.6464, 'fpr': 0.0798, 'f1score': 0.652, 'precision': 0.6577, 'tpr': 0.6464}, 6), (3.7917, 3.257, 0.4653, 0.6743, {'recall': 0.6743, 'fpr': 0.086, 'f1score': 0.6617, 'precision': 0.6496, 'tpr': 0.6743}, 7), (0.8328, 0.2638, 0.431, 0.9736, {'recall': 0.9736, 'fpr': 0.3804, 'f1score': 0.5455, 'precision': 0.3789, 'tpr': 0.9736}, 8), (0.8328, 0.2638, 0.431, 0.9736, {'recall': 0.9736, 'fpr': 0.3804, 'f1score': 0.5455, 'precision': 0.3789, 'tpr': 0.9736}, 9), (0.8328, 0.2638, 0.431, 0.9976, {'recall': 0.9976, 'fpr': 0.0004, 'f1score': 0.998, 'precision': 0.9984, 'tpr': 0.9976}, 10), (0.8328, 0.2638, 0.431, 0.974, {'recall': 0.974, 'fpr': 0.3806, 'f1score': 0.5458, 'precision': 0.3792, 'tpr': 0.974}, 10)]
+    gen = 10
+    numgens = 20
+    numalphas = 1000
+    myepsilon = 0.0001
+    mylambda = 10
+    final_payoff = 0.8328
+
+    # 4 and 9
+    rls = [(1, 0, 1, 0.9738, {'recall': 0.9738, 'fpr': 0.2073, 'f1score': 0.7301, 'precision': 0.5839, 'tpr': 0.9738}, 0), (0, 0, 1, 0.9773, {'recall': 0.9773, 'fpr': 0.2111, 'f1score': 0.7293, 'precision': 0.5817, 'tpr': 0.9773}, 0), (1.123, 0.3449, 0.2219, 0.9655, {'recall': 0.9655, 'fpr': 0.3193, 'f1score': 0.6376, 'precision': 0.476, 'tpr': 0.9655}, 0), (1.9423, 1.1765, 0.2342, 0.8824, {'recall': 0.8824, 'fpr': 0.0438, 'f1score': 0.8696, 'precision': 0.8573, 'tpr': 0.8824}, 1), (1.8907, 1.1636, 0.2729, 0.8836, {'recall': 0.8836, 'fpr': 0.0363, 'f1score': 0.8819, 'precision': 0.8801, 'tpr': 0.8836}, 2), (1.8722, 1.1377, 0.2655, 0.8862, {'recall': 0.8862, 'fpr': 0.0374, 'f1score': 0.8818, 'precision': 0.8774, 'tpr': 0.8862}, 3), (1.833, 1.1258, 0.2928, 0.8874, {'recall': 0.8874, 'fpr': 0.0405, 'f1score': 0.8775, 'precision': 0.8677, 'tpr': 0.8874}, 4), (1.7894, 1.1922, 0.4028, 0.8808, {'recall': 0.8808, 'fpr': 0.1111, 'f1score': 0.7829, 'precision': 0.7047, 'tpr': 0.8808}, 5), (1.7894, 1.1922, 0.4028, 0.8808, {'recall': 0.8808, 'fpr': 0.1111, 'f1score': 0.7829, 'precision': 0.7047, 'tpr': 0.8808}, 6), (1.7894, 1.1922, 0.4028, 0.9912, {'recall': 0.9912, 'fpr': 0.0021, 'f1score': 0.992, 'precision': 0.9929, 'tpr': 0.9912}, 7), (1.7894, 1.1922, 0.4028, 0.9754, {'recall': 0.9754, 'fpr': 0.3109, 'f1score': 0.6489, 'precision': 0.4862, 'tpr': 0.9754}, 7)]
+    gen = 7
+    numgens = 20
+    numalphas = 1000
+    myepsilon = 0.0001
+    mylambda = 10
+    final_payoff = 1.7894
+
+    # 2 and 6
+    rls = 
+    gen = 
+    numgens = 
+    numalphas = 
+    myepsilon = 
+    mylambda = 
+    final_payoff = 
+    
+    # 5 and 8
+    rls = 
+    gen = 
+    numgens = 
+    numalphas = 
+    myepsilon = 
+    mylambda = 
+    final_payoff = 
+    
+    # 2 and 8
+    rls = 
+    gen = 
+    numgens = 
+    numalphas = 
+    myepsilon = 
+    mylambda = 
+    final_payoff = 
+    
+    # 6 and 8
+    rls = 
+    gen = 
+    numgens = 
+    numalphas = 
+    myepsilon = 
+    mylambda = 
+    final_payoff = 
+    
+    # 3 and 8
+    rls = 
+    gen = 
+    numgens = 
+    numalphas = 
+    myepsilon = 
+    mylambda = 
+    final_payoff = 
+
+
+
+
+
+
     
     results = {}
 
@@ -784,125 +865,125 @@ def gaplots():
     mutationy1 = []
           
     mutationx1.append(5)
-    mutationy1.append(0.3571)
+    mutationy1.append(0.7988)
      
     mutationx1.append(10)
-    mutationy1.append(0.2625)
+    mutationy1.append(0.8008)
       
     mutationx1.append(20)
-    mutationy1.append(0.2815)
+    mutationy1.append(0.8051)
       
     mutationx1.append(30)
-    mutationy1.append(0.2165)
+    mutationy1.append()
       
     mutationx1.append(40)
-    mutationy1.append(0.2534)
+    mutationy1.append()
       
     mutationx1.append(50)
-    mutationy1.append(0.2607)
+    mutationy1.append(0.7939)
       
     mutationx1.append(60)
-    mutationy1.append(0.4142)
+    mutationy1.append(0.798)
       
     mutationx1.append(70)
-    mutationy1.append(0.3376)
+    mutationy1.append(0.7728)
       
     mutationx1.append(80)
-    mutationy1.append(0.4153)
+    mutationy1.append()
 #     mutationx1.append(80)
 #     mutationy1.append(0.6241)
       
     mutationx1.append(90)
-    mutationy1.append(0.4951)
+    mutationy1.append(0.8092)
       
     mutationx1.append(100)
-    mutationy1.append(0.4541)
+    mutationy1.append(0.7916)
       
     mutationx1.append(200)
-    mutationy1.append(0.4123)
+    mutationy1.append(0.7866)
       
     
     mutationx2 = []
     mutationy2 = []
     mutationx2.append(5)
-    mutationy2.append(0.2551)
+    mutationy2.append(0.5908)
     
     mutationx2.append(10)
-    mutationy2.append(0.3948)
+    mutationy2.append(0.6231)
     
     mutationx2.append(20)
-    mutationy2.append(0.3583)
+    mutationy2.append(0.5949)
     
     mutationx2.append(30)
-    mutationy2.append(0.2614)
+    mutationy2.append()
     
     mutationx2.append(40)
-    mutationy2.append(0.2366)
+    mutationy2.append()
     
     mutationx2.append(50)
-    mutationy2.append(0.2145)
+    mutationy2.append(0.6336)
     
     mutationx2.append(60)
-    mutationy2.append(0.5632)
+    mutationy2.append(0.6446)
     
     mutationx2.append(70)
-    mutationy2.append(0.2684)
+    mutationy2.append(0.6275)
     
     mutationx2.append(80)
-    mutationy2.append(0.2302)
+    mutationy2.append()
     
     mutationx2.append(90)
-    mutationy2.append(0.618)
+    mutationy2.append(0.6274)
     
     mutationx2.append(100)
-    mutationy2.append(0.616)
+    mutationy2.append(0.6973)
      
     mutationx2.append(200)
-    mutationy2.append(0.296)
+    mutationy2.append(0.6222)
     
     mutationx3 = []
     mutationy3 = []
         
     mutationx3.append(5)
-    mutationy3.append(0.3809)
+    mutationy3.append(0.7041)
     
     mutationx3.append(10)
-    mutationy3.append(0.3279)
+    mutationy3.append(0.7274)
     
     mutationx3.append(20)
-    mutationy3.append(0.308)
+    mutationy3.append(0.6779)
     
     mutationx3.append(30)
-    mutationy3.append(0.4022)
+    mutationy3.append()
     
     mutationx3.append(40)
-    mutationy3.append(0.2397)
+    mutationy3.append()
     
     mutationx3.append(50)
-    mutationy3.append(0.2502)
+    mutationy3.append(0.7601)
     
     mutationx3.append(60)
-    mutationy3.append(0.3692)
+    mutationy3.append(0.7209)
      
     mutationx3.append(70)
-    mutationy3.append(0.4666)
+    mutationy3.append(0.6829)
      
     mutationx3.append(80)
-    mutationy3.append(0.5171)
+    mutationy3.append()
      
     mutationx3.append(90)
-    mutationy3.append(0.3482)
+    mutationy3.append(0.7616)
      
     mutationx3.append(100)
-    mutationy3.append(0.2292)
+    mutationy3.append(0.9508)
      
     mutationx3.append(200)
-    mutationy3.append(0.2000)
+    mutationy3.append(0.7034)
         
            
-    plt.plot(mutationx1,mutationy1, label=str(10), linestyle='-', marker='o', linewidth=2)
-    plt.plot(mutationx2,mutationy2, label=str(1), linestyle='--', marker='v', linewidth=2)
-    plt.plot(mutationx3,mutationy3, label=str(0.1), linestyle=':', marker='^', linewidth=2)
+    plt.plot(mutationx1,mutationy1, label='method 1', linestyle='-', marker='o', linewidth=2)
+    plt.plot(mutationx2,mutationy2, label='method 2', linestyle='--', marker='v', linewidth=2)
+    plt.plot(mutationx3,mutationy3, label='method 3', linestyle=':', marker='^', linewidth=2)
 #    title('Parameter Tuning : Mutation Operation')
     xlabel('Upper Bound for Mutation')
     ylabel('Testing f1score given manipulated testing and manipulated training data')
@@ -919,209 +1000,209 @@ def gaplots():
 
 
 
-#     crossoverx1 = []
-#     crossovery1 = []
-#     
-#     crossoverx1.append(2)
-#     crossovery1.append(0.2607)
-#     
-#     crossoverx1.append(3)
-#     crossovery1.append(0.6202)
-#     
-#     crossoverx1.append(4)
-#     crossovery1.append(0.2084)
-#     
-#     crossoverx1.append(5)
-#     crossovery1.append(0.241)
-#     
-#     crossoverx1.append(6)
-#     crossovery1.append(0.2735)
-#     
-#     crossoverx1.append(7)
-#     crossovery1.append(0.2489)
-#     
-#     crossoverx1.append(8)
-#     crossovery1.append(0.5463)
-#   
-#     crossoverx1.append(9)
-#     crossovery1.append(0.6222)
-#   
-#   
-#     crossoverx2 = []
-#     crossovery2 = []
-#     
-#     crossoverx2.append(2)
-#     crossovery2.append(0.2844)
-#     
-#     crossoverx2.append(3)
-#     crossovery2.append(0.3393)
-#     
-#     crossoverx2.append(4)
-#     crossovery2.append(0.3293)
-#     
-#     crossoverx2.append(5)
-#     crossovery2.append(0.2538)
-#     
-#     crossoverx2.append(6)
-#     crossovery2.append(0.2549)
-#     
-#     crossoverx2.append(7)
-#     crossovery2.append(0.2813)
-#     
-#     crossoverx2.append(8)
-#     crossovery2.append(0.2377)
-#   
-#     crossoverx2.append(9)
-#     crossovery2.append(0.5541)
-#   
-#   
-#   
-#     crossoverx3 = []
-#     crossovery3 = []
-#     
-#     crossoverx3.append(2)
-#     crossovery3.append(0.4352)
-#     
-#     crossoverx3.append(3)
-#     crossovery3.append(0.339)
-#     
-#     crossoverx3.append(4)
-#     crossovery3.append(0.3997)
-#     
-#     crossoverx3.append(5)
-#     crossovery3.append(0.297)
-#     
-#     crossoverx3.append(6)
-#     crossovery3.append(0.2066)
-#     
-#     crossoverx3.append(7)
-#     crossovery3.append(0.3037)
-#     
-#     crossoverx3.append(8)
-#     crossovery3.append(0.361)
-#   
-#     crossoverx3.append(9)
-#     crossovery3.append(0.5067)
-#    
-#     plt.plot(crossoverx1,crossovery1, label=str(10), linestyle='-', marker='<', linewidth=2)
-#     plt.plot(crossoverx2,crossovery2, label=str(1), linestyle='--', marker='>', linewidth=2)
-#     plt.plot(crossoverx3,crossovery3, label=str(0.1), linestyle=':', marker='s', linewidth=2)
-#   
-# ##     title('Parameter Tuning : Crossover Operation')
-#     xlabel('Minimum width for Crossover')
-#     ylabel('Testing f1score given manipulated testing and manipulated training data')
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-# #     plt.legend()
-# #     plt.grid()
-#     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/CrossoverParams.png", dpi=300)
+    crossoverx1 = []
+    crossovery1 = []
+     
+    crossoverx1.append(2)
+    crossovery1.append()
+     
+    crossoverx1.append(3)
+    crossovery1.append(0.7786)
+     
+    crossoverx1.append(4)
+    crossovery1.append()
+     
+    crossoverx1.append(5)
+    crossovery1.append(0.7957)
+     
+    crossoverx1.append(6)
+    crossovery1.append(0.8091)
+     
+    crossoverx1.append(7)
+    crossovery1.append()
+     
+    crossoverx1.append(8)
+    crossovery1.append(0.7869)
+   
+    crossoverx1.append(9)
+    crossovery1.append(0.7929)
+   
+   
+    crossoverx2 = []
+    crossovery2 = []
+     
+    crossoverx2.append(2)
+    crossovery2.append()
+     
+    crossoverx2.append(3)
+    crossovery2.append(0.6722)
+     
+    crossoverx2.append(4)
+    crossovery2.append()
+     
+    crossoverx2.append(5)
+    crossovery2.append(0.6081)
+     
+    crossoverx2.append(6)
+    crossovery2.append(0.6823)
+     
+    crossoverx2.append(7)
+    crossovery2.append()
+     
+    crossoverx2.append(8)
+    crossovery2.append(0.6509)
+   
+    crossoverx2.append(9)
+    crossovery2.append(0.6222)
+   
+   
+   
+    crossoverx3 = []
+    crossovery3 = []
+     
+    crossoverx3.append(2)
+    crossovery3.append()
+     
+    crossoverx3.append(3)
+    crossovery3.append(0.7165)
+     
+    crossoverx3.append(4)
+    crossovery3.append()
+     
+    crossoverx3.append(5)
+    crossovery3.append(0.9753)
+     
+    crossoverx3.append(6)
+    crossovery3.append(0.7734)
+     
+    crossoverx3.append(7)
+    crossovery3.append()
+     
+    crossoverx3.append(8)
+    crossovery3.append(0.9929)
+   
+    crossoverx3.append(9)
+    crossovery3.append(0.7135)
+    
+    plt.plot(crossoverx1,crossovery1, label='method 1', linestyle='-', marker='<', linewidth=2)
+    plt.plot(crossoverx2,crossovery2, label='method 2', linestyle='--', marker='>', linewidth=2)
+    plt.plot(crossoverx3,crossovery3, label='method 3', linestyle=':', marker='s', linewidth=2)
+   
+##     title('Parameter Tuning : Crossover Operation')
+    xlabel('Minimum width for Crossover')
+    ylabel('Testing f1score given manipulated testing and manipulated training data')
+    ax = plt.subplot(111)
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+#     plt.legend()
+#     plt.grid()
+    plt.grid(linestyle='-', linewidth=0.4)
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/CrossoverParams.png", dpi=300)
 
 
 
 
  
-#     selectionx1 = []
-#     selectiony1 = []
-#      
-#     selectionx1.append(20)
-#     selectiony1.append(0.32)
-#      
-#     selectionx1.append(30)
-#     selectiony1.append(0.5542)
-#          
-#     selectionx1.append(40)
-#     selectiony1.append(0.2459)
-#    
-#     selectionx1.append(50)
-#     selectiony1.append(0.2607)
-#      
-#     selectionx1.append(60)
-#     selectiony1.append(0.5016)
-#      
-#     selectionx1.append(70)
-#     selectiony1.append(0.4137)
-#      
-#     selectionx1.append(80)
-#     selectiony1.append(0.2806)
-#   
-#   
-#   
-#   
-#   
-#     selectionx2 = []
-#     selectiony2 = []
-#      
-#     selectionx2.append(20)
-#     selectiony2.append(0.3048)
-#      
-#     selectionx2.append(30)
-#     selectiony2.append(0.2981)
-#          
-#     selectionx2.append(40)
-#     selectiony2.append(0.2724)
-#    
-#     selectionx2.append(50)
-#     selectiony2.append(0.3293)
-#      
-#     selectionx2.append(60)
-#     selectiony2.append(0.2609)
-#      
-#     selectionx2.append(70)
-#     selectiony2.append(0.6294)
-#      
-#     selectionx2.append(80)
-#     selectiony2.append(0.4988)
-#   
-#   
-#   
-#   
-#   
-#   
-#   
-#   
-#   
-#     selectionx3 = []
-#     selectiony3 = []
-#      
-#     selectionx3.append(20)
-#     selectiony3.append(0.4722)
-#      
-#     selectionx3.append(30)
-#     selectiony3.append(0.3063)
-#          
-#     selectionx3.append(40)
-#     selectiony3.append(0.261)
-#    
-#     selectionx3.append(50)
-#     selectiony3.append(0.2502)
-#      
-#     selectionx3.append(60)
-#     selectiony3.append(0.3142)
-#      
-#     selectionx3.append(70)
-#     selectiony3.append(0.2541)
-#      
-#     selectionx3.append(80)
-#     selectiony3.append(0.2806)
-#   
-#   
-#     
-#     plt.plot(selectionx1,selectiony1, label=str(10), linestyle='-', marker='p', linewidth=2)
-#     plt.plot(selectionx2,selectiony2, label=str(1), linestyle='--', marker='H', linewidth=2)
-#     plt.plot(selectionx3,selectiony3, label=str(0.1), linestyle=':', marker='d', linewidth=2)
-# #    title('Parameter Tuning : Selection Operation')
-#     xlabel('Percentage offspring size for Selection')
-#     ylabel('Testing f1score given manipulated testing and manipulated training data')
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-# #     plt.legend()color='r', linestyle='-', linewidth=2
-#     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png", dpi=300)
+    selectionx1 = []
+    selectiony1 = []
+      
+    selectionx1.append(20)
+    selectiony1.append(0.7881)
+      
+    selectionx1.append(30)
+    selectiony1.append()
+          
+    selectionx1.append(40)
+    selectiony1.append(0.7905)
+    
+    selectionx1.append(50)
+    selectiony1.append(0.8065)
+      
+    selectionx1.append(60)
+    selectiony1.append()
+      
+    selectionx1.append(70)
+    selectiony1.append()
+      
+    selectionx1.append(80)
+    selectiony1.append(0.7845)
+   
+   
+   
+   
+   
+    selectionx2 = []
+    selectiony2 = []
+      
+    selectionx2.append(20)
+    selectiony2.append(0.6277)
+      
+    selectionx2.append(30)
+    selectiony2.append()
+          
+    selectionx2.append(40)
+    selectiony2.append(0.6783)
+    
+    selectionx2.append(50)
+    selectiony2.append(0.6012)
+      
+    selectionx2.append(60)
+    selectiony2.append()
+      
+    selectionx2.append(70)
+    selectiony2.append()
+      
+    selectionx2.append(80)
+    selectiony2.append(0.613)
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    selectionx3 = []
+    selectiony3 = []
+      
+    selectionx3.append(20)
+    selectiony3.append(0.8076)
+      
+    selectionx3.append(30)
+    selectiony3.append()
+          
+    selectionx3.append(40)
+    selectiony3.append(0.759)
+    
+    selectionx3.append(50)
+    selectiony3.append(0.7691)
+      
+    selectionx3.append(60)
+    selectiony3.append()
+      
+    selectionx3.append(70)
+    selectiony3.append()
+      
+    selectionx3.append(80)
+    selectiony3.append(0.8918)
+   
+   
+     
+    plt.plot(selectionx1,selectiony1, label=str(10), linestyle='-', marker='p', linewidth=2)
+    plt.plot(selectionx2,selectiony2, label=str(1), linestyle='--', marker='H', linewidth=2)
+    plt.plot(selectionx3,selectiony3, label=str(0.1), linestyle=':', marker='d', linewidth=2)
+#    title('Parameter Tuning : Selection Operation')
+    xlabel('Percentage offspring size for Selection')
+    ylabel('Testing f1score given manipulated testing and manipulated training data')
+    ax = plt.subplot(111)
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+#     plt.legend()color='r', linestyle='-', linewidth=2
+    plt.grid(linestyle='-', linewidth=0.4)
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png", dpi=300)
 
 
     print('Successfully saved all plots one at a time')

@@ -472,7 +472,7 @@ def initIndividualImage(filename):
 def initIndividual(meanimage):
 #     return meanimage + np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
 #     return meanimage + np.random.randint(low=FLAGS.steplow,high=FLAGS.stephigh, size=(32, 32, 3))
-    return meanimage + np.random.randint(low=random.randint(math.floor(FLAGS.low/FLAGS.dividend),0),high=random.randint(0,math.ceil(FLAGS.high/FLAGS.dividend)), size=(32, 32, 3))
+    return meanimage + np.random.randint(low=random.randint(math.floor(FLAGS.low/FLAGS.dividend),0),high=random.randint(1,math.ceil(FLAGS.high/FLAGS.dividend)), size=(32, 32, 3))
 
 def initImagePopulation(ind_init, InDir):
     images = list()

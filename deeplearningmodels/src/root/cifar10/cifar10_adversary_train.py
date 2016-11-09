@@ -482,18 +482,24 @@ def initImagePopulation(ind_init, InDir):
     positiveimagesmean = np.zeros((32, 32, 3))
 #     d = ls[0]
     dr = 0
+    
+    filesd = dict()
+    index = 0
+    
     for d in ls:
         ind = ls.index(d)
         for f in listdir(InDir + d):
             a = ind_init(filename=InDir + d + '/' + f)
             if(len(a.shape) == 3):
+                filesd[index] = f
+                index = index+1
                 images.append((ind,a))
                 if(ind==1):
                     positiveimagesmean = positiveimagesmean + a
                     dr = dr + 1
 #         ind = ind + 1
 #     print('l',l)
-    return images,np.floor(np.divide(positiveimagesmean, dr))
+    return images,np.floor(np.divide(positiveimagesmean, dr)),filesd
 
 def evaluate(currpopulation):
     binarizer(FLAGS.data_dir + '/imagenet2010-batches-bin/',currpopulation,'test.bin')

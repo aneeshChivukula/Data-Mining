@@ -3280,7 +3280,37 @@ def gaplots():
 
 
 
+in a text file or in file name, track both label and index of images saved to disk. rerun updated code on server for four labels that are giving clear output and default settings.
+(
+
+change transformer, initImagePopulation to include index to label dict filesd and check test output
+print filesd to get the index and label for the InDir which is AdvSplitTest and AdvSplitTrain
 
 
+64794.jpeg
+8594.jpeg
+43378.jpeg
+
+listdir('/home/achivuku/Documents/AdversarialLearningDatasets/MNISTDatabase/TestSplitBackup/4 and 9/4')
+
+ls = listdir('/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/TestSplitBackup/3 and 8/3')
+from PIL import Image
+f='/home/aneesh/Documents/IJCNN Paper/IJCNN/images/1original.jpeg'
+img = Image.open(f)
+image = img.resize((1024,1024), Image.ANTIALIAS)
+image.save(f)
+
+7 and 9, 4 and 9, 2 and 6, 2 and 8
+
+f='/home/aneesh/Documents/IJCNN Paper/IJCNN/images/7original.jpeg'
+f='/home/aneesh/Documents/IJCNN Paper/IJCNN/images/4original.jpeg'
+f='/home/aneesh/Documents/IJCNN Paper/IJCNN/images/3original.jpeg'
+
+)
+
+
+number = 14366.081836478248
+print("{:.2e}".format(number))
+print("{:.2e}".format(ttest[1]))
 
 '''

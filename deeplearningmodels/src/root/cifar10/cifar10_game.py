@@ -30,7 +30,7 @@ perfmetric = "recall"
 # perfmetric = "fpr"
 
 
-def transformer(AdvInDir,imagespopulation,curralpha,labels):
+def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
     if tf.gfile.Exists(AdvInDir):
       tf.gfile.DeleteRecursively(AdvInDir)
     tf.gfile.MakeDirs(AdvInDir)
@@ -44,7 +44,8 @@ def transformer(AdvInDir,imagespopulation,curralpha,labels):
             CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
         else:
             CurrImage = np.array(x[1], np.uint8)
-        Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
+#         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
+        Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(filesd[i]) + ".jpeg")
     
     
 
@@ -172,7 +173,7 @@ def main(argv=None):
     
     toolbox.register("individualImage", cifar10_adversary_train.initIndividualImage)
     toolbox.register("imagepopulation", cifar10_adversary_train.initImagePopulation, toolbox.individualImage)
-    imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
 
     toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=positiveimagesmean)
     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
@@ -294,7 +295,7 @@ def main(argv=None):
     alphastar = bestalpha
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
-    imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
     binarizer(GameInDir,AdvInDir,imagespopulation,alphastar,labels,'train.bin')
     if tf.gfile.Exists(TrainWeightsDir):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
@@ -302,7 +303,7 @@ def main(argv=None):
     cifar10_train.train()
     
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
-    imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
     binarizer(GameInDir,AdvInDir,imagespopulation,alphastar,labels,'test.bin')
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
@@ -332,7 +333,7 @@ def main(argv=None):
     shutil.copytree(InitialCheckpointsDir,CheckpointsDir, CheckpointsDir)
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
-    imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
     binarizer(GameInDir,AdvInDir,imagespopulation,alphastar,labels,'test.bin')
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
@@ -346,13 +347,13 @@ def main(argv=None):
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
     AdvInDirTrain = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTrain/'
-    imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
-    transformer(AdvInDirTrain,imagespopulation,alphastar,labels)
+    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
+    transformer(AdvInDirTrain,imagespopulation,alphastar,labels,filesd)
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
     AdvInDirTest = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTest/'
-    imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
-    transformer(AdvInDirTest,imagespopulation,alphastar,labels)
+    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
+    transformer(AdvInDirTest,imagespopulation,alphastar,labels,filesd)
 
     print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',perf)
     finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))

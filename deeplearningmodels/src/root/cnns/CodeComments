@@ -3313,4 +3313,9 @@ number = 14366.081836478248
 print("{:.2e}".format(number))
 print("{:.2e}".format(ttest[1]))
 
+For high strength attacks
+heightendind = np.random.randint(np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+widthendind = np.random.randint(np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+
+and FLAGS.minwidthstartidx is 20, FLAGS.minwidthenddx is 25
 '''

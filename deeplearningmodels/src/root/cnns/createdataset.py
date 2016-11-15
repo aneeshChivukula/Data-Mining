@@ -920,137 +920,137 @@ def trainplots():
 def gaplots():
 #     mutationx1 = []
 #     mutationy1 = []
-#                
+#                   
 #     mutationx1.append(5)
 #     mutationy1.append(0.7988)
-#           
+#              
 #     mutationx1.append(10)
 # #     mutationy1.append(0.8008)
 #     mutationy1.append(0.7988)
-#            
+#               
 #     mutationx1.append(20)
 # #     mutationy1.append(0.8051)
 #     mutationy1.append(0.7988)
-#            
+#               
 #     mutationx1.append(30)
 # #     mutationy1.append(0.7726)
 #     mutationy1.append(0.7988)
-#            
+#               
 #     mutationx1.append(40)
 # #     mutationy1.append(0.7817)
 #     mutationy1.append(0.7988)
-#            
+#               
 #     mutationx1.append(50)
 # #     mutationy1.append(0.7939)
 #     mutationy1.append(0.7988)
-#            
+#               
 #     mutationx1.append(60)
 # #     mutationy1.append(0.798)
 #     mutationy1.append(0.7988)
-#            
+#               
 #     mutationx1.append(70)
 # #     mutationy1.append(0.7728)
 #     mutationy1.append(0.7988)
-#            
+#               
 #     mutationx1.append(80)
 # #     mutationy1.append(0.7936)
 # #     mutationx1.append(80)
 # #     mutationy1.append(0.6241)
 #     mutationy1.append(0.7988)
-#            
+#               
 #     mutationx1.append(90)
 # #     mutationy1.append(0.8092)
 #     mutationy1.append(0.7988)
-#            
+#               
 #     mutationx1.append(100)
 # #     mutationy1.append(0.7916)
 #     mutationy1.append(0.7988)
-#            
+#               
 #     mutationx1.append(200)
 # #     mutationy1.append(0.7866)
 #     mutationy1.append(0.7988)
-#            
-#          
+#               
+#             
 #     mutationx2 = []
 #     mutationy2 = []
 #     mutationx2.append(5)
 #     mutationy2.append(0.5908)
-#          
+#             
 #     mutationx2.append(10)
 #     mutationy2.append(0.6231)
-#          
+#             
 #     mutationx2.append(20)
 #     mutationy2.append(0.5949)
-#          
+#             
 #     mutationx2.append(30)
 #     mutationy2.append(0.6084)
-#          
+#             
 #     mutationx2.append(40)
 #     mutationy2.append(0.5933)
-#          
+#             
 #     mutationx2.append(50)
 #     mutationy2.append(0.6336)
-#          
+#             
 #     mutationx2.append(60)
 #     mutationy2.append(0.6446)
-#          
+#             
 #     mutationx2.append(70)
 #     mutationy2.append(0.6275)
-#          
+#             
 #     mutationx2.append(80)
 #     mutationy2.append(0.5936)
-#          
+#             
 #     mutationx2.append(90)
 #     mutationy2.append(0.6274)
-#          
+#             
 #     mutationx2.append(100)
 #     mutationy2.append(0.6973)
-#           
+#              
 #     mutationx2.append(200)
 #     mutationy2.append(0.6222)
-#          
+#             
 #     mutationx3 = []
 #     mutationy3 = []
-#              
+#                 
 #     mutationx3.append(5)
 #     mutationy3.append(0.7041)
-#          
+#             
 #     mutationx3.append(10)
 #     mutationy3.append(0.7274)
-#          
+#             
 #     mutationx3.append(20)
 #     mutationy3.append(0.6779)
-#          
+#             
 #     mutationx3.append(30)
 #     mutationy3.append(0.9047)
-#          
+#             
 #     mutationx3.append(40)
 #     mutationy3.append(0.7988)
-#          
+#             
 #     mutationx3.append(50)
 #     mutationy3.append(0.7601)
-#          
+#             
 #     mutationx3.append(60)
 #     mutationy3.append(0.7209)
-#           
+#              
 #     mutationx3.append(70)
 #     mutationy3.append(0.6829)
-#           
+#              
 #     mutationx3.append(80)
 #     mutationy3.append(0.7374)
-#           
+#              
 #     mutationx3.append(90)
 #     mutationy3.append(0.7616)
-#           
+#              
 #     mutationx3.append(100)
 #     mutationy3.append(0.9508)
-#           
+#              
 #     mutationx3.append(200)
 #     mutationy3.append(0.7034)
-#          
+#             
 #    #plt.plot(mutationx1,mutationy1, label='learner performance', linestyle='-', marker='o', linewidth=2)
-#     plt.plot(mutationx2,mutationy2, label='manipulated learner performance', linestyle='--', marker='v', linewidth=2)
-#     plt.plot(mutationx3,mutationy3, label='secure learner performance', linestyle=':', marker='^', linewidth=2)
+#     plt.plot(mutationx2,mutationy2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(mutationx3,mutationy3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
 # #    title('Parameter Tuning : Mutation Operation')
 # #     xlabel('Upper Bound for Mutation')
 #     xlabel(r'Upper Bound for Mutation [$\delta$]', fontsize=20)
@@ -1073,99 +1073,99 @@ def gaplots():
 
 #     crossoverx1 = []
 #     crossovery1 = []
-#           
+#             
 #     crossoverx1.append(2)
 #     crossovery1.append(0.7867)
-#           
+#             
 #     crossoverx1.append(3)
 # #     crossovery1.append(0.7786)
 #     crossovery1.append(0.7867)
-#           
+#             
 #     crossoverx1.append(4)
 # #     crossovery1.append()
 #     crossovery1.append(0.7867)
-#           
+#             
 #     crossoverx1.append(5)
 # #     crossovery1.append(0.7957)
 #     crossovery1.append(0.7867)
-#           
+#             
 #     crossoverx1.append(6)
 # #     crossovery1.append(0.8091)
 #     crossovery1.append(0.7867)
-#           
+#             
 #     crossoverx1.append(7)
 # #     crossovery1.append()
 #     crossovery1.append(0.7867)
-#           
+#             
 #     crossoverx1.append(8)
 # #     crossovery1.append(0.7869)
 #     crossovery1.append(0.7867)
-#         
+#           
 #     crossoverx1.append(9)
 # #     crossovery1.append(0.7929)
 #     crossovery1.append(0.7867)
-#         
-#         
+#           
+#           
 #     crossoverx2 = []
 #     crossovery2 = []
-#           
+#             
 #     crossoverx2.append(2)
 #     crossovery2.append(0.791)
-#           
+#             
 #     crossoverx2.append(3)
 #     crossovery2.append(0.6722)
-#           
+#             
 #     crossoverx2.append(4)
 #     crossovery2.append(0.6669)
-#           
+#             
 #     crossoverx2.append(5)
 #     crossovery2.append(0.6081)
-#           
+#             
 #     crossoverx2.append(6)
 #     crossovery2.append(0.6823)
-#           
+#             
 #     crossoverx2.append(7)
 #     crossovery2.append(0.5673)
-#           
+#             
 #     crossoverx2.append(8)
 #     crossovery2.append(0.6509)
-#         
+#           
 #     crossoverx2.append(9)
 #     crossovery2.append(0.6222)
-#         
-#         
-#         
+#           
+#           
+#           
 #     crossoverx3 = []
 #     crossovery3 = []
-#           
+#             
 #     crossoverx3.append(2)
 #     crossovery3.append(0.9936)
-#           
+#             
 #     crossoverx3.append(3)
 #     crossovery3.append(0.7165)
-#           
+#             
 #     crossoverx3.append(4)
 #     crossovery3.append(0.7345)
-#           
+#             
 #     crossoverx3.append(5)
 #     crossovery3.append(0.9753)
-#           
+#             
 #     crossoverx3.append(6)
 #     crossovery3.append(0.7734)
-#           
+#             
 #     crossoverx3.append(7)
 #     crossovery3.append(0.9945)
-#           
+#             
 #     crossoverx3.append(8)
 #     crossovery3.append(0.9929)
-#         
+#           
 #     crossoverx3.append(9)
 #     crossovery3.append(0.7135)
-#          
+#            
 #    #plt.plot(crossoverx1,crossovery1, label='learner performance', linestyle='-', marker='<', linewidth=2)
-#     plt.plot(crossoverx2,crossovery2, label='manipulated learner performance', linestyle='--', marker='>', linewidth=2)
-#     plt.plot(crossoverx3,crossovery3, label='secure learner performance', linestyle=':', marker='s', linewidth=2)
-#         
+#     plt.plot(crossoverx2,crossovery2, label='Manipulated Learner Performance', linestyle='--', marker='>', linewidth=2)
+#     plt.plot(crossoverx3,crossovery3, label='Secure Learner Performance (Our method)', linestyle='-', marker='s', linewidth=2)
+#           
 # ##     title('Parameter Tuning : Crossover Operation')
 # #     xlabel('Minimum width for Crossover')
 #     xlabel(r'Minimum width for Crossover [$\eta$]', fontsize=20)    
@@ -1188,99 +1188,99 @@ def gaplots():
    
 #     selectionx1 = []
 #     selectiony1 = []
-#              
+#                
 #     selectionx1.append(20)
 #     selectiony1.append(0.7881)
-#              
+#                
 #     selectionx1.append(30)
 # #     selectiony1.append()
 #     selectiony1.append(0.7881)
-#                  
+#                    
 #     selectionx1.append(40)
 # #     selectiony1.append(0.7905)
 #     selectiony1.append(0.7881)
-#            
+#              
 #     selectionx1.append(50)
 # #     selectiony1.append(0.8065)
 #     selectiony1.append(0.7881)
-#              
+#                
 #     selectionx1.append(60)
 # # #     selectiony1.append()
 #     selectiony1.append(0.7881)
-#              
+#                
 #     selectionx1.append(70)
 # #     selectiony1.append(0.796)
 #     selectiony1.append(0.7881)
-#              
+#                
 #     selectionx1.append(80)
 # #     selectiony1.append(0.7845)
 #     selectiony1.append(0.7881)
-#           
-#           
-#           
-#           
-#           
+#             
+#             
+#             
+#             
+#             
 #     selectionx2 = []
 #     selectiony2 = []
-#              
+#                
 #     selectionx2.append(20)
 #     selectiony2.append(0.6277)
-#              
+#                
 #     selectionx2.append(30)
 #     selectiony2.append(0.5937)
-#                  
+#                    
 #     selectionx2.append(40)
 #     selectiony2.append(0.6783)
-#            
+#              
 #     selectionx2.append(50)
 #     selectiony2.append(0.6012)
-#              
+#                
 #     selectionx2.append(60)
 #     selectiony2.append(0.6238)
-#              
+#                
 #     selectionx2.append(70)
 #     selectiony2.append(0.6619)
-#              
+#                
 #     selectionx2.append(80)
 #     selectiony2.append(0.613)
-#           
-#           
-#           
-#           
-#           
-#           
-#           
-#           
-#           
+#             
+#             
+#             
+#             
+#             
+#             
+#             
+#             
+#             
 #     selectionx3 = []
 #     selectiony3 = []
-#              
+#                
 #     selectionx3.append(20)
 #     selectiony3.append(0.8076)
-#              
+#                
 #     selectionx3.append(30)
 #     selectiony3.append(0.7869)
-#                  
+#                    
 #     selectionx3.append(40)
 #     selectiony3.append(0.759)
-#            
+#              
 #     selectionx3.append(50)
 #     selectiony3.append(0.7691)
-#              
+#                
 #     selectionx3.append(60)
 #     selectiony3.append(0.7775)
-#              
+#                
 #     selectionx3.append(70)
 #     selectiony3.append(0.9266)
-#              
+#                
 #     selectionx3.append(80)
 #     selectiony3.append(0.8918)
-#           
-#           
 #             
+#             
+#               
 #    #plt.plot(selectionx1,selectiony1, label='learner performance', linestyle='-', marker='p', linewidth=2)
-#     plt.plot(selectionx2,selectiony2, label='manipulated learner performance', linestyle='--', marker='H', linewidth=2)
-#     plt.plot(selectionx3,selectiony3, label='secure learner performance', linestyle=':', marker='d', linewidth=2)
+#     plt.plot(selectionx2,selectiony2, label='Manipulated Learner Performance', linestyle='--', marker='H', linewidth=2)
+#     plt.plot(selectionx3,selectiony3, label='Secure Learner Performance (Our method)', linestyle='-', marker='d', linewidth=2)
 # #    title('Parameter Tuning : Selection Operation')
 # #     xlabel('Percentage offspring size for Selection')
 #     xlabel(r'Percentage offspring size for Selection [$\zeta$]', fontsize=20)
@@ -1302,148 +1302,148 @@ def gaplots():
     
 #     populationx1 = []
 #     populationy1 = []
-#         
+#            
 #     populationx1.append(500)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(1500)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(2000)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(2500)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(3000)
 #     populationy1.append(0.7864)
-#  
+#     
 #     populationx1.append(3500)
 #     populationy1.append(0.7789)
-#     
+#        
 #     populationx1.append(4000)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(4500)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(5000)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(6000)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(7000)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(8000)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(9000)
 #     populationy1.append(0.7864)
-#     
+#        
 #     populationx1.append(10000)
 #     populationy1.append(0.7864)
-#         
+#            
 #     populationx2 = []
 #     populationy2 = []
-#         
+#            
 #     populationx2.append(500)
 #     populationy2.append(0.6403)
-#     
+#        
 #     populationx2.append(1500)
 #     populationy2.append(0.6194)
-#     
+#        
 #     populationx2.append(2000)
 #     populationy2.append(0.6104)
-#     
+#        
 #     populationx2.append(2500)
 #     populationy2.append(0.6101)
-#     
+#        
 #     populationx2.append(3000)
 #     populationy2.append(0.5777)
-#     
+#        
 #     populationx2.append(3500)
 #     populationy2.append(0.65)
-#     
+#        
 #     populationx2.append(4000)
 #     populationy2.append(0.5974)
-#     
+#        
 #     populationx2.append(4500)
 #     populationy2.append(0.6091)
-#     
+#        
 #     populationx2.append(5000)
 #     populationy2.append(0.6073)
-#     
+#        
 #     populationx2.append(6000)
 #     populationy2.append(0.6268)
-#     
+#        
 #     populationx2.append(7000)
 #     populationy2.append(0.6174)
-#     
+#        
 #     populationx2.append(8000)
 #     populationy2.append(0.5853)
-#     
+#        
 #     populationx2.append(9000)
 #     populationy2.append(0.5846)
-#     
+#        
 #     populationx2.append(10000)
 #     populationy2.append(0.6322)
-#     
+#        
 #     populationx3 = []
 #     populationy3 = []
-#         
+#            
 #     populationx3.append(500)
 #     populationy3.append(0.7711)
-#     
+#        
 #     populationx3.append(1500)
 #     populationy3.append(0.6792)
-#     
+#        
 #     populationx3.append(2000)
 #     populationy3.append(0.774)
-#     
+#        
 #     populationx3.append(2500)
 #     populationy3.append(0.6953)
-#     
+#        
 #     populationx3.append(3000)
 #     populationy3.append(0.759)
-#     
+#        
 #     populationx3.append(3500)
 #     populationy3.append(0.8285)
-#  
+#     
 #     populationx3.append(4000)
 #     populationy3.append(0.7503)
-#     
+#        
 #     populationx3.append(4500)
 #     populationy3.append(0.7388)
-#     
+#        
 #     populationx3.append(5000)
 #     populationy3.append(0.6914)
-#     
+#        
 #     populationx3.append(6000)
 #     populationy3.append(0.7792)
-#     
+#        
 #     populationx3.append(7000)
 #     populationy3.append(0.7205)
-#     
+#        
 #     populationx3.append(8000)
 #     populationy3.append(0.6984)
-#     
+#        
 #     populationx3.append(9000)
 #     populationy3.append(0.8452)
-#     
+#        
 #     populationx3.append(10000)
 #     populationy3.append(0.7477)
-#         
-#         
+#            
+#            
 # #    #plt.plot(populationx1,populationy1, label='learner performance', linestyle='-', marker='p', linewidth=2)
-#     plt.plot(populationx2,populationy2, label='manipulated learner performance', linestyle='--', marker='H', linewidth=2)
-#     plt.plot(populationx3,populationy3, label='secure learner performance', linestyle=':', marker='d', linewidth=2)
+#     plt.plot(populationx2,populationy2, label='Manipulated Learner Performance', linestyle='--', marker='H', linewidth=2)
+#     plt.plot(populationx3,populationy3, label='Secure Learner Performance (Our method)', linestyle='-', marker='d', linewidth=2)
 # #    title('Parameter Tuning : Selection Operation')
 # #     xlabel('Population Size')
 #     xlabel(r'Population Size [$\psi$]', fontsize=20)
 #     ylabel('Testing performance : f1score', fontsize=20)
-#   
+#      
 #     ax = plt.subplot(111)
 #     box = ax.get_position()
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
@@ -1459,41 +1459,41 @@ def gaplots():
 
 
     
-    lowstrengthattacky1 = []
-    lowstrengthattacky1.append(0.8421)
-    lowstrengthattacky1.append(0.7915)
-    lowstrengthattacky1.append(0.9736)
-    lowstrengthattacky1.append(0.8295)
-    lowstrengthattacky1.append(0.8629)
-    lowstrengthattacky1.append(0.8024)
-    lowstrengthattacky1.append(0.6382)
-    lowstrengthattacky1.append(0.876)
- 
-     
-    lowstrengthattacky2 = []
-    lowstrengthattacky2.append(0.6788)
-    lowstrengthattacky2.append(0.6552)
-    lowstrengthattacky2.append(0.6648)
-    lowstrengthattacky2.append(0.6366)
-    lowstrengthattacky2.append(0.6812)
-    lowstrengthattacky2.append(0.619)
-    lowstrengthattacky2.append(0.6257)
-    lowstrengthattacky2.append(0.826)
- 
- 
-    lowstrengthattacky3 = []
-    lowstrengthattacky3.append(0.7785)
-    lowstrengthattacky3.append(0.7807)
-    lowstrengthattacky3.append(0.9813)
-    lowstrengthattacky3.append(0.8391)
-    lowstrengthattacky3.append(0.9624)
-    lowstrengthattacky3.append(0.8669)
-    lowstrengthattacky3.append(0.8202)
-    lowstrengthattacky3.append(0.9974)
- 
-    l1 = lowstrengthattacky1
-    l2 = lowstrengthattacky2
-    l3 = lowstrengthattacky3
+#     lowstrengthattacky1 = []
+#     lowstrengthattacky1.append(0.8421)
+#     lowstrengthattacky1.append(0.7915)
+#     lowstrengthattacky1.append(0.9736)
+#     lowstrengthattacky1.append(0.8295)
+#     lowstrengthattacky1.append(0.8629)
+#     lowstrengthattacky1.append(0.8024)
+#     lowstrengthattacky1.append(0.6382)
+#     lowstrengthattacky1.append(0.876)
+#  
+#      
+#     lowstrengthattacky2 = []
+#     lowstrengthattacky2.append(0.6788)
+#     lowstrengthattacky2.append(0.6552)
+#     lowstrengthattacky2.append(0.6648)
+#     lowstrengthattacky2.append(0.6366)
+#     lowstrengthattacky2.append(0.6812)
+#     lowstrengthattacky2.append(0.619)
+#     lowstrengthattacky2.append(0.6257)
+#     lowstrengthattacky2.append(0.826)
+#  
+#  
+#     lowstrengthattacky3 = []
+#     lowstrengthattacky3.append(0.7785)
+#     lowstrengthattacky3.append(0.7807)
+#     lowstrengthattacky3.append(0.9813)
+#     lowstrengthattacky3.append(0.8391)
+#     lowstrengthattacky3.append(0.9624)
+#     lowstrengthattacky3.append(0.8669)
+#     lowstrengthattacky3.append(0.8202)
+#     lowstrengthattacky3.append(0.9974)
+#  
+#     l1 = lowstrengthattacky1
+#     l2 = lowstrengthattacky2
+#     l3 = lowstrengthattacky3
 
 
 
@@ -1505,34 +1505,34 @@ def gaplots():
 
 #     mediumstrengthattacky1 = []
 #     mediumstrengthattacky1.append(0.859)
-# #     mediumstrengthattacky1.append()
+#     mediumstrengthattacky1.append(0.7253)
 #     mediumstrengthattacky1.append(0.9767)
 #     mediumstrengthattacky1.append(0.8371)
 #     mediumstrengthattacky1.append(0.857)
 #     mediumstrengthattacky1.append(0.8025)
 #     mediumstrengthattacky1.append(0.7082)
 #     mediumstrengthattacky1.append(0.8747)
-#      
+#       
 #     mediumstrengthattacky2 = []
 #     mediumstrengthattacky2.append(0.7868)
-# #     mediumstrengthattacky2.append()
+#     mediumstrengthattacky2.append(0.6786)
 #     mediumstrengthattacky2.append(0.5634)
 #     mediumstrengthattacky2.append(0.6499)
 #     mediumstrengthattacky2.append(0.7172)
 #     mediumstrengthattacky2.append(0.6471)
 #     mediumstrengthattacky2.append(0.6168)
 #     mediumstrengthattacky2.append(0.8087)
-#  
+#   
 #     mediumstrengthattacky3 = []
 #     mediumstrengthattacky3.append(0.84)
-# #     mediumstrengthattacky3.append()
+#     mediumstrengthattacky3.append(0.7938)
 #     mediumstrengthattacky3.append(0.9886)
 #     mediumstrengthattacky3.append(0.8354)
 #     mediumstrengthattacky3.append(0.8721)
 #     mediumstrengthattacky3.append(0.7841)
 #     mediumstrengthattacky3.append(0.9598)
 #     mediumstrengthattacky3.append(0.9233)
-#  
+#   
 #     l1 = mediumstrengthattacky1
 #     l2 = mediumstrengthattacky2
 #     l3 = mediumstrengthattacky3

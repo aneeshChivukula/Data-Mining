@@ -3,6 +3,9 @@ import sys
 import random
 import linecache
 import cPickle
+from statsmodels.iolib.table import Row
+import numpy as np
+import math
 
 def createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,Sampletimestampsfile,Samplepricesfile):
 
@@ -151,31 +154,152 @@ def createlabelleddatasample(PositiveSampleFile,NegativeSampleFile,InFile,Labell
                inline = linecache.getline(InFile, currtimestamp)
                
                
-               
+def createfilteredpositivenegativepartitions(InFile,LabelledSampleFile,PositiveClassFile,NegativeClassFile, Sampletimestampsfile,Positivetimestampsfile):
+
+    fp = open(PositiveClassFile, 'w')
+    fn = open(NegativeClassFile, 'w')
+    
+    
+    sampletimestamps = []
+    positivesampletimestamps = []
+    
+    with open(InFile) as fileobject:
+        for line in fileobject:
+            row = line.rstrip('\n').split(',')
+            sampletimestamps.append(row[1])
+            
+            if(row[3] == 'P'):
+                fp.write(line)
+                positivesampletimestamps.append(row[1])
+            else:
+                fn.write(line)
+
+    cPickle.dump(sampletimestamps, open(Sampletimestampsfile, 'wb')) 
+    cPickle.dump(positivesampletimestamps, open(Positivetimestampsfile, 'wb'))
+    print 'done'
+    
+def find_nearest(array,value):
+    idx = (np.abs(array-value)).argmin()
+#     return array[idx],idx
+    return idx
+    
+def createfilteredsample(InFile,PositiveClassFile,PositiveSampleFile,LabelledSampleFile,positivesamplesize,negativesamplesize,numpositivelines,numnegativelines,windowsize,Sampletimestampsfile,Positivetimestampsfile,NegativeClassFile,NegativeSampleFile):
+    inlines = open(InFile, 'r').readlines()
+    
+    fs = open(LabelledSampleFile, 'a')
+
+    sampletimestamps = np.array(cPickle.load(open(Sampletimestampsfile, 'rb')),dtype=np.float32)
+    
+#     selectedindices = []
+#     
+#     numsamples = 0
+#     
+#     while(numsamples <= positivesamplesize):
+#         curridx = random.randint(0,numpositivelines)
+#         if(curridx not in selectedindices):
+#             selectedindices.append(curridx)
+#             
+#             line = linecache.getline(PositiveClassFile, curridx)
+#             
+#             if(line):
+#                 splitline = line.split(',')
+#                 searchtimestamp = float(splitline[1])
+#                 
+#                 sampleline = ""
+#                 
+#                 for d in xrange(1,windowsize+1):
+#                     curridx = find_nearest(sampletimestamps, searchtimestamp-(windowsize/d))
+#                     splitline = inlines[curridx].rstrip('\n').split(',')
+#                     
+#                     sampleline += splitline[2] + ","
+#                 
+#                 fs.write(sampleline + "P" + '\n')
+#                 
+#                 numsamples = numsamples + 1
+            
+            
+    numsamples = 0
+    selectedindices = []
+    discardedindices = []
+    positivesampletimestamps = np.array(cPickle.load(open(Positivetimestampsfile, 'rb')),dtype=np.float32)
+    
+    
+    while(numsamples <= negativesamplesize):
+        curridx = random.randint(0,numnegativelines)
+        if(curridx not in discardedindices and curridx not in selectedindices):
+            line = linecache.getline(NegativeClassFile, curridx)
+
+            if(line):
+                splitline = line.split(',')
+                searchtimestamp = float(splitline[1])
+
+                sampleline = ""
+
+
+                if(sum((positivesampletimestamps > searchtimestamp-windowsize) & (positivesampletimestamps < searchtimestamp)) != 0):
+                    discardedindices.append(curridx)
+                else:
+                    selectedindices.append(curridx)
+
+                    sampleline = ""
+                    for d in xrange(1,windowsize+1):
+                        curridx = find_nearest(sampletimestamps, searchtimestamp-(windowsize/d))
+                        splitline = inlines[curridx].rstrip('\n').split(',')
+                        sampleline += splitline[2] + ","
+                    
+                    fs.write(sampleline + "N" + '\n')
+
+                    numsamples = numsamples + 1
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
-    InFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/threemonth_sample_demomarket_1000seriesalerts.csv' 
+#     InFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/threemonth_sample_demomarket_1000seriesalerts.csv' 
+    InFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/input.csv' 
+    
     LabelledSampleFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/sample.csv' 
     PositiveClassFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/threemonth_sample_demomarket_1000seriesalerts_positiveclass.csv' 
     NegativeClassFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/threemonth_sample_demomarket_1000seriesalerts_negativeclass.csv' 
     Positivetimestampsfile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/pickledpositivetimestamps.csv'
     Sampletimestampsfile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/pickledsampletimestamps.csv'
     Samplepricesfile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/pickledsampleprices.csv'
-    windowsize = 60
-#     createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,Sampletimestampsfile,Samplepricesfile)
-
-
+    windowsize = 60*60
+    numpositivelines = 67
+    positivesamplesize = 50
+    PositiveSampleFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/positivesample.csv' 
+    numnegativelines = 30109
+    negativesamplesize = 50
+    NegativeSampleFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/negativesample.csv' 
     fs = open(LabelledSampleFile, 'w')
     fs.close()
 
-
-    numpositivelines = 48596
-    positivesamplesize = 10000
-    PositiveSampleFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/positivesample.csv' 
-    createpositivesample(PositiveClassFile,PositiveSampleFile,Positivetimestampsfile,numpositivelines,positivesamplesize,LabelledSampleFile,InFile,Sampletimestampsfile,Samplepricesfile,windowsize)
     
-    numnegativelines = 10745743
-    negativesamplesize = 10000
-    NegativeSampleFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/negativesample.csv' 
+#     createfilteredpositivenegativepartitions(InFile,LabelledSampleFile,PositiveClassFile,NegativeClassFile, Sampletimestampsfile,Positivetimestampsfile)
+    
+    
+    createfilteredsample(InFile,PositiveClassFile,PositiveSampleFile,LabelledSampleFile,positivesamplesize,negativesamplesize,numpositivelines,numnegativelines,windowsize,Sampletimestampsfile,Positivetimestampsfile,NegativeClassFile,NegativeSampleFile)
+    
+    
+    
+    
+    
+#     createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,Sampletimestampsfile,Samplepricesfile)
+#     createpositivesample(PositiveClassFile,PositiveSampleFile,Positivetimestampsfile,numpositivelines,positivesamplesize,LabelledSampleFile,InFile,Sampletimestampsfile,Samplepricesfile,windowsize)
 #     createnegativesample(PositiveClassFile,NegativeClassFile,NegativeSampleFile,Positivetimestampsfile,numnegativelines,negativesamplesize,windowsize,LabelledSampleFile,InFile,Sampletimestampsfile)
 
+# InFile metadata :
+# "timestampdiff","price","binarylabels"
+# date,time,instrument,transactionid,price,label

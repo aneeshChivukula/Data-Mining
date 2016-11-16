@@ -3355,7 +3355,7 @@ mydata2[1,]$timestamp : "2012-09-03 09:30:01 AEST"
 
 timestampdiff <- 0
 for(i in 1:nrow(mydata2)) {
-timestampdiff[i] <- difftime(mydata2[i,]$timestamp,"2012-09-03 09:30:01 AEST")
+timestampdiff[i] <- difftime(mydata2[i,]$timestamp,"2012-09-03 09:30:01 AEST",unit="secs")
 }
 
 mydata2$timestampdiff = timestampdiff
@@ -3402,8 +3402,8 @@ binarylabels = mydata2$binarylabels
 
 binarylabels <- gsub(FALSE, "N", binarylabels)
 binarylabels <- gsub(TRUE, "P", binarylabels)
+binarylabels = noquote(binarylabels)
 mydata2$binarylabels = binarylabels
-
 
 ggplot(mydata2, aes(x=timestampdiff, y=binarylabels)) +
   geom_point(size=5) +
@@ -3412,13 +3412,24 @@ ggplot(mydata2, aes(x=timestampdiff, y=binarylabels)) +
   theme_bw()
 
 export <- mydata2[,c("timestampdiff","price","binarylabels")]
-write.csv(file="filteredsample.csv", x=export, row.names=FALSE)
+write.csv(file="filteredsample.csv", x=export)
 
 filtereddata = read.csv("filteredsample.csv")
 export <- filtereddata[,c("timestampdiff","price","binarylabels")]
+write.csv(file="filteredsample.csv", x=export)
+
+"rowids","timestampdiff","price","binarylabels"
 
 scp -r threemonth_sample_demomarket_1000seriesalerts.csv achivuku@titan9:/home/achivuku/Documents/BigLearningDatasets 
 scp -r achivuku@titan9:/home/achivuku/Documents/BigLearningDatasets/filteredsample.csv /home/aneesh/Desktop/UTS\ Literature\ Survey/NASDAQ\ Project/
+
+sed 's/\"//g' filteredsample.csv > input.csv
+
+InFile metadata :
+"timestampdiff","price","binarylabels"
+date,time,instrument,transactionid,price,label
+
+
 
 
 '''

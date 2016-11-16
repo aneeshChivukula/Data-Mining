@@ -4,7 +4,7 @@ import random
 import linecache
 import cPickle
 
-def createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,Sampletimestampsfile):
+def createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,Sampletimestampsfile,Samplepricesfile):
 
     startdate = date(2012, 9, 03)
     starttime = time(9, 25, 0, 1)
@@ -16,6 +16,7 @@ def createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,
     numnegativelines = 0
     
     sampletimestamps = list()
+    sampleprices = list()
     
     with open(InFile) as fileobject:
         for line in fileobject:
@@ -40,32 +41,31 @@ def createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,
                 numpositivelines = numpositivelines + 1
                 
             sampletimestamps.append(secondssince)
+            sampleprices.append(row[4])
     
     cPickle.dump(sampletimestamps, open(Sampletimestampsfile, 'wb')) 
+    cPickle.dump(sampleprices, open(Samplepricesfile, 'wb')) 
     print 'numpositivelines',numpositivelines
     print 'numnegativelines',numnegativelines
     print 'done'
 
 
-def createpositivesample(PositiveClassFile,PositiveSampleFile,Positivetimestampsfile,numpositivelines,positivesamplesize,LabelledSampleFile,InFile,Sampletimestampsfile,windowsize):
+def createpositivesample(PositiveClassFile,PositiveSampleFile,Positivetimestampsfile,numpositivelines,positivesamplesize,LabelledSampleFile,InFile,Sampletimestampsfile,Samplepricesfile,windowsize):
     sampletimestamps = cPickle.load(open(Sampletimestampsfile, 'rb'))
-    
-#     print(sampletimestamps)
+    sampleprices = cPickle.load(open(Samplepricesfile, 'rb'))
     
     fs = open(LabelledSampleFile, 'a')
-
     fp = open(PositiveSampleFile, 'w')
     positivesampletimestamps = list()
 
     selectedindices = []
-
-    while(len(selectedindices) <= positivesamplesize):
+    numsamples = 0
+    while(numsamples <= positivesamplesize):
         curridx = random.randint(0,numpositivelines)
         if(curridx not in selectedindices):
             selectedindices.append(curridx)
             
             line = linecache.getline(PositiveClassFile, curridx)
-            fp.write(line)
             
             splitline = line.split(',')
             currtimestamp = int(splitline[0])
@@ -75,17 +75,23 @@ def createpositivesample(PositiveClassFile,PositiveSampleFile,Positivetimestamps
             processedtimestamps = []
             processedtimestamps.append(currtimestamp)
             sampleline = ""
-    
-            for x in sampletimestamps:
-                if(x not in processedtimestamps and (currtimestamp - windowsize < x < currtimestamp) and len(processedtimestamps) <= 60):
-                    inline = linecache.getline(InFile, x) # Taking the first available price value for x
-                    inprice = inline.split(',')[4] 
+            
+            for xidx,x in enumerate(sampletimestamps): 
+            # Reduce number of comparisons by indexing presorted timestampped database, binary search partitioning and multiprocessing loops over cpus. 
+                # Convert forloop into while loop and use multiprocessing to speedup this loop. Then use same loop to create negative samples. 
+                # Execute using server memory.
+                if(x not in processedtimestamps and (currtimestamp - windowsize < x < currtimestamp) and len(processedtimestamps) != 59):
                     processedtimestamps.append(x)
+                    inprice = sampleprices[xidx]
                     sampleline += inprice + ","
     
-            if(len(processedtimestamps) == 60):
+            if(len(processedtimestamps) == 59):
+                fp.write(line)
                 sampleline += currprice + ","
                 fs.write(sampleline + "P" + '\n')
+                numsamples = numsamples + 1
+                print('numsamples',numsamples)
+                
     
     fp.close()
     fs.close()
@@ -110,13 +116,24 @@ def createnegativesample(PositiveClassFile,NegativeClassFile,NegativeSampleFile,
             line = linecache.getline(NegativeClassFile, curridx)
             currtimestamp = int(line.rstrip().split(',')[0])
 
-            matchingpositives = []
-            for x in positivesampletimestampsset:
-                if(currtimestamp - windowsize < x < currtimestamp + windowsize): # Check searching algorithms if loop is too slow. Also need only one matchingpositives to exit loop.
-                    matchingpositives.append(x)
-            print(curridx,matchingpositives)
+
+            xidx = 0
+            looping = True
+            maxxidx = len(positivesampletimestampsset)
+#             matchingpositives = []
             
-            if(len(matchingpositives) == 0):
+            while looping and xidx < maxxidx:
+                x = positivesampletimestampsset[xidx]
+#             for x in positivesampletimestampsset:
+                if(currtimestamp - windowsize < x < currtimestamp + windowsize): 
+                    # Check searching algorithms if loop is too slow. Also need only one matchingpositives to exit loop.
+#                     matchingpositives.append(x)
+                    looping = False
+                else:
+                    xidx += 1
+            
+#             if(len(matchingpositives) == 0):
+            if(looping):
                 fn.write(line)
 #                 print("Found: ",curridx)
                 selectedindices.append(curridx)
@@ -143,8 +160,9 @@ if __name__ == '__main__':
     NegativeClassFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/threemonth_sample_demomarket_1000seriesalerts_negativeclass.csv' 
     Positivetimestampsfile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/pickledpositivetimestamps.csv'
     Sampletimestampsfile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/pickledsampletimestamps.csv'
+    Samplepricesfile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/pickledsampleprices.csv'
     windowsize = 60
-#     createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,Sampletimestampsfile)
+#     createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,Sampletimestampsfile,Samplepricesfile)
 
 
     fs = open(LabelledSampleFile, 'w')
@@ -154,10 +172,10 @@ if __name__ == '__main__':
     numpositivelines = 48596
     positivesamplesize = 10000
     PositiveSampleFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/positivesample.csv' 
-#     createpositivesample(PositiveClassFile,PositiveSampleFile,Positivetimestampsfile,numpositivelines,positivesamplesize,LabelledSampleFile,InFile,Sampletimestampsfile,windowsize)
+    createpositivesample(PositiveClassFile,PositiveSampleFile,Positivetimestampsfile,numpositivelines,positivesamplesize,LabelledSampleFile,InFile,Sampletimestampsfile,Samplepricesfile,windowsize)
     
     numnegativelines = 10745743
     negativesamplesize = 10000
     NegativeSampleFile = '/home/aneesh/Desktop/UTS Literature Survey/NASDAQ Project/negativesample.csv' 
-    createnegativesample(PositiveClassFile,NegativeClassFile,NegativeSampleFile,Positivetimestampsfile,numnegativelines,negativesamplesize,windowsize,LabelledSampleFile,InFile,Sampletimestampsfile)
+#     createnegativesample(PositiveClassFile,NegativeClassFile,NegativeSampleFile,Positivetimestampsfile,numnegativelines,negativesamplesize,windowsize,LabelledSampleFile,InFile,Sampletimestampsfile)
 

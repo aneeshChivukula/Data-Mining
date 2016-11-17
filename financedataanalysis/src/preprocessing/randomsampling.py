@@ -190,32 +190,32 @@ def createfilteredsample(InFile,PositiveClassFile,PositiveSampleFile,LabelledSam
 
     sampletimestamps = np.array(cPickle.load(open(Sampletimestampsfile, 'rb')),dtype=np.float32)
     
-#     selectedindices = []
-#     
-#     numsamples = 0
-#     
-#     while(numsamples <= positivesamplesize):
-#         curridx = random.randint(0,numpositivelines)
-#         if(curridx not in selectedindices):
-#             selectedindices.append(curridx)
-#             
-#             line = linecache.getline(PositiveClassFile, curridx)
-#             
-#             if(line):
-#                 splitline = line.split(',')
-#                 searchtimestamp = float(splitline[1])
-#                 
-#                 sampleline = ""
-#                 
-#                 for d in xrange(1,windowsize+1):
-#                     curridx = find_nearest(sampletimestamps, searchtimestamp-(windowsize/d))
-#                     splitline = inlines[curridx].rstrip('\n').split(',')
-#                     
-#                     sampleline += splitline[2] + ","
-#                 
-#                 fs.write(sampleline + "P" + '\n')
-#                 
-#                 numsamples = numsamples + 1
+    selectedindices = []
+     
+    numsamples = 0
+     
+    while(numsamples <= positivesamplesize):
+        curridx = random.randint(0,numpositivelines)
+        if(curridx not in selectedindices):
+            selectedindices.append(curridx)
+             
+            line = linecache.getline(PositiveClassFile, curridx)
+             
+            if(line):
+                splitline = line.split(',')
+                searchtimestamp = float(splitline[1])
+                 
+                sampleline = ""
+                 
+                for d in xrange(1,windowsize+1):
+                    curridx = find_nearest(sampletimestamps, searchtimestamp-(windowsize/d))
+                    splitline = inlines[curridx].rstrip('\n').split(',')
+                     
+                    sampleline += splitline[2] + ","
+                 
+                fs.write(sampleline + "P" + '\n')
+                 
+                numsamples = numsamples + 1
             
             
     numsamples = 0

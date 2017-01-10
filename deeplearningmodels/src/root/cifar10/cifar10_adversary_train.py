@@ -555,6 +555,17 @@ def mutation(individual):
 #     print('individual[0] shape after',(individual[0]).shape)
     return individual
 
+def perturbation(individual):
+    mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
+#     print('individual[0] before',np.sum(individual[0]))
+#     print('individual[0] shape before',(individual[0]).shape)
+    individual[0][mask] = individual[0][mask] + r[mask]
+#     print('individual[0] after',np.sum(individual[0]))
+#     print('individual[0] shape after',(individual[0]).shape)
+    return individual
+    
+
 def crossover(individual1,individual2):
     
     np.random.seed(current_milli_time())
@@ -626,6 +637,34 @@ def distorted_image(x,curralpha):
     a[a<0] = 0
     return a
 
+# TO DO : alphafitnesses looping can be made efficient with tensorflow 
+def alphafitness(curralpha,imagespopulation,toolbox):
+    distortedimages = []
+    for x in imagespopulation:
+        if(x[0] == 0):
+            distortedimages.append((distorted_image(x[1],curralpha[0]),x[0]))
+        else:
+            distortedimages.append((distorted_image(x[1],np.zeros(curralpha[0].shape)),x[0]))
+    perfmetrics = toolbox.evaluate(distortedimages)
+    error = FLAGS.mylambda * (1-perfmetrics[str(perfmetric)])
+    fit = 1 + error - tensornorm(curralpha[0])
+
+    curralpha[0].fitness.error = error
+#         curralpha.fitness.payoff = fit
+    curralpha[0].fitness.weights = (fit,)
+    curralpha[0].fitness.values = [fit]
+
+    curralpha[0].fitness.precision = perfmetrics['precision']
+    curralpha[0].fitness.recall = perfmetrics['recall']
+    curralpha[0].fitness.f1score = perfmetrics['f1score']
+    curralpha[0].fitness.tpr = perfmetrics['tpr']
+    curralpha[0].fitness.fpr = perfmetrics['fpr']
+
+    print('Reset fitnesses in alphafitnesses')
+    print('curralpha[0].fitness.error after', curralpha[0].fitness.error)
+
+
+# TO DO : alphasfitnesses looping can be made efficient with tensorflow 
 def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
     fitnesses = []
 #     fitnesses = np.zeros(len(alphaspopulation))

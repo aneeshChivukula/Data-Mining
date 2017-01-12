@@ -3672,4 +3672,58 @@ toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.att
 		        bestalpha = alphaspopulation[index]
 		alphastar = bestalpha
 
+
+    toolbox.register("perturbate", cifar10_adversary_train.perturbation)
+
+
+import random
+import math
+
+
+
+
+
+def alphafitness(curralpha,imagespopulation,toolbox):
+    distortedimages = []
+    for x in imagespopulation:
+        if(x[0] == 0):
+            distortedimages.append((distorted_image(x[1],curralpha[0]),x[0]))
+        else:
+            distortedimages.append((distorted_image(x[1],np.zeros(curralpha[0].shape)),x[0]))
+    perfmetrics = toolbox.evaluate(distortedimages)
+    error = FLAGS.mylambda * (1-perfmetrics[str(perfmetric)])
+    fit = 1 + error - tensornorm(curralpha[0])
+
+    curralpha[0].fitness.error = error
+#         curralpha.fitness.payoff = fit
+    curralpha[0].fitness.weights = (fit,)
+    curralpha[0].fitness.values = [fit]
+
+    curralpha[0].fitness.precision = perfmetrics['precision']
+    curralpha[0].fitness.recall = perfmetrics['recall']
+    curralpha[0].fitness.f1score = perfmetrics['f1score']
+    curralpha[0].fitness.tpr = perfmetrics['tpr']
+    curralpha[0].fitness.fpr = perfmetrics['fpr']
+
+    print('Reset fitnesses in alphafitnesses')
+    print('curralpha[0].fitness.error after', curralpha[0].fitness.error)
+
+
+
+
+
+def perturbation(individual):
+    mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
+#     print('individual[0] before',np.sum(individual[0]))
+#     print('individual[0] shape before',(individual[0]).shape)
+    individual[0][mask] = individual[0][mask] + r[mask]
+#     print('individual[0] after',np.sum(individual[0]))
+#     print('individual[0] shape after',(individual[0]).shape)
+    return individual
+
+
+
+
+
 '''

@@ -219,12 +219,14 @@ def main(argv=None):
 
             alphan = alphac
             
+            print('adv_payoff - adv_payoff_highest',adv_payoff - adv_payoff_highest)
+            
             if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
                 adv_payoff_highest = adv_payoff
     
                 while TempCurrent >= TempMin:
                     for idx in xrange(0,SampleSize):
-        
+                        print('idx',idx)
                         mutantm = toolbox.perturbate(alphac[0])
                         alphan[0][0] = np.copy(mutantm[0])
                         alphan = toolbox.clone(alphan)

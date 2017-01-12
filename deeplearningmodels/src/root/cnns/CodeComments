@@ -3562,6 +3562,11 @@ TempMin = 0
 SampleSize = 1000
 ReductionRate = 0.9
 
+TempMax = 10000
+TempMin = 1
+SampleSize = 10
+ReductionRate = 0.1
+
 toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
 
     if(searchalg=="SA"):
@@ -3585,13 +3590,13 @@ toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.att
             adv_payoff = round(evalg,FLAGS.numdecimalplaces)
 
             alphan = alphac
-            
+            print('adv_payoff - adv_payoff_highest',adv_payoff - adv_payoff_highest)
             if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
                 adv_payoff_highest = adv_payoff
     
                 while TempCurrent >= TempMin:
                     for idx in xrange(0,SampleSize):
-        
+        				print('idx',idx)
                         mutantm = toolbox.perturbate(alphac[0])
                         alphan[0][0] = np.copy(mutantm[0])
                         alphan = toolbox.clone(alphan)
@@ -3615,7 +3620,7 @@ toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.att
                             print('In third if')
                             alphac = alphan
                             evalc = evaln
-                    print('TempCurrent',TempCurrent)
+                        print('TempCurrent',TempCurrent)
                     TempCurrent *= ReductionRate
                 print('End Game Iteration')
     

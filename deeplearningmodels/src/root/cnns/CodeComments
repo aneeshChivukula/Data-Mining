@@ -3558,7 +3558,7 @@ Updates for SA Code on server :
 searchalg = "SA"
 
 TempMax = 10000
-TempMin = 0
+TempMin = 1
 SampleSize = 1000
 ReductionRate = 0.9
 
@@ -3566,6 +3566,13 @@ TempMax = 10000
 TempMin = 1
 SampleSize = 10
 ReductionRate = 0.1
+
+SampleSize = 1000
+ReductionRate = 0.8
+
+tf.app.flags.DEFINE_integer('max_steps', 2000,
+                            """Number of batches to run.""")
+
 
 toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
 

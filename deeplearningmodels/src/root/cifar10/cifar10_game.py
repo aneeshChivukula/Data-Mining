@@ -32,10 +32,10 @@ perfmetric = "recall"
 # searchalg = "GA"
 searchalg = "SA"
 
-TempMax = 1000
-TempMin = 1
-SampleSize = 5
-ReductionRate = 10
+TempMax = 10000
+TempMin = 0
+SampleSize = 1000
+ReductionRate = 0.9
 
 
 def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
@@ -74,9 +74,13 @@ def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
         else:
             CurrImage = np.array(x[1], np.uint8)
 #             Image.fromarray(np.array(x[1], np.uint8)).save(AdvInDir + CurrLabel + "/" + str(i+2) + ".jpeg")
-            
+
+#         print('CurrImage',CurrImage)
+#         print('type(CurrImage)',type(CurrImage))        
+#         print('curralpha',curralpha)
+#         print('imagespopulation[0]',imagespopulation[0])
         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
-        
+
         l = np.insert(CurrImage.flatten(order='F'),0, x[0])
         if(len(l) == createdataset.length):
             L.append(l)
@@ -125,33 +129,37 @@ def main(argv=None):
     fp2 = open(AlphasFile,'wb')
     
     cifar10_train.train()
-    
+     
     if(os.path.exists(InitialCheckpointsDir)):
         shutil.rmtree(InitialCheckpointsDir)
     shutil.copytree(CheckpointsDir, InitialCheckpointsDir)
     # For 2 class problem, change input bin file to include 2 classes and train over 2000 iterations
     # For 1000 class problem, change input bin file to include 1000 classes and train over 10000 iterations
 
-#     createdataset.binarizer(InDir,'TrainSplit/','test.bin')
-#     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
-#     if tf.gfile.Exists(EvalDir):
-#       tf.gfile.DeleteRecursively(EvalDir)
-#     tf.gfile.MakeDirs(EvalDir)
-#     perfmetrics = cifar10_eval.evaluate()
-#     perf = perfmetrics[str(perfmetric)]
-#     print('initial original training data performance of cifar10_eval without alphastar on original training data',perf)
-#     finalresults.append((1, 0, 1, perf, perfmetrics, gen))
-#     
-#     createdataset.binarizer(InDir,'TestSplit/','test.bin')
-#     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
-#     if tf.gfile.Exists(EvalDir):
-#       tf.gfile.DeleteRecursively(EvalDir)
-#     tf.gfile.MakeDirs(EvalDir)
-#     perfmetrics = cifar10_eval.evaluate()
-#     perf = perfmetrics[str(perfmetric)]
-#     print('initial original testing data precision of cifar10_eval without alphastar on original training data',perf)
-#     finalresults.append((0, 0, 1, perf, perfmetrics, gen))
+# Comment while testing on laptop
 
+    createdataset.binarizer(InDir,'TrainSplit/','test.bin')
+    copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
+    if tf.gfile.Exists(EvalDir):
+      tf.gfile.DeleteRecursively(EvalDir)
+    tf.gfile.MakeDirs(EvalDir)
+    perfmetrics = cifar10_eval.evaluate()
+    perf = perfmetrics[str(perfmetric)]
+    print('initial original training data performance of cifar10_eval without alphastar on original training data',perf)
+    finalresults.append((1, 0, 1, perf, perfmetrics, gen))
+      
+    createdataset.binarizer(InDir,'TestSplit/','test.bin')
+    copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
+    if tf.gfile.Exists(EvalDir):
+      tf.gfile.DeleteRecursively(EvalDir)
+    tf.gfile.MakeDirs(EvalDir)
+    perfmetrics = cifar10_eval.evaluate()
+    perf = perfmetrics[str(perfmetric)]
+    print('initial original testing data precision of cifar10_eval without alphastar on original training data',perf)
+    finalresults.append((0, 0, 1, perf, perfmetrics, gen))
+
+# Comment while testing on laptop
+ 
 #     createdataset.binarizer(InDir,'TrainSplit/','train.bin')
 #     copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
 #     if tf.gfile.Exists(TrainWeightsDir):
@@ -159,7 +167,7 @@ def main(argv=None):
 #     tf.gfile.MakeDirs(TrainWeightsDir)
 #     cifar10_train.train()
     # IS this retraining needed?
-
+ 
 #     createdataset.binarizer(InDir,'TestSplit/','test.bin')
 #     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
 
@@ -183,6 +191,7 @@ def main(argv=None):
     toolbox.register("individualImage", cifar10_adversary_train.initIndividualImage)
     toolbox.register("imagepopulation", cifar10_adversary_train.initImagePopulation, toolbox.individualImage)
     imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
+    
 
     toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=positiveimagesmean)
     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
@@ -190,65 +199,100 @@ def main(argv=None):
 
     if(searchalg=="SA"):
         toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=1)
+        
         alphac = toolbox.population() # 'alphac[0].shape', (1, 32, 32, 3))
         pickle.dump(alphac,fp2)
+
+        binarizer(GameInDir,AdvInDir,imagespopulation,alphac[0],labels,'train.bin')
+
         cifar10_adversary_train.alphafitness(alphac,imagespopulation,toolbox)
-        payoffc = alphac[0].fitness.weights[0]
-        alphan = toolbox.clone(alphac)
+        evalc = alphac[0].fitness.weights[0]
         
-        alphag = alphac # ('alphag[0].shape', (32, 32, 3))
-        payoffg = alphag[0].fitness.weights[0]
+        while(LoopingFlag):
+            print('gen',gen)
         
-        TempCurrent = TempMax
-        
-        while TempCurrent >= TempMin:
-            for idx in xrange(0,SampleSize):
-#                 positiveimagesmean = np.array(alphac[0][0])
-#                 alphac = toolbox.population()
-#                 pickle.dump(alphac,fp2)
-
-                print('alphac[0].shape',alphac[0].shape)
-                print('alphac[0].fitness.values',alphac[0].fitness.values)
-                mutantm = toolbox.perturbate(alphac[0])
-                alphan[0][0] = np.copy(mutantm[0])
-                alphan = toolbox.clone(alphan)
-
-#                 print('mutantm.shape',mutantm[0].shape)
-#                 print('mutantm.fitness.values',mutantm.fitness.values)
-#                 
-#                 print('alphac.shape',alphac[0][0].shape)
-#                 print('alphac.fitness.values',alphac[0].fitness.weights)
-#                 sys.exit()
-                del alphan[0].fitness.values
-                alphan[0].fitness.weights = (0.0,)                
-
-                cifar10_adversary_train.alphafitness(alphan,imagespopulation,toolbox)
-                
-                payoffn = alphan[0].fitness.weights[0]
-                
-                
-                if payoffn > payoffc:
-                    print('In first if')
-                    alphac[0][0] = np.copy(alphan[0])
-                    alphac = toolbox.clone(alphan)
-                    payoffc = payoffn
-                    if payoffg < payoffn:
-                        print('In second if')
-                        alphag[0][0] = np.copy(alphan[0])
-                        alphag = toolbox.clone(alphan)
-                        payoffg = payoffn
-                elif random.random() <= math.exp((payoffn-payoffc)/TempCurrent):
-                    print('In third if')
-                    alphac[0][0] = np.copy(alphan[0])
-                    alphac = toolbox.clone(alphan)
-                    payoffc = payoffn
-                print('This is the end')
+            TempCurrent = TempMax
     
-            TempCurrent *= ReductionRate
-        alphastar = alphag
-        print('alphastar.fitness.weights',alphastar.fitness.weights)
-        sys.exit()
+            alphag = alphac
+            evalg = alphag[0].fitness.weights[0]
+            adv_payoff = round(evalg,FLAGS.numdecimalplaces)
 
+            alphan = alphac
+            
+            if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
+                adv_payoff_highest = adv_payoff
+    
+                while TempCurrent >= TempMin:
+                    for idx in xrange(0,SampleSize):
+        
+                        mutantm = toolbox.perturbate(alphac[0])
+                        alphan[0][0] = np.copy(mutantm[0])
+                        alphan = toolbox.clone(alphan)
+                        # Weights are NOT retained after cloning. Weights must be recomputed if cloning is used for deep copy
+        
+                        cifar10_adversary_train.alphafitness(alphan,imagespopulation,toolbox)
+                        
+                        evaln = alphan[0].fitness.weights[0]
+                        print('evaln',evaln)
+                        print('evalg',evalg)
+                        
+                        if evaln > evalc:
+                            print('In first if')
+                            alphac = alphan
+                            evalc = evaln
+                            if evalg < evaln:
+                                print('In second if')
+                                alphag = alphan
+                                evalg = evaln
+                        elif random.random() <= math.exp((evaln-evalc)/TempCurrent):
+                            print('In third if')
+                            alphac = alphan
+                            evalc = evaln
+                    print('TempCurrent',TempCurrent)
+                    TempCurrent *= ReductionRate
+                print('End Game Iteration')
+    
+                bestalpha = alphag
+                print('alphastar.fitness.weights',bestalpha[0].fitness.weights)
+
+                evalbestalpha = bestalpha[0].fitness.weights[0]
+                adv_payoff = round(evalbestalpha,FLAGS.numdecimalplaces)
+
+                error = round(bestalpha[0].fitness.error,FLAGS.numdecimalplaces)
+                perfmetrics = {}
+                perfmetrics['precision'] = round(bestalpha[0].fitness.precision,FLAGS.numdecimalplaces)
+                perfmetrics['recall'] = round(bestalpha[0].fitness.recall,FLAGS.numdecimalplaces)
+                perfmetrics['f1score'] = round(bestalpha[0].fitness.f1score,FLAGS.numdecimalplaces)
+                perfmetrics['tpr'] = round(bestalpha[0].fitness.tpr,FLAGS.numdecimalplaces)
+                perfmetrics['fpr'] = round(bestalpha[0].fitness.fpr,FLAGS.numdecimalplaces)
+                perf = round(perfmetrics[str(perfmetric)],FLAGS.numdecimalplaces)
+    
+                print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
+                finalresults.append((adv_payoff, error,round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
+                print('finalresults',finalresults)
+                pickle.dump(finalresults,fp1)
+                
+                
+                binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha[0],labels,'train.bin')
+                if tf.gfile.Exists(TrainWeightsDir):
+                  tf.gfile.DeleteRecursively(TrainWeightsDir)
+                tf.gfile.MakeDirs(TrainWeightsDir)
+                cifar10_train.train()
+    
+                alphac = bestalpha 
+                gen = gen + 1 
+                
+                print('Iteration completed')
+            else:
+                LoopingFlag = False
+        print('Game completed')
+        alphastar = bestalpha[0]
+        print('alphastar[0].fitness.weights[0]',alphastar.fitness.weights[0])
+        print('alphastar[0].fitness.precision',alphastar.fitness.precision)
+        print('alphastar[0].fitness.recall',alphastar.fitness.recall)
+        print('alphastar[0].fitness.f1score',alphastar.fitness.f1score)
+        print('alphastar[0].fitness.tpr',alphastar.fitness.tpr)
+        print('alphastar[0].fitness.fpr',alphastar.fitness.fpr)
     
     elif(searchalg=="GA"):
         toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=FLAGS.numalphas)
@@ -334,6 +378,9 @@ def main(argv=None):
                     print('mutant.fitness.valid',mutant.fitness.valid)
     
                 binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha,labels,'train.bin')
+                
+                
+                
                 if tf.gfile.Exists(TrainWeightsDir):
                   tf.gfile.DeleteRecursively(TrainWeightsDir)
                 tf.gfile.MakeDirs(TrainWeightsDir)
@@ -431,7 +478,6 @@ def main(argv=None):
     finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
 
 
-    print('bestalpha',alphastar)
     print('bestalpha.fitness.weights[0]',alphastar.fitness.weights[0])
     print('adv_payoff_highest',adv_payoff_highest)
     print('gen',gen)

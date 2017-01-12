@@ -3517,4 +3517,159 @@ cifar10_cnn.py
 
 Check docs and examples in keras-master on github webpage
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Updates for SA Code on server :
+
+
+# searchalg = "GA"
+searchalg = "SA"
+
+TempMax = 10000
+TempMin = 0
+SampleSize = 1000
+ReductionRate = 0.9
+
+toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
+
+    if(searchalg=="SA"):
+        toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=1)
+        
+        alphac = toolbox.population() # 'alphac[0].shape', (1, 32, 32, 3))
+        pickle.dump(alphac,fp2)
+
+        binarizer(GameInDir,AdvInDir,imagespopulation,alphac[0],labels,'train.bin')
+
+        cifar10_adversary_train.alphafitness(alphac,imagespopulation,toolbox)
+        evalc = alphac[0].fitness.weights[0]
+        
+        while(LoopingFlag):
+            print('gen',gen)
+        
+            TempCurrent = TempMax
+    
+            alphag = alphac
+            evalg = alphag[0].fitness.weights[0]
+            adv_payoff = round(evalg,FLAGS.numdecimalplaces)
+
+            alphan = alphac
+            
+            if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
+                adv_payoff_highest = adv_payoff
+    
+                while TempCurrent >= TempMin:
+                    for idx in xrange(0,SampleSize):
+        
+                        mutantm = toolbox.perturbate(alphac[0])
+                        alphan[0][0] = np.copy(mutantm[0])
+                        alphan = toolbox.clone(alphan)
+                        # Weights are NOT retained after cloning. Weights must be recomputed if cloning is used for deep copy
+        
+                        cifar10_adversary_train.alphafitness(alphan,imagespopulation,toolbox)
+                        
+                        evaln = alphan[0].fitness.weights[0]
+                        print('evaln',evaln)
+                        print('evalg',evalg)
+                        
+                        if evaln > evalc:
+                            print('In first if')
+                            alphac = alphan
+                            evalc = evaln
+                            if evalg < evaln:
+                                print('In second if')
+                                alphag = alphan
+                                evalg = evaln
+                        elif random.random() <= math.exp((evaln-evalc)/TempCurrent):
+                            print('In third if')
+                            alphac = alphan
+                            evalc = evaln
+                    print('TempCurrent',TempCurrent)
+                    TempCurrent *= ReductionRate
+                print('End Game Iteration')
+    
+                bestalpha = alphag
+                print('alphastar.fitness.weights',bestalpha[0].fitness.weights)
+
+                evalbestalpha = bestalpha[0].fitness.weights[0]
+                adv_payoff = round(evalbestalpha,FLAGS.numdecimalplaces)
+
+                error = round(bestalpha[0].fitness.error,FLAGS.numdecimalplaces)
+                perfmetrics = {}
+                perfmetrics['precision'] = round(bestalpha[0].fitness.precision,FLAGS.numdecimalplaces)
+                perfmetrics['recall'] = round(bestalpha[0].fitness.recall,FLAGS.numdecimalplaces)
+                perfmetrics['f1score'] = round(bestalpha[0].fitness.f1score,FLAGS.numdecimalplaces)
+                perfmetrics['tpr'] = round(bestalpha[0].fitness.tpr,FLAGS.numdecimalplaces)
+                perfmetrics['fpr'] = round(bestalpha[0].fitness.fpr,FLAGS.numdecimalplaces)
+                perf = round(perfmetrics[str(perfmetric)],FLAGS.numdecimalplaces)
+    
+                print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
+                finalresults.append((adv_payoff, error,round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
+                print('finalresults',finalresults)
+                pickle.dump(finalresults,fp1)
+                
+                
+                binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha[0],labels,'train.bin')
+                if tf.gfile.Exists(TrainWeightsDir):
+                  tf.gfile.DeleteRecursively(TrainWeightsDir)
+                tf.gfile.MakeDirs(TrainWeightsDir)
+                cifar10_train.train()
+    
+                alphac = bestalpha 
+                gen = gen + 1 
+                
+                print('Iteration completed')
+            else:
+                LoopingFlag = False
+        print('Game completed')
+        alphastar = bestalpha[0]
+        print('alphastar[0].fitness.weights[0]',alphastar.fitness.weights[0])
+        print('alphastar[0].fitness.precision',alphastar.fitness.precision)
+        print('alphastar[0].fitness.recall',alphastar.fitness.recall)
+        print('alphastar[0].fitness.f1score',alphastar.fitness.f1score)
+        print('alphastar[0].fitness.tpr',alphastar.fitness.tpr)
+        print('alphastar[0].fitness.fpr',alphastar.fitness.fpr)
+    
+    elif(searchalg=="GA"):
+
+
+		bestalphafitness = 0.0
+		bestalpha = alphaspopulation[0]
+		for index,_ in enumerate(alphaspopulation):
+		    if(alphaspopulation[index].fitness.weights > bestalphafitness):
+		        bestalphafitness = alphaspopulation[index].fitness.weights
+		        bestalpha = alphaspopulation[index]
+		alphastar = bestalpha
+
 '''

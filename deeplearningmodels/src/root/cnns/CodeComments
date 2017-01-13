@@ -3736,6 +3736,31 @@ def perturbation(individual):
 
 
 
+TempMax = 10000
+TempMin = 1
+SampleSize = 1000
+ReductionRate = 0.8
+
+4-5 days
+
+Reduce TempMax, ReductionRate, SampleSize
+Increase TempMin
+
+Put multiple runs on server
+
+Find time periteration and number of iterations in SA code such that the SA parameters converge to a solution in 2-3 hours in one iteration of the game. 
+TempMax*pow(ReductionRate,n) = TempMin
+Time the SA iteration to get t the time to compute mutation and fitness
+
+TempMax = 1000
+TempMin = 1
+SampleSize = 50,10,20,30,40,60,70,80,90,100
+ReductionRate = 0.6,0.5,0.8
+
+math.pow(0.6,n) = 1000
+half a minute per sample for calculating fitness value and mutation for 50 samples
+
+five hours per sa in each game iteration, output from around 10 iterations of the game to be found in 2-3 days or 50-55 hours,
 
 
 '''

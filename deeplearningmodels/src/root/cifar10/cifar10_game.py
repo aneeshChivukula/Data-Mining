@@ -20,6 +20,9 @@ from root.cifar10 import cifar10_train
 from root.cnns import createdataset
 import tensorflow as tf
 
+import time
+
+
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -33,9 +36,9 @@ perfmetric = "recall"
 searchalg = "SA"
 
 TempMax = 10000
-TempMin = 0
+TempMin = 1
 SampleSize = 1000
-ReductionRate = 0.9
+ReductionRate = 0.8
 
 
 def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
@@ -209,6 +212,8 @@ def main(argv=None):
         evalc = alphac[0].fitness.weights[0]
         
         while(LoopingFlag):
+            
+
             print('gen',gen)
         
             TempCurrent = TempMax
@@ -226,6 +231,7 @@ def main(argv=None):
     
                 while TempCurrent >= TempMin:
                     for idx in xrange(0,SampleSize):
+                        start_time = time.time()
                         print('idx',idx)
                         mutantm = toolbox.perturbate(alphac[0])
                         alphan[0][0] = np.copy(mutantm[0])
@@ -250,6 +256,7 @@ def main(argv=None):
                             print('In third if')
                             alphac = alphan
                             evalc = evaln
+                        print("--- %s seconds ---" % (time.time() - start_time))
                     print('TempCurrent',TempCurrent)
                     TempCurrent *= ReductionRate
                 print('End Game Iteration')
@@ -285,8 +292,11 @@ def main(argv=None):
                 gen = gen + 1 
                 
                 print('Iteration completed')
+                
             else:
                 LoopingFlag = False
+
+        
         print('Game completed')
         alphastar = bestalpha[0]
         print('alphastar[0].fitness.weights[0]',alphastar.fitness.weights[0])

@@ -3684,7 +3684,7 @@ toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.att
 		        bestalpha = alphaspopulation[index]
 		alphastar = bestalpha
 
-
+	toolbox.register("select", cifar10_adversary_train.select)
     toolbox.register("perturbate", cifar10_adversary_train.perturbation)
 
 
@@ -3758,7 +3758,7 @@ SampleSize = 50,10,20,30,40,60,70,80,90,100
 ReductionRate = 0.6,0.5,0.8
 
 math.pow(0.6,n) = 1000
-half a minute per sample for calculating fitness value and mutation for 50 samples
+half a minute per sample for calculating fitness value and mutation for 50 samples, if required fitness calculation can be made efficient in tensorflow,
 
 five hours per sa in each game iteration, output from around 10 iterations of the game to be found in 2-3 days or 50-55 hours,
 

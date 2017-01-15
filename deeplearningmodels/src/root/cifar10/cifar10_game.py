@@ -210,25 +210,26 @@ def main(argv=None):
 
         cifar10_adversary_train.alphafitness(alphac,imagespopulation,toolbox)
         evalc = alphac[0].fitness.weights[0]
+        alphag = alphac
+        alphan = alphac
         
         while(LoopingFlag):
-            
 
             print('gen',gen)
         
             TempCurrent = TempMax
-    
-            alphag = alphac
+            
             evalg = alphag[0].fitness.weights[0]
             adv_payoff = round(evalg,FLAGS.numdecimalplaces)
 
-            alphan = alphac
             
             print('adv_payoff - adv_payoff_highest',adv_payoff - adv_payoff_highest)
             
             if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
                 adv_payoff_highest = adv_payoff
     
+                print('adv_payoff_highest',adv_payoff_highest)
+                
                 while TempCurrent >= TempMin:
                     for idx in xrange(0,SampleSize):
                         start_time = time.time()
@@ -241,8 +242,10 @@ def main(argv=None):
                         cifar10_adversary_train.alphafitness(alphan,imagespopulation,toolbox)
                         
                         evaln = alphan[0].fitness.weights[0]
-                        print('evaln',evaln)
-                        print('evalg',evalg)
+                        print('evaln',round(evaln,FLAGS.numdecimalplaces)) 
+                        print('evalg',round(evalg,FLAGS.numdecimalplaces)) 
+                        print('evalc',round(evalc,FLAGS.numdecimalplaces))
+                        print('TempCurrent',TempCurrent)
                         
                         if evaln > evalc:
                             print('In first if')
@@ -261,19 +264,17 @@ def main(argv=None):
                     TempCurrent *= ReductionRate
                 print('End Game Iteration')
     
-                bestalpha = alphag
-                print('alphastar.fitness.weights',bestalpha[0].fitness.weights)
+                print('alphastar.fitness.weights',alphag[0].fitness.weights)
 
-                evalbestalpha = bestalpha[0].fitness.weights[0]
-                adv_payoff = round(evalbestalpha,FLAGS.numdecimalplaces)
+                adv_payoff = round(alphag[0].fitness.weights[0],FLAGS.numdecimalplaces)
+                error = round(alphag[0].fitness.error,FLAGS.numdecimalplaces)
 
-                error = round(bestalpha[0].fitness.error,FLAGS.numdecimalplaces)
                 perfmetrics = {}
-                perfmetrics['precision'] = round(bestalpha[0].fitness.precision,FLAGS.numdecimalplaces)
-                perfmetrics['recall'] = round(bestalpha[0].fitness.recall,FLAGS.numdecimalplaces)
-                perfmetrics['f1score'] = round(bestalpha[0].fitness.f1score,FLAGS.numdecimalplaces)
-                perfmetrics['tpr'] = round(bestalpha[0].fitness.tpr,FLAGS.numdecimalplaces)
-                perfmetrics['fpr'] = round(bestalpha[0].fitness.fpr,FLAGS.numdecimalplaces)
+                perfmetrics['precision'] = round(alphag[0].fitness.precision,FLAGS.numdecimalplaces)
+                perfmetrics['recall'] = round(alphag[0].fitness.recall,FLAGS.numdecimalplaces)
+                perfmetrics['f1score'] = round(alphag[0].fitness.f1score,FLAGS.numdecimalplaces)
+                perfmetrics['tpr'] = round(alphag[0].fitness.tpr,FLAGS.numdecimalplaces)
+                perfmetrics['fpr'] = round(alphag[0].fitness.fpr,FLAGS.numdecimalplaces)
                 perf = round(perfmetrics[str(perfmetric)],FLAGS.numdecimalplaces)
     
                 print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
@@ -282,13 +283,13 @@ def main(argv=None):
                 pickle.dump(finalresults,fp1)
                 
                 
-                binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha[0],labels,'train.bin')
+                binarizer(GameInDir,AdvInDir,imagespopulation,alphag[0],labels,'train.bin')
                 if tf.gfile.Exists(TrainWeightsDir):
                   tf.gfile.DeleteRecursively(TrainWeightsDir)
                 tf.gfile.MakeDirs(TrainWeightsDir)
                 cifar10_train.train()
     
-                alphac = bestalpha 
+                alphac = alphag 
                 gen = gen + 1 
                 
                 print('Iteration completed')
@@ -298,7 +299,7 @@ def main(argv=None):
 
         
         print('Game completed')
-        alphastar = bestalpha[0]
+        alphastar = alphag[0]
         print('alphastar[0].fitness.weights[0]',alphastar.fitness.weights[0])
         print('alphastar[0].fitness.precision',alphastar.fitness.precision)
         print('alphastar[0].fitness.recall',alphastar.fitness.recall)
@@ -490,18 +491,26 @@ def main(argv=None):
     finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
 
 
-    print('bestalpha.fitness.weights[0]',alphastar.fitness.weights[0])
-    print('adv_payoff_highest',adv_payoff_highest)
-    print('gen',gen)
-    print('FLAGS.steplow',FLAGS.steplow)
-    print('FLAGS.stephigh',FLAGS.stephigh)
-    print('FLAGS.minwidthstartidx',FLAGS.minwidthstartidx)
-    print('FLAGS.minwidthenddx',FLAGS.minwidthenddx)
-    print('FLAGS.offspringsizefactor',FLAGS.offspringsizefactor)
-    print('FLAGS.numgens',FLAGS.numgens)
-    print('FLAGS.numalphas',FLAGS.numalphas)
-    print('FLAGS.myepsilon',FLAGS.myepsilon)
-    print('FLAGS.mylambda',FLAGS.mylambda)
+    if(searchalg=="GA"):
+        print('bestalpha.fitness.weights[0]',alphastar.fitness.weights[0])
+        print('adv_payoff_highest',adv_payoff_highest)
+        print('gen',gen)
+        print('FLAGS.steplow',FLAGS.steplow)
+        print('FLAGS.stephigh',FLAGS.stephigh)
+        print('FLAGS.minwidthstartidx',FLAGS.minwidthstartidx)
+        print('FLAGS.minwidthenddx',FLAGS.minwidthenddx)
+        print('FLAGS.offspringsizefactor',FLAGS.offspringsizefactor)
+        print('FLAGS.numgens',FLAGS.numgens)
+        print('FLAGS.numalphas',FLAGS.numalphas)
+        print('FLAGS.myepsilon',FLAGS.myepsilon)
+        print('FLAGS.mylambda',FLAGS.mylambda)
+    elif(searchalg=="GA"):
+        print('TempMax',TempMax)
+        print('TempMin',TempMin)
+        print('SampleSize',SampleSize)
+        print('ReductionRate',ReductionRate)
+        
+    
     print('finalresults',finalresults)
     
     pickle.dump(finalresults,fp1)

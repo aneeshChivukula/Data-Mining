@@ -3690,7 +3690,7 @@ toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.att
 
 import random
 import math
-
+import time
 
 
 
@@ -3733,6 +3733,28 @@ def perturbation(individual):
 #     print('individual[0] after',np.sum(individual[0]))
 #     print('individual[0] shape after',(individual[0]).shape)
     return individual
+
+
+
+    if(searchalg=="GA"):
+        print('bestalpha.fitness.weights[0]',alphastar.fitness.weights[0])
+        print('adv_payoff_highest',adv_payoff_highest)
+        print('gen',gen)
+        print('FLAGS.steplow',FLAGS.steplow)
+        print('FLAGS.stephigh',FLAGS.stephigh)
+        print('FLAGS.minwidthstartidx',FLAGS.minwidthstartidx)
+        print('FLAGS.minwidthenddx',FLAGS.minwidthenddx)
+        print('FLAGS.offspringsizefactor',FLAGS.offspringsizefactor)
+        print('FLAGS.numgens',FLAGS.numgens)
+        print('FLAGS.numalphas',FLAGS.numalphas)
+        print('FLAGS.myepsilon',FLAGS.myepsilon)
+        print('FLAGS.mylambda',FLAGS.mylambda)
+    elif(searchalg=="GA"):
+        print('TempMax',TempMax)
+        print('TempMin',TempMin)
+        print('SampleSize',SampleSize)
+        print('ReductionRate',ReductionRate)
+
 
 
 

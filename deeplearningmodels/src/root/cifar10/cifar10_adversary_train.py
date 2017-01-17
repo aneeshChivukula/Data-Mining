@@ -555,16 +555,27 @@ def mutation(individual):
 #     print('individual[0] shape after',(individual[0]).shape)
     return individual
 
+# def perturbation(individual):
+#     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+#     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
+#     individual[0][mask] = individual[0][mask] + r[mask]
+#     return individual
+
 def perturbation(individual):
-    mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
-    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
-#     print('individual[0] before',np.sum(individual[0]))
-#     print('individual[0] shape before',(individual[0]).shape)
-    individual[0][mask] = individual[0][mask] + r[mask]
-#     print('individual[0] after',np.sum(individual[0]))
-#     print('individual[0] shape after',(individual[0]).shape)
-    return individual
     
+    np.random.seed(current_milli_time())
+    
+    heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+    heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+    
+    widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+    widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+    
+    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
+
+    individual[0][heightstartind:heightendind,widthstartind:widthendind,] += r[heightstartind:heightendind,widthstartind:widthendind,]
+    
+    return individual
 
 def crossover(individual1,individual2):
     

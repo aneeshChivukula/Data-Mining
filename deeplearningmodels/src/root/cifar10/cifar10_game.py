@@ -35,10 +35,10 @@ perfmetric = "recall"
 # searchalg = "GA"
 searchalg = "SA"
 
-TempMax = 10000
+TempMax = 50
 TempMin = 1
-SampleSize = 1000
-ReductionRate = 0.8
+SampleSize = 5
+ReductionRate = 0.6
 
 
 def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
@@ -57,6 +57,13 @@ def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
             CurrImage = np.array(x[1], np.uint8)
 #         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(filesd[i]) + ".jpeg")
+    
+
+def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
+    CurrImage = np.array(curralpha, np.uint8)
+    
+    print('CurrImage',CurrImage)
+    Image.fromarray(CurrImage).save(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".jpeg")
     
     
 
@@ -213,6 +220,25 @@ def main(argv=None):
         alphag = alphac
         alphan = alphac
         
+        
+        
+        AdvInDirN = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphan/'
+        AdvInDirG = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphag/'
+        AdvInDirC = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphac/'
+
+        if tf.gfile.Exists(AdvInDirN):
+            tf.gfile.DeleteRecursively(AdvInDirN)
+        tf.gfile.MakeDirs(AdvInDirN)
+
+        if tf.gfile.Exists(AdvInDirG):
+            tf.gfile.DeleteRecursively(AdvInDirG)
+        tf.gfile.MakeDirs(AdvInDirG)
+
+        if tf.gfile.Exists(AdvInDirC):
+            tf.gfile.DeleteRecursively(AdvInDirC)
+        tf.gfile.MakeDirs(AdvInDirC)
+
+        
         while(LoopingFlag):
 
             print('gen',gen)
@@ -221,7 +247,6 @@ def main(argv=None):
             
             evalg = alphag[0].fitness.weights[0]
             adv_payoff = round(evalg,FLAGS.numdecimalplaces)
-
             
             print('adv_payoff - adv_payoff_highest',adv_payoff - adv_payoff_highest)
             
@@ -238,7 +263,11 @@ def main(argv=None):
                         alphan[0][0] = np.copy(mutantm[0])
                         alphan = toolbox.clone(alphan)
                         # Weights are NOT retained after cloning. Weights must be recomputed if cloning is used for deep copy
-        
+                        
+                        
+                        alphasaver(AdvInDirN,alphan[0][0],TempCurrent,idx)
+                        
+                        
                         cifar10_adversary_train.alphafitness(alphan,imagespopulation,toolbox)
                         
                         evaln = alphan[0].fitness.weights[0]
@@ -282,7 +311,7 @@ def main(argv=None):
                 print('finalresults',finalresults)
                 pickle.dump(finalresults,fp1)
                 
-                
+
                 binarizer(GameInDir,AdvInDir,imagespopulation,alphag[0],labels,'train.bin')
                 if tf.gfile.Exists(TrainWeightsDir):
                   tf.gfile.DeleteRecursively(TrainWeightsDir)
@@ -292,6 +321,9 @@ def main(argv=None):
                 alphac = alphag 
                 gen = gen + 1 
                 
+                
+                transformer(AdvInDirG,imagespopulation,alphag[0],labels,filesd)
+                alphasaver(AdvInDirC,alphac[0][0],TempCurrent,idx)
                 print('Iteration completed')
                 
             else:
@@ -480,18 +512,19 @@ def main(argv=None):
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
     AdvInDirTrain = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTrain/'
     imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
-    transformer(AdvInDirTrain,imagespopulation,alphastar,labels,filesd)
+    transformer(AdvInDirTrain,imagespopulation,alphastar[0],labels,filesd)
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
     AdvInDirTest = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTest/'
     imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
-    transformer(AdvInDirTest,imagespopulation,alphastar,labels,filesd)
+    transformer(AdvInDirTest,imagespopulation,alphastar[0],labels,filesd)
 
     print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',perf)
     finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
 
 
     if(searchalg=="GA"):
+        print('alphastar',alphastar)
         print('bestalpha.fitness.weights[0]',alphastar.fitness.weights[0])
         print('adv_payoff_highest',adv_payoff_highest)
         print('gen',gen)
@@ -509,8 +542,6 @@ def main(argv=None):
         print('TempMin',TempMin)
         print('SampleSize',SampleSize)
         print('ReductionRate',ReductionRate)
-        
-    
     print('finalresults',finalresults)
     
     pickle.dump(finalresults,fp1)

@@ -3575,7 +3575,8 @@ tf.app.flags.DEFINE_integer('max_steps', 2000,
 
 
 toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
-
+imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
+    
     if(searchalg=="SA"):
         toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=1)
         
@@ -3586,34 +3587,61 @@ toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.att
 
         cifar10_adversary_train.alphafitness(alphac,imagespopulation,toolbox)
         evalc = alphac[0].fitness.weights[0]
+        alphag = alphac
+        alphan = alphac
+        
+        
+        
+        AdvInDirN = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphan/'
+        AdvInDirG = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphag/'
+        AdvInDirC = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphac/'
+
+        if tf.gfile.Exists(AdvInDirN):
+            tf.gfile.DeleteRecursively(AdvInDirN)
+        tf.gfile.MakeDirs(AdvInDirN)
+
+        if tf.gfile.Exists(AdvInDirG):
+            tf.gfile.DeleteRecursively(AdvInDirG)
+        tf.gfile.MakeDirs(AdvInDirG)
+
+        if tf.gfile.Exists(AdvInDirC):
+            tf.gfile.DeleteRecursively(AdvInDirC)
+        tf.gfile.MakeDirs(AdvInDirC)
+
         
         while(LoopingFlag):
+
             print('gen',gen)
         
             TempCurrent = TempMax
-    
-            alphag = alphac
+            
             evalg = alphag[0].fitness.weights[0]
             adv_payoff = round(evalg,FLAGS.numdecimalplaces)
-
-            alphan = alphac
+            
             print('adv_payoff - adv_payoff_highest',adv_payoff - adv_payoff_highest)
+            
             if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
                 adv_payoff_highest = adv_payoff
     
+                print('adv_payoff_highest',adv_payoff_highest)
+                
                 while TempCurrent >= TempMin:
                     for idx in xrange(0,SampleSize):
-        				print('idx',idx)
+                        start_time = time.time()
+                        print('idx',idx)
                         mutantm = toolbox.perturbate(alphac[0])
                         alphan[0][0] = np.copy(mutantm[0])
                         alphan = toolbox.clone(alphan)
                         # Weights are NOT retained after cloning. Weights must be recomputed if cloning is used for deep copy
-        
+                        
+                        alphasaver(AdvInDirN,alphan,TempCurrent,idx)
                         cifar10_adversary_train.alphafitness(alphan,imagespopulation,toolbox)
                         
                         evaln = alphan[0].fitness.weights[0]
-                        print('evaln',evaln)
-                        print('evalg',evalg)
+                        print('evaln',round(evaln,FLAGS.numdecimalplaces)) 
+                        print('evalg',round(evalg,FLAGS.numdecimalplaces)) 
+                        print('evalc',round(evalc,FLAGS.numdecimalplaces))
+                        print('TempCurrent',TempCurrent)
                         
                         if evaln > evalc:
                             print('In first if')
@@ -3627,23 +3655,22 @@ toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.att
                             print('In third if')
                             alphac = alphan
                             evalc = evaln
-                        print('TempCurrent',TempCurrent)
+                        print("--- %s seconds ---" % (time.time() - start_time))
+                    print('TempCurrent',TempCurrent)
                     TempCurrent *= ReductionRate
                 print('End Game Iteration')
     
-                bestalpha = alphag
-                print('alphastar.fitness.weights',bestalpha[0].fitness.weights)
+                print('alphastar.fitness.weights',alphag[0].fitness.weights)
 
-                evalbestalpha = bestalpha[0].fitness.weights[0]
-                adv_payoff = round(evalbestalpha,FLAGS.numdecimalplaces)
+                adv_payoff = round(alphag[0].fitness.weights[0],FLAGS.numdecimalplaces)
+                error = round(alphag[0].fitness.error,FLAGS.numdecimalplaces)
 
-                error = round(bestalpha[0].fitness.error,FLAGS.numdecimalplaces)
                 perfmetrics = {}
-                perfmetrics['precision'] = round(bestalpha[0].fitness.precision,FLAGS.numdecimalplaces)
-                perfmetrics['recall'] = round(bestalpha[0].fitness.recall,FLAGS.numdecimalplaces)
-                perfmetrics['f1score'] = round(bestalpha[0].fitness.f1score,FLAGS.numdecimalplaces)
-                perfmetrics['tpr'] = round(bestalpha[0].fitness.tpr,FLAGS.numdecimalplaces)
-                perfmetrics['fpr'] = round(bestalpha[0].fitness.fpr,FLAGS.numdecimalplaces)
+                perfmetrics['precision'] = round(alphag[0].fitness.precision,FLAGS.numdecimalplaces)
+                perfmetrics['recall'] = round(alphag[0].fitness.recall,FLAGS.numdecimalplaces)
+                perfmetrics['f1score'] = round(alphag[0].fitness.f1score,FLAGS.numdecimalplaces)
+                perfmetrics['tpr'] = round(alphag[0].fitness.tpr,FLAGS.numdecimalplaces)
+                perfmetrics['fpr'] = round(alphag[0].fitness.fpr,FLAGS.numdecimalplaces)
                 perf = round(perfmetrics[str(perfmetric)],FLAGS.numdecimalplaces)
     
                 print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
@@ -3651,21 +3678,26 @@ toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.att
                 print('finalresults',finalresults)
                 pickle.dump(finalresults,fp1)
                 
-                
-                binarizer(GameInDir,AdvInDir,imagespopulation,bestalpha[0],labels,'train.bin')
+
+                binarizer(GameInDir,AdvInDir,imagespopulation,alphag[0],labels,'train.bin')
                 if tf.gfile.Exists(TrainWeightsDir):
                   tf.gfile.DeleteRecursively(TrainWeightsDir)
                 tf.gfile.MakeDirs(TrainWeightsDir)
                 cifar10_train.train()
     
-                alphac = bestalpha 
+                alphac = alphag 
                 gen = gen + 1 
                 
+                transformer(AdvInDirG,imagespopulation,alphag,labels,filesd)
+                alphasaver(AdvInDirC,alphac,TempCurrent,idx)
                 print('Iteration completed')
+                
             else:
                 LoopingFlag = False
+
+        
         print('Game completed')
-        alphastar = bestalpha[0]
+        alphastar = alphag[0]
         print('alphastar[0].fitness.weights[0]',alphastar.fitness.weights[0])
         print('alphastar[0].fitness.precision',alphastar.fitness.precision)
         print('alphastar[0].fitness.recall',alphastar.fitness.recall)
@@ -3693,6 +3725,22 @@ import math
 import time
 
 
+def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
+    if tf.gfile.Exists(AdvInDir):
+      tf.gfile.DeleteRecursively(AdvInDir)
+    tf.gfile.MakeDirs(AdvInDir)
+    
+    for Label in labels:
+        tf.gfile.MakeDirs(AdvInDir + Label)
+    
+    for i,x in enumerate(imagespopulation):
+        CurrLabel = labels[x[0]]
+        if(x[0] == 0):
+            CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
+        else:
+            CurrImage = np.array(x[1], np.uint8)
+#         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
+        Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(filesd[i]) + ".jpeg")
 
 
 def alphafitness(curralpha,imagespopulation,toolbox):
@@ -3722,6 +3770,22 @@ def alphafitness(curralpha,imagespopulation,toolbox):
 
 
 
+def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
+    if tf.gfile.Exists(AdvInDir):
+      tf.gfile.DeleteRecursively(AdvInDir)
+    tf.gfile.MakeDirs(AdvInDir)
+    
+    for Label in labels:
+        tf.gfile.MakeDirs(AdvInDir + Label)
+    
+    for i,x in enumerate(imagespopulation):
+        CurrLabel = labels[x[0]]
+        if(x[0] == 0):
+            CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
+        else:
+            CurrImage = np.array(x[1], np.uint8)
+#         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
+        Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(filesd[i]) + ".jpeg")
 
 
 def perturbation(individual):
@@ -3734,6 +3798,21 @@ def perturbation(individual):
 #     print('individual[0] shape after',(individual[0]).shape)
     return individual
 
+def perturbation(individual):
+    
+    np.random.seed(current_milli_time())
+    
+    heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+    heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+    
+    widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+    widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+    
+    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
+
+    individual[0][heightstartind:heightendind,widthstartind:widthendind,] += r[heightstartind:heightendind,widthstartind:widthendind,]
+    
+    return individual
 
 
     if(searchalg=="GA"):
@@ -3754,6 +3833,29 @@ def perturbation(individual):
         print('TempMin',TempMin)
         print('SampleSize',SampleSize)
         print('ReductionRate',ReductionRate)
+
+
+        AdvInDirN = '/scratch/cifar10_7/AdversarialSplitAlphan/'
+        AdvInDirG = '/scratch/cifar10_7/AdversarialSplitAlphag/'
+        AdvInDirC = '/scratch/cifar10_7/AdversarialSplitAlphac/'
+
+        if tf.gfile.Exists(AdvInDirN):
+            tf.gfile.DeleteRecursively(AdvInDirN)
+        tf.gfile.MakeDirs(AdvInDirN)
+
+        if tf.gfile.Exists(AdvInDirG):
+            tf.gfile.DeleteRecursively(AdvInDirG)
+        tf.gfile.MakeDirs(AdvInDirG)
+
+        if tf.gfile.Exists(AdvInDirC):
+            tf.gfile.DeleteRecursively(AdvInDirC)
+        tf.gfile.MakeDirs(AdvInDirC)
+
+def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
+    CurrImage = np.array(curralpha, np.uint8)
+    Image.fromarray(CurrImage).save(AdvInDir + "/" + TempCurrent + idx + ".jpeg")
+
+
 
 
 

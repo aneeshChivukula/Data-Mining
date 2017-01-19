@@ -41,9 +41,9 @@ tf.app.flags.DEFINE_integer('high', 255,
                             """Upper limit for pixel value.""")
 tf.app.flags.DEFINE_integer('dividend', 1,
                             """Factor to control the GA norm initialization boundaries.""")
-tf.app.flags.DEFINE_integer('steplow', -50,
+tf.app.flags.DEFINE_integer('steplow', -20,
                             """Small step limit for mutation operator.""")
-tf.app.flags.DEFINE_integer('stephigh', 50,
+tf.app.flags.DEFINE_integer('stephigh', 20,
                             """Small step limit for mutation operator.""")
 
 # tf.app.flags.DEFINE_integer('steplow', -5,
@@ -480,8 +480,10 @@ def initImagePopulation(ind_init, InDir):
     ls = listdir(InDir)
     ls.sort()
     positiveimagesmean = np.zeros((32, 32, 3))
+    negativeimagesmean = np.zeros((32, 32, 3))
 #     d = ls[0]
-    dr = 0
+    numpos = 0
+    numneg = 0
     
     filesd = dict()
     index = 0
@@ -496,10 +498,14 @@ def initImagePopulation(ind_init, InDir):
                 images.append((ind,a))
                 if(ind==1):
                     positiveimagesmean = positiveimagesmean + a
-                    dr = dr + 1
+                    numpos = numpos + 1
+                else:
+                    negativeimagesmean = negativeimagesmean + a
+                    numneg = numneg + 1
+                    
 #         ind = ind + 1
 #     print('l',l)
-    return images,np.floor(np.divide(positiveimagesmean, dr)),filesd
+    return images,np.floor(np.divide(positiveimagesmean, numpos)),np.floor(np.divide(negativeimagesmean, numneg)),filesd
 
 def evaluate(currpopulation):
     binarizer(FLAGS.data_dir + '/imagenet2010-batches-bin/',currpopulation,'test.bin')
@@ -555,26 +561,32 @@ def mutation(individual):
 #     print('individual[0] shape after',(individual[0]).shape)
     return individual
 
-# def perturbation(individual):
-#     mask = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+# def perturbation(individual,mask2):
+#     mask1 = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+#     mask = np.logical_and(mask1,mask2)
+# 
 #     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
 #     individual[0][mask] = individual[0][mask] + r[mask]
 #     return individual
 
-def perturbation(individual):
-    
+def perturbation(individual,mask2):
+     
     np.random.seed(current_milli_time())
-    
+     
     heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
     heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
-    
+     
     widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
     widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+     
+    mask1 = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+    mask = np.logical_and(mask1,mask2)[heightstartind:heightendind,widthstartind:widthendind,]
+    
     
     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
-
-    individual[0][heightstartind:heightendind,widthstartind:widthendind,] += r[heightstartind:heightendind,widthstartind:widthendind,]
-    
+ 
+    individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[heightstartind:heightendind,widthstartind:widthendind,][mask]
+     
     return individual
 
 def crossover(individual1,individual2):

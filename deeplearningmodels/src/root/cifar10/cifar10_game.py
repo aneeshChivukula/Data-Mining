@@ -200,10 +200,11 @@ def main(argv=None):
     
     toolbox.register("individualImage", cifar10_adversary_train.initIndividualImage)
     toolbox.register("imagepopulation", cifar10_adversary_train.initImagePopulation, toolbox.individualImage)
-    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
     
 
-    toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=positiveimagesmean)
+#     toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=positiveimagesmean)
+    toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=0)
     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
 
 
@@ -220,7 +221,11 @@ def main(argv=None):
         alphag = alphac
         alphan = alphac
         
+        mask1 = positiveimagesmean != 0
+        mask2 = negativeimagesmean != 0
         
+        mask = mask2
+#         mask = np.logical_and(mask1,mask2)
         
         AdvInDirN = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphan/'
         AdvInDirG = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphag/'
@@ -259,7 +264,7 @@ def main(argv=None):
                     for idx in xrange(0,SampleSize):
                         start_time = time.time()
                         print('idx',idx)
-                        mutantm = toolbox.perturbate(alphac[0])
+                        mutantm = toolbox.perturbate(alphac[0],mask)
                         alphan[0][0] = np.copy(mutantm[0])
                         alphan = toolbox.clone(alphan)
                         # Weights are NOT retained after cloning. Weights must be recomputed if cloning is used for deep copy
@@ -459,7 +464,7 @@ def main(argv=None):
         alphastar = bestalpha
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
-    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
     binarizer(GameInDir,AdvInDir,imagespopulation,alphastar,labels,'train.bin')
     if tf.gfile.Exists(TrainWeightsDir):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
@@ -467,7 +472,7 @@ def main(argv=None):
     cifar10_train.train()
     
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
-    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
     binarizer(GameInDir,AdvInDir,imagespopulation,alphastar,labels,'test.bin')
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
@@ -497,7 +502,7 @@ def main(argv=None):
     shutil.copytree(InitialCheckpointsDir,CheckpointsDir, CheckpointsDir)
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
-    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
     binarizer(GameInDir,AdvInDir,imagespopulation,alphastar,labels,'test.bin')
     if tf.gfile.Exists(EvalDir):
       tf.gfile.DeleteRecursively(EvalDir)
@@ -511,12 +516,12 @@ def main(argv=None):
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
     AdvInDirTrain = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTrain/'
-    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
     transformer(AdvInDirTrain,imagespopulation,alphastar[0],labels,filesd)
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
     AdvInDirTest = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTest/'
-    imagespopulation,positiveimagesmean,filesd = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
     transformer(AdvInDirTest,imagespopulation,alphastar[0],labels,filesd)
 
     print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',perf)

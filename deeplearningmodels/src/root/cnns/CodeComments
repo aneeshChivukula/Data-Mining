@@ -3855,6 +3855,184 @@ def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
     CurrImage = np.array(curralpha, np.uint8)
     Image.fromarray(CurrImage).save(AdvInDir + "/" + TempCurrent + idx + ".jpeg")
 
+def initImagePopulation(ind_init, InDir):
+
+def perturbation(individual,positiveimagesmean,negativeimagesmean):
+
+imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
+
+        mask1 = positiveimagesmean != 0
+        mask2 = negativeimagesmean != 0
+        
+        mask = mask2
+
+mutantm = toolbox.perturbate(alphac[0],mask)
+
+tf.app.flags.DEFINE_integer('steplow', -20,
+                            """Small step limit for mutation operator.""")
+tf.app.flags.DEFINE_integer('stephigh', 20,
+                            """Small step limit for mutation operator.""")
+
+
+tf.app.flags.DEFINE_integer('max_steps', 5000,
+                            """Number of batches to run.""")
+
+
+
+Changes to be made on server if overwriting client code on server code :
+
+cifar10_game.py
+
+import sys
+import tensorflow as tf
+import numpy as np
+import PIL
+from PIL import Image
+from shutil import copyfile
+
+#from root.cifar10 import cifar10
+#from root.cifar10 import cifar10_train
+#from root.cifar10 import cifar10_eval
+#from root.cifar10 import cifar10_adversary_train
+#from root.cnns import createdataset
+
+from os import listdir
+from deap import base
+from deap import creator
+from deap import tools
+import cPickle as pickle
+
+import shutil
+import os
+import random
+import math
+import time
+
+sys.path.append('/home/achivuku/workspace/deeplearningmodels_7/src/root/cifar10')
+sys.path.append('/home/achivuku/workspace/deeplearningmodels_7/src/root/cnns')
+import cifar10
+import cifar10_train
+import cifar10_eval
+import cifar10_adversary_train
+import createdataset
+
+
+FLAGS = tf.app.flags.FLAGS
+
+# perfmetric = "precision"
+perfmetric = "recall"
+# perfmetric = "f1score"
+# perfmetric = "tpr"
+# perfmetric = "fpr"
+
+# searchalg = "GA"
+searchalg = "SA"
+
+#TempMax = 50
+#TempMin = 1
+#SampleSize = 5
+#ReductionRate = 0.6
+
+TempMax = 1000
+TempMin = 5
+SampleSize = 50
+ReductionRate = 0.6
+
+print(FLAGS.stephigh)
+
+
+    InDir = '/scratch/cifar10_7/' 
+    createdataset.binarizer(InDir,'TrainSplit/','train.bin')
+    copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
+    if tf.gfile.Exists(TrainWeightsDir):
+      tf.gfile.DeleteRecursively(TrainWeightsDir)
+    tf.gfile.MakeDirs(TrainWeightsDir)
+
+    StdoutFile = '/scratch/cifar10_7/cifar10_train/Stdout.txt'
+    AlphasFile = '/scratch/cifar10_7/cifar10_train/alphas.pkl'
+    fp1 = open(StdoutFile,'wb')
+    fp2 = open(AlphasFile,'wb')
+
+    InDir = '/scratch/cifar10_7/TrainSplit/' 
+    labels = listdir(InDir)
+    labels.sort()
+
+        AdvInDirN = '/scratch/cifar10_7/AdversarialSplitAlphan/'
+        AdvInDirG = '/scratch/cifar10_7/AdversarialSplitAlphag/'
+        AdvInDirC = '/scratch/cifar10_7/AdversarialSplitAlphac/'
+
+    WeightsDir = '/scratch/cifar10_7/cifar10_output'
+    AdvInDir = '/scratch/cifar10_7/AdversarialSplit/'
+    GameInDir = '/scratch/cifar10_7/cifar10_data/imagenet2010-batches-bin/'
+    EvalDir = '/scratch/cifar10_7/cifar10_eval'
+    TrainWeightsDir = '/scratch/cifar10_7/cifar10_train'
+    CheckpointsDir = '/scratch/cifar10_7/cifar10_train'
+    InitialCheckpointsDir = '/scratch/cifar10_7/cifar10_train_initial'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cifar10_adversary_train.pyc
+
+
+
+from __future__ import division
+
+from PIL import Image
+import copy
+from datetime import datetime
+from deap import base
+from deap import creator
+from deap import tools
+import math
+from os import listdir
+import os.path
+import random
+import sys
+import time
+
+import numpy as np
+#from root.cifar10 import cifar10
+#from root.cifar10 import cifar10_eval
+import tensorflow as tf
+import time
+import cv2
+
+import sys
+sys.path.append('/home/achivuku/workspace/deeplearningmodels_7/src/root/cifar10')
+sys.path.append('/home/achivuku/workspace/deeplearningmodels_7/src/root/cnns')
+import cifar10
+import cifar10_eval
+
+
+FLAGS = tf.app.flags.FLAGS
+
+
+tf.app.flags.DEFINE_string('adv_train_dir', '/scratch/cifar10_7/cifar10_adversary_train',
+                           """Directory where to write event logs """
+                           """and checkpoint.""")
+
+current_milli_time = lambda: int(round(time.time()))
+StdoutFile = '/scratch/cifar10_7/cifar10_train/StdoutGeneticOps.txt'
+fp = open(StdoutFile,'w')
+fp.close()
+
+  InDir = '/scratch/cifar10_7/TrainSplit/' 
+  WeightsDir = '/scratch/cifar10_7/cifar10_output'
+  (alphaspopulation,imagespopulation) = adversary_train_genetic(InDir,WeightsDir)
+  print('final len(alphaspopulation)',len(alphaspopulation))
+#   print('input imagespopulation',imagespopulation)
+
 
 
 

@@ -30,9 +30,9 @@ length = 3073
 
 # perfmetric = "precision"
 # perfmetric = "recall"
-# perfmetric = "f1score"
+perfmetric = "f1score"
 # perfmetric = "tpr"
-perfmetric = "fpr"
+# perfmetric = "fpr"
 executeonserver = False
 
 
@@ -343,13 +343,13 @@ def generatereports():
 # Following are results for experiment with handwritten digits data
     
     # 7 and 9
-    rls = [(1, 0, 1, 0.86, {'recall': 0.86, 'fpr': 0.0942, 'f1score': 0.7787, 'precision': 0.7115, 'tpr': 0.86}, 0), (0, 0, 1, 0.8754, {'recall': 0.8754, 'fpr': 0.1005, 'f1score': 0.7794, 'precision': 0.7024, 'tpr': 0.8754}, 0), (2.2693, 1.5713, 0.302, 0.8429, {'recall': 0.8429, 'fpr': 0.3107, 'f1score': 0.5653, 'precision': 0.4252, 'tpr': 0.8429}, 0), (2.2693, 1.5713, 0.302, 0.8429, {'recall': 0.8429, 'fpr': 0.3107, 'f1score': 0.5653, 'precision': 0.4252, 'tpr': 0.8429}, 1), (2.2693, 1.5713, 0.302, 0.9956, {'recall': 0.9956, 'fpr': 0.0018, 'f1score': 0.9945, 'precision': 0.9934, 'tpr': 0.9956}, 2), (2.2693, 1.5713, 0.302, 0.8494, {'recall': 0.8494, 'fpr': 0.3123, 'f1score': 0.5673, 'precision': 0.4259, 'tpr': 0.8494}, 2)]
-    gen = 13
-    numgens = 20
-    numalphas = 1000
-    myepsilon = 0.0001
-    mylambda = 10
-    final_payoff = 1.1426
+#     rls = [(1, 0, 1, 0.86, {'recall': 0.86, 'fpr': 0.0942, 'f1score': 0.7787, 'precision': 0.7115, 'tpr': 0.86}, 0), (0, 0, 1, 0.8754, {'recall': 0.8754, 'fpr': 0.1005, 'f1score': 0.7794, 'precision': 0.7024, 'tpr': 0.8754}, 0), (2.2693, 1.5713, 0.302, 0.8429, {'recall': 0.8429, 'fpr': 0.3107, 'f1score': 0.5653, 'precision': 0.4252, 'tpr': 0.8429}, 0), (2.2693, 1.5713, 0.302, 0.8429, {'recall': 0.8429, 'fpr': 0.3107, 'f1score': 0.5653, 'precision': 0.4252, 'tpr': 0.8429}, 1), (2.2693, 1.5713, 0.302, 0.9956, {'recall': 0.9956, 'fpr': 0.0018, 'f1score': 0.9945, 'precision': 0.9934, 'tpr': 0.9956}, 2), (2.2693, 1.5713, 0.302, 0.8494, {'recall': 0.8494, 'fpr': 0.3123, 'f1score': 0.5673, 'precision': 0.4259, 'tpr': 0.8494}, 2)]
+#     gen = 13
+#     numgens = 20
+#     numalphas = 1000
+#     myepsilon = 0.0001
+#     mylambda = 10
+#     final_payoff = 1.1426
 
 #     # 1 and 4
 #     rls = [(1, 0, 1, 0.9845, {'recall': 0.9845, 'fpr': 0.0091, 'f1score': 0.9734, 'precision': 0.9626, 'tpr': 0.9845}, 0), (0, 0, 1, 0.9854, {'recall': 0.9854, 'fpr': 0.0081, 'f1score': 0.9758, 'precision': 0.9665, 'tpr': 0.9854}, 0), (1.0797, 0.2803, 0.2006, 0.972, {'recall': 0.972, 'fpr': 0.3742, 'f1score': 0.5487, 'precision': 0.3822, 'tpr': 0.972}, 0), (4.3055, 3.5586, 0.2531, 0.6441, {'recall': 0.6441, 'fpr': 0.0824, 'f1score': 0.647, 'precision': 0.65, 'tpr': 0.6441}, 1), (4.2859, 3.5222, 0.2363, 0.6478, {'recall': 0.6478, 'fpr': 0.0845, 'f1score': 0.6465, 'precision': 0.6451, 'tpr': 0.6478}, 2), (4.0694, 3.3617, 0.2923, 0.6638, {'recall': 0.6638, 'fpr': 0.0851, 'f1score': 0.6572, 'precision': 0.6506, 'tpr': 0.6638}, 3), (1.056, 0.2693, 0.2133, 0.9731, {'recall': 0.9731, 'fpr': 0.3799, 'f1score': 0.544, 'precision': 0.3776, 'tpr': 0.9731}, 4), (4.2485, 3.4961, 0.2476, 0.6504, {'recall': 0.6504, 'fpr': 0.0798, 'f1score': 0.6549, 'precision': 0.6595, 'tpr': 0.6504}, 5), (4.1554, 3.5356, 0.3802, 0.6464, {'recall': 0.6464, 'fpr': 0.0798, 'f1score': 0.652, 'precision': 0.6577, 'tpr': 0.6464}, 6), (3.7917, 3.257, 0.4653, 0.6743, {'recall': 0.6743, 'fpr': 0.086, 'f1score': 0.6617, 'precision': 0.6496, 'tpr': 0.6743}, 7), (0.8328, 0.2638, 0.431, 0.9736, {'recall': 0.9736, 'fpr': 0.3804, 'f1score': 0.5455, 'precision': 0.3789, 'tpr': 0.9736}, 8), (0.8328, 0.2638, 0.431, 0.9736, {'recall': 0.9736, 'fpr': 0.3804, 'f1score': 0.5455, 'precision': 0.3789, 'tpr': 0.9736}, 9), (0.8328, 0.2638, 0.431, 0.9976, {'recall': 0.9976, 'fpr': 0.0004, 'f1score': 0.998, 'precision': 0.9984, 'tpr': 0.9976}, 10), (0.8328, 0.2638, 0.431, 0.974, {'recall': 0.974, 'fpr': 0.3806, 'f1score': 0.5458, 'precision': 0.3792, 'tpr': 0.974}, 10)]
@@ -405,6 +405,113 @@ def generatereports():
 #     mylambda = 10
 #     final_payoff = 2.8082
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # 7 and 9 for delta from 10 to 100 in steps of 10. default is 20.
+#     rls = [(1, 0, 1, 0.9265, {'recall': 0.9265, 'fpr': 0.0982, 'f1score': 0.8097, 'precision': 0.7191, 'tpr': 0.9265}, 0), (0, 0, 1, 0.94, {'recall': 0.94, 'fpr': 0.0908, 'f1score': 0.8266, 'precision': 0.7377, 'tpr': 0.94}, 0), (0.6629, 0.0784, 0.4155, 0.9216, {'recall': 0.9216, 'fpr': 0.1523, 'f1score': 0.7423, 'precision': 0.6213, 'tpr': 0.9216}, 0), (0.6629, 0.0784, 0.4155, 0.9216, {'recall': 0.9216, 'fpr': 0.1523, 'f1score': 0.7423, 'precision': 0.6213, 'tpr': 0.9216}, 1), (0.6629, 0.0784, 0.4155, 0.9872, {'recall': 0.9872, 'fpr': 0.0093, 'f1score': 0.9767, 'precision': 0.9664, 'tpr': 0.9872}, 2), (0.6629, 0.0784, 0.4155, 0.9419, {'recall': 0.9419, 'fpr': 0.1591, 'f1score': 0.7456, 'precision': 0.617, 'tpr': 0.9419}, 2)]
+#     gen = 2
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 20
+#     max_steps = 3000
+
+
+#     rls = [(1, 0, 1, 0.9519, {'recall': 0.9519, 'fpr': 0.1021, 'f1score': 0.8184, 'precision': 0.7177, 'tpr': 0.9519}, 0), (0, 0, 1, 0.9544, {'recall': 0.9544, 'fpr': 0.0997, 'f1score': 0.8226, 'precision': 0.7228, 'tpr': 0.9544}, 0), (0.6602, 0.0606, 0.4004, 0.9394, {'recall': 0.9394, 'fpr': 0.3505, 'f1score': 0.5824, 'precision': 0.422, 'tpr': 0.9394}, 0), (0.6602, 0.0606, 0.4004, 0.9394, {'recall': 0.9394, 'fpr': 0.3505, 'f1score': 0.5824, 'precision': 0.422, 'tpr': 0.9394}, 1), (0.6602, 0.0606, 0.4004, 0.9989, {'recall': 0.9989, 'fpr': 0.0002, 'f1score': 0.9991, 'precision': 0.9993, 'tpr': 0.9989}, 2), (0.6602, 0.0606, 0.4004, 0.9523, {'recall': 0.9523, 'fpr': 0.3458, 'f1score': 0.5895, 'precision': 0.4269, 'tpr': 0.9523}, 2)]
+#     gen = 2
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 40
+#     max_steps = 3000
+
+#     rls = [(1, 0, 1, 0.9584, {'recall': 0.9584, 'fpr': 0.1091, 'f1score': 0.8125, 'precision': 0.7052, 'tpr': 0.9584}, 0), (0, 0, 1, 0.9599, {'recall': 0.9599, 'fpr': 0.1066, 'f1score': 0.8151, 'precision': 0.7082, 'tpr': 0.9599}, 0), (0.5113, 0.0423, 0.531, 0.9577, {'recall': 0.9577, 'fpr': 0.2956, 'f1score': 0.6297, 'precision': 0.469, 'tpr': 0.9577}, 0), (0.5113, 0.0423, 0.531, 0.9577, {'recall': 0.9577, 'fpr': 0.2956, 'f1score': 0.6297, 'precision': 0.469, 'tpr': 0.9577}, 1), (0.5113, 0.0423, 0.531, 1.0, {'recall': 1.0, 'fpr': 0.0001, 'f1score': 0.9998, 'precision': 0.9996, 'tpr': 1.0}, 2), (0.5113, 0.0423, 0.531, 0.9501, {'recall': 0.9501, 'fpr': 0.3132, 'f1score': 0.6117, 'precision': 0.451, 'tpr': 0.9501}, 2)]
+#     gen = 2
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 50
+#     max_steps = 3000
+
+#     rls = [(1, 0, 1, 0.9379, {'recall': 0.9379, 'fpr': 0.1085, 'f1score': 0.8016, 'precision': 0.6999, 'tpr': 0.9379}, 0), (0, 0, 1, 0.9472, {'recall': 0.9472, 'fpr': 0.1072, 'f1score': 0.8085, 'precision': 0.7052, 'tpr': 0.9472}, 0), (0.6594, 0.0599, 0.4005, 0.9401, {'recall': 0.9401, 'fpr': 0.2951, 'f1score': 0.6217, 'precision': 0.4644, 'tpr': 0.9401}, 0), (0.6594, 0.0599, 0.4005, 0.9993, {'recall': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'precision': 0.9996, 'tpr': 0.9993}, 1), (0.6594, 0.0599, 0.4005, 0.9428, {'recall': 0.9428, 'fpr': 0.2813, 'f1score': 0.6343, 'precision': 0.4779, 'tpr': 0.9428}, 1)]
+#     gen = 1
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 70
+#     max_steps = 3000
+
+#     rls = [(1, 0, 1, 0.9637, {'recall': 0.9637, 'fpr': 0.1066, 'f1score': 0.8196, 'precision': 0.713, 'tpr': 0.9637}, 0), (0, 0, 1, 0.9624, {'recall': 0.9624, 'fpr': 0.1024, 'f1score': 0.8231, 'precision': 0.719, 'tpr': 0.9624}, 0), (0.5484, 0.0426, 0.4942, 0.9574, {'recall': 0.9574, 'fpr': 0.2985, 'f1score': 0.6277, 'precision': 0.4669, 'tpr': 0.9574}, 0), (0.5484, 0.0426, 0.4942, 0.9574, {'recall': 0.9574, 'fpr': 0.2985, 'f1score': 0.6277, 'precision': 0.4669, 'tpr': 0.9574}, 1), (0.5484, 0.0426, 0.4942, 0.9996, {'recall': 0.9996, 'fpr': 0.0, 'f1score': 0.9998, 'precision': 1.0, 'tpr': 0.9996}, 2), (0.5484, 0.0426, 0.4942, 0.9619, {'recall': 0.9619, 'fpr': 0.3353, 'f1score': 0.6011, 'precision': 0.4372, 'tpr': 0.9619}, 2)]
+#     gen = 2
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 100
+#     max_steps = 3000
+
+#     rls = [(1, 0, 1, 0.9387, {'recall': 0.9387, 'fpr': 0.1071, 'f1score': 0.8042, 'precision': 0.7034, 'tpr': 0.9387}, 0), (0, 0, 1, 0.9475, {'recall': 0.9475, 'fpr': 0.1011, 'f1score': 0.8185, 'precision': 0.7204, 'tpr': 0.9475}, 0), (0.6391, 0.0692, 0.4301, 0.9308, {'recall': 0.9308, 'fpr': 0.3217, 'f1score': 0.5986, 'precision': 0.4412, 'tpr': 0.9308}, 0), (0.6391, 0.0692, 0.4301, 0.9308, {'recall': 0.9308, 'fpr': 0.3217, 'f1score': 0.5986, 'precision': 0.4412, 'tpr': 0.9308}, 1), (0.6391, 0.0692, 0.4301, 0.9993, {'recall': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'precision': 0.9996, 'tpr': 0.9993}, 2), (0.6391, 0.0692, 0.4301, 0.9444, {'recall': 0.9444, 'fpr': 0.34, 'f1score': 0.5911, 'precision': 0.4301, 'tpr': 0.9444}, 2)]
+#     gen = 2
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 60
+#     max_steps = 3000
+
+#     rls = [(1, 0, 1, 0.9669, {'recall': 0.9669, 'fpr': 0.0978, 'f1score': 0.8318, 'precision': 0.7299, 'tpr': 0.9669}, 0), (0, 0, 1, 0.9618, {'recall': 0.9618, 'fpr': 0.0939, 'f1score': 0.8331, 'precision': 0.7347, 'tpr': 0.9618}, 0), (0.7545, 0.0428, 0.2883, 0.9572, {'recall': 0.9572, 'fpr': 0.2166, 'f1score': 0.6947, 'precision': 0.5452, 'tpr': 0.9572}, 0), (0.7545, 0.0428, 0.2883, 0.9937, {'recall': 0.9937, 'fpr': 0.0027, 'f1score': 0.9919, 'precision': 0.9901, 'tpr': 0.9937}, 1), (0.7545, 0.0428, 0.2883, 0.9619, {'recall': 0.9619, 'fpr': 0.2111, 'f1score': 0.7018, 'precision': 0.5524, 'tpr': 0.9619}, 1)]
+#     gen = 1
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 10
+#     max_steps = 3000
+    
+    rls = [(1, 0, 1, 0.9159, {'recall': 0.9159, 'fpr': 0.1012, 'f1score': 0.8004, 'precision': 0.7108, 'tpr': 0.9159}, 0), (0, 0, 1, 0.9247, {'recall': 0.9247, 'fpr': 0.0969, 'f1score': 0.8107, 'precision': 0.7217, 'tpr': 0.9247}, 0), (0.7875, 0.0956, 0.3081, 0.9044, {'recall': 0.9044, 'fpr': 0.2016, 'f1score': 0.6822, 'precision': 0.5476, 'tpr': 0.9044}, 0), (0.7875, 0.0956, 0.3081, 0.9044, {'recall': 0.9044, 'fpr': 0.2016, 'f1score': 0.6822, 'precision': 0.5476, 'tpr': 0.9044}, 1), (0.7875, 0.0956, 0.3081, 0.9719, {'recall': 0.9719, 'fpr': 0.087, 'f1score': 0.8486, 'precision': 0.753, 'tpr': 0.9719}, 2), (0.7875, 0.0956, 0.3081, 0.9223, {'recall': 0.9223, 'fpr': 0.2068, 'f1score': 0.6868, 'precision': 0.5471, 'tpr': 0.9223}, 2)]
+#     gen = 2
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 30
+#     max_steps = 3000
+
+
+
+
+
+
+
+    
+    
+     
 #     # 6 and 8
 #     rls = 
 #     gen = 
@@ -413,7 +520,6 @@ def generatereports():
 #     myepsilon = 
 #     mylambda = 
 #     final_payoff = 
-     
 
 
 
@@ -443,14 +549,14 @@ def generatereports():
     results['testing error on original training data and manipulated testing data'] = rls[-1][4]
 
     print(results)
-    print('numgens',numgens)
-    print('numalphas',numalphas)
-    print('myepsilon',myepsilon)
-    print('mylambda',mylambda)
-    print('final_payoff',final_payoff)
+#     print('numgens',numgens)
+#     print('numalphas',numalphas)
+#     print('myepsilon',myepsilon)
+#     print('mylambda',mylambda)
+#     print('final_payoff',final_payoff)
 
     
-    print('rls[2:-2]',rls[2:-2])
+#     print('rls[2:-2]',rls[2:-2])
     
     trainingresults = []
     precisions = []
@@ -1576,6 +1682,49 @@ def gaplots():
 #     l2 = highstrengthattacky2
 #     l3 = highstrengthattacky3
 
+    delta1 = []
+    delta2 = []
+    delta3 = []
+
+    delta1.append(0.8266)
+    delta1.append(0.8226)
+    delta1.append(0.8151)
+    delta1.append(0.8085)
+    delta1.append(0.8231)
+    delta1.append(0.8185)
+    delta1.append(0.8331)
+    delta1.append(0.8107)
+
+
+    
+    delta2.append(0.7456)
+    delta2.append(0.5895)
+    delta2.append(0.6117)
+    delta2.append(0.6343)
+    delta2.append(0.6011)
+    delta2.append(0.5911)
+    delta2.append(0.7018)
+    delta2.append(0.6868)
+    
+    
+    
+    delta3.append(0.9767)
+    delta3.append(0.9991)
+    delta3.append(0.9998)
+    delta3.append(0.9995)
+    delta3.append(0.9998)
+    delta3.append(0.9995)
+    delta3.append(0.9919)
+    delta3.append(0.8486)
+    
+    l1 = delta1
+    l2 = delta2
+    l3 = delta3
+
+# t-statistic independent =  8.310 manipulated testing pvalue =  8.78e-07
+# t-statistic independent = -8.370 manipulated training and manipulated testing pvalue =  8.06e-07
+# t-statistic independent = -11.902 manipulated testing and manipulated training/testing pvalue =  1.04e-08
+# friedmantest-statistic = 16.000 pvalue =  3.35e-04
 
     
     print('Output results for ',perfmetric)
@@ -1632,29 +1781,62 @@ def ttest():
     
     # Following are results for experiment when error is 1-recall
     
-    record = {'testing error on original training data and original testing data': {'recall': 0.8166828322017459, 'error': 0, 'precision': 0.350541215653622, 'tpr': 0.8166828322017459, 'fpr': 0.1325516186591894, 'f1score': 0.4905330614622779, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8462291870714985, 'error': 0.632952691680261, 'precision': 0.48268156424581005, 'tpr': 0.8462291870714985, 'fpr': 0.07861448340266576, 'f1score': 0.6147278548559232, 'norm': 0.3522083554977504, 'payoff': 1.2807443361825106}, 'training error on original training data and original testing data': {'recall': 0.586105675146771, 'error': 0, 'precision': 0.5096426545660806, 'tpr': 0.586105675146771, 'fpr': 0.1776248202177933, 'f1score': 0.5452063106796117, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.7064579256360078, 'error': 0.632952691680261, 'precision': 0.19125827814569538, 'tpr': 0.7064579256360078, 'fpr': 0.25921209033791814, 'f1score': 0.30102147175317906, 'norm': 0.3522083554977504, 'payoff': 1.2807443361825106}}
+#     record = {'testing error on original training data and original testing data': {'recall': 0.8166828322017459, 'error': 0, 'precision': 0.350541215653622, 'tpr': 0.8166828322017459, 'fpr': 0.1325516186591894, 'f1score': 0.4905330614622779, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8462291870714985, 'error': 0.632952691680261, 'precision': 0.48268156424581005, 'tpr': 0.8462291870714985, 'fpr': 0.07861448340266576, 'f1score': 0.6147278548559232, 'norm': 0.3522083554977504, 'payoff': 1.2807443361825106}, 'training error on original training data and original testing data': {'recall': 0.586105675146771, 'error': 0, 'precision': 0.5096426545660806, 'tpr': 0.586105675146771, 'fpr': 0.1776248202177933, 'f1score': 0.5452063106796117, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.7064579256360078, 'error': 0.632952691680261, 'precision': 0.19125827814569538, 'tpr': 0.7064579256360078, 'fpr': 0.25921209033791814, 'f1score': 0.30102147175317906, 'norm': 0.3522083554977504, 'payoff': 1.2807443361825106}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.8305905130687319, 'error': 0, 'precision': 0.4022503516174402, 'tpr': 0.8305905130687319, 'fpr': 0.10835387099515595, 'f1score': 0.542008843967151, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8493150684931506, 'error': 8.121349772874757, 'precision': 0.496, 'tpr': 0.8493150684931506, 'fpr': 0.0748853795211411, 'f1score': 0.6262626262626263, 'norm': 0.6814581846842014, 'payoff': 8.439891588190555}, 'training error on original training data and original testing data': {'recall': 0.5706840390879478, 'error': 0, 'precision': 0.5028702640642939, 'tpr': 0.5706840390879478, 'fpr': 0.17800616649537512, 'f1score': 0.5346353371986573, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.6804619826756496, 'error': 8.121349772874757, 'precision': 0.13725490196078433, 'tpr': 0.6804619826756496, 'fpr': 0.37785902559306184, 'f1score': 0.2284329563812601, 'norm': 0.6814581846842014, 'payoff': 8.439891588190555}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.8299516908212561, 'error': 0, 'precision': 0.35657949356579494, 'tpr': 0.8299516908212561, 'fpr': 0.1317467063323417, 'f1score': 0.4988385598141696, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8468292682926829, 'error': 19.49119373776908, 'precision': 0.4614566719829878, 'tpr': 0.8468292682926829, 'fpr': 0.08602972399150743, 'f1score': 0.5973847212663455, 'norm': 0.5592743557243125, 'payoff': 19.931919382044768}, 'training error on original training data and original testing data': {'recall': 0.6, 'error': 0, 'precision': 0.5175611126720989, 'tpr': 0.6, 'fpr': 0.176464542651593, 'f1score': 0.5557399306079348, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8334956183057449, 'error': 19.49119373776908, 'precision': 0.4911072862880092, 'tpr': 0.8334956183057449, 'fpr': 0.07534188397179988, 'f1score': 0.6180505415162455, 'norm': 0.5592743557243125, 'payoff': 19.931919382044768}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.8181818181818182, 'error': 0, 'precision': 0.3635582294800172, 'tpr': 0.8181818181818182, 'fpr': 0.12587115417304096, 'f1score': 0.5034216007140732, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8245264207377866, 'error': 0.24812275546849494, 'precision': 0.45766463752075265, 'tpr': 0.8245264207377866, 'fpr': 0.08307196744935152, 'f1score': 0.5886120996441281, 'norm': 0.41607379244470966, 'payoff': 0.8320489630237852}, 'training error on original training data and original testing data': {'recall': 0.6009174311926605, 'error': 0, 'precision': 0.5039846111569113, 'tpr': 0.6009174311926605, 'fpr': 0.18516618793598688, 'f1score': 0.5481990733821551, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.72265625, 'error': 0.24812275546849494, 'precision': 0.17969888295288974, 'tpr': 0.72265625, 'fpr': 0.2868546195652174, 'f1score': 0.28782574873590044, 'norm': 0.41607379244470966, 'payoff': 0.8320489630237852}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.8316929133858267, 'error': 0, 'precision': 0.3419668150546338, 'tpr': 0.8316929133858267, 'fpr': 0.1379837067209776, 'f1score': 0.48465729853742473, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8446411012782694, 'error': 0.09125326370757181, 'precision': 0.4301452178267401, 'tpr': 0.8446411012782694, 'fpr': 0.09657981838241535, 'f1score': 0.5700066357000664, 'norm': 0.262791954761878, 'payoff': 0.8284613089456938}, 'training error on original training data and original testing data': {'recall': 0.6053577262332571, 'error': 0, 'precision': 0.5138657792567942, 'tpr': 0.6053577262332571, 'fpr': 0.17999794640106787, 'f1score': 0.5558722063896805, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.7704280155642024, 'error': 0.09125326370757181, 'precision': 0.20491591203104786, 'tpr': 0.7704280155642024, 'fpr': 0.2610431532449881, 'f1score': 0.3237277743715512, 'norm': 0.262791954761878, 'payoff': 0.8284613089456938}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.8091528724440117, 'error': 0, 'precision': 0.3519695044472681, 'tpr': 0.8091528724440117, 'fpr': 0.1299583793425635, 'f1score': 0.49055489964580873, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8620019436345967, 'error': 0.004809791597750579, 'precision': 0.49887514060742405, 'tpr': 0.8620019436345967, 'fpr': 0.07569450344065924, 'f1score': 0.6319914499465622, 'norm': 0.2733881309444355, 'payoff': 0.731421660653315}, 'training error on original training data and original testing data': {'recall': 0.6018246985988921, 'error': 0, 'precision': 0.506166072896684, 'tpr': 0.6018246985988921, 'fpr': 0.18518137909772892, 'f1score': 0.549866031557011, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8226120857699805, 'error': 0.004809791597750579, 'precision': 0.24393063583815028, 'tpr': 0.8226120857699805, 'fpr': 0.2221844742653304, 'f1score': 0.3762817654926438, 'norm': 0.2733881309444355, 'payoff': 0.731421660653315}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.8163064833005894, 'error': 0, 'precision': 0.36304062909567497, 'tpr': 0.8163064833005894, 'fpr': 0.12374809030724834, 'f1score': 0.5025703054127608, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.84106614017769, 'error': 7.397975840679073, 'precision': 0.48657909765848084, 'tpr': 0.84106614017769, 'fpr': 0.07627046746415543, 'f1score': 0.6164978292329957, 'norm': 0.4999173777131576, 'payoff': 7.898058462965916}, 'training error on original training data and original testing data': {'recall': 0.5846153846153846, 'error': 0, 'precision': 0.509703196347032, 'tpr': 0.5846153846153846, 'fpr': 0.1762955361723961, 'f1score': 0.5445952126848606, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.733847637415622, 'error': 7.397975840679073, 'precision': 0.15854166666666666, 'tpr': 0.733847637415622, 'fpr': 0.3433647878942447, 'f1score': 0.26075038547198903, 'norm': 0.4999173777131576, 'payoff': 7.898058462965916}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.8212180746561886, 'error': 0, 'precision': 0.3417825020441537, 'tpr': 0.8212180746561886, 'fpr': 0.13664912578509592, 'f1score': 0.48267898383371827, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8458536585365853, 'error': 6.280209013716524, 'precision': 0.4811320754716981, 'tpr': 0.8458536585365853, 'fpr': 0.07940552016985138, 'f1score': 0.6133710647329325, 'norm': 0.6115342857158943, 'payoff': 6.66867472800063}, 'training error on original training data and original testing data': {'recall': 0.5864217776320105, 'error': 0, 'precision': 0.5108571428571429, 'tpr': 0.5864217776320105, 'fpr': 0.1755717362321813, 'f1score': 0.5460375629867156, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8382352941176471, 'error': 6.280209013716524, 'precision': 0.25591140377132593, 'tpr': 0.8382352941176471, 'fpr': 0.21103565365025467, 'f1score': 0.39211190094015136, 'norm': 0.6115342857158943, 'payoff': 6.66867472800063}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.841948310139165, 'error': 0, 'precision': 0.38552571688666365, 'tpr': 0.841948310139165, 'fpr': 0.11446498219433611, 'f1score': 0.528879175772713, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8381046396841066, 'error': 5.702614379084967, 'precision': 0.49018475750577367, 'tpr': 0.8381046396841066, 'fpr': 0.0749130397895987, 'f1score': 0.6185792349726776, 'norm': 0.6451898086495547, 'payoff': 6.057424570435412}, 'training error on original training data and original testing data': {'recall': 0.5872656755009696, 'error': 0, 'precision': 0.5169274537695591, 'tpr': 0.5872656755009696, 'fpr': 0.17494333402019369, 'f1score': 0.5498562566197609, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8442703232125367, 'error': 5.702614379084967, 'precision': 0.42631058358061324, 'tpr': 0.8442703232125367, 'fpr': 0.09848034637914933, 'f1score': 0.5665461715412422, 'norm': 0.6451898086495547, 'payoff': 6.057424570435412}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.8214285714285714, 'error': 0, 'precision': 0.3376984126984127, 'tpr': 0.8214285714285714, 'fpr': 0.14187351241074464, 'f1score': 0.47862767154105734, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8501945525291829, 'error': 0.4550653594771242, 'precision': 0.4932279909706546, 'tpr': 0.8501945525291829, 'fpr': 0.07628270472307169, 'f1score': 0.6242857142857143, 'norm': 0.4016356239031291, 'payoff': 1.053429735573995}, 'training error on original training data and original testing data': {'recall': 0.6139717940308298, 'error': 0, 'precision': 0.5124555160142349, 'tpr': 0.6139717940308298, 'fpr': 0.18264793354527742, 'f1score': 0.55863921217547, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.7573385518590998, 'error': 0.4550653594771242, 'precision': 0.1712768311573357, 'tpr': 0.7573385518590998, 'fpr': 0.31796569876040076, 'f1score': 0.2793719545208446, 'norm': 0.4016356239031291, 'payoff': 1.053429735573995}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.8287937743190662, 'error': 0, 'precision': 0.3459196102314251, 'tpr': 0.8287937743190662, 'fpr': 0.13685015290519878, 'f1score': 0.48811228874248064, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8526829268292683, 'error': 0.46028645833333337, 'precision': 0.4810126582278481, 'tpr': 0.8526829268292683, 'fpr': 0.08008492569002124, 'f1score': 0.6150598170302604, 'norm': 0.3239408112316269, 'payoff': 1.1363456471017066}, 'training error on original training data and original testing data': {'recall': 0.6066536203522505, 'error': 0, 'precision': 0.5126791620727673, 'tpr': 0.6066536203522505, 'fpr': 0.181631395109924, 'f1score': 0.5557215416791156, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.81648675171737, 'error': 0.46028645833333337, 'precision': 0.2798520013454423, 'tpr': 0.81648675171737, 'fpr': 0.1817332993803582, 'f1score': 0.4168336673346693, 'norm': 0.3239408112316269, 'payoff': 1.1363456471017066}}
+#     records.append(record)
+
+
+    # SA Output
+    # (7,9) for delta from 10 to 100 in steps of 10. default is 20.
+    record = {'testing error on original training data and original testing data': {'recall': 0.94, 'error': 0, 'precision': 0.7377, 'tpr': 0.94, 'fpr': 0.0908, 'f1score': 0.8266, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9419, 'error': 0.0784, 'precision': 0.617, 'tpr': 0.9419, 'fpr': 0.1591, 'f1score': 0.7456, 'norm': 0.4155, 'payoff': 0.6629}, 'training error on original training data and original testing data': {'recall': 0.9265, 'error': 0, 'precision': 0.7191, 'tpr': 0.9265, 'fpr': 0.0982, 'f1score': 0.8097, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9872, 'error': 0.0784, 'precision': 0.9664, 'tpr': 0.9872, 'fpr': 0.0093, 'f1score': 0.9767, 'norm': 0.4155, 'payoff': 0.6629}}
     records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.8305905130687319, 'error': 0, 'precision': 0.4022503516174402, 'tpr': 0.8305905130687319, 'fpr': 0.10835387099515595, 'f1score': 0.542008843967151, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8493150684931506, 'error': 8.121349772874757, 'precision': 0.496, 'tpr': 0.8493150684931506, 'fpr': 0.0748853795211411, 'f1score': 0.6262626262626263, 'norm': 0.6814581846842014, 'payoff': 8.439891588190555}, 'training error on original training data and original testing data': {'recall': 0.5706840390879478, 'error': 0, 'precision': 0.5028702640642939, 'tpr': 0.5706840390879478, 'fpr': 0.17800616649537512, 'f1score': 0.5346353371986573, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.6804619826756496, 'error': 8.121349772874757, 'precision': 0.13725490196078433, 'tpr': 0.6804619826756496, 'fpr': 0.37785902559306184, 'f1score': 0.2284329563812601, 'norm': 0.6814581846842014, 'payoff': 8.439891588190555}}
+    record = {'testing error on original training data and original testing data': {'recall': 0.9544, 'error': 0, 'precision': 0.7228, 'tpr': 0.9544, 'fpr': 0.0997, 'f1score': 0.8226, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9523, 'error': 0.0606, 'precision': 0.4269, 'tpr': 0.9523, 'fpr': 0.3458, 'f1score': 0.5895, 'norm': 0.4004, 'payoff': 0.6602}, 'training error on original training data and original testing data': {'recall': 0.9519, 'error': 0, 'precision': 0.7177, 'tpr': 0.9519, 'fpr': 0.1021, 'f1score': 0.8184, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9989, 'error': 0.0606, 'precision': 0.9993, 'tpr': 0.9989, 'fpr': 0.0002, 'f1score': 0.9991, 'norm': 0.4004, 'payoff': 0.6602}}
     records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.8299516908212561, 'error': 0, 'precision': 0.35657949356579494, 'tpr': 0.8299516908212561, 'fpr': 0.1317467063323417, 'f1score': 0.4988385598141696, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8468292682926829, 'error': 19.49119373776908, 'precision': 0.4614566719829878, 'tpr': 0.8468292682926829, 'fpr': 0.08602972399150743, 'f1score': 0.5973847212663455, 'norm': 0.5592743557243125, 'payoff': 19.931919382044768}, 'training error on original training data and original testing data': {'recall': 0.6, 'error': 0, 'precision': 0.5175611126720989, 'tpr': 0.6, 'fpr': 0.176464542651593, 'f1score': 0.5557399306079348, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8334956183057449, 'error': 19.49119373776908, 'precision': 0.4911072862880092, 'tpr': 0.8334956183057449, 'fpr': 0.07534188397179988, 'f1score': 0.6180505415162455, 'norm': 0.5592743557243125, 'payoff': 19.931919382044768}}
+    record = {'testing error on original training data and original testing data': {'recall': 0.9599, 'error': 0, 'precision': 0.7082, 'tpr': 0.9599, 'fpr': 0.1066, 'f1score': 0.8151, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9501, 'error': 0.0423, 'precision': 0.451, 'tpr': 0.9501, 'fpr': 0.3132, 'f1score': 0.6117, 'norm': 0.531, 'payoff': 0.5113}, 'training error on original training data and original testing data': {'recall': 0.9584, 'error': 0, 'precision': 0.7052, 'tpr': 0.9584, 'fpr': 0.1091, 'f1score': 0.8125, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 1.0, 'error': 0.0423, 'precision': 0.9996, 'tpr': 1.0, 'fpr': 0.0001, 'f1score': 0.9998, 'norm': 0.531, 'payoff': 0.5113}}
     records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.8181818181818182, 'error': 0, 'precision': 0.3635582294800172, 'tpr': 0.8181818181818182, 'fpr': 0.12587115417304096, 'f1score': 0.5034216007140732, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8245264207377866, 'error': 0.24812275546849494, 'precision': 0.45766463752075265, 'tpr': 0.8245264207377866, 'fpr': 0.08307196744935152, 'f1score': 0.5886120996441281, 'norm': 0.41607379244470966, 'payoff': 0.8320489630237852}, 'training error on original training data and original testing data': {'recall': 0.6009174311926605, 'error': 0, 'precision': 0.5039846111569113, 'tpr': 0.6009174311926605, 'fpr': 0.18516618793598688, 'f1score': 0.5481990733821551, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.72265625, 'error': 0.24812275546849494, 'precision': 0.17969888295288974, 'tpr': 0.72265625, 'fpr': 0.2868546195652174, 'f1score': 0.28782574873590044, 'norm': 0.41607379244470966, 'payoff': 0.8320489630237852}}
+    record = {'testing error on original training data and original testing data': {'recall': 0.9472, 'error': 0, 'precision': 0.7052, 'tpr': 0.9472, 'fpr': 0.1072, 'f1score': 0.8085, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9428, 'error': 0.0599, 'precision': 0.4779, 'tpr': 0.9428, 'fpr': 0.2813, 'f1score': 0.6343, 'norm': 0.4005, 'payoff': 0.6594}, 'training error on original training data and original testing data': {'recall': 0.9379, 'error': 0, 'precision': 0.6999, 'tpr': 0.9379, 'fpr': 0.1085, 'f1score': 0.8016, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9993, 'error': 0.0599, 'precision': 0.9996, 'tpr': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'norm': 0.4005, 'payoff': 0.6594}}
     records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.8316929133858267, 'error': 0, 'precision': 0.3419668150546338, 'tpr': 0.8316929133858267, 'fpr': 0.1379837067209776, 'f1score': 0.48465729853742473, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8446411012782694, 'error': 0.09125326370757181, 'precision': 0.4301452178267401, 'tpr': 0.8446411012782694, 'fpr': 0.09657981838241535, 'f1score': 0.5700066357000664, 'norm': 0.262791954761878, 'payoff': 0.8284613089456938}, 'training error on original training data and original testing data': {'recall': 0.6053577262332571, 'error': 0, 'precision': 0.5138657792567942, 'tpr': 0.6053577262332571, 'fpr': 0.17999794640106787, 'f1score': 0.5558722063896805, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.7704280155642024, 'error': 0.09125326370757181, 'precision': 0.20491591203104786, 'tpr': 0.7704280155642024, 'fpr': 0.2610431532449881, 'f1score': 0.3237277743715512, 'norm': 0.262791954761878, 'payoff': 0.8284613089456938}}
+    record = {'testing error on original training data and original testing data': {'recall': 0.9624, 'error': 0, 'precision': 0.719, 'tpr': 0.9624, 'fpr': 0.1024, 'f1score': 0.8231, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9619, 'error': 0.0426, 'precision': 0.4372, 'tpr': 0.9619, 'fpr': 0.3353, 'f1score': 0.6011, 'norm': 0.4942, 'payoff': 0.5484}, 'training error on original training data and original testing data': {'recall': 0.9637, 'error': 0, 'precision': 0.713, 'tpr': 0.9637, 'fpr': 0.1066, 'f1score': 0.8196, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9996, 'error': 0.0426, 'precision': 1.0, 'tpr': 0.9996, 'fpr': 0.0, 'f1score': 0.9998, 'norm': 0.4942, 'payoff': 0.5484}}
     records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.8091528724440117, 'error': 0, 'precision': 0.3519695044472681, 'tpr': 0.8091528724440117, 'fpr': 0.1299583793425635, 'f1score': 0.49055489964580873, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8620019436345967, 'error': 0.004809791597750579, 'precision': 0.49887514060742405, 'tpr': 0.8620019436345967, 'fpr': 0.07569450344065924, 'f1score': 0.6319914499465622, 'norm': 0.2733881309444355, 'payoff': 0.731421660653315}, 'training error on original training data and original testing data': {'recall': 0.6018246985988921, 'error': 0, 'precision': 0.506166072896684, 'tpr': 0.6018246985988921, 'fpr': 0.18518137909772892, 'f1score': 0.549866031557011, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8226120857699805, 'error': 0.004809791597750579, 'precision': 0.24393063583815028, 'tpr': 0.8226120857699805, 'fpr': 0.2221844742653304, 'f1score': 0.3762817654926438, 'norm': 0.2733881309444355, 'payoff': 0.731421660653315}}
+    record = {'testing error on original training data and original testing data': {'recall': 0.9475, 'error': 0, 'precision': 0.7204, 'tpr': 0.9475, 'fpr': 0.1011, 'f1score': 0.8185, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9444, 'error': 0.0692, 'precision': 0.4301, 'tpr': 0.9444, 'fpr': 0.34, 'f1score': 0.5911, 'norm': 0.4301, 'payoff': 0.6391}, 'training error on original training data and original testing data': {'recall': 0.9387, 'error': 0, 'precision': 0.7034, 'tpr': 0.9387, 'fpr': 0.1071, 'f1score': 0.8042, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9993, 'error': 0.0692, 'precision': 0.9996, 'tpr': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'norm': 0.4301, 'payoff': 0.6391}}
     records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.8163064833005894, 'error': 0, 'precision': 0.36304062909567497, 'tpr': 0.8163064833005894, 'fpr': 0.12374809030724834, 'f1score': 0.5025703054127608, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.84106614017769, 'error': 7.397975840679073, 'precision': 0.48657909765848084, 'tpr': 0.84106614017769, 'fpr': 0.07627046746415543, 'f1score': 0.6164978292329957, 'norm': 0.4999173777131576, 'payoff': 7.898058462965916}, 'training error on original training data and original testing data': {'recall': 0.5846153846153846, 'error': 0, 'precision': 0.509703196347032, 'tpr': 0.5846153846153846, 'fpr': 0.1762955361723961, 'f1score': 0.5445952126848606, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.733847637415622, 'error': 7.397975840679073, 'precision': 0.15854166666666666, 'tpr': 0.733847637415622, 'fpr': 0.3433647878942447, 'f1score': 0.26075038547198903, 'norm': 0.4999173777131576, 'payoff': 7.898058462965916}}
+    record = {'testing error on original training data and original testing data': {'recall': 0.9618, 'error': 0, 'precision': 0.7347, 'tpr': 0.9618, 'fpr': 0.0939, 'f1score': 0.8331, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9619, 'error': 0.0428, 'precision': 0.5524, 'tpr': 0.9619, 'fpr': 0.2111, 'f1score': 0.7018, 'norm': 0.2883, 'payoff': 0.7545}, 'training error on original training data and original testing data': {'recall': 0.9669, 'error': 0, 'precision': 0.7299, 'tpr': 0.9669, 'fpr': 0.0978, 'f1score': 0.8318, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9937, 'error': 0.0428, 'precision': 0.9901, 'tpr': 0.9937, 'fpr': 0.0027, 'f1score': 0.9919, 'norm': 0.2883, 'payoff': 0.7545}}
     records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.8212180746561886, 'error': 0, 'precision': 0.3417825020441537, 'tpr': 0.8212180746561886, 'fpr': 0.13664912578509592, 'f1score': 0.48267898383371827, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8458536585365853, 'error': 6.280209013716524, 'precision': 0.4811320754716981, 'tpr': 0.8458536585365853, 'fpr': 0.07940552016985138, 'f1score': 0.6133710647329325, 'norm': 0.6115342857158943, 'payoff': 6.66867472800063}, 'training error on original training data and original testing data': {'recall': 0.5864217776320105, 'error': 0, 'precision': 0.5108571428571429, 'tpr': 0.5864217776320105, 'fpr': 0.1755717362321813, 'f1score': 0.5460375629867156, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8382352941176471, 'error': 6.280209013716524, 'precision': 0.25591140377132593, 'tpr': 0.8382352941176471, 'fpr': 0.21103565365025467, 'f1score': 0.39211190094015136, 'norm': 0.6115342857158943, 'payoff': 6.66867472800063}}
-    records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.841948310139165, 'error': 0, 'precision': 0.38552571688666365, 'tpr': 0.841948310139165, 'fpr': 0.11446498219433611, 'f1score': 0.528879175772713, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8381046396841066, 'error': 5.702614379084967, 'precision': 0.49018475750577367, 'tpr': 0.8381046396841066, 'fpr': 0.0749130397895987, 'f1score': 0.6185792349726776, 'norm': 0.6451898086495547, 'payoff': 6.057424570435412}, 'training error on original training data and original testing data': {'recall': 0.5872656755009696, 'error': 0, 'precision': 0.5169274537695591, 'tpr': 0.5872656755009696, 'fpr': 0.17494333402019369, 'f1score': 0.5498562566197609, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.8442703232125367, 'error': 5.702614379084967, 'precision': 0.42631058358061324, 'tpr': 0.8442703232125367, 'fpr': 0.09848034637914933, 'f1score': 0.5665461715412422, 'norm': 0.6451898086495547, 'payoff': 6.057424570435412}}
-    records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.8214285714285714, 'error': 0, 'precision': 0.3376984126984127, 'tpr': 0.8214285714285714, 'fpr': 0.14187351241074464, 'f1score': 0.47862767154105734, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8501945525291829, 'error': 0.4550653594771242, 'precision': 0.4932279909706546, 'tpr': 0.8501945525291829, 'fpr': 0.07628270472307169, 'f1score': 0.6242857142857143, 'norm': 0.4016356239031291, 'payoff': 1.053429735573995}, 'training error on original training data and original testing data': {'recall': 0.6139717940308298, 'error': 0, 'precision': 0.5124555160142349, 'tpr': 0.6139717940308298, 'fpr': 0.18264793354527742, 'f1score': 0.55863921217547, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.7573385518590998, 'error': 0.4550653594771242, 'precision': 0.1712768311573357, 'tpr': 0.7573385518590998, 'fpr': 0.31796569876040076, 'f1score': 0.2793719545208446, 'norm': 0.4016356239031291, 'payoff': 1.053429735573995}}
-    records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.8287937743190662, 'error': 0, 'precision': 0.3459196102314251, 'tpr': 0.8287937743190662, 'fpr': 0.13685015290519878, 'f1score': 0.48811228874248064, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.8526829268292683, 'error': 0.46028645833333337, 'precision': 0.4810126582278481, 'tpr': 0.8526829268292683, 'fpr': 0.08008492569002124, 'f1score': 0.6150598170302604, 'norm': 0.3239408112316269, 'payoff': 1.1363456471017066}, 'training error on original training data and original testing data': {'recall': 0.6066536203522505, 'error': 0, 'precision': 0.5126791620727673, 'tpr': 0.6066536203522505, 'fpr': 0.181631395109924, 'f1score': 0.5557215416791156, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.81648675171737, 'error': 0.46028645833333337, 'precision': 0.2798520013454423, 'tpr': 0.81648675171737, 'fpr': 0.1817332993803582, 'f1score': 0.4168336673346693, 'norm': 0.3239408112316269, 'payoff': 1.1363456471017066}}
+    record = {'testing error on original training data and original testing data': {'recall': 0.9247, 'error': 0, 'precision': 0.7217, 'tpr': 0.9247, 'fpr': 0.0969, 'f1score': 0.8107, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9223, 'error': 0.0956, 'precision': 0.5471, 'tpr': 0.9223, 'fpr': 0.2068, 'f1score': 0.6868, 'norm': 0.3081, 'payoff': 0.7875}, 'training error on original training data and original testing data': {'recall': 0.9159, 'error': 0, 'precision': 0.7108, 'tpr': 0.9159, 'fpr': 0.1012, 'f1score': 0.8004, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9719, 'error': 0.0956, 'precision': 0.753, 'tpr': 0.9719, 'fpr': 0.087, 'f1score': 0.8486, 'norm': 0.3081, 'payoff': 0.7875}}
     records.append(record)
 
+
+
+
+
+
+
+
+
+
+
+
+
+    
     l1 = []
     l2 = []
     l3 = []

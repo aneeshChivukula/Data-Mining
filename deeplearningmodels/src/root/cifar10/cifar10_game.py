@@ -36,9 +36,9 @@ perfmetric = "recall"
 searchalg = "SA"
 
 TempMax = 50
-TempMin = 1
+TempMin = 5
 SampleSize = 5
-ReductionRate = 0.6
+ReductionRate = 0.1
 
 
 def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
@@ -57,7 +57,7 @@ def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
             CurrImage = np.array(x[1], np.uint8)
 #         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(filesd[i]) + ".jpeg")
-    
+        print('AdvInDir + CurrLabel + "/" + str(filesd[i])',AdvInDir + CurrLabel + "/" + str(filesd[i]))
 
 def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
     CurrImage = np.array(curralpha, np.uint8)
@@ -202,6 +202,7 @@ def main(argv=None):
     toolbox.register("imagepopulation", cifar10_adversary_train.initImagePopulation, toolbox.individualImage)
     imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
     
+    
 
 #     toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=positiveimagesmean)
     toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=0)
@@ -330,7 +331,7 @@ def main(argv=None):
                 transformer(AdvInDirG,imagespopulation,alphag[0],labels,filesd)
                 alphasaver(AdvInDirC,alphac[0][0],TempCurrent,idx)
                 print('Iteration completed')
-                
+                sys.exit()
             else:
                 LoopingFlag = False
 

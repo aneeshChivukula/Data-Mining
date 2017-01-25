@@ -4065,4 +4065,8 @@ half a minute per sample for calculating fitness value and mutation for 50 sampl
 five hours per sa in each game iteration, output from around 10 iterations of the game to be found in 2-3 days or 50-55 hours,
 
 
+make table and plot put 16 more on 7,9 by eve
+grep -rl 'deeplearningmodels_15' ./ | xargs sed -i 's/deeplearningmodels_15/deeplearningmodels_16/g' 
+grep -rl 'cifar10_15' ./ | xargs sed -i 's/cifar10_15/cifar10_16/g' 
+
 '''

@@ -583,7 +583,7 @@ def perturbation(individual,mask2):
     mask = np.logical_and(mask1,mask2)[heightstartind:heightendind,widthstartind:widthendind,]
     
     
-    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
+    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh),dtype=np.int64)
  
     individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[heightstartind:heightendind,widthstartind:widthendind,][mask]
      

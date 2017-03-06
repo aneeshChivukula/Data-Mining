@@ -420,8 +420,22 @@ def generatereports():
 
 
 
-
+    # (7,9)
+    
     # 7 and 9 for delta from 10 to 100 in steps of 10. default is 20.
+
+
+#     rls = [(1, 0, 1, 0.9669, {'recall': 0.9669, 'fpr': 0.0978, 'f1score': 0.8318, 'precision': 0.7299, 'tpr': 0.9669}, 0), (0, 0, 1, 0.9618, {'recall': 0.9618, 'fpr': 0.0939, 'f1score': 0.8331, 'precision': 0.7347, 'tpr': 0.9618}, 0), (0.7545, 0.0428, 0.2883, 0.9572, {'recall': 0.9572, 'fpr': 0.2166, 'f1score': 0.6947, 'precision': 0.5452, 'tpr': 0.9572}, 0), (0.7545, 0.0428, 0.2883, 0.9937, {'recall': 0.9937, 'fpr': 0.0027, 'f1score': 0.9919, 'precision': 0.9901, 'tpr': 0.9937}, 1), (0.7545, 0.0428, 0.2883, 0.9619, {'recall': 0.9619, 'fpr': 0.2111, 'f1score': 0.7018, 'precision': 0.5524, 'tpr': 0.9619}, 1)]
+#     gen = 1
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 10
+#     max_steps = 3000
+
+
 #     rls = [(1, 0, 1, 0.9265, {'recall': 0.9265, 'fpr': 0.0982, 'f1score': 0.8097, 'precision': 0.7191, 'tpr': 0.9265}, 0), (0, 0, 1, 0.94, {'recall': 0.94, 'fpr': 0.0908, 'f1score': 0.8266, 'precision': 0.7377, 'tpr': 0.94}, 0), (0.6629, 0.0784, 0.4155, 0.9216, {'recall': 0.9216, 'fpr': 0.1523, 'f1score': 0.7423, 'precision': 0.6213, 'tpr': 0.9216}, 0), (0.6629, 0.0784, 0.4155, 0.9216, {'recall': 0.9216, 'fpr': 0.1523, 'f1score': 0.7423, 'precision': 0.6213, 'tpr': 0.9216}, 1), (0.6629, 0.0784, 0.4155, 0.9872, {'recall': 0.9872, 'fpr': 0.0093, 'f1score': 0.9767, 'precision': 0.9664, 'tpr': 0.9872}, 2), (0.6629, 0.0784, 0.4155, 0.9419, {'recall': 0.9419, 'fpr': 0.1591, 'f1score': 0.7456, 'precision': 0.617, 'tpr': 0.9419}, 2)]
 #     gen = 2
 #     TempMax = 1000
@@ -432,6 +446,15 @@ def generatereports():
 #     delta = 20
 #     max_steps = 3000
 
+    rls = [(1, 0, 1, 0.9159, {'recall': 0.9159, 'fpr': 0.1012, 'f1score': 0.8004, 'precision': 0.7108, 'tpr': 0.9159}, 0), (0, 0, 1, 0.9247, {'recall': 0.9247, 'fpr': 0.0969, 'f1score': 0.8107, 'precision': 0.7217, 'tpr': 0.9247}, 0), (0.7875, 0.0956, 0.3081, 0.9044, {'recall': 0.9044, 'fpr': 0.2016, 'f1score': 0.6822, 'precision': 0.5476, 'tpr': 0.9044}, 0), (0.7875, 0.0956, 0.3081, 0.9044, {'recall': 0.9044, 'fpr': 0.2016, 'f1score': 0.6822, 'precision': 0.5476, 'tpr': 0.9044}, 1), (0.7875, 0.0956, 0.3081, 0.9719, {'recall': 0.9719, 'fpr': 0.087, 'f1score': 0.8486, 'precision': 0.753, 'tpr': 0.9719}, 2), (0.7875, 0.0956, 0.3081, 0.9223, {'recall': 0.9223, 'fpr': 0.2068, 'f1score': 0.6868, 'precision': 0.5471, 'tpr': 0.9223}, 2)]
+#     gen = 2
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 30
+#     max_steps = 3000
 
 #     rls = [(1, 0, 1, 0.9519, {'recall': 0.9519, 'fpr': 0.1021, 'f1score': 0.8184, 'precision': 0.7177, 'tpr': 0.9519}, 0), (0, 0, 1, 0.9544, {'recall': 0.9544, 'fpr': 0.0997, 'f1score': 0.8226, 'precision': 0.7228, 'tpr': 0.9544}, 0), (0.6602, 0.0606, 0.4004, 0.9394, {'recall': 0.9394, 'fpr': 0.3505, 'f1score': 0.5824, 'precision': 0.422, 'tpr': 0.9394}, 0), (0.6602, 0.0606, 0.4004, 0.9394, {'recall': 0.9394, 'fpr': 0.3505, 'f1score': 0.5824, 'precision': 0.422, 'tpr': 0.9394}, 1), (0.6602, 0.0606, 0.4004, 0.9989, {'recall': 0.9989, 'fpr': 0.0002, 'f1score': 0.9991, 'precision': 0.9993, 'tpr': 0.9989}, 2), (0.6602, 0.0606, 0.4004, 0.9523, {'recall': 0.9523, 'fpr': 0.3458, 'f1score': 0.5895, 'precision': 0.4269, 'tpr': 0.9523}, 2)]
 #     gen = 2
@@ -453,6 +476,16 @@ def generatereports():
 #     delta = 50
 #     max_steps = 3000
 
+#     rls = [(1, 0, 1, 0.9387, {'recall': 0.9387, 'fpr': 0.1071, 'f1score': 0.8042, 'precision': 0.7034, 'tpr': 0.9387}, 0), (0, 0, 1, 0.9475, {'recall': 0.9475, 'fpr': 0.1011, 'f1score': 0.8185, 'precision': 0.7204, 'tpr': 0.9475}, 0), (0.6391, 0.0692, 0.4301, 0.9308, {'recall': 0.9308, 'fpr': 0.3217, 'f1score': 0.5986, 'precision': 0.4412, 'tpr': 0.9308}, 0), (0.6391, 0.0692, 0.4301, 0.9308, {'recall': 0.9308, 'fpr': 0.3217, 'f1score': 0.5986, 'precision': 0.4412, 'tpr': 0.9308}, 1), (0.6391, 0.0692, 0.4301, 0.9993, {'recall': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'precision': 0.9996, 'tpr': 0.9993}, 2), (0.6391, 0.0692, 0.4301, 0.9444, {'recall': 0.9444, 'fpr': 0.34, 'f1score': 0.5911, 'precision': 0.4301, 'tpr': 0.9444}, 2)]
+#     gen = 2
+#     TempMax = 1000
+#     TempMin = 5
+#     SampleSize = 50
+#     ReductionRate = 0.6
+#     eta = 2
+#     delta = 60
+#     max_steps = 3000
+
 #     rls = [(1, 0, 1, 0.9379, {'recall': 0.9379, 'fpr': 0.1085, 'f1score': 0.8016, 'precision': 0.6999, 'tpr': 0.9379}, 0), (0, 0, 1, 0.9472, {'recall': 0.9472, 'fpr': 0.1072, 'f1score': 0.8085, 'precision': 0.7052, 'tpr': 0.9472}, 0), (0.6594, 0.0599, 0.4005, 0.9401, {'recall': 0.9401, 'fpr': 0.2951, 'f1score': 0.6217, 'precision': 0.4644, 'tpr': 0.9401}, 0), (0.6594, 0.0599, 0.4005, 0.9993, {'recall': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'precision': 0.9996, 'tpr': 0.9993}, 1), (0.6594, 0.0599, 0.4005, 0.9428, {'recall': 0.9428, 'fpr': 0.2813, 'f1score': 0.6343, 'precision': 0.4779, 'tpr': 0.9428}, 1)]
 #     gen = 1
 #     TempMax = 1000
@@ -462,6 +495,16 @@ def generatereports():
 #     eta = 2
 #     delta = 70
 #     max_steps = 3000
+
+    rls = [(1, 0, 1, 0.926, {'recall': 0.926, 'fpr': 0.1025, 'f1score': 0.8039, 'precision': 0.7102, 'tpr': 0.926}, 0), (0, 0, 1, 0.9367, {'recall': 0.9367, 'fpr': 0.1007, 'f1score': 0.8118, 'precision': 0.7163, 'tpr': 0.9367}, 0), (0.5938, 0.0719, 0.4781, 0.9281, {'recall': 0.9281, 'fpr': 0.2123, 'f1score': 0.6855, 'precision': 0.5434, 'tpr': 0.9281}, 0), (0.5938, 0.0719, 0.4781, 0.9281, {'recall': 0.9281, 'fpr': 0.2123, 'f1score': 0.6855, 'precision': 0.5434, 'tpr': 0.9281}, 1), (0.5938, 0.0719, 0.4781, 0.996, {'recall': 0.996, 'fpr': 0.0013, 'f1score': 0.9956, 'precision': 0.9953, 'tpr': 0.996}, 2), (0.5938, 0.0719, 0.4781, 0.931, {'recall': 0.931, 'fpr': 0.2274, 'f1score': 0.6719, 'precision': 0.5256, 'tpr': 0.931}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 80
+    max_steps = 3000
 
 #     rls = [(1, 0, 1, 0.9637, {'recall': 0.9637, 'fpr': 0.1066, 'f1score': 0.8196, 'precision': 0.713, 'tpr': 0.9637}, 0), (0, 0, 1, 0.9624, {'recall': 0.9624, 'fpr': 0.1024, 'f1score': 0.8231, 'precision': 0.719, 'tpr': 0.9624}, 0), (0.5484, 0.0426, 0.4942, 0.9574, {'recall': 0.9574, 'fpr': 0.2985, 'f1score': 0.6277, 'precision': 0.4669, 'tpr': 0.9574}, 0), (0.5484, 0.0426, 0.4942, 0.9574, {'recall': 0.9574, 'fpr': 0.2985, 'f1score': 0.6277, 'precision': 0.4669, 'tpr': 0.9574}, 1), (0.5484, 0.0426, 0.4942, 0.9996, {'recall': 0.9996, 'fpr': 0.0, 'f1score': 0.9998, 'precision': 1.0, 'tpr': 0.9996}, 2), (0.5484, 0.0426, 0.4942, 0.9619, {'recall': 0.9619, 'fpr': 0.3353, 'f1score': 0.6011, 'precision': 0.4372, 'tpr': 0.9619}, 2)]
 #     gen = 2
@@ -473,44 +516,481 @@ def generatereports():
 #     delta = 100
 #     max_steps = 3000
 
-#     rls = [(1, 0, 1, 0.9387, {'recall': 0.9387, 'fpr': 0.1071, 'f1score': 0.8042, 'precision': 0.7034, 'tpr': 0.9387}, 0), (0, 0, 1, 0.9475, {'recall': 0.9475, 'fpr': 0.1011, 'f1score': 0.8185, 'precision': 0.7204, 'tpr': 0.9475}, 0), (0.6391, 0.0692, 0.4301, 0.9308, {'recall': 0.9308, 'fpr': 0.3217, 'f1score': 0.5986, 'precision': 0.4412, 'tpr': 0.9308}, 0), (0.6391, 0.0692, 0.4301, 0.9308, {'recall': 0.9308, 'fpr': 0.3217, 'f1score': 0.5986, 'precision': 0.4412, 'tpr': 0.9308}, 1), (0.6391, 0.0692, 0.4301, 0.9993, {'recall': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'precision': 0.9996, 'tpr': 0.9993}, 2), (0.6391, 0.0692, 0.4301, 0.9444, {'recall': 0.9444, 'fpr': 0.34, 'f1score': 0.5911, 'precision': 0.4301, 'tpr': 0.9444}, 2)]
-#     gen = 2
-#     TempMax = 1000
-#     TempMin = 5
-#     SampleSize = 50
-#     ReductionRate = 0.6
-#     eta = 2
-#     delta = 60
-#     max_steps = 3000
+    # 7 and 9 for eta from 2 to 10 in steps of 1. default is 2.
 
-#     rls = [(1, 0, 1, 0.9669, {'recall': 0.9669, 'fpr': 0.0978, 'f1score': 0.8318, 'precision': 0.7299, 'tpr': 0.9669}, 0), (0, 0, 1, 0.9618, {'recall': 0.9618, 'fpr': 0.0939, 'f1score': 0.8331, 'precision': 0.7347, 'tpr': 0.9618}, 0), (0.7545, 0.0428, 0.2883, 0.9572, {'recall': 0.9572, 'fpr': 0.2166, 'f1score': 0.6947, 'precision': 0.5452, 'tpr': 0.9572}, 0), (0.7545, 0.0428, 0.2883, 0.9937, {'recall': 0.9937, 'fpr': 0.0027, 'f1score': 0.9919, 'precision': 0.9901, 'tpr': 0.9937}, 1), (0.7545, 0.0428, 0.2883, 0.9619, {'recall': 0.9619, 'fpr': 0.2111, 'f1score': 0.7018, 'precision': 0.5524, 'tpr': 0.9619}, 1)]
-#     gen = 1
-#     TempMax = 1000
-#     TempMin = 5
-#     SampleSize = 50
-#     ReductionRate = 0.6
-#     eta = 2
-#     delta = 10
-#     max_steps = 3000
-    
     rls = [(1, 0, 1, 0.9159, {'recall': 0.9159, 'fpr': 0.1012, 'f1score': 0.8004, 'precision': 0.7108, 'tpr': 0.9159}, 0), (0, 0, 1, 0.9247, {'recall': 0.9247, 'fpr': 0.0969, 'f1score': 0.8107, 'precision': 0.7217, 'tpr': 0.9247}, 0), (0.7875, 0.0956, 0.3081, 0.9044, {'recall': 0.9044, 'fpr': 0.2016, 'f1score': 0.6822, 'precision': 0.5476, 'tpr': 0.9044}, 0), (0.7875, 0.0956, 0.3081, 0.9044, {'recall': 0.9044, 'fpr': 0.2016, 'f1score': 0.6822, 'precision': 0.5476, 'tpr': 0.9044}, 1), (0.7875, 0.0956, 0.3081, 0.9719, {'recall': 0.9719, 'fpr': 0.087, 'f1score': 0.8486, 'precision': 0.753, 'tpr': 0.9719}, 2), (0.7875, 0.0956, 0.3081, 0.9223, {'recall': 0.9223, 'fpr': 0.2068, 'f1score': 0.6868, 'precision': 0.5471, 'tpr': 0.9223}, 2)]
-#     gen = 2
-#     TempMax = 1000
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 30
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9318, {'recall': 0.9318, 'fpr': 0.101, 'f1score': 0.8105, 'precision': 0.7171, 'tpr': 0.9318}, 0), (0, 0, 1, 0.942, {'recall': 0.942, 'fpr': 0.1007, 'f1score': 0.814, 'precision': 0.7166, 'tpr': 0.942}, 0), (0.6506, 0.0763, 0.4257, 0.9237, {'recall': 0.9237, 'fpr': 0.1987, 'f1score': 0.6949, 'precision': 0.557, 'tpr': 0.9237}, 0), (0.6506, 0.0763, 0.4257, 0.9237, {'recall': 0.9237, 'fpr': 0.1987, 'f1score': 0.6949, 'precision': 0.557, 'tpr': 0.9237}, 1), (0.6506, 0.0763, 0.4257, 0.993, {'recall': 0.993, 'fpr': 0.0012, 'f1score': 0.9943, 'precision': 0.9956, 'tpr': 0.993}, 2), (0.6506, 0.0763, 0.4257, 0.9433, {'recall': 0.9433, 'fpr': 0.1993, 'f1score': 0.7033, 'precision': 0.5607, 'tpr': 0.9433}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 7
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9311, {'recall': 0.9311, 'fpr': 0.102, 'f1score': 0.8079, 'precision': 0.7135, 'tpr': 0.9311}, 0), (0, 0, 1, 0.9298, {'recall': 0.9298, 'fpr': 0.1022, 'f1score': 0.8064, 'precision': 0.7119, 'tpr': 0.9298}, 0), (0.6966, 0.0729, 0.3763, 0.9271, {'recall': 0.9271, 'fpr': 0.2147, 'f1score': 0.6818, 'precision': 0.5391, 'tpr': 0.9271}, 0), (0.6966, 0.0729, 0.3763, 0.9271, {'recall': 0.9271, 'fpr': 0.2147, 'f1score': 0.6818, 'precision': 0.5391, 'tpr': 0.9271}, 1), (0.6966, 0.0729, 0.3763, 0.9289, {'recall': 0.9289, 'fpr': 0.0929, 'f1score': 0.8179, 'precision': 0.7306, 'tpr': 0.9289}, 2), (0.6966, 0.0729, 0.3763, 0.9329, {'recall': 0.9329, 'fpr': 0.2184, 'f1score': 0.6811, 'precision': 0.5364, 'tpr': 0.9329}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 8
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9367, {'recall': 0.9367, 'fpr': 0.1089, 'f1score': 0.8014, 'precision': 0.7002, 'tpr': 0.9367}, 0), (0, 0, 1, 0.944, {'recall': 0.944, 'fpr': 0.1042, 'f1score': 0.811, 'precision': 0.7109, 'tpr': 0.944}, 0), (0.5767, 0.0697, 0.493, 0.9303, {'recall': 0.9303, 'fpr': 0.2642, 'f1score': 0.643, 'precision': 0.4913, 'tpr': 0.9303}, 0), (0.5767, 0.0697, 0.493, 0.9985, {'recall': 0.9985, 'fpr': 0.0008, 'f1score': 0.9978, 'precision': 0.9971, 'tpr': 0.9985}, 1), (0.5767, 0.0697, 0.493, 0.9418, {'recall': 0.9418, 'fpr': 0.2598, 'f1score': 0.6515, 'precision': 0.498, 'tpr': 0.9418}, 1)]
+    gen = 1
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 9
+    delta = 20
+    max_steps = 3000
+
+
+    # 7 and 9 for ReductionRate from 0.5 to 0.9 in steps of 0.1. default is 0.6.
+
+    rls = [(1, 0, 1, 0.9221, {'recall': 0.9221, 'fpr': 0.0944, 'f1score': 0.8133, 'precision': 0.7275, 'tpr': 0.9221}, 0), (0, 0, 1, 0.9207, {'recall': 0.9207, 'fpr': 0.0926, 'f1score': 0.8149, 'precision': 0.731, 'tpr': 0.9207}, 0), (0.8565, 0.0902, 0.2337, 0.9098, {'recall': 0.9098, 'fpr': 0.2456, 'f1score': 0.647, 'precision': 0.502, 'tpr': 0.9098}, 0), (0.8565, 0.0902, 0.2337, 0.9098, {'recall': 0.9098, 'fpr': 0.2456, 'f1score': 0.647, 'precision': 0.502, 'tpr': 0.9098}, 1), (0.8565, 0.0902, 0.2337, 0.9744, {'recall': 0.9744, 'fpr': 0.1152, 'f1score': 0.8124, 'precision': 0.6966, 'tpr': 0.9744}, 2), (0.8565, 0.0902, 0.2337, 0.9213, {'recall': 0.9213, 'fpr': 0.2527, 'f1score': 0.6483, 'precision': 0.5001, 'tpr': 0.9213}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.7
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9427, {'recall': 0.9427, 'fpr': 0.1021, 'f1score': 0.8135, 'precision': 0.7154, 'tpr': 0.9427}, 0), (0, 0, 1, 0.9404, {'recall': 0.9404, 'fpr': 0.1028, 'f1score': 0.8102, 'precision': 0.7117, 'tpr': 0.9404}, 0), (0.6241, 0.0683, 0.4442, 0.9317, {'recall': 0.9317, 'fpr': 0.2392, 'f1score': 0.6629, 'precision': 0.5145, 'tpr': 0.9317}, 0), (0.6241, 0.0683, 0.4442, 0.9317, {'recall': 0.9317, 'fpr': 0.2392, 'f1score': 0.6629, 'precision': 0.5145, 'tpr': 0.9317}, 1), (0.6241, 0.0683, 0.4442, 0.9744, {'recall': 0.9744, 'fpr': 0.0459, 'f1score': 0.9091, 'precision': 0.852, 'tpr': 0.9744}, 2), (0.6241, 0.0683, 0.4442, 0.9426, {'recall': 0.9426, 'fpr': 0.2418, 'f1score': 0.6657, 'precision': 0.5146, 'tpr': 0.9426}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.948, {'recall': 0.948, 'fpr': 0.0971, 'f1score': 0.8222, 'precision': 0.7259, 'tpr': 0.948}, 0), (0, 0, 1, 0.9437, {'recall': 0.9437, 'fpr': 0.0964, 'f1score': 0.8212, 'precision': 0.7269, 'tpr': 0.9437}, 0), (0.7982, 0.0666, 0.2684, 0.9334, {'recall': 0.9334, 'fpr': 0.26, 'f1score': 0.6458, 'precision': 0.4937, 'tpr': 0.9334}, 0), (0.7982, 0.0666, 0.2684, 0.9334, {'recall': 0.9334, 'fpr': 0.26, 'f1score': 0.6458, 'precision': 0.4937, 'tpr': 0.9334}, 1), (0.7982, 0.0666, 0.2684, 0.9967, {'recall': 0.9967, 'fpr': 0.0007, 'f1score': 0.9971, 'precision': 0.9974, 'tpr': 0.9967}, 2), (0.7982, 0.0666, 0.2684, 0.935, {'recall': 0.935, 'fpr': 0.2678, 'f1score': 0.6405, 'precision': 0.4871, 'tpr': 0.935}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.9
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    
+    # 7 and 9 for SampleSize from 10 to 100 in steps of 10. default is 50.
+
+    rls = [(1, 0, 1, 0.9147, {'recall': 0.9147, 'fpr': 0.091, 'f1score': 0.8131, 'precision': 0.7319, 'tpr': 0.9147}, 0), (0, 0, 1, 0.9287, {'recall': 0.9287, 'fpr': 0.0952, 'f1score': 0.8158, 'precision': 0.7274, 'tpr': 0.9287}, 0), (0.6432, 0.0939, 0.4507, 0.9061, {'recall': 0.9061, 'fpr': 0.3176, 'f1score': 0.5908, 'precision': 0.4383, 'tpr': 0.9061}, 0), (0.6432, 0.0939, 0.4507, 0.9061, {'recall': 0.9061, 'fpr': 0.3176, 'f1score': 0.5908, 'precision': 0.4383, 'tpr': 0.9061}, 1), (0.6432, 0.0939, 0.4507, 0.9993, {'recall': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'precision': 0.9996, 'tpr': 0.9993}, 2), (0.6432, 0.0939, 0.4507, 0.9085, {'recall': 0.9085, 'fpr': 0.3204, 'f1score': 0.5894, 'precision': 0.4362, 'tpr': 0.9085}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 10
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9535, {'recall': 0.9535, 'fpr': 0.1081, 'f1score': 0.811, 'precision': 0.7055, 'tpr': 0.9535}, 0), (0, 0, 1, 0.9616, {'recall': 0.9616, 'fpr': 0.1135, 'f1score': 0.8081, 'precision': 0.6968, 'tpr': 0.9616}, 0), (0.8208, 0.049, 0.2282, 0.951, {'recall': 0.951, 'fpr': 0.1948, 'f1score': 0.7131, 'precision': 0.5704, 'tpr': 0.951}, 0), (0.8208, 0.049, 0.2282, 0.951, {'recall': 0.951, 'fpr': 0.1948, 'f1score': 0.7131, 'precision': 0.5704, 'tpr': 0.951}, 1), (0.8208, 0.049, 0.2282, 0.9644, {'recall': 0.9644, 'fpr': 0.0678, 'f1score': 0.8709, 'precision': 0.7939, 'tpr': 0.9644}, 2), (0.8208, 0.049, 0.2282, 0.96, {'recall': 0.96, 'fpr': 0.2065, 'f1score': 0.705, 'precision': 0.5571, 'tpr': 0.96}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 20
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9254, {'recall': 0.9254, 'fpr': 0.0964, 'f1score': 0.8117, 'precision': 0.7229, 'tpr': 0.9254}, 0), (0, 0, 1, 0.925, {'recall': 0.925, 'fpr': 0.0942, 'f1score': 0.8144, 'precision': 0.7274, 'tpr': 0.925}, 0), (0.809, 0.0804, 0.2714, 0.9196, {'recall': 0.9196, 'fpr': 0.2234, 'f1score': 0.671, 'precision': 0.5282, 'tpr': 0.9196}, 0), (0.809, 0.0804, 0.2714, 0.9196, {'recall': 0.9196, 'fpr': 0.2234, 'f1score': 0.671, 'precision': 0.5282, 'tpr': 0.9196}, 1), (0.809, 0.0804, 0.2714, 0.9971, {'recall': 0.9971, 'fpr': 0.0, 'f1score': 0.9985, 'precision': 1.0, 'tpr': 0.9971}, 2), (0.809, 0.0804, 0.2714, 0.9287, {'recall': 0.9287, 'fpr': 0.2166, 'f1score': 0.6813, 'precision': 0.538, 'tpr': 0.9287}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 30
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9421, {'recall': 0.9421, 'fpr': 0.1045, 'f1score': 0.8095, 'precision': 0.7096, 'tpr': 0.9421}, 0), (0, 0, 1, 0.9489, {'recall': 0.9489, 'fpr': 0.1034, 'f1score': 0.8139, 'precision': 0.7125, 'tpr': 0.9489}, 0), (0.7155, 0.0664, 0.3509, 0.9336, {'recall': 0.9336, 'fpr': 0.2902, 'f1score': 0.6229, 'precision': 0.4673, 'tpr': 0.9336}, 0), (0.7155, 0.0664, 0.3509, 0.9336, {'recall': 0.9336, 'fpr': 0.2902, 'f1score': 0.6229, 'precision': 0.4673, 'tpr': 0.9336}, 1), (0.7155, 0.0664, 0.3509, 0.9949, {'recall': 0.9949, 'fpr': 0.0016, 'f1score': 0.9945, 'precision': 0.9942, 'tpr': 0.9949}, 2), (0.7155, 0.0664, 0.3509, 0.939, {'recall': 0.939, 'fpr': 0.289, 'f1score': 0.6256, 'precision': 0.4691, 'tpr': 0.939}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 40
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9499, {'recall': 0.9499, 'fpr': 0.0895, 'f1score': 0.8336, 'precision': 0.7426, 'tpr': 0.9499}, 0), (0, 0, 1, 0.95, {'recall': 0.95, 'fpr': 0.0896, 'f1score': 0.8327, 'precision': 0.7412, 'tpr': 0.95}, 0), (0.7665, 0.0601, 0.2936, 0.9399, {'recall': 0.9399, 'fpr': 0.2382, 'f1score': 0.6686, 'precision': 0.5188, 'tpr': 0.9399}, 0), (0.7665, 0.0601, 0.2936, 0.9399, {'recall': 0.9399, 'fpr': 0.2382, 'f1score': 0.6686, 'precision': 0.5188, 'tpr': 0.9399}, 1), (0.7665, 0.0601, 0.2936, 0.9952, {'recall': 0.9952, 'fpr': 0.002, 'f1score': 0.994, 'precision': 0.9927, 'tpr': 0.9952}, 2), (0.7665, 0.0601, 0.2936, 0.9443, {'recall': 0.9443, 'fpr': 0.2471, 'f1score': 0.663, 'precision': 0.5108, 'tpr': 0.9443}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 60
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9428, {'recall': 0.9428, 'fpr': 0.1046, 'f1score': 0.8096, 'precision': 0.7093, 'tpr': 0.9428}, 0), (0, 0, 1, 0.9444, {'recall': 0.9444, 'fpr': 0.1001, 'f1score': 0.8165, 'precision': 0.7191, 'tpr': 0.9444}, 0), (0.7118, 0.0581, 0.3463, 0.9419, {'recall': 0.9419, 'fpr': 0.2704, 'f1score': 0.6417, 'precision': 0.4866, 'tpr': 0.9419}, 0), (0.7118, 0.0581, 0.3463, 0.9978, {'recall': 0.9978, 'fpr': 0.0002, 'f1score': 0.9985, 'precision': 0.9993, 'tpr': 0.9978}, 1), (0.7118, 0.0581, 0.3463, 0.9434, {'recall': 0.9434, 'fpr': 0.2855, 'f1score': 0.6305, 'precision': 0.4734, 'tpr': 0.9434}, 1)]
+    gen = 1
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 70
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9539, {'recall': 0.9539, 'fpr': 0.1077, 'f1score': 0.8128, 'precision': 0.7081, 'tpr': 0.9539}, 0), (0, 0, 1, 0.9592, {'recall': 0.9592, 'fpr': 0.1074, 'f1score': 0.8155, 'precision': 0.7092, 'tpr': 0.9592}, 0), (0.8481, 0.0586, 0.2105, 0.9414, {'recall': 0.9414, 'fpr': 0.2411, 'f1score': 0.6667, 'precision': 0.5161, 'tpr': 0.9414}, 0), (0.8736, 0.0828, 0.2092, 0.9172, {'recall': 0.9172, 'fpr': 0.153, 'f1score': 0.7393, 'precision': 0.6191, 'tpr': 0.9172}, 1), (0.8736, 0.0828, 0.2092, 0.9172, {'recall': 0.9172, 'fpr': 0.153, 'f1score': 0.7393, 'precision': 0.6191, 'tpr': 0.9172}, 2), (0.8736, 0.0828, 0.2092, 0.9455, {'recall': 0.9455, 'fpr': 0.1536, 'f1score': 0.753, 'precision': 0.6256, 'tpr': 0.9455}, 3), (0.8736, 0.0828, 0.2092, 0.9519, {'recall': 0.9519, 'fpr': 0.2028, 'f1score': 0.7048, 'precision': 0.5595, 'tpr': 0.9519}, 3)]
+    gen = 3
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 80
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9433, {'recall': 0.9433, 'fpr': 0.0942, 'f1score': 0.825, 'precision': 0.733, 'tpr': 0.9433}, 0), (0, 0, 1, 0.9456, {'recall': 0.9456, 'fpr': 0.0971, 'f1score': 0.8226, 'precision': 0.728, 'tpr': 0.9456}, 0), (0.805, 0.0685, 0.2635, 0.9315, {'recall': 0.9315, 'fpr': 0.2395, 'f1score': 0.6619, 'precision': 0.5133, 'tpr': 0.9315}, 0), (0.805, 0.0685, 0.2635, 0.9315, {'recall': 0.9315, 'fpr': 0.2395, 'f1score': 0.6619, 'precision': 0.5133, 'tpr': 0.9315}, 1), (0.805, 0.0685, 0.2635, 0.965, {'recall': 0.965, 'fpr': 0.1476, 'f1score': 0.7698, 'precision': 0.6403, 'tpr': 0.965}, 2), (0.805, 0.0685, 0.2635, 0.9396, {'recall': 0.9396, 'fpr': 0.2703, 'f1score': 0.6416, 'precision': 0.4872, 'tpr': 0.9396}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 90
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9358, {'recall': 0.9358, 'fpr': 0.1121, 'f1score': 0.7973, 'precision': 0.6946, 'tpr': 0.9358}, 0), (0, 0, 1, 0.938, {'recall': 0.938, 'fpr': 0.1091, 'f1score': 0.8014, 'precision': 0.6996, 'tpr': 0.938}, 0), (0.792, 0.0749, 0.2829, 0.9251, {'recall': 0.9251, 'fpr': 0.2323, 'f1score': 0.6657, 'precision': 0.5199, 'tpr': 0.9251}, 0), (0.792, 0.0749, 0.2829, 0.9251, {'recall': 0.9251, 'fpr': 0.2323, 'f1score': 0.6657, 'precision': 0.5199, 'tpr': 0.9251}, 1), (0.792, 0.0749, 0.2829, 0.9857, {'recall': 0.9857, 'fpr': 0.1504, 'f1score': 0.7765, 'precision': 0.6405, 'tpr': 0.9857}, 2), (0.792, 0.0749, 0.2829, 0.9401, {'recall': 0.9401, 'fpr': 0.2446, 'f1score': 0.6608, 'precision': 0.5095, 'tpr': 0.9401}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 100
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    # 7 and 9 for lambda from 0.1 to 10 in steps of 10. default is 1.
+    rls = [(1, 0, 1, 0.9597, {'recall': 0.9597, 'fpr': 0.1001, 'f1score': 0.824, 'precision': 0.722, 'tpr': 0.9597}, 0), (0, 0, 1, 0.9594, {'recall': 0.9594, 'fpr': 0.101, 'f1score': 0.8229, 'precision': 0.7204, 'tpr': 0.9594}, 0), (1.2216, 0.4677, 0.2461, 0.9532, {'recall': 0.9532, 'fpr': 0.2081, 'f1score': 0.7013, 'precision': 0.5548, 'tpr': 0.9532}, 0), (1.2216, 0.4677, 0.2461, 0.9532, {'recall': 0.9532, 'fpr': 0.2081, 'f1score': 0.7013, 'precision': 0.5548, 'tpr': 0.9532}, 1), (1.2216, 0.4677, 0.2461, 0.996, {'recall': 0.996, 'fpr': 0.001, 'f1score': 0.9962, 'precision': 0.9963, 'tpr': 0.996}, 2), (1.2216, 0.4677, 0.2461, 0.9608, {'recall': 0.9608, 'fpr': 0.2257, 'f1score': 0.6882, 'precision': 0.536, 'tpr': 0.9608}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9331, {'recall': 0.9331, 'fpr': 0.1147, 'f1score': 0.7934, 'precision': 0.6901, 'tpr': 0.9331}, 0), (0, 0, 1, 0.9279, {'recall': 0.9279, 'fpr': 0.1097, 'f1score': 0.7958, 'precision': 0.6966, 'tpr': 0.9279}, 0), (0.5166, 0.0073, 0.4907, 0.9266, {'recall': 0.9266, 'fpr': 0.3582, 'f1score': 0.5716, 'precision': 0.4132, 'tpr': 0.9266}, 0), (0.5415, 0.0001, 0.4586, 0.9993, {'recall': 0.9993, 'fpr': 0.0003, 'f1score': 0.9991, 'precision': 0.9989, 'tpr': 0.9993}, 1), (0.5472, 0.0001, 0.4529, 0.9993, {'recall': 0.9993, 'fpr': 0.0002, 'f1score': 0.9993, 'precision': 0.9993, 'tpr': 0.9993}, 2), (0.5584, 0.0, 0.4416, 0.9996, {'recall': 0.9996, 'fpr': 0.0, 'f1score': 0.9998, 'precision': 1.0, 'tpr': 0.9996}, 3), (0.5584, 0.0, 0.4416, 0.9996, {'recall': 0.9996, 'fpr': 0.0, 'f1score': 0.9998, 'precision': 1.0, 'tpr': 0.9996}, 4), (0.5584, 0.0, 0.4416, 0.9989, {'recall': 0.9989, 'fpr': 0.0002, 'f1score': 0.9991, 'precision': 0.9993, 'tpr': 0.9989}, 5), (0.5584, 0.0, 0.4416, 0.9336, {'recall': 0.9336, 'fpr': 0.0509, 'f1score': 0.8807, 'precision': 0.8334, 'tpr': 0.9336}, 5)]
+    gen = 5
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # (4,9)
+    # 4 and 9 for delta from 10 to 100 in steps of 10. default is 20.
+
+    rls = [(1, 0, 1, 0.9753, {'recall': 0.9753, 'fpr': 0.1453, 'f1score': 0.7932, 'precision': 0.6684, 'tpr': 0.9753}, 0), (0, 0, 1, 0.9711, {'recall': 0.9711, 'fpr': 0.1428, 'f1score': 0.7928, 'precision': 0.6698, 'tpr': 0.9711}, 0), (0.6404, 0.0281, 0.3877, 0.9719, {'recall': 0.9719, 'fpr': 0.2592, 'f1score': 0.6856, 'precision': 0.5296, 'tpr': 0.9719}, 0), (0.6526, 0.0442, 0.3916, 0.9558, {'recall': 0.9558, 'fpr': 0.1893, 'f1score': 0.738, 'precision': 0.601, 'tpr': 0.9558}, 1), (0.6791, 0.0662, 0.3871, 0.9338, {'recall': 0.9338, 'fpr': 0.0639, 'f1score': 0.8695, 'precision': 0.8136, 'tpr': 0.9338}, 2), (0.6791, 0.0662, 0.3871, 0.9338, {'recall': 0.9338, 'fpr': 0.0639, 'f1score': 0.8695, 'precision': 0.8136, 'tpr': 0.9338}, 3), (0.6791, 0.0662, 0.3871, 0.9198, {'recall': 0.9198, 'fpr': 0.1221, 'f1score': 0.7899, 'precision': 0.6922, 'tpr': 0.9198}, 4), (0.6791, 0.0662, 0.3871, 0.9705, {'recall': 0.9705, 'fpr': 0.2676, 'f1score': 0.6776, 'precision': 0.5206, 'tpr': 0.9705}, 4)]
+    gen = 4
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 10
+    max_steps = 3000
+    
+    rls = [(1, 0, 1, 0.951, {'recall': 0.951, 'fpr': 0.0987, 'f1score': 0.8232, 'precision': 0.7257, 'tpr': 0.951}, 0), (0, 0, 1, 0.957, {'recall': 0.957, 'fpr': 0.0972, 'f1score': 0.8272, 'precision': 0.7284, 'tpr': 0.957}, 0), (0.6393, 0.0514, 0.4121, 0.9486, {'recall': 0.9486, 'fpr': 0.2986, 'f1score': 0.6233, 'precision': 0.4641, 'tpr': 0.9486}, 0), (0.6393, 0.0514, 0.4121, 0.9486, {'recall': 0.9486, 'fpr': 0.2986, 'f1score': 0.6233, 'precision': 0.4641, 'tpr': 0.9486}, 1), (0.6393, 0.0514, 0.4121, 0.9985, {'recall': 0.9985, 'fpr': 0.0002, 'f1score': 0.9989, 'precision': 0.9993, 'tpr': 0.9985}, 2), (0.6393, 0.0514, 0.4121, 0.9543, {'recall': 0.9543, 'fpr': 0.3, 'f1score': 0.6262, 'precision': 0.466, 'tpr': 0.9543}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.5
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    
+    rls = [(1, 0, 1, 0.9798, {'recall': 0.9798, 'fpr': 0.1613, 'f1score': 0.7791, 'precision': 0.6466, 'tpr': 0.9798}, 0), (0, 0, 1, 0.9799, {'recall': 0.9799, 'fpr': 0.1571, 'f1score': 0.7819, 'precision': 0.6505, 'tpr': 0.9799}, 0), (0.5727, 0.0202, 0.4475, 0.9798, {'recall': 0.9798, 'fpr': 0.2181, 'f1score': 0.7218, 'precision': 0.5713, 'tpr': 0.9798}, 0), (0.5727, 0.0202, 0.4475, 0.9798, {'recall': 0.9798, 'fpr': 0.2181, 'f1score': 0.7218, 'precision': 0.5713, 'tpr': 0.9798}, 1), (0.5727, 0.0202, 0.4475, 1.0, {'recall': 1.0, 'fpr': 0.0002, 'f1score': 0.9997, 'precision': 0.9993, 'tpr': 1.0}, 2), (0.5727, 0.0202, 0.4475, 0.9824, {'recall': 0.9824, 'fpr': 0.2244, 'f1score': 0.7194, 'precision': 0.5675, 'tpr': 0.9824}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 30
+    max_steps = 3000
+    
+    rls = [(1, 0, 1, 0.978, {'recall': 0.978, 'fpr': 0.1187, 'f1score': 0.8239, 'precision': 0.7118, 'tpr': 0.978}, 0), (0, 0, 1, 0.9742, {'recall': 0.9742, 'fpr': 0.1165, 'f1score': 0.8241, 'precision': 0.7141, 'tpr': 0.9742}, 0), (0.6591, 0.0248, 0.3657, 0.9752, {'recall': 0.9752, 'fpr': 0.3186, 'f1score': 0.6417, 'precision': 0.4781, 'tpr': 0.9752}, 0), (0.6591, 0.0248, 0.3657, 0.9752, {'recall': 0.9752, 'fpr': 0.3186, 'f1score': 0.6417, 'precision': 0.4781, 'tpr': 0.9752}, 1), (0.6591, 0.0248, 0.3657, 0.9932, {'recall': 0.9932, 'fpr': 0.0013, 'f1score': 0.9944, 'precision': 0.9956, 'tpr': 0.9932}, 2), (0.6591, 0.0248, 0.3657, 0.9715, {'recall': 0.9715, 'fpr': 0.3213, 'f1score': 0.6376, 'precision': 0.4745, 'tpr': 0.9715}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 40
+    max_steps = 3000
+
+
+    rls = [(1, 0, 1, 0.9766, {'recall': 0.9766, 'fpr': 0.1283, 'f1score': 0.8125, 'precision': 0.6956, 'tpr': 0.9766}, 0), (0, 0, 1, 0.9745, {'recall': 0.9745, 'fpr': 0.1281, 'f1score': 0.8111, 'precision': 0.6946, 'tpr': 0.9745}, 0), (0.5847, 0.0279, 0.4432, 0.9721, {'recall': 0.9721, 'fpr': 0.3235, 'f1score': 0.6356, 'precision': 0.4721, 'tpr': 0.9721}, 0), (0.5847, 0.0279, 0.4432, 0.9721, {'recall': 0.9721, 'fpr': 0.3235, 'f1score': 0.6356, 'precision': 0.4721, 'tpr': 0.9721}, 1), (0.5847, 0.0279, 0.4432, 0.9986, {'recall': 0.9986, 'fpr': 0.0002, 'f1score': 0.999, 'precision': 0.9993, 'tpr': 0.9986}, 2), (0.5847, 0.0279, 0.4432, 0.9718, {'recall': 0.9718, 'fpr': 0.3398, 'f1score': 0.6254, 'precision': 0.461, 'tpr': 0.9718}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 50
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9779, {'recall': 0.9779, 'fpr': 0.1203, 'f1score': 0.821, 'precision': 0.7076, 'tpr': 0.9779}, 0), (0, 0, 1, 0.9749, {'recall': 0.9749, 'fpr': 0.121, 'f1score': 0.8196, 'precision': 0.7069, 'tpr': 0.9749}, 0), (0.7024, 0.0235, 0.3211, 0.9765, {'recall': 0.9765, 'fpr': 0.3073, 'f1score': 0.6497, 'precision': 0.4868, 'tpr': 0.9765}, 0), (0.7024, 0.0235, 0.3211, 0.9765, {'recall': 0.9765, 'fpr': 0.3073, 'f1score': 0.6497, 'precision': 0.4868, 'tpr': 0.9765}, 1), (0.7024, 0.0235, 0.3211, 0.9688, {'recall': 0.9688, 'fpr': 0.0183, 'f1score': 0.9546, 'precision': 0.9408, 'tpr': 0.9688}, 2), (0.7024, 0.0235, 0.3211, 0.9685, {'recall': 0.9685, 'fpr': 0.2941, 'f1score': 0.6567, 'precision': 0.4968, 'tpr': 0.9685}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 60
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9721, {'recall': 0.9721, 'fpr': 0.1277, 'f1score': 0.8099, 'precision': 0.694, 'tpr': 0.9721}, 0), (0, 0, 1, 0.9674, {'recall': 0.9674, 'fpr': 0.1271, 'f1score': 0.8086, 'precision': 0.6945, 'tpr': 0.9674}, 0), (0.7315, 0.031, 0.2995, 0.969, {'recall': 0.969, 'fpr': 0.252, 'f1score': 0.6879, 'precision': 0.5332, 'tpr': 0.969}, 0), (0.7315, 0.031, 0.2995, 0.9176, {'recall': 0.9176, 'fpr': 0.156, 'f1score': 0.7525, 'precision': 0.6378, 'tpr': 0.9176}, 1), (0.7315, 0.031, 0.2995, 0.9666, {'recall': 0.9666, 'fpr': 0.263, 'f1score': 0.6781, 'precision': 0.5222, 'tpr': 0.9666}, 1)]
+    gen = 1
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 70
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9622, {'recall': 0.9622, 'fpr': 0.1582, 'f1score': 0.7718, 'precision': 0.6443, 'tpr': 0.9622}, 0), (0, 0, 1, 0.9619, {'recall': 0.9619, 'fpr': 0.1518, 'f1score': 0.7785, 'precision': 0.6538, 'tpr': 0.9619}, 0), (0.6013, 0.0413, 0.44, 0.9587, {'recall': 0.9587, 'fpr': 0.2806, 'f1score': 0.6625, 'precision': 0.5062, 'tpr': 0.9587}, 0), (0.6013, 0.0413, 0.44, 0.9587, {'recall': 0.9587, 'fpr': 0.2806, 'f1score': 0.6625, 'precision': 0.5062, 'tpr': 0.9587}, 1), (0.6013, 0.0413, 0.44, 0.9959, {'recall': 0.9959, 'fpr': 0.0023, 'f1score': 0.994, 'precision': 0.9922, 'tpr': 0.9959}, 2), (0.6013, 0.0413, 0.44, 0.9652, {'recall': 0.9652, 'fpr': 0.2895, 'f1score': 0.6594, 'precision': 0.5007, 'tpr': 0.9652}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 80
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9289, {'recall': 0.9289, 'fpr': 0.1008, 'f1score': 0.8065, 'precision': 0.7126, 'tpr': 0.9289}, 0), (0, 0, 1, 0.9309, {'recall': 0.9309, 'fpr': 0.0962, 'f1score': 0.8148, 'precision': 0.7245, 'tpr': 0.9309}, 0), (0.604, 0.072, 0.468, 0.928, {'recall': 0.928, 'fpr': 0.2419, 'f1score': 0.6573, 'precision': 0.5089, 'tpr': 0.928}, 0), (0.604, 0.072, 0.468, 0.928, {'recall': 0.928, 'fpr': 0.2419, 'f1score': 0.6573, 'precision': 0.5089, 'tpr': 0.928}, 1), (0.604, 0.072, 0.468, 0.9985, {'recall': 0.9985, 'fpr': 0.0004, 'f1score': 0.9985, 'precision': 0.9985, 'tpr': 0.9985}, 2), (0.604, 0.072, 0.468, 0.9278, {'recall': 0.9278, 'fpr': 0.2546, 'f1score': 0.6472, 'precision': 0.4969, 'tpr': 0.9278}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 90
+    max_steps = 3000
+    
+    rls = [(1, 0, 1, 0.9494, {'recall': 0.9494, 'fpr': 0.1091, 'f1score': 0.8086, 'precision': 0.7041, 'tpr': 0.9494}, 0), (0, 0, 1, 0.9539, {'recall': 0.9539, 'fpr': 0.1055, 'f1score': 0.8144, 'precision': 0.7105, 'tpr': 0.9539}, 0), (0.7565, 0.0563, 0.2998, 0.9437, {'recall': 0.9437, 'fpr': 0.2761, 'f1score': 0.6359, 'precision': 0.4795, 'tpr': 0.9437}, 0), (0.7565, 0.0563, 0.2998, 0.9437, {'recall': 0.9437, 'fpr': 0.2761, 'f1score': 0.6359, 'precision': 0.4795, 'tpr': 0.9437}, 1), (0.7565, 0.0563, 0.2998, 0.9924, {'recall': 0.9924, 'fpr': 0.0026, 'f1score': 0.9915, 'precision': 0.9906, 'tpr': 0.9924}, 2), (0.7565, 0.0563, 0.2998, 0.9453, {'recall': 0.9453, 'fpr': 0.3111, 'f1score': 0.6106, 'precision': 0.451, 'tpr': 0.9453}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 100
+    max_steps = 3000
+
+    
+    # 4 and 9 for eta from 2 to 10 in steps of 1. default is 2.
+
+    rls = [(1, 0, 1, 0.9416, {'recall': 0.9416, 'fpr': 0.1497, 'f1score': 0.772, 'precision': 0.6542, 'tpr': 0.9416}, 0), (0, 0, 1, 0.9383, {'recall': 0.9383, 'fpr': 0.1512, 'f1score': 0.7669, 'precision': 0.6484, 'tpr': 0.9383}, 0), (0.6464, 0.0655, 0.4191, 0.9345, {'recall': 0.9345, 'fpr': 0.2934, 'f1score': 0.641, 'precision': 0.4878, 'tpr': 0.9345}, 0), (0.6464, 0.0655, 0.4191, 0.9345, {'recall': 0.9345, 'fpr': 0.2934, 'f1score': 0.641, 'precision': 0.4878, 'tpr': 0.9345}, 1), (0.6464, 0.0655, 0.4191, 0.9986, {'recall': 0.9986, 'fpr': 0.0008, 'f1score': 0.998, 'precision': 0.9973, 'tpr': 0.9986}, 2), (0.6464, 0.0655, 0.4191, 0.9382, {'recall': 0.9382, 'fpr': 0.2915, 'f1score': 0.6427, 'precision': 0.4887, 'tpr': 0.9382}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 3
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9868, {'recall': 0.9868, 'fpr': 0.1789, 'f1score': 0.7638, 'precision': 0.623, 'tpr': 0.9868}, 0), (0, 0, 1, 0.9861, {'recall': 0.9861, 'fpr': 0.1817, 'f1score': 0.7602, 'precision': 0.6185, 'tpr': 0.9861}, 0), (0.5437, 0.0142, 0.4705, 0.9858, {'recall': 0.9858, 'fpr': 0.3382, 'f1score': 0.6337, 'precision': 0.4669, 'tpr': 0.9858}, 0), (0.5688, 0.0, 0.4312, 1.0, {'recall': 1.0, 'fpr': 0.0, 'f1score': 1.0, 'precision': 1.0, 'tpr': 1.0}, 1), (0.5849, 0.0003, 0.4154, 0.9997, {'recall': 0.9997, 'fpr': 0.0001, 'f1score': 0.9997, 'precision': 0.9997, 'tpr': 0.9997}, 2), (0.5849, 0.0003, 0.4154, 0.9997, {'recall': 0.9997, 'fpr': 0.0001, 'f1score': 0.9997, 'precision': 0.9997, 'tpr': 0.9997}, 3), (0.5849, 0.0003, 0.4154, 0.9997, {'recall': 0.9997, 'fpr': 0.0001, 'f1score': 0.9997, 'precision': 0.9997, 'tpr': 0.9997}, 4), (0.5849, 0.0003, 0.4154, 0.982, {'recall': 0.982, 'fpr': 0.1214, 'f1score': 0.8222, 'precision': 0.7072, 'tpr': 0.982}, 4)]
+    gen = 4
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 4
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9528, {'recall': 0.9528, 'fpr': 0.1647, 'f1score': 0.7611, 'precision': 0.6336, 'tpr': 0.9528}, 0), (0, 0, 1, 0.9485, {'recall': 0.9485, 'fpr': 0.1619, 'f1score': 0.762, 'precision': 0.6368, 'tpr': 0.9485}, 0), (0.5233, 0.0525, 0.5292, 0.9475, {'recall': 0.9475, 'fpr': 0.2418, 'f1score': 0.6878, 'precision': 0.5399, 'tpr': 0.9475}, 0), (0.5233, 0.0525, 0.5292, 0.9993, {'recall': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'precision': 0.9997, 'tpr': 0.9993}, 1), (0.5233, 0.0525, 0.5292, 0.9444, {'recall': 0.9444, 'fpr': 0.2349, 'f1score': 0.6921, 'precision': 0.5462, 'tpr': 0.9444}, 1)]
+    gen = 1
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 100
+    ReductionRate = 0.6
+    eta = 5
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9776, {'recall': 0.9776, 'fpr': 0.1656, 'f1score': 0.7719, 'precision': 0.6378, 'tpr': 0.9776}, 0), (0, 0, 1, 0.9806, {'recall': 0.9806, 'fpr': 0.1643, 'f1score': 0.7747, 'precision': 0.6403, 'tpr': 0.9806}, 0), (0.4633, 0.0231, 0.5598, 0.9769, {'recall': 0.9769, 'fpr': 0.3067, 'f1score': 0.651, 'precision': 0.4881, 'tpr': 0.9769}, 0), (0.4633, 0.0231, 0.5598, 0.9769, {'recall': 0.9769, 'fpr': 0.3067, 'f1score': 0.651, 'precision': 0.4881, 'tpr': 0.9769}, 1), (0.4633, 0.0231, 0.5598, 0.9997, {'recall': 0.9997, 'fpr': 0.0001, 'f1score': 0.9997, 'precision': 0.9997, 'tpr': 0.9997}, 2), (0.4633, 0.0231, 0.5598, 0.9753, {'recall': 0.9753, 'fpr': 0.3137, 'f1score': 0.6455, 'precision': 0.4824, 'tpr': 0.9753}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 6
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9776, {'recall': 0.9776, 'fpr': 0.1656, 'f1score': 0.7719, 'precision': 0.6378, 'tpr': 0.9776}, 0), (0, 0, 1, 0.9806, {'recall': 0.9806, 'fpr': 0.1643, 'f1score': 0.7747, 'precision': 0.6403, 'tpr': 0.9806}, 0), (0.4633, 0.0231, 0.5598, 0.9769, {'recall': 0.9769, 'fpr': 0.3067, 'f1score': 0.651, 'precision': 0.4881, 'tpr': 0.9769}, 0), (0.4633, 0.0231, 0.5598, 0.9769, {'recall': 0.9769, 'fpr': 0.3067, 'f1score': 0.651, 'precision': 0.4881, 'tpr': 0.9769}, 1), (0.4633, 0.0231, 0.5598, 0.9997, {'recall': 0.9997, 'fpr': 0.0001, 'f1score': 0.9997, 'precision': 0.9997, 'tpr': 0.9997}, 2), (0.4633, 0.0231, 0.5598, 0.9753, {'recall': 0.9753, 'fpr': 0.3137, 'f1score': 0.6455, 'precision': 0.4824, 'tpr': 0.9753}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 7
+    delta = 20
+    max_steps = 3000
+    
+    # 4 and 9 for ReductionRate from 0.5 to 0.9 in steps of 0.1. default is 0.6.
+    rls = [(1, 0, 1, 0.9741, {'recall': 0.9741, 'fpr': 0.1141, 'f1score': 0.8263, 'precision': 0.7174, 'tpr': 0.9741}, 0), (0, 0, 1, 0.9756, {'recall': 0.9756, 'fpr': 0.1183, 'f1score': 0.8231, 'precision': 0.7118, 'tpr': 0.9756}, 0), (0.7958, 0.0265, 0.2307, 0.9735, {'recall': 0.9735, 'fpr': 0.2915, 'f1score': 0.6595, 'precision': 0.4987, 'tpr': 0.9735}, 0), (0.847, 0.0645, 0.2175, 0.9355, {'recall': 0.9355, 'fpr': 0.1413, 'f1score': 0.7768, 'precision': 0.6641, 'tpr': 0.9355}, 1), (0.847, 0.0645, 0.2175, 0.9355, {'recall': 0.9355, 'fpr': 0.1413, 'f1score': 0.7768, 'precision': 0.6641, 'tpr': 0.9355}, 2), (0.847, 0.0645, 0.2175, 0.9508, {'recall': 0.9508, 'fpr': 0.1099, 'f1score': 0.8203, 'precision': 0.7213, 'tpr': 0.9508}, 3), (0.847, 0.0645, 0.2175, 0.9743, {'recall': 0.9743, 'fpr': 0.2425, 'f1score': 0.7002, 'precision': 0.5464, 'tpr': 0.9743}, 3)]
+    gen = 3
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.7
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9776, {'recall': 0.9776, 'fpr': 0.1253, 'f1score': 0.8155, 'precision': 0.6995, 'tpr': 0.9776}, 0), (0, 0, 1, 0.9738, {'recall': 0.9738, 'fpr': 0.1257, 'f1score': 0.813, 'precision': 0.6977, 'tpr': 0.9738}, 0), (0.6195, 0.0305, 0.411, 0.9695, {'recall': 0.9695, 'fpr': 0.329, 'f1score': 0.6316, 'precision': 0.4684, 'tpr': 0.9695}, 0), (0.6195, 0.0305, 0.411, 0.9695, {'recall': 0.9695, 'fpr': 0.329, 'f1score': 0.6316, 'precision': 0.4684, 'tpr': 0.9695}, 1), (0.6195, 0.0305, 0.411, 0.9993, {'recall': 0.9993, 'fpr': 0.0, 'f1score': 0.9997, 'precision': 1.0, 'tpr': 0.9993}, 2), (0.6195, 0.0305, 0.411, 0.9744, {'recall': 0.9744, 'fpr': 0.334, 'f1score': 0.6289, 'precision': 0.4642, 'tpr': 0.9744}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    
+    # 4 and 9 for SampleSize from 10 to 100 in steps of 10. default is 50.
+
+    rls = [(1, 0, 1, 0.9809, {'recall': 0.9809, 'fpr': 0.1351, 'f1score': 0.8057, 'precision': 0.6835, 'tpr': 0.9809}, 0), (0, 0, 1, 0.9792, {'recall': 0.9792, 'fpr': 0.135, 'f1score': 0.8048, 'precision': 0.6831, 'tpr': 0.9792}, 0), (0.5414, 0.0258, 0.4844, 0.9742, {'recall': 0.9742, 'fpr': 0.3194, 'f1score': 0.6401, 'precision': 0.4766, 'tpr': 0.9742}, 0), (0.5414, 0.0258, 0.4844, 0.9742, {'recall': 0.9742, 'fpr': 0.3194, 'f1score': 0.6401, 'precision': 0.4766, 'tpr': 0.9742}, 1), (0.5414, 0.0258, 0.4844, 0.9983, {'recall': 0.9983, 'fpr': 0.0009, 'f1score': 0.9976, 'precision': 0.997, 'tpr': 0.9983}, 2), (0.5414, 0.0258, 0.4844, 0.9783, {'recall': 0.9783, 'fpr': 0.3211, 'f1score': 0.6409, 'precision': 0.4766, 'tpr': 0.9783}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 10
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9757, {'recall': 0.9757, 'fpr': 0.1613, 'f1score': 0.7766, 'precision': 0.6451, 'tpr': 0.9757}, 0), (0, 0, 1, 0.9722, {'recall': 0.9722, 'fpr': 0.1634, 'f1score': 0.7725, 'precision': 0.6408, 'tpr': 0.9722}, 0), (0.8035, 0.0307, 0.2272, 0.9693, {'recall': 0.9693, 'fpr': 0.2879, 'f1score': 0.6597, 'precision': 0.5, 'tpr': 0.9693}, 0), (0.8035, 0.0307, 0.2272, 0.9693, {'recall': 0.9693, 'fpr': 0.2879, 'f1score': 0.6597, 'precision': 0.5, 'tpr': 0.9693}, 1), (0.8035, 0.0307, 0.2272, 0.981, {'recall': 0.981, 'fpr': 0.008, 'f1score': 0.9772, 'precision': 0.9735, 'tpr': 0.981}, 2), (0.8035, 0.0307, 0.2272, 0.9782, {'recall': 0.9782, 'fpr': 0.2906, 'f1score': 0.6624, 'precision': 0.5008, 'tpr': 0.9782}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 20
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9837, {'recall': 0.9837, 'fpr': 0.1623, 'f1score': 0.7787, 'precision': 0.6444, 'tpr': 0.9837}, 0), (0, 0, 1, 0.984, {'recall': 0.984, 'fpr': 0.1604, 'f1score': 0.7803, 'precision': 0.6464, 'tpr': 0.984}, 0), (0.5073, 0.0204, 0.5131, 0.9796, {'recall': 0.9796, 'fpr': 0.1964, 'f1score': 0.7432, 'precision': 0.5987, 'tpr': 0.9796}, 0), (0.5258, 0.0, 0.4742, 1.0, {'recall': 1.0, 'fpr': 0.0, 'f1score': 1.0, 'precision': 1.0, 'tpr': 1.0}, 1), (0.5258, 0.0, 0.4742, 1.0, {'recall': 1.0, 'fpr': 0.0, 'f1score': 1.0, 'precision': 1.0, 'tpr': 1.0}, 2), (0.5258, 0.0, 0.4742, 1.0, {'recall': 1.0, 'fpr': 0.0002, 'f1score': 0.9997, 'precision': 0.9993, 'tpr': 1.0}, 3), (0.5258, 0.0, 0.4742, 0.9844, {'recall': 0.9844, 'fpr': 0.021, 'f1score': 0.9582, 'precision': 0.9333, 'tpr': 0.9844}, 3)]
+    gen = 3
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 30
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9741, {'recall': 0.9741, 'fpr': 0.1721, 'f1score': 0.7636, 'precision': 0.6279, 'tpr': 0.9741}, 0), (0, 0, 1, 0.9644, {'recall': 0.9644, 'fpr': 0.1781, 'f1score': 0.7535, 'precision': 0.6183, 'tpr': 0.9644}, 0), (0.7771, 0.0286, 0.2515, 0.9714, {'recall': 0.9714, 'fpr': 0.3143, 'f1score': 0.6418, 'precision': 0.4793, 'tpr': 0.9714}, 0), (0.8136, 0.0688, 0.2552, 0.9312, {'recall': 0.9312, 'fpr': 0.14, 'f1score': 0.7766, 'precision': 0.6659, 'tpr': 0.9312}, 1), (0.8136, 0.0688, 0.2552, 0.9312, {'recall': 0.9312, 'fpr': 0.14, 'f1score': 0.7766, 'precision': 0.6659, 'tpr': 0.9312}, 2), (0.8136, 0.0688, 0.2552, 0.9482, {'recall': 0.9482, 'fpr': 0.1433, 'f1score': 0.7804, 'precision': 0.6631, 'tpr': 0.9482}, 3), (0.8136, 0.0688, 0.2552, 0.9634, {'recall': 0.9634, 'fpr': 0.3145, 'f1score': 0.6393, 'precision': 0.4784, 'tpr': 0.9634}, 3)]
+    gen = 3
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 40
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    
+    rls = [(1, 0, 1, 0.9725, {'recall': 0.9725, 'fpr': 0.1534, 'f1score': 0.7823, 'precision': 0.6543, 'tpr': 0.9725}, 0), (0, 0, 1, 0.9752, {'recall': 0.9752, 'fpr': 0.1514, 'f1score': 0.7858, 'precision': 0.658, 'tpr': 0.9752}, 0), (0.6128, 0.0321, 0.4193, 0.9679, {'recall': 0.9679, 'fpr': 0.3115, 'f1score': 0.644, 'precision': 0.4825, 'tpr': 0.9679}, 0), (0.6128, 0.0321, 0.4193, 0.9966, {'recall': 0.9966, 'fpr': 0.0015, 'f1score': 0.9958, 'precision': 0.9949, 'tpr': 0.9966}, 1), (0.6128, 0.0321, 0.4193, 0.9698, {'recall': 0.9698, 'fpr': 0.3141, 'f1score': 0.6419, 'precision': 0.4798, 'tpr': 0.9698}, 1)]
+    gen = 1
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 60
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9844, {'recall': 0.9844, 'fpr': 0.1266, 'f1score': 0.8175, 'precision': 0.6991, 'tpr': 0.9844}, 0), (0, 0, 1, 0.9857, {'recall': 0.9857, 'fpr': 0.1363, 'f1score': 0.807, 'precision': 0.6832, 'tpr': 0.9857}, 0), (0.4849, 0.015, 0.5301, 0.985, {'recall': 0.985, 'fpr': 0.3088, 'f1score': 0.6523, 'precision': 0.4876, 'tpr': 0.985}, 0), (0.4849, 0.015, 0.5301, 0.985, {'recall': 0.985, 'fpr': 0.3088, 'f1score': 0.6523, 'precision': 0.4876, 'tpr': 0.985}, 1), (0.4849, 0.015, 0.5301, 0.9997, {'recall': 0.9997, 'fpr': 0.0, 'f1score': 0.9998, 'precision': 1.0, 'tpr': 0.9997}, 2), (0.4849, 0.015, 0.5301, 0.9817, {'recall': 0.9817, 'fpr': 0.3191, 'f1score': 0.6448, 'precision': 0.4801, 'tpr': 0.9817}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 80
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9674, {'recall': 0.9674, 'fpr': 0.1489, 'f1score': 0.7845, 'precision': 0.6598, 'tpr': 0.9674}, 0), (0, 0, 1, 0.9706, {'recall': 0.9706, 'fpr': 0.1464, 'f1score': 0.7901, 'precision': 0.6662, 'tpr': 0.9706}, 0), (0.5662, 0.037, 0.4708, 0.963, {'recall': 0.963, 'fpr': 0.246, 'f1score': 0.6911, 'precision': 0.539, 'tpr': 0.963}, 0), (0.5662, 0.037, 0.4708, 0.963, {'recall': 0.963, 'fpr': 0.246, 'f1score': 0.6911, 'precision': 0.539, 'tpr': 0.963}, 1), (0.5662, 0.037, 0.4708, 0.9807, {'recall': 0.9807, 'fpr': 0.0054, 'f1score': 0.9813, 'precision': 0.982, 'tpr': 0.9807}, 2), (0.5662, 0.037, 0.4708, 0.9687, {'recall': 0.9687, 'fpr': 0.2527, 'f1score': 0.6878, 'precision': 0.5332, 'tpr': 0.9687}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 90
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9868, {'recall': 0.9868, 'fpr': 0.1789, 'f1score': 0.7638, 'precision': 0.623, 'tpr': 0.9868}, 0), (0, 0, 1, 0.9861, {'recall': 0.9861, 'fpr': 0.1817, 'f1score': 0.7602, 'precision': 0.6185, 'tpr': 0.9861}, 0), (0.5437, 0.0142, 0.4705, 0.9858, {'recall': 0.9858, 'fpr': 0.3382, 'f1score': 0.6337, 'precision': 0.4669, 'tpr': 0.9858}, 0), (0.5688, 0.0, 0.4312, 1.0, {'recall': 1.0, 'fpr': 0.0, 'f1score': 1.0, 'precision': 1.0, 'tpr': 1.0}, 1), (0.5849, 0.0003, 0.4154, 0.9997, {'recall': 0.9997, 'fpr': 0.0001, 'f1score': 0.9997, 'precision': 0.9997, 'tpr': 0.9997}, 2), (0.5849, 0.0003, 0.4154, 0.9997, {'recall': 0.9997, 'fpr': 0.0001, 'f1score': 0.9997, 'precision': 0.9997, 'tpr': 0.9997}, 3), (0.5849, 0.0003, 0.4154, 0.9997, {'recall': 0.9997, 'fpr': 0.0001, 'f1score': 0.9997, 'precision': 0.9997, 'tpr': 0.9997}, 4), (0.5849, 0.0003, 0.4154, 0.982, {'recall': 0.982, 'fpr': 0.1214, 'f1score': 0.8222, 'precision': 0.7072, 'tpr': 0.982}, 4)]
+    gen = 4
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 100
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
+    
+    # 6 and 8 for delta from 10 to 100 in steps of 10. default is 20.
+    # 6 and 8 for eta from 2 to 10 in steps of 1. default is 2.
+    # 6 and 8 for ReductionRate from 0.5 to 0.9 in steps of 0.1. default is 0.6.
+    # 6 and 8 for SampleSize from 10 to 100 in steps of 10. default is 50.
+#     rls = 
+#     gen = 1
 #     TempMin = 5
-#     SampleSize = 50
+#     TempMax = 1000
+#     SampleSize = 60
 #     ReductionRate = 0.6
 #     eta = 2
-#     delta = 30
+#     delta = 20
 #     max_steps = 3000
-
-
-
-
-
-
-
-    
-    
      
 #     # 6 and 8
 #     rls = 

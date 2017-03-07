@@ -446,7 +446,7 @@ def generatereports():
 #     delta = 20
 #     max_steps = 3000
 
-    rls = [(1, 0, 1, 0.9159, {'recall': 0.9159, 'fpr': 0.1012, 'f1score': 0.8004, 'precision': 0.7108, 'tpr': 0.9159}, 0), (0, 0, 1, 0.9247, {'recall': 0.9247, 'fpr': 0.0969, 'f1score': 0.8107, 'precision': 0.7217, 'tpr': 0.9247}, 0), (0.7875, 0.0956, 0.3081, 0.9044, {'recall': 0.9044, 'fpr': 0.2016, 'f1score': 0.6822, 'precision': 0.5476, 'tpr': 0.9044}, 0), (0.7875, 0.0956, 0.3081, 0.9044, {'recall': 0.9044, 'fpr': 0.2016, 'f1score': 0.6822, 'precision': 0.5476, 'tpr': 0.9044}, 1), (0.7875, 0.0956, 0.3081, 0.9719, {'recall': 0.9719, 'fpr': 0.087, 'f1score': 0.8486, 'precision': 0.753, 'tpr': 0.9719}, 2), (0.7875, 0.0956, 0.3081, 0.9223, {'recall': 0.9223, 'fpr': 0.2068, 'f1score': 0.6868, 'precision': 0.5471, 'tpr': 0.9223}, 2)]
+#     rls = [(1, 0, 1, 0.9159, {'recall': 0.9159, 'fpr': 0.1012, 'f1score': 0.8004, 'precision': 0.7108, 'tpr': 0.9159}, 0), (0, 0, 1, 0.9247, {'recall': 0.9247, 'fpr': 0.0969, 'f1score': 0.8107, 'precision': 0.7217, 'tpr': 0.9247}, 0), (0.7875, 0.0956, 0.3081, 0.9044, {'recall': 0.9044, 'fpr': 0.2016, 'f1score': 0.6822, 'precision': 0.5476, 'tpr': 0.9044}, 0), (0.7875, 0.0956, 0.3081, 0.9044, {'recall': 0.9044, 'fpr': 0.2016, 'f1score': 0.6822, 'precision': 0.5476, 'tpr': 0.9044}, 1), (0.7875, 0.0956, 0.3081, 0.9719, {'recall': 0.9719, 'fpr': 0.087, 'f1score': 0.8486, 'precision': 0.753, 'tpr': 0.9719}, 2), (0.7875, 0.0956, 0.3081, 0.9223, {'recall': 0.9223, 'fpr': 0.2068, 'f1score': 0.6868, 'precision': 0.5471, 'tpr': 0.9223}, 2)]
 #     gen = 2
 #     TempMax = 1000
 #     TempMin = 5
@@ -560,6 +560,16 @@ def generatereports():
 
 
     # 7 and 9 for ReductionRate from 0.5 to 0.9 in steps of 0.1. default is 0.6.
+
+    rls = [(1, 0, 1, 0.9324, {'recall': 0.9324, 'fpr': 0.0926, 'f1score': 0.8205, 'precision': 0.7326, 'tpr': 0.9324}, 0), (0, 0, 1, 0.9437, {'recall': 0.9437, 'fpr': 0.0926, 'f1score': 0.8262, 'precision': 0.7348, 'tpr': 0.9437}, 0), (0.587, 0.0686, 0.4816, 0.9314, {'recall': 0.9314, 'fpr': 0.3143, 'f1score': 0.6023, 'precision': 0.445, 'tpr': 0.9314}, 0), (0.587, 0.0686, 0.4816, 0.9314, {'recall': 0.9314, 'fpr': 0.3143, 'f1score': 0.6023, 'precision': 0.445, 'tpr': 0.9314}, 1), (0.587, 0.0686, 0.4816, 0.9996, {'recall': 0.9996, 'fpr': 0.0004, 'f1score': 0.9991, 'precision': 0.9985, 'tpr': 0.9996}, 2), (0.587, 0.0686, 0.4816, 0.9395, {'recall': 0.9395, 'fpr': 0.3151, 'f1score': 0.607, 'precision': 0.4484, 'tpr': 0.9395}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.5
+    eta = 2
+    delta = 20
+    max_steps = 3000
 
     rls = [(1, 0, 1, 0.9221, {'recall': 0.9221, 'fpr': 0.0944, 'f1score': 0.8133, 'precision': 0.7275, 'tpr': 0.9221}, 0), (0, 0, 1, 0.9207, {'recall': 0.9207, 'fpr': 0.0926, 'f1score': 0.8149, 'precision': 0.731, 'tpr': 0.9207}, 0), (0.8565, 0.0902, 0.2337, 0.9098, {'recall': 0.9098, 'fpr': 0.2456, 'f1score': 0.647, 'precision': 0.502, 'tpr': 0.9098}, 0), (0.8565, 0.0902, 0.2337, 0.9098, {'recall': 0.9098, 'fpr': 0.2456, 'f1score': 0.647, 'precision': 0.502, 'tpr': 0.9098}, 1), (0.8565, 0.0902, 0.2337, 0.9744, {'recall': 0.9744, 'fpr': 0.1152, 'f1score': 0.8124, 'precision': 0.6966, 'tpr': 0.9744}, 2), (0.8565, 0.0902, 0.2337, 0.9213, {'recall': 0.9213, 'fpr': 0.2527, 'f1score': 0.6483, 'precision': 0.5001, 'tpr': 0.9213}, 2)]
     gen = 2
@@ -1530,8 +1540,738 @@ def trainplots():
 
 
 
+def saplots():
+    
+
+    # (7,9)
+    deltay1 = []
+    deltay2 = []
+    deltay3 = []
+
+    deltax1 = []
+    deltax2 = []
+    deltax3 = []
+
+    deltay1.append(0.8331)
+    deltax1.append(10)
+
+    deltay1.append(0.8167)
+    deltax1.append(20)
+
+    deltay1.append(0.8107)
+    deltax1.append(30)
+    
+    deltay1.append(0.8226)
+    deltax1.append(40)
+
+    deltay1.append(0.8151)
+    deltax1.append(50)
+
+    deltay1.append(0.8185)
+    deltax1.append(60)
+    
+    deltay1.append(0.8085)
+    deltax1.append(70)
+
+    deltay1.append(0.8118)
+    deltax1.append(80)
+
+    deltay1.append()
+    deltax1.append(90)
+
+    deltay1.append(0.8231)
+    deltax1.append(100)
+
+    
+    deltay2.append(0.7018)
+    deltax2.append(10)
+
+    deltay2.append(0.6874)
+    deltax2.append(20)
+
+    deltay2.append(0.6868)
+    deltax2.append(30)
+
+    deltay2.append(0.5895)
+    deltax2.append(40)
+
+    deltay2.append(0.6117)
+    deltax2.append(50)
+
+    deltay2.append(0.5911)
+    deltax2.append(60)
+
+    deltay2.append(0.6343)
+    deltax2.append(70)
+
+    deltay2.append(0.6719)
+    deltax2.append(80)
+    
+    deltay2.append()
+    deltax2.append(90)
+
+    deltay2.append(0.6011)
+    deltax2.append(100)
+    
+    
+    deltay3.append(0.9919)
+    deltax3.append(10)
+
+    deltay3.append(0.8273)
+    deltax3.append(20)
+
+    deltay3.append(0.8486)
+    deltax3.append(30)
+    
+    deltay3.append(0.9991)
+    deltax3.append(40)
+
+    deltay3.append(0.9998)
+    deltax3.append(50)
+
+    deltay3.append(0.9995)
+    deltax3.append(60)
+
+    deltay3.append(0.9995)
+    deltax3.append(70)
+    
+    deltay3.append(0.9956)
+    deltax3.append(80)
+    
+    deltay3.append()
+    deltax3.append(90)
+
+    deltay3.append(0.9998)
+    deltax3.append(100)
+    
+    l1 = deltay1
+    l2 = deltay2
+    l3 = deltay3
 
 
+    etay1 = []
+    etay2 = []
+    etay3 = []
+
+    etax1 = []
+    etax2 = []
+    etax3 = []
+
+    etay1.append()
+    etax1.append(2)
+
+    etay1.append()
+    etax1.append(3)
+
+    etay1.append()
+    etax1.append(4)
+
+    etay1.append()
+    etax1.append(5)
+
+    etay1.append()
+    etax1.append(6)
+
+    etay1.append(0.814)
+    etax1.append(7)
+
+    etay1.append(0.8064)
+    etax1.append(8)
+
+    etay1.append(0.811)
+    etax1.append(9)
+
+
+    etay2.append()
+    etax2.append(2)
+
+    etay2.append()
+    etax2.append(3)
+
+    etay2.append()
+    etax2.append(4)
+
+    etay2.append()
+    etax2.append(5)
+
+    etay2.append()
+    etax2.append(6)
+
+    etay2.append(0.7033)
+    etax2.append(7)
+
+    etay2.append(0.6811)
+    etax2.append(8)
+
+    etay2.append(0.6515)
+    etax2.append(9)
+
+
+    etay3.append()
+    etax3.append(2)
+
+    etay3.append()
+    etax3.append(3)
+
+    etay3.append()
+    etax3.append(4)
+
+    etay3.append()
+    etax3.append(5)
+
+    etay3.append()
+    etax3.append(6)
+
+    etay3.append(0.9943)
+    etax3.append(7)
+
+    etay3.append(0.8179)
+    etax3.append(8)
+
+    etay3.append(0.9978)
+    etax3.append(9)
+
+    l1 = etay1
+    l2 = etay2
+    l3 = etay3
+    
+
+    ReductionRatey1 = []
+    ReductionRatey2 = []
+    ReductionRatey3 = []
+
+    ReductionRatex1 = []
+    ReductionRatex2 = []
+    ReductionRatex3 = []
+
+    ReductionRatey1.append(0.8262)
+    ReductionRatex1.append(0.5)
+
+    ReductionRatey1.append()
+    ReductionRatex1.append(0.6)
+
+    ReductionRatey1.append(0.8149)
+    ReductionRatex1.append(0.7)
+
+    ReductionRatey1.append(0.8102)
+    ReductionRatex1.append(0.8)
+
+    ReductionRatey1.append(0.8212)
+    ReductionRatex1.append(0.9)
+
+    ReductionRatey2.append(0.607)
+    ReductionRatex2.append(0.5)
+
+    ReductionRatey2.append()
+    ReductionRatex2.append(0.6)
+
+    ReductionRatey2.append(0.6483)
+    ReductionRatex2.append(0.7)
+
+    ReductionRatey2.append(0.6657)
+    ReductionRatex2.append(0.8)
+
+    ReductionRatey2.append(0.6405)
+    ReductionRatex2.append(0.9)
+
+    ReductionRatey3.append(0.9991)
+    ReductionRatex3.append(0.5)
+
+    ReductionRatey3.append()
+    ReductionRatex3.append(0.6)
+
+    ReductionRatey3.append(0.8124)
+    ReductionRatex3.append(0.7)
+
+    ReductionRatey3.append(0.9091)
+    ReductionRatex3.append(0.8)
+
+    ReductionRatey3.append(0.9971)
+    ReductionRatex3.append(0.9)
+
+    l1 = ReductionRatey1
+    l2 = ReductionRatey2
+    l3 = ReductionRatey3
+
+    SampleSizey1 = []
+    SampleSizey2 = []
+    SampleSizey3 = []
+
+    SampleSizex1 = []
+    SampleSizex2 = []
+    SampleSizex3 = []
+
+    SampleSizey1.append(0.8158)
+    SampleSizex1.append(10)
+
+    SampleSizey1.append(0.8081)
+    SampleSizex1.append(20)
+
+    SampleSizey1.append(0.8144)
+    SampleSizex1.append(30)
+
+    SampleSizey1.append(0.8139)
+    SampleSizex1.append(40)
+
+    SampleSizey1.append()
+    SampleSizex1.append(50)
+
+    SampleSizey1.append(0.8327)
+    SampleSizex1.append(60)
+
+    SampleSizey1.append(0.8165)
+    SampleSizex1.append(70)
+
+    SampleSizey1.append(0.8155)
+    SampleSizex1.append(80)
+
+    SampleSizey1.append(0.8226)
+    SampleSizex1.append(90)
+
+    SampleSizey1.append(0.8014)
+    SampleSizex1.append(100)
+
+    SampleSizey2.append(0.5894)
+    SampleSizex2.append(10)
+
+    SampleSizey2.append(0.705)
+    SampleSizex2.append(20)
+
+    SampleSizey2.append(0.6813)
+    SampleSizex2.append(30)
+
+    SampleSizey2.append(0.6256)
+    SampleSizex2.append(40)
+
+    SampleSizey2.append()
+    SampleSizex2.append(50)
+
+    SampleSizey2.append(0.663)
+    SampleSizex2.append(60)
+
+    SampleSizey2.append(0.6305)
+    SampleSizex2.append(70)
+
+    SampleSizey2.append(0.7048)
+    SampleSizex2.append(80)
+
+    SampleSizey2.append(0.6416)
+    SampleSizex2.append(90)
+
+    SampleSizey2.append(0.6608)
+    SampleSizex2.append(100)
+
+    SampleSizey3.append(0.9995)
+    SampleSizex3.append(10)
+
+    SampleSizey3.append(0.8709)
+    SampleSizex3.append(20)
+
+    SampleSizey3.append(0.9985)
+    SampleSizex3.append(30)
+
+    SampleSizey3.append(0.9945)
+    SampleSizex3.append(40)
+
+    SampleSizey3.append()
+    SampleSizex3.append(50)
+
+    SampleSizey3.append(0.994)
+    SampleSizex3.append(60)
+
+    SampleSizey3.append(0.9985)
+    SampleSizex3.append(70)
+
+    SampleSizey3.append(0.753)
+    SampleSizex3.append(80)
+
+    SampleSizey3.append(0.7698)
+    SampleSizex3.append(90)
+
+    SampleSizey3.append(0.7765)
+    SampleSizex3.append(100)
+
+    l1 = SampleSizey1
+    l2 = SampleSizey2
+    l3 = SampleSizey3
+
+
+    # (4,9)
+
+    deltay1 = []
+    deltay2 = []
+    deltay3 = []
+
+    deltax1 = []
+    deltax2 = []
+    deltax3 = []
+
+    deltay1.append(0.7928)
+    deltax1.append(10)
+
+    deltay1.append(0.8272)
+    deltax1.append(20)
+
+    deltay1.append(0.7819)
+    deltax1.append(30)
+    
+    deltay1.append(0.8241)
+    deltax1.append(40)
+
+    deltay1.append(0.8111)
+    deltax1.append(50)
+
+    deltay1.append(0.8196)
+    deltax1.append(60)
+    
+    deltay1.append(0.8086)
+    deltax1.append(70)
+
+    deltay1.append(0.7785)
+    deltax1.append(80)
+
+    deltay1.append(0.8148)
+    deltax1.append(90)
+
+    deltay1.append(0.8144)
+    deltax1.append(100)
+    
+    deltay2.append(0.6776)
+    deltax2.append(10)
+
+    deltay2.append(0.6262)
+    deltax2.append(20)
+
+    deltay2.append(0.7194)
+    deltax2.append(30)
+
+    deltay2.append(0.6376)
+    deltax2.append(40)
+
+    deltay2.append(0.6254)
+    deltax2.append(50)
+
+    deltay2.append(0.6567)
+    deltax2.append(60)
+
+    deltay2.append(0.6781)
+    deltax2.append(70)
+
+    deltay2.append(0.6594)
+    deltax2.append(80)
+    
+    deltay2.append(0.6472)
+    deltax2.append(90)
+
+    deltay2.append(0.6106)
+    deltax2.append(100)
+    
+    
+    deltay3.append(0.7899)
+    deltax3.append(10)
+
+    deltay3.append(0.9989)
+    deltax3.append(20)
+
+    deltay3.append(0.9997)
+    deltax3.append(30)
+    
+    deltay3.append(0.9944)
+    deltax3.append(40)
+
+    deltay3.append(0.999)
+    deltax3.append(50)
+
+    deltay3.append(0.9546)
+    deltax3.append(60)
+
+    deltay3.append(0.7525)
+    deltax3.append(70)
+    
+    deltay3.append(0.994)
+    deltax3.append(80)
+    
+    deltay3.append(0.9985)
+    deltax3.append(90)
+
+    deltay3.append(0.9915)
+    deltax3.append(100)
+    
+    l1 = deltay1
+    l2 = deltay2
+    l3 = deltay3
+
+
+    etay1 = []
+    etay2 = []
+    etay3 = []
+
+    etax1 = []
+    etax2 = []
+    etax3 = []
+
+    etay1.append()
+    etax1.append(2)
+
+    etay1.append(0.7669)
+    etax1.append(3)
+
+    etay1.append()
+    etax1.append(4)
+
+    etay1.append(0.762)
+    etax1.append(5)
+
+    etay1.append(0.7747)
+    etax1.append(6)
+
+    etay1.append(0.7747)
+    etax1.append(7)
+
+    etay1.append()
+    etax1.append(8)
+
+    etay1.append(0.8159)
+    etax1.append(9)
+
+
+    etay2.append()
+    etax2.append(2)
+
+    etay2.append(0.6427)
+    etax2.append(3)
+
+    etay2.append()
+    etax2.append(4)
+
+    etay2.append(0.6921)
+    etax2.append(5)
+
+    etay2.append(0.6455)
+    etax2.append(6)
+
+    etay2.append(0.6455)
+    etax2.append(7)
+
+    etay2.append()
+    etax2.append(8)
+
+    etay2.append(0.6249)
+    etax2.append(9)
+
+
+    etay3.append()
+    etax3.append(2)
+
+    etay3.append(0.998)
+    etax3.append(3)
+
+    etay3.append()
+    etax3.append(4)
+
+    etay3.append(0.9995)
+    etax3.append(5)
+
+    etay3.append(0.9997)
+    etax3.append(6)
+
+    etay3.append(0.9997)
+    etax3.append(7)
+
+    etay3.append()
+    etax3.append(8)
+
+    etay3.append(1.0)
+    etax3.append(9)
+
+    l1 = etay1
+    l2 = etay2
+    l3 = etay3
+    
+
+    ReductionRatey1 = []
+    ReductionRatey2 = []
+    ReductionRatey3 = []
+
+    ReductionRatex1 = []
+    ReductionRatex2 = []
+    ReductionRatex3 = []
+
+    ReductionRatey1.append()
+    ReductionRatex1.append(0.5)
+
+    ReductionRatey1.append(0.8179)
+    ReductionRatex1.append(0.6)
+
+    ReductionRatey1.append(0.8231)
+    ReductionRatex1.append(0.7)
+
+    ReductionRatey1.append(0.813)
+    ReductionRatex1.append(0.8)
+
+    ReductionRatey1.append()
+    ReductionRatex1.append(0.9)
+
+    ReductionRatey2.append()
+    ReductionRatex2.append(0.5)
+
+    ReductionRatey2.append(0.6893)
+    ReductionRatex2.append(0.6)
+
+    ReductionRatey2.append(0.7002)
+    ReductionRatex2.append(0.7)
+
+    ReductionRatey2.append(0.6289)
+    ReductionRatex2.append(0.8)
+
+    ReductionRatey2.append()
+    ReductionRatex2.append(0.9)
+
+    ReductionRatey3.append()
+    ReductionRatex3.append(0.5)
+
+    ReductionRatey3.append(0.8003)
+    ReductionRatex3.append(0.6)
+
+    ReductionRatey3.append(0.8203)
+    ReductionRatex3.append(0.7)
+
+    ReductionRatey3.append(0.9997)
+    ReductionRatex3.append(0.8)
+
+    ReductionRatey3.append()
+    ReductionRatex3.append(0.9)
+
+    l1 = ReductionRatey1
+    l2 = ReductionRatey2
+    l3 = ReductionRatey3
+
+    SampleSizey1 = []
+    SampleSizey2 = []
+    SampleSizey3 = []
+
+    SampleSizex1 = []
+    SampleSizex2 = []
+    SampleSizex3 = []
+
+    SampleSizey1.append(0.8048)
+    SampleSizex1.append(10)
+
+    SampleSizey1.append(0.7725)
+    SampleSizex1.append(20)
+
+    SampleSizey1.append()
+    SampleSizex1.append(30)
+
+    SampleSizey1.append(0.7535)
+    SampleSizex1.append(40)
+
+    SampleSizey1.append(0.7966)
+    SampleSizex1.append(50)
+
+    SampleSizey1.append(0.7858)
+    SampleSizex1.append(60)
+
+    SampleSizey1.append(0.7817)
+    SampleSizex1.append(70)
+
+    SampleSizey1.append(0.807)
+    SampleSizex1.append(80)
+
+    SampleSizey1.append(0.7901)
+    SampleSizex1.append(90)
+
+    SampleSizey1.append()
+    SampleSizex1.append(100)
+
+    SampleSizey2.append(0.6409)
+    SampleSizex2.append(10)
+
+    SampleSizey2.append(0.6624)
+    SampleSizex2.append(20)
+
+    SampleSizey2.append()
+    SampleSizex2.append(30)
+
+    SampleSizey2.append(0.6393)
+    SampleSizex2.append(40)
+
+    SampleSizey2.append(0.6419)
+    SampleSizex2.append(50)
+
+    SampleSizey2.append(0.6419)
+    SampleSizex2.append(60)
+
+    SampleSizey2.append(0.6599)
+    SampleSizex2.append(70)
+
+    SampleSizey2.append(0.6448)
+    SampleSizex2.append(80)
+
+    SampleSizey2.append(0.6878)
+    SampleSizex2.append(90)
+
+    SampleSizey2.append()
+    SampleSizex2.append(100)
+
+    SampleSizey3.append(0.9976)
+    SampleSizex3.append(10)
+
+    SampleSizey3.append(0.9772)
+    SampleSizex3.append(20)
+
+    SampleSizey3.append()
+    SampleSizex3.append(30)
+
+    SampleSizey3.append(0.7804)
+    SampleSizex3.append(40)
+
+    SampleSizey3.append(0.9988)
+    SampleSizex3.append(50)
+
+    SampleSizey3.append(0.9958)
+    SampleSizex3.append(60)
+
+    SampleSizey3.append(0.9794)
+    SampleSizex3.append(70)
+
+    SampleSizey3.append(0.9998)
+    SampleSizex3.append(80)
+
+    SampleSizey3.append(0.9813)
+    SampleSizex3.append(90)
+
+    SampleSizey3.append()
+    SampleSizex3.append(100)
+
+    l1 = SampleSizey1
+    l2 = SampleSizey2
+    l3 = SampleSizey3
+
+    
+    
+    
+    
+    print('Output results for ',perfmetric)
+    ttest=stats.ttest_ind(l1,l2,equal_var=True)
+    print 't-statistic independent = %6.3f manipulated testing pvalue = ' % ttest[0],"{:.2e}".format(ttest[1])
+#     ttest=stats.ttest_rel(l1,l2)
+#     print 't-statistic dependent = %6.3f pvalue = %6.4f' % ttest
+    
+    ttest=stats.ttest_ind(l1,l3,equal_var=True)
+    print 't-statistic independent = %6.3f manipulated training and manipulated testing pvalue = ' % ttest[0],"{:.2e}".format(ttest[1])
+
+    ttest=stats.ttest_ind(l2,l3,equal_var=True)
+    print 't-statistic independent = %6.3f manipulated testing and manipulated training/testing pvalue = ' % ttest[0],"{:.2e}".format(ttest[1])
+
+    a = np.array([l1,l2,l3])
+    friedmantest = stats.friedmanchisquare(*(a[i, :] for i in range(a.shape[0])))
+#     print 'friedmantest-statistic = %6.3f pvalue = %6.100f' % friedmantest
+    print 'friedmantest-statistic = %6.3f pvalue = ' % friedmantest[0],"{:.2e}".format(friedmantest[1])
+
+
+    
+    print('Successfully saved all plots one at a time')
 
         
 def gaplots():
@@ -2120,39 +2860,39 @@ def gaplots():
 
 
 
-#     mediumstrengthattacky1 = []
-#     mediumstrengthattacky1.append(0.859)
-#     mediumstrengthattacky1.append(0.7253)
-#     mediumstrengthattacky1.append(0.9767)
-#     mediumstrengthattacky1.append(0.8371)
-#     mediumstrengthattacky1.append(0.857)
-#     mediumstrengthattacky1.append(0.8025)
-#     mediumstrengthattacky1.append(0.7082)
-#     mediumstrengthattacky1.append(0.8747)
-#       
-#     mediumstrengthattacky2 = []
-#     mediumstrengthattacky2.append(0.7868)
-#     mediumstrengthattacky2.append(0.6786)
-#     mediumstrengthattacky2.append(0.5634)
-#     mediumstrengthattacky2.append(0.6499)
-#     mediumstrengthattacky2.append(0.7172)
-#     mediumstrengthattacky2.append(0.6471)
-#     mediumstrengthattacky2.append(0.6168)
-#     mediumstrengthattacky2.append(0.8087)
-#   
-#     mediumstrengthattacky3 = []
-#     mediumstrengthattacky3.append(0.84)
-#     mediumstrengthattacky3.append(0.7938)
-#     mediumstrengthattacky3.append(0.9886)
-#     mediumstrengthattacky3.append(0.8354)
-#     mediumstrengthattacky3.append(0.8721)
-#     mediumstrengthattacky3.append(0.7841)
-#     mediumstrengthattacky3.append(0.9598)
-#     mediumstrengthattacky3.append(0.9233)
-#   
-#     l1 = mediumstrengthattacky1
-#     l2 = mediumstrengthattacky2
-#     l3 = mediumstrengthattacky3
+    mediumstrengthattacky1 = []
+    mediumstrengthattacky1.append(0.859)
+    mediumstrengthattacky1.append(0.7253)
+    mediumstrengthattacky1.append(0.9767)
+    mediumstrengthattacky1.append(0.8371)
+    mediumstrengthattacky1.append(0.857)
+    mediumstrengthattacky1.append(0.8025)
+    mediumstrengthattacky1.append(0.7082)
+    mediumstrengthattacky1.append(0.8747)
+       
+    mediumstrengthattacky2 = []
+    mediumstrengthattacky2.append(0.7868)
+    mediumstrengthattacky2.append(0.6786)
+    mediumstrengthattacky2.append(0.5634)
+    mediumstrengthattacky2.append(0.6499)
+    mediumstrengthattacky2.append(0.7172)
+    mediumstrengthattacky2.append(0.6471)
+    mediumstrengthattacky2.append(0.6168)
+    mediumstrengthattacky2.append(0.8087)
+   
+    mediumstrengthattacky3 = []
+    mediumstrengthattacky3.append(0.84)
+    mediumstrengthattacky3.append(0.7938)
+    mediumstrengthattacky3.append(0.9886)
+    mediumstrengthattacky3.append(0.8354)
+    mediumstrengthattacky3.append(0.8721)
+    mediumstrengthattacky3.append(0.7841)
+    mediumstrengthattacky3.append(0.9598)
+    mediumstrengthattacky3.append(0.9233)
+   
+    l1 = mediumstrengthattacky1
+    l2 = mediumstrengthattacky2
+    l3 = mediumstrengthattacky3
  
  
  
@@ -2193,44 +2933,6 @@ def gaplots():
 #     l2 = highstrengthattacky2
 #     l3 = highstrengthattacky3
 
-    delta1 = []
-    delta2 = []
-    delta3 = []
-
-    delta1.append(0.8266)
-    delta1.append(0.8226)
-    delta1.append(0.8151)
-    delta1.append(0.8085)
-    delta1.append(0.8231)
-    delta1.append(0.8185)
-    delta1.append(0.8331)
-    delta1.append(0.8107)
-
-
-    
-    delta2.append(0.7456)
-    delta2.append(0.5895)
-    delta2.append(0.6117)
-    delta2.append(0.6343)
-    delta2.append(0.6011)
-    delta2.append(0.5911)
-    delta2.append(0.7018)
-    delta2.append(0.6868)
-    
-    
-    
-    delta3.append(0.9767)
-    delta3.append(0.9991)
-    delta3.append(0.9998)
-    delta3.append(0.9995)
-    delta3.append(0.9998)
-    delta3.append(0.9995)
-    delta3.append(0.9919)
-    delta3.append(0.8486)
-    
-    l1 = delta1
-    l2 = delta2
-    l3 = delta3
 
 # t-statistic independent =  8.310 manipulated testing pvalue =  8.78e-07
 # t-statistic independent = -8.370 manipulated training and manipulated testing pvalue =  8.06e-07
@@ -2449,10 +3151,10 @@ if __name__ == '__main__':
 #     binarizer(InDir,'TestSplit/','test.bin')
 #     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')    generatereports()
 
-#     generatereports()
+    generatereports()
 #     trainplots()
 #     ttest()
-    gaplots()
+#     gaplots()
 
 
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')

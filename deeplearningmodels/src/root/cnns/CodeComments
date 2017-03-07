@@ -4110,4 +4110,81 @@ SA params for various pairs of digits :
 
 =====================================================perfmetric==========================================================================
 
+
+    deltay1.append(0.8266)
+    deltax1.append()
+
+    deltay1.append(0.8226)
+    deltax1.append()
+
+    deltay1.append(0.8151)
+    deltax1.append()
+    
+    deltay1.append(0.8085)
+    deltax1.append()
+
+    deltay1.append(0.8231)
+    deltax1.append()
+
+    deltay1.append(0.8185)
+    deltax1.append()
+    
+    deltay1.append(0.8331)
+    deltax1.append()
+
+    deltay1.append(0.8107)
+    deltax1.append()
+
+
+    
+    deltay2.append(0.7456)
+    deltax2.append()
+
+    deltay2.append(0.5895)
+    deltax2.append()
+
+    deltay2.append(0.6117)
+    deltax2.append()
+
+    deltay2.append(0.6343)
+    deltax2.append()
+
+    deltay2.append(0.6011)
+    deltax2.append()
+
+    deltay2.append(0.5911)
+    deltax2.append()
+
+    deltay2.append(0.7018)
+    deltax2.append()
+
+    deltay2.append(0.6868)
+    deltax2.append()
+    
+    
+    
+    deltay3.append(0.9767)
+    deltax3.append()
+
+    deltay3.append(0.9991)
+    deltax3.append()
+
+    deltay3.append(0.9998)
+    deltax3.append()
+    
+    deltay3.append(0.9995)
+    deltax3.append()
+
+    deltay3.append(0.9998)
+    deltax3.append()
+
+    deltay3.append(0.9995)
+    deltax3.append()
+
+    deltay3.append(0.9919)
+    deltax3.append()
+    
+    deltay3.append(0.8486)
+    deltax3.append()
+
 '''

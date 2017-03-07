@@ -873,8 +873,29 @@ def generatereports():
     eta = 7
     delta = 20
     max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9797, {'recall': 0.9797, 'fpr': 0.126, 'f1score': 0.8164, 'precision': 0.6998, 'tpr': 0.9797}, 0), (0, 0, 1, 0.9723, {'recall': 0.9723, 'fpr': 0.1234, 'f1score': 0.8159, 'precision': 0.7029, 'tpr': 0.9723}, 0), (0.4854, 0.029, 0.5436, 0.971, {'recall': 0.971, 'fpr': 0.342, 'f1score': 0.6223, 'precision': 0.4578, 'tpr': 0.971}, 0), (0.4854, 0.029, 0.5436, 0.971, {'recall': 0.971, 'fpr': 0.342, 'f1score': 0.6223, 'precision': 0.4578, 'tpr': 0.971}, 1), (0.4854, 0.029, 0.5436, 1.0, {'recall': 1.0, 'fpr': 0.0, 'f1score': 1.0, 'precision': 1.0, 'tpr': 1.0}, 2), (0.4854, 0.029, 0.5436, 0.9772, {'recall': 0.9772, 'fpr': 0.3438, 'f1score': 0.6249, 'precision': 0.4593, 'tpr': 0.9772}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 9
+    delta = 20
+    max_steps = 3000
+
     
     # 4 and 9 for ReductionRate from 0.5 to 0.9 in steps of 0.1. default is 0.6.
+    rls = [(1, 0, 1, 0.9739, {'recall': 0.9739, 'fpr': 0.1268, 'f1score': 0.8123, 'precision': 0.6968, 'tpr': 0.9739}, 0), (0, 0, 1, 0.9809, {'recall': 0.9809, 'fpr': 0.1243, 'f1score': 0.8179, 'precision': 0.7013, 'tpr': 0.9809}, 0), (0.8273, 0.0287, 0.2014, 0.9713, {'recall': 0.9713, 'fpr': 0.2496, 'f1score': 0.6933, 'precision': 0.539, 'tpr': 0.9713}, 0), (0.8826, 0.0937, 0.2111, 0.9063, {'recall': 0.9063, 'fpr': 0.1305, 'f1score': 0.7737, 'precision': 0.6749, 'tpr': 0.9063}, 1), (0.8826, 0.0937, 0.2111, 0.9063, {'recall': 0.9063, 'fpr': 0.1305, 'f1score': 0.7737, 'precision': 0.6749, 'tpr': 0.9063}, 2), (0.8826, 0.0937, 0.2111, 0.9498, {'recall': 0.9498, 'fpr': 0.1269, 'f1score': 0.8003, 'precision': 0.6914, 'tpr': 0.9498}, 3), (0.8826, 0.0937, 0.2111, 0.9758, {'recall': 0.9758, 'fpr': 0.2545, 'f1score': 0.6893, 'precision': 0.5328, 'tpr': 0.9758}, 3)]
+    gen = 3
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
     rls = [(1, 0, 1, 0.9741, {'recall': 0.9741, 'fpr': 0.1141, 'f1score': 0.8263, 'precision': 0.7174, 'tpr': 0.9741}, 0), (0, 0, 1, 0.9756, {'recall': 0.9756, 'fpr': 0.1183, 'f1score': 0.8231, 'precision': 0.7118, 'tpr': 0.9756}, 0), (0.7958, 0.0265, 0.2307, 0.9735, {'recall': 0.9735, 'fpr': 0.2915, 'f1score': 0.6595, 'precision': 0.4987, 'tpr': 0.9735}, 0), (0.847, 0.0645, 0.2175, 0.9355, {'recall': 0.9355, 'fpr': 0.1413, 'f1score': 0.7768, 'precision': 0.6641, 'tpr': 0.9355}, 1), (0.847, 0.0645, 0.2175, 0.9355, {'recall': 0.9355, 'fpr': 0.1413, 'f1score': 0.7768, 'precision': 0.6641, 'tpr': 0.9355}, 2), (0.847, 0.0645, 0.2175, 0.9508, {'recall': 0.9508, 'fpr': 0.1099, 'f1score': 0.8203, 'precision': 0.7213, 'tpr': 0.9508}, 3), (0.847, 0.0645, 0.2175, 0.9743, {'recall': 0.9743, 'fpr': 0.2425, 'f1score': 0.7002, 'precision': 0.5464, 'tpr': 0.9743}, 3)]
     gen = 3
     TempMax = 1000
@@ -936,7 +957,17 @@ def generatereports():
     eta = 2
     delta = 20
     max_steps = 3000
-    
+
+    rls = [(1, 0, 1, 0.9803, {'recall': 0.9803, 'fpr': 0.1454, 'f1score': 0.7949, 'precision': 0.6684, 'tpr': 0.9803}, 0), (0, 0, 1, 0.9763, {'recall': 0.9763, 'fpr': 0.1424, 'f1score': 0.7966, 'precision': 0.6727, 'tpr': 0.9763}, 0), (0.5713, 0.0203, 0.449, 0.9797, {'recall': 0.9797, 'fpr': 0.3112, 'f1score': 0.6495, 'precision': 0.4857, 'tpr': 0.9797}, 0), (0.5713, 0.0203, 0.449, 0.9797, {'recall': 0.9797, 'fpr': 0.3112, 'f1score': 0.6495, 'precision': 0.4857, 'tpr': 0.9797}, 1), (0.5713, 0.0203, 0.449, 0.998, {'recall': 0.998, 'fpr': 0.0001, 'f1score': 0.9988, 'precision': 0.9997, 'tpr': 0.998}, 2), (0.5713, 0.0203, 0.449, 0.9792, {'recall': 0.9792, 'fpr': 0.3189, 'f1score': 0.6419, 'precision': 0.4774, 'tpr': 0.9792}, 2)]    
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
     rls = [(1, 0, 1, 0.9725, {'recall': 0.9725, 'fpr': 0.1534, 'f1score': 0.7823, 'precision': 0.6543, 'tpr': 0.9725}, 0), (0, 0, 1, 0.9752, {'recall': 0.9752, 'fpr': 0.1514, 'f1score': 0.7858, 'precision': 0.658, 'tpr': 0.9752}, 0), (0.6128, 0.0321, 0.4193, 0.9679, {'recall': 0.9679, 'fpr': 0.3115, 'f1score': 0.644, 'precision': 0.4825, 'tpr': 0.9679}, 0), (0.6128, 0.0321, 0.4193, 0.9966, {'recall': 0.9966, 'fpr': 0.0015, 'f1score': 0.9958, 'precision': 0.9949, 'tpr': 0.9966}, 1), (0.6128, 0.0321, 0.4193, 0.9698, {'recall': 0.9698, 'fpr': 0.3141, 'f1score': 0.6419, 'precision': 0.4798, 'tpr': 0.9698}, 1)]
     gen = 1
     TempMin = 5

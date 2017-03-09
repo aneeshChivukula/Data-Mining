@@ -539,6 +539,19 @@ def generatereports():
     delta = 20
     max_steps = 3000
 
+
+
+    rls = [(1, 0, 1, 0.9599, {'recall': 0.9599, 'fpr': 0.0932, 'f1score': 0.8339, 'precision': 0.7371, 'tpr': 0.9599}, 0), (0, 0, 1, 0.9571, {'recall': 0.9571, 'fpr': 0.093, 'f1score': 0.8319, 'precision': 0.7357, 'tpr': 0.9571}, 0), (0.4891, 0.0394, 0.5503, 0.9606, {'recall': 0.9606, 'fpr': 0.0224, 'f1score': 0.9405, 'precision': 0.9213, 'tpr': 0.9606}, 0), (0.4891, 0.0394, 0.5503, 0.9606, {'recall': 0.9606, 'fpr': 0.0224, 'f1score': 0.9405, 'precision': 0.9213, 'tpr': 0.9606}, 1), (0.4891, 0.0394, 0.5503, 0.9996, {'recall': 0.9996, 'fpr': 0.0, 'f1score': 0.9998, 'precision': 1.0, 'tpr': 0.9996}, 2), (0.4891, 0.0394, 0.5503, 0.9623, {'recall': 0.9623, 'fpr': 0.0217, 'f1score': 0.9425, 'precision': 0.9235, 'tpr': 0.9623}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 3
+    delta = 20
+    max_steps = 3000
+
+    
     rls = [(1, 0, 1, 0.9675, {'recall': 0.9675, 'fpr': 0.1225, 'f1score': 0.8001, 'precision': 0.6821, 'tpr': 0.9675}, 0), (0, 0, 1, 0.9653, {'recall': 0.9653, 'fpr': 0.1224, 'f1score': 0.7975, 'precision': 0.6794, 'tpr': 0.9653}, 0), (0.6934, 0.0348, 0.3414, 0.9652, {'recall': 0.9652, 'fpr': 0.1902, 'f1score': 0.724, 'precision': 0.5792, 'tpr': 0.9652}, 0), (0.6934, 0.0348, 0.3414, 0.9974, {'recall': 0.9974, 'fpr': 0.0006, 'f1score': 0.9976, 'precision': 0.9978, 'tpr': 0.9974}, 1), (0.6934, 0.0348, 0.3414, 0.9663, {'recall': 0.9663, 'fpr': 0.1871, 'f1score': 0.7275, 'precision': 0.5834, 'tpr': 0.9663}, 1)]
     gen = 1
     TempMax = 1000
@@ -546,6 +559,27 @@ def generatereports():
     SampleSize = 50
     ReductionRate = 0.6
     eta = 4
+    delta = 20
+    max_steps = 3000
+
+
+    rls = [(1, 0, 1, 0.9467, {'recall': 0.9467, 'fpr': 0.1051, 'f1score': 0.8115, 'precision': 0.7101, 'tpr': 0.9467}, 0), (0, 0, 1, 0.9563, {'recall': 0.9563, 'fpr': 0.1044, 'f1score': 0.8181, 'precision': 0.7147, 'tpr': 0.9563}, 0), (0.5131, 0.052, 0.5389, 0.948, {'recall': 0.948, 'fpr': 0.092, 'f1score': 0.83, 'precision': 0.7381, 'tpr': 0.948}, 0), (0.5131, 0.052, 0.5389, 0.948, {'recall': 0.948, 'fpr': 0.092, 'f1score': 0.83, 'precision': 0.7381, 'tpr': 0.948}, 1), (0.5131, 0.052, 0.5389, 1.0, {'recall': 1.0, 'fpr': 0.0003, 'f1score': 0.9995, 'precision': 0.9989, 'tpr': 1.0}, 2), (0.5131, 0.052, 0.5389, 0.9484, {'recall': 0.9484, 'fpr': 0.0995, 'f1score': 0.8192, 'precision': 0.721, 'tpr': 0.9484}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 5
+    delta = 20
+    max_steps = 3000
+
+    rls = [(1, 0, 1, 0.9399, {'recall': 0.9399, 'fpr': 0.1113, 'f1score': 0.7998, 'precision': 0.696, 'tpr': 0.9399}, 0), (0, 0, 1, 0.9396, {'recall': 0.9396, 'fpr': 0.1069, 'f1score': 0.8054, 'precision': 0.7047, 'tpr': 0.9396}, 0), (0.5154, 0.0769, 0.5615, 0.9231, {'recall': 0.9231, 'fpr': 0.3181, 'f1score': 0.5964, 'precision': 0.4405, 'tpr': 0.9231}, 0), (0.5154, 0.0769, 0.5615, 0.9231, {'recall': 0.9231, 'fpr': 0.3181, 'f1score': 0.5964, 'precision': 0.4405, 'tpr': 0.9231}, 1), (0.5154, 0.0769, 0.5615, 1.0, {'recall': 1.0, 'fpr': 0.0002, 'f1score': 0.9996, 'precision': 0.9993, 'tpr': 1.0}, 2), (0.5154, 0.0769, 0.5615, 0.935, {'recall': 0.935, 'fpr': 0.3266, 'f1score': 0.5966, 'precision': 0.4381, 'tpr': 0.935}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 6
     delta = 20
     max_steps = 3000
 
@@ -1025,6 +1059,16 @@ def generatereports():
     delta = 20
     max_steps = 3000
     
+    rls = [(1, 0, 1, 0.9722, {'recall': 0.9722, 'fpr': 0.1392, 'f1score': 0.7975, 'precision': 0.6761, 'tpr': 0.9722}, 0), (0, 0, 1, 0.9745, {'recall': 0.9745, 'fpr': 0.1317, 'f1score': 0.8068, 'precision': 0.6883, 'tpr': 0.9745}, 0), (0.6412, 0.0283, 0.3871, 0.9717, {'recall': 0.9717, 'fpr': 0.2827, 'f1score': 0.6651, 'precision': 0.5056, 'tpr': 0.9717}, 0), (0.6412, 0.0283, 0.3871, 0.9717, {'recall': 0.9717, 'fpr': 0.2827, 'f1score': 0.6651, 'precision': 0.5056, 'tpr': 0.9717}, 1), (0.6412, 0.0283, 0.3871, 0.999, {'recall': 0.999, 'fpr': 0.0002, 'f1score': 0.9992, 'precision': 0.9993, 'tpr': 0.999}, 2), (0.6412, 0.0283, 0.3871, 0.9745, {'recall': 0.9745, 'fpr': 0.2895, 'f1score': 0.6618, 'precision': 0.501, 'tpr': 0.9745}, 2)]
+    gen = 2
+    TempMax = 1000
+    TempMin = 5
+    SampleSize = 50
+    ReductionRate = 0.9
+    eta = 2
+    delta = 20
+    max_steps = 3000
+
     # 4 and 9 for SampleSize from 10 to 100 in steps of 10. default is 50.
 
     rls = [(1, 0, 1, 0.9809, {'recall': 0.9809, 'fpr': 0.1351, 'f1score': 0.8057, 'precision': 0.6835, 'tpr': 0.9809}, 0), (0, 0, 1, 0.9792, {'recall': 0.9792, 'fpr': 0.135, 'f1score': 0.8048, 'precision': 0.6831, 'tpr': 0.9792}, 0), (0.5414, 0.0258, 0.4844, 0.9742, {'recall': 0.9742, 'fpr': 0.3194, 'f1score': 0.6401, 'precision': 0.4766, 'tpr': 0.9742}, 0), (0.5414, 0.0258, 0.4844, 0.9742, {'recall': 0.9742, 'fpr': 0.3194, 'f1score': 0.6401, 'precision': 0.4766, 'tpr': 0.9742}, 1), (0.5414, 0.0258, 0.4844, 0.9983, {'recall': 0.9983, 'fpr': 0.0009, 'f1score': 0.9976, 'precision': 0.997, 'tpr': 0.9983}, 2), (0.5414, 0.0258, 0.4844, 0.9783, {'recall': 0.9783, 'fpr': 0.3211, 'f1score': 0.6409, 'precision': 0.4766, 'tpr': 0.9783}, 2)]
@@ -1686,711 +1730,821 @@ def saplots():
     
 
     # (7,9)
-    deltay1 = []
-    deltay2 = []
-    deltay3 = []
 
-    deltax1 = []
-    deltax2 = []
-    deltax3 = []
-
-    deltay1.append(0.8331)
-    deltax1.append(10)
-
-    deltay1.append(0.8167)
-    deltax1.append(20)
-
-    deltay1.append(0.8107)
-    deltax1.append(30)
-    
-    deltay1.append(0.8226)
-    deltax1.append(40)
-
-    deltay1.append(0.8151)
-    deltax1.append(50)
-
-    deltay1.append(0.8185)
-    deltax1.append(60)
-    
-    deltay1.append(0.8085)
-    deltax1.append(70)
-
-    deltay1.append(0.8118)
-    deltax1.append(80)
-
-    deltay1.append(0.824)
-    deltax1.append(90)
-
-    deltay1.append(0.8231)
-    deltax1.append(100)
-
-    
-    deltay2.append(0.7018)
-    deltax2.append(10)
-
-    deltay2.append(0.6874)
-    deltax2.append(20)
-
-    deltay2.append(0.6868)
-    deltax2.append(30)
-
-    deltay2.append(0.5895)
-    deltax2.append(40)
-
-    deltay2.append(0.6117)
-    deltax2.append(50)
-
-    deltay2.append(0.5911)
-    deltax2.append(60)
-
-    deltay2.append(0.6343)
-    deltax2.append(70)
-
-    deltay2.append(0.6719)
-    deltax2.append(80)
-    
-    deltay2.append(0.6475)
-    deltax2.append(90)
-
-    deltay2.append(0.6011)
-    deltax2.append(100)
-    
-    
-    deltay3.append(0.9919)
-    deltax3.append(10)
-
-    deltay3.append(0.8273)
-    deltax3.append(20)
-
-    deltay3.append(0.8486)
-    deltax3.append(30)
-    
-    deltay3.append(0.9991)
-    deltax3.append(40)
-
-    deltay3.append(0.9998)
-    deltax3.append(50)
-
-    deltay3.append(0.9995)
-    deltax3.append(60)
-
-    deltay3.append(0.9995)
-    deltax3.append(70)
-    
-    deltay3.append(0.9956)
-    deltax3.append(80)
-    
-    deltay3.append(0.9995)
-    deltax3.append(90)
-
-    deltay3.append(0.9998)
-    deltax3.append(100)
-    
-    l1 = deltay1
-    l2 = deltay2
-    l3 = deltay3
-
-
-    etay1 = []
-    etay2 = []
-    etay3 = []
-
-    etax1 = []
-    etax2 = []
-    etax3 = []
-
-    etay1.append(0.806)
-    etax1.append(2)
-
-    etay1.append()
-    etax1.append(3)
-
-    etay1.append(0.7975)
-    etax1.append(4)
-
-    etay1.append()
-    etax1.append(5)
-
-    etay1.append()
-    etax1.append(6)
-
-    etay1.append(0.814)
-    etax1.append(7)
-
-    etay1.append(0.8064)
-    etax1.append(8)
-
-    etay1.append(0.811)
-    etax1.append(9)
-
-
-    etay2.append(0.6104)
-    etax2.append(2)
-
-    etay2.append()
-    etax2.append(3)
-
-    etay2.append(0.7275)
-    etax2.append(4)
-
-    etay2.append()
-    etax2.append(5)
-
-    etay2.append()
-    etax2.append(6)
-
-    etay2.append(0.7033)
-    etax2.append(7)
-
-    etay2.append(0.6811)
-    etax2.append(8)
-
-    etay2.append(0.6515)
-    etax2.append(9)
-
-
-    etay3.append(0.9996)
-    etax3.append(2)
-
-    etay3.append()
-    etax3.append(3)
-
-    etay3.append(0.9976)
-    etax3.append(4)
-
-    etay3.append()
-    etax3.append(5)
-
-    etay3.append()
-    etax3.append(6)
-
-    etay3.append(0.9943)
-    etax3.append(7)
-
-    etay3.append(0.8179)
-    etax3.append(8)
-
-    etay3.append(0.9978)
-    etax3.append(9)
-
-    l1 = etay1
-    l2 = etay2
-    l3 = etay3
-    
-
-    ReductionRatey1 = []
-    ReductionRatey2 = []
-    ReductionRatey3 = []
-
-    ReductionRatex1 = []
-    ReductionRatex2 = []
-    ReductionRatex3 = []
-
-    ReductionRatey1.append(0.8262)
-    ReductionRatex1.append(0.5)
-
-    ReductionRatey1.append(0.8219)
-    ReductionRatex1.append(0.6)
-
-    ReductionRatey1.append(0.8149)
-    ReductionRatex1.append(0.7)
-
-    ReductionRatey1.append(0.8102)
-    ReductionRatex1.append(0.8)
-
-    ReductionRatey1.append(0.8212)
-    ReductionRatex1.append(0.9)
-
-    ReductionRatey2.append(0.607)
-    ReductionRatex2.append(0.5)
-
-    ReductionRatey2.append(0.5826)
-    ReductionRatex2.append(0.6)
-
-    ReductionRatey2.append(0.6483)
-    ReductionRatex2.append(0.7)
-
-    ReductionRatey2.append(0.6657)
-    ReductionRatex2.append(0.8)
-
-    ReductionRatey2.append(0.6405)
-    ReductionRatex2.append(0.9)
-
-    ReductionRatey3.append(0.9991)
-    ReductionRatex3.append(0.5)
-
-    ReductionRatey3.append(1.0)
-    ReductionRatex3.append(0.6)
-
-    ReductionRatey3.append(0.8124)
-    ReductionRatex3.append(0.7)
-
-    ReductionRatey3.append(0.9091)
-    ReductionRatex3.append(0.8)
-
-    ReductionRatey3.append(0.9971)
-    ReductionRatex3.append(0.9)
-
-    l1 = ReductionRatey1
-    l2 = ReductionRatey2
-    l3 = ReductionRatey3
-
-    SampleSizey1 = []
-    SampleSizey2 = []
-    SampleSizey3 = []
-
-    SampleSizex1 = []
-    SampleSizex2 = []
-    SampleSizex3 = []
-
-    SampleSizey1.append(0.8158)
-    SampleSizex1.append(10)
-
-    SampleSizey1.append(0.8081)
-    SampleSizex1.append(20)
-
-    SampleSizey1.append(0.8144)
-    SampleSizex1.append(30)
-
-    SampleSizey1.append(0.8139)
-    SampleSizex1.append(40)
-
-    SampleSizey1.append(0.8166)
-    SampleSizex1.append(50)
-
-    SampleSizey1.append(0.8327)
-    SampleSizex1.append(60)
-
-    SampleSizey1.append(0.8165)
-    SampleSizex1.append(70)
-
-    SampleSizey1.append(0.8155)
-    SampleSizex1.append(80)
-
-    SampleSizey1.append(0.8226)
-    SampleSizex1.append(90)
-
-    SampleSizey1.append(0.8014)
-    SampleSizex1.append(100)
-
-    SampleSizey2.append(0.5894)
-    SampleSizex2.append(10)
-
-    SampleSizey2.append(0.705)
-    SampleSizex2.append(20)
-
-    SampleSizey2.append(0.6813)
-    SampleSizex2.append(30)
-
-    SampleSizey2.append(0.6256)
-    SampleSizex2.append(40)
-
-    SampleSizey2.append(0.6639)
-    SampleSizex2.append(50)
-
-    SampleSizey2.append(0.663)
-    SampleSizex2.append(60)
-
-    SampleSizey2.append(0.6305)
-    SampleSizex2.append(70)
-
-    SampleSizey2.append(0.7048)
-    SampleSizex2.append(80)
-
-    SampleSizey2.append(0.6416)
-    SampleSizex2.append(90)
-
-    SampleSizey2.append(0.6608)
-    SampleSizex2.append(100)
-
-    SampleSizey3.append(0.9995)
-    SampleSizex3.append(10)
-
-    SampleSizey3.append(0.8709)
-    SampleSizex3.append(20)
-
-    SampleSizey3.append(0.9985)
-    SampleSizex3.append(30)
-
-    SampleSizey3.append(0.9945)
-    SampleSizex3.append(40)
-
-    SampleSizey3.append(0.9973)
-    SampleSizex3.append(50)
-
-    SampleSizey3.append(0.994)
-    SampleSizex3.append(60)
-
-    SampleSizey3.append(0.9985)
-    SampleSizex3.append(70)
-
-    SampleSizey3.append(0.753)
-    SampleSizex3.append(80)
-
-    SampleSizey3.append(0.7698)
-    SampleSizex3.append(90)
-
-    SampleSizey3.append(0.7765)
-    SampleSizex3.append(100)
-
-    l1 = SampleSizey1
-    l2 = SampleSizey2
-    l3 = SampleSizey3
+#     deltay1 = []
+#     deltay2 = []
+#     deltay3 = []
+#  
+#     deltax1 = []
+#     deltax2 = []
+#     deltax3 = []
+#  
+#     deltay1.append(0.8331)
+#     deltax1.append(10)
+#  
+#     deltay1.append(0.8167)
+#     deltax1.append(20)
+#  
+#     deltay1.append(0.8107)
+#     deltax1.append(30)
+#      
+#     deltay1.append(0.8226)
+#     deltax1.append(40)
+#  
+#     deltay1.append(0.8151)
+#     deltax1.append(50)
+#  
+#     deltay1.append(0.8185)
+#     deltax1.append(60)
+#      
+#     deltay1.append(0.8085)
+#     deltax1.append(70)
+#  
+#     deltay1.append(0.8118)
+#     deltax1.append(80)
+#  
+#     deltay1.append(0.824)
+#     deltax1.append(90)
+#  
+#     deltay1.append(0.8231)
+#     deltax1.append(100)
+#  
+#      
+#     deltay2.append(0.7018)
+#     deltax2.append(10)
+#  
+#     deltay2.append(0.6874)
+#     deltax2.append(20)
+#  
+#     deltay2.append(0.6868)
+#     deltax2.append(30)
+#  
+#     deltay2.append(0.5895)
+#     deltax2.append(40)
+#  
+#     deltay2.append(0.6117)
+#     deltax2.append(50)
+#  
+#     deltay2.append(0.5911)
+#     deltax2.append(60)
+#  
+#     deltay2.append(0.6343)
+#     deltax2.append(70)
+#  
+#     deltay2.append(0.6719)
+#     deltax2.append(80)
+#      
+#     deltay2.append(0.6475)
+#     deltax2.append(90)
+#  
+#     deltay2.append(0.6011)
+#     deltax2.append(100)
+#      
+#      
+#     deltay3.append(0.9919)
+#     deltax3.append(10)
+#  
+#     deltay3.append(0.8273)
+#     deltax3.append(20)
+#  
+#     deltay3.append(0.8486)
+#     deltax3.append(30)
+#      
+#     deltay3.append(0.9991)
+#     deltax3.append(40)
+#  
+#     deltay3.append(0.9998)
+#     deltax3.append(50)
+#  
+#     deltay3.append(0.9995)
+#     deltax3.append(60)
+#  
+#     deltay3.append(0.9995)
+#     deltax3.append(70)
+#      
+#     deltay3.append(0.9956)
+#     deltax3.append(80)
+#      
+#     deltay3.append(0.9995)
+#     deltax3.append(90)
+#  
+#     deltay3.append(0.9998)
+#     deltax3.append(100)
+#  
+#     plt.plot(deltax1,deltay1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+#     plt.plot(deltax2,deltay2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(deltax3,deltay3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#  
+#     xlabel(r'Upper Bound for Perturbation Step [$\delta$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PerturbationStepParams79.png", dpi=300)
+#      
+#     l1 = deltay1
+#     l2 = deltay2
+#     l3 = deltay3
+ 
+ 
+#     etay1 = []
+#     etay2 = []
+#     etay3 = []
+#  
+#     etax1 = []
+#     etax2 = []
+#     etax3 = []
+#  
+#     etay1.append(0.806)
+#     etax1.append(2)
+#  
+#     etay1.append(0.8319)
+#     etax1.append(3)
+#  
+#     etay1.append(0.7975)
+#     etax1.append(4)
+#  
+#     etay1.append(0.8181)
+#     etax1.append(5)
+#  
+#     etay1.append(0.8054)
+#     etax1.append(6)
+#  
+#     etay1.append(0.814)
+#     etax1.append(7)
+#  
+#     etay1.append(0.8064)
+#     etax1.append(8)
+#  
+#     etay1.append(0.811)
+#     etax1.append(9)
+#  
+#  
+#     etay2.append(0.6104)
+#     etax2.append(2)
+#  
+#     etay2.append(0.7425)
+#     etax2.append(3)
+#  
+#     etay2.append(0.7275)
+#     etax2.append(4)
+#  
+#     etay2.append(0.7992)
+#     etax2.append(5)
+#  
+#     etay2.append(0.5966)
+#     etax2.append(6)
+#  
+#     etay2.append(0.7033)
+#     etax2.append(7)
+#  
+#     etay2.append(0.6811)
+#     etax2.append(8)
+#  
+#     etay2.append(0.6515)
+#     etax2.append(9)
+#  
+#  
+#     etay3.append(0.9996)
+#     etax3.append(2)
+#  
+#     etay3.append(0.9998)
+#     etax3.append(3)
+#  
+#     etay3.append(0.9976)
+#     etax3.append(4)
+#  
+#     etay3.append(0.9995)
+#     etax3.append(5)
+#  
+#     etay3.append(0.9996)
+#     etax3.append(6)
+#  
+#     etay3.append(0.9943)
+#     etax3.append(7)
+#  
+#     etay3.append(0.8179)
+#     etax3.append(8)
+#  
+#     etay3.append(0.9978)
+#     etax3.append(9)
+# 
+#     plt.plot(etax1,etay1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+#     plt.plot(etax2,etay2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(etax3,etay3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+# 
+#     xlabel(r'Upper Bound for Perturbation Index [$\eta$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PerturbationIndexParams79.png", dpi=300)
+#     
+#     l1 = etay1
+#     l2 = etay2
+#     l3 = etay3
+     
+ 
+#     ReductionRatey1 = []
+#     ReductionRatey2 = []
+#     ReductionRatey3 = []
+#  
+#     ReductionRatex1 = []
+#     ReductionRatex2 = []
+#     ReductionRatex3 = []
+#  
+#     ReductionRatey1.append(0.8262)
+#     ReductionRatex1.append(0.5)
+#  
+#     ReductionRatey1.append(0.8219)
+#     ReductionRatex1.append(0.6)
+#  
+#     ReductionRatey1.append(0.8149)
+#     ReductionRatex1.append(0.7)
+#  
+#     ReductionRatey1.append(0.8102)
+#     ReductionRatex1.append(0.8)
+#  
+#     ReductionRatey1.append(0.8212)
+#     ReductionRatex1.append(0.9)
+#  
+#     ReductionRatey2.append(0.607)
+#     ReductionRatex2.append(0.5)
+#  
+#     ReductionRatey2.append(0.5826)
+#     ReductionRatex2.append(0.6)
+#  
+#     ReductionRatey2.append(0.6483)
+#     ReductionRatex2.append(0.7)
+#  
+#     ReductionRatey2.append(0.6657)
+#     ReductionRatex2.append(0.8)
+#  
+#     ReductionRatey2.append(0.6405)
+#     ReductionRatex2.append(0.9)
+#  
+#     ReductionRatey3.append(0.9991)
+#     ReductionRatex3.append(0.5)
+#  
+#     ReductionRatey3.append(1.0)
+#     ReductionRatex3.append(0.6)
+#  
+#     ReductionRatey3.append(0.8124)
+#     ReductionRatex3.append(0.7)
+#  
+#     ReductionRatey3.append(0.9091)
+#     ReductionRatex3.append(0.8)
+#  
+#     ReductionRatey3.append(0.9971)
+#     ReductionRatex3.append(0.9)
+# 
+# 
+#     plt.plot(ReductionRatex1,ReductionRatey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+#     plt.plot(ReductionRatex2,ReductionRatey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(ReductionRatex3,ReductionRatey3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+# 
+#     xlabel(r'Reduction Rate [$\rho$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/ReductionRateParams79.png", dpi=300)
+#  
+#     l1 = ReductionRatey1
+#     l2 = ReductionRatey2
+#     l3 = ReductionRatey3
+ 
+#     SampleSizey1 = []
+#     SampleSizey2 = []
+#     SampleSizey3 = []
+#  
+#     SampleSizex1 = []
+#     SampleSizex2 = []
+#     SampleSizex3 = []
+#  
+#     SampleSizey1.append(0.8158)
+#     SampleSizex1.append(10)
+#  
+#     SampleSizey1.append(0.8081)
+#     SampleSizex1.append(20)
+#  
+#     SampleSizey1.append(0.8144)
+#     SampleSizex1.append(30)
+#  
+#     SampleSizey1.append(0.8139)
+#     SampleSizex1.append(40)
+#  
+#     SampleSizey1.append(0.8166)
+#     SampleSizex1.append(50)
+#  
+#     SampleSizey1.append(0.8327)
+#     SampleSizex1.append(60)
+#  
+#     SampleSizey1.append(0.8165)
+#     SampleSizex1.append(70)
+#  
+#     SampleSizey1.append(0.8155)
+#     SampleSizex1.append(80)
+#  
+#     SampleSizey1.append(0.8226)
+#     SampleSizex1.append(90)
+#  
+#     SampleSizey1.append(0.8014)
+#     SampleSizex1.append(100)
+#  
+#     SampleSizey2.append(0.5894)
+#     SampleSizex2.append(10)
+#  
+#     SampleSizey2.append(0.705)
+#     SampleSizex2.append(20)
+#  
+#     SampleSizey2.append(0.6813)
+#     SampleSizex2.append(30)
+#  
+#     SampleSizey2.append(0.6256)
+#     SampleSizex2.append(40)
+#  
+#     SampleSizey2.append(0.6639)
+#     SampleSizex2.append(50)
+#  
+#     SampleSizey2.append(0.663)
+#     SampleSizex2.append(60)
+#  
+#     SampleSizey2.append(0.6305)
+#     SampleSizex2.append(70)
+#  
+#     SampleSizey2.append(0.7048)
+#     SampleSizex2.append(80)
+#  
+#     SampleSizey2.append(0.6416)
+#     SampleSizex2.append(90)
+#  
+#     SampleSizey2.append(0.6608)
+#     SampleSizex2.append(100)
+#  
+#     SampleSizey3.append(0.9995)
+#     SampleSizex3.append(10)
+#  
+#     SampleSizey3.append(0.8709)
+#     SampleSizex3.append(20)
+#  
+#     SampleSizey3.append(0.9985)
+#     SampleSizex3.append(30)
+#  
+#     SampleSizey3.append(0.9945)
+#     SampleSizex3.append(40)
+#  
+#     SampleSizey3.append(0.9973)
+#     SampleSizex3.append(50)
+#  
+#     SampleSizey3.append(0.994)
+#     SampleSizex3.append(60)
+#  
+#     SampleSizey3.append(0.9985)
+#     SampleSizex3.append(70)
+#  
+#     SampleSizey3.append(0.753)
+#     SampleSizex3.append(80)
+#  
+#     SampleSizey3.append(0.7698)
+#     SampleSizex3.append(90)
+#  
+#     SampleSizey3.append(0.7765)
+#     SampleSizex3.append(100)
+#  
+# 
+#     plt.plot(SampleSizex1,SampleSizey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+#     plt.plot(SampleSizex2,SampleSizey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(SampleSizex3,SampleSizey3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+# 
+#     xlabel(r'Sample Size [$\nu$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SampleSizeParams79.png", dpi=300)
+# 
+# 
+#     l1 = SampleSizey1
+#     l2 = SampleSizey2
+#     l3 = SampleSizey3
 
 
     # (4,9)
 
-    deltay1 = []
-    deltay2 = []
-    deltay3 = []
-
-    deltax1 = []
-    deltax2 = []
-    deltax3 = []
-
-    deltay1.append(0.7928)
-    deltax1.append(10)
-
-    deltay1.append(0.8272)
-    deltax1.append(20)
-
-    deltay1.append(0.7819)
-    deltax1.append(30)
-    
-    deltay1.append(0.8241)
-    deltax1.append(40)
-
-    deltay1.append(0.8111)
-    deltax1.append(50)
-
-    deltay1.append(0.8196)
-    deltax1.append(60)
-    
-    deltay1.append(0.8086)
-    deltax1.append(70)
-
-    deltay1.append(0.7785)
-    deltax1.append(80)
-
-    deltay1.append(0.8148)
-    deltax1.append(90)
-
-    deltay1.append(0.8144)
-    deltax1.append(100)
-    
-    deltay2.append(0.6776)
-    deltax2.append(10)
-
-    deltay2.append(0.6262)
-    deltax2.append(20)
-
-    deltay2.append(0.7194)
-    deltax2.append(30)
-
-    deltay2.append(0.6376)
-    deltax2.append(40)
-
-    deltay2.append(0.6254)
-    deltax2.append(50)
-
-    deltay2.append(0.6567)
-    deltax2.append(60)
-
-    deltay2.append(0.6781)
-    deltax2.append(70)
-
-    deltay2.append(0.6594)
-    deltax2.append(80)
-    
-    deltay2.append(0.6472)
-    deltax2.append(90)
-
-    deltay2.append(0.6106)
-    deltax2.append(100)
-    
-    
-    deltay3.append(0.7899)
-    deltax3.append(10)
-
-    deltay3.append(0.9989)
-    deltax3.append(20)
-
-    deltay3.append(0.9997)
-    deltax3.append(30)
-    
-    deltay3.append(0.9944)
-    deltax3.append(40)
-
-    deltay3.append(0.999)
-    deltax3.append(50)
-
-    deltay3.append(0.9546)
-    deltax3.append(60)
-
-    deltay3.append(0.7525)
-    deltax3.append(70)
-    
-    deltay3.append(0.994)
-    deltax3.append(80)
-    
-    deltay3.append(0.9985)
-    deltax3.append(90)
-
-    deltay3.append(0.9915)
-    deltax3.append(100)
-    
-    l1 = deltay1
-    l2 = deltay2
-    l3 = deltay3
-
-
-    etay1 = []
-    etay2 = []
-    etay3 = []
-
-    etax1 = []
-    etax2 = []
-    etax3 = []
-
-    etay1.append(0.7938)
-    etax1.append(2)
-
-    etay1.append(0.7669)
-    etax1.append(3)
-
-    etay1.append(0.7941)
-    etax1.append(4)
-
-    etay1.append(0.762)
-    etax1.append(5)
-
-    etay1.append(0.7747)
-    etax1.append(6)
-
-    etay1.append(0.7747)
-    etax1.append(7)
-
-    etay1.append(0.7949)
-    etax1.append(8)
-
-    etay1.append(0.8159)
-    etax1.append(9)
-
-
-    etay2.append(0.6945)
-    etax2.append(2)
-
-    etay2.append(0.6427)
-    etax2.append(3)
-
-    etay2.append(0.6417)
-    etax2.append(4)
-
-    etay2.append(0.6921)
-    etax2.append(5)
-
-    etay2.append(0.6455)
-    etax2.append(6)
-
-    etay2.append(0.6455)
-    etax2.append(7)
-
-    etay2.append(0.6583)
-    etax2.append(8)
-
-    etay2.append(0.6249)
-    etax2.append(9)
-
-
-    etay3.append(0.7583)
-    etax3.append(2)
-
-    etay3.append(0.998)
-    etax3.append(3)
-
-    etay3.append(0.9875)
-    etax3.append(4)
-
-    etay3.append(0.9995)
-    etax3.append(5)
-
-    etay3.append(0.9997)
-    etax3.append(6)
-
-    etay3.append(0.9997)
-    etax3.append(7)
-
-    etay3.append(0.9559)
-    etax3.append(8)
-
-    etay3.append(1.0)
-    etax3.append(9)
-
-    l1 = etay1
-    l2 = etay2
-    l3 = etay3
-    
-
-    ReductionRatey1 = []
-    ReductionRatey2 = []
-    ReductionRatey3 = []
-
-    ReductionRatex1 = []
-    ReductionRatex2 = []
-    ReductionRatex3 = []
-
-    ReductionRatey1.append(0.8043)
-    ReductionRatex1.append(0.5)
-
-    ReductionRatey1.append(0.8179)
-    ReductionRatex1.append(0.6)
-
-    ReductionRatey1.append(0.8231)
-    ReductionRatex1.append(0.7)
-
-    ReductionRatey1.append(0.813)
-    ReductionRatex1.append(0.8)
-
-    ReductionRatey1.append()
-    ReductionRatex1.append(0.9)
-
-    ReductionRatey2.append(0.7835)
-    ReductionRatex2.append(0.5)
-
-    ReductionRatey2.append(0.6893)
-    ReductionRatex2.append(0.6)
-
-    ReductionRatey2.append(0.7002)
-    ReductionRatex2.append(0.7)
-
-    ReductionRatey2.append(0.6289)
-    ReductionRatex2.append(0.8)
-
-    ReductionRatey2.append()
-    ReductionRatex2.append(0.9)
-
-    ReductionRatey3.append(0.9997)
-    ReductionRatex3.append(0.5)
-
-    ReductionRatey3.append(0.8003)
-    ReductionRatex3.append(0.6)
-
-    ReductionRatey3.append(0.8203)
-    ReductionRatex3.append(0.7)
-
-    ReductionRatey3.append(0.9997)
-    ReductionRatex3.append(0.8)
-
-    ReductionRatey3.append()
-    ReductionRatex3.append(0.9)
-
-    l1 = ReductionRatey1
-    l2 = ReductionRatey2
-    l3 = ReductionRatey3
-
+#     deltay1 = []
+#     deltay2 = []
+#     deltay3 = []
+# 
+#     deltax1 = []
+#     deltax2 = []
+#     deltax3 = []
+# 
+#     deltay1.append(0.7928)
+#     deltax1.append(10)
+# 
+#     deltay1.append(0.8272)
+#     deltax1.append(20)
+# 
+#     deltay1.append(0.7819)
+#     deltax1.append(30)
+#     
+#     deltay1.append(0.8241)
+#     deltax1.append(40)
+# 
+#     deltay1.append(0.8111)
+#     deltax1.append(50)
+# 
+#     deltay1.append(0.8196)
+#     deltax1.append(60)
+#     
+#     deltay1.append(0.8086)
+#     deltax1.append(70)
+# 
+#     deltay1.append(0.7785)
+#     deltax1.append(80)
+# 
+#     deltay1.append(0.8148)
+#     deltax1.append(90)
+# 
+#     deltay1.append(0.8144)
+#     deltax1.append(100)
+#     
+#     deltay2.append(0.6776)
+#     deltax2.append(10)
+# 
+#     deltay2.append(0.6262)
+#     deltax2.append(20)
+# 
+#     deltay2.append(0.7194)
+#     deltax2.append(30)
+# 
+#     deltay2.append(0.6376)
+#     deltax2.append(40)
+# 
+#     deltay2.append(0.6254)
+#     deltax2.append(50)
+# 
+#     deltay2.append(0.6567)
+#     deltax2.append(60)
+# 
+#     deltay2.append(0.6781)
+#     deltax2.append(70)
+# 
+#     deltay2.append(0.6594)
+#     deltax2.append(80)
+#     
+#     deltay2.append(0.6472)
+#     deltax2.append(90)
+# 
+#     deltay2.append(0.6106)
+#     deltax2.append(100)
+#     
+#     
+#     deltay3.append(0.7899)
+#     deltax3.append(10)
+# 
+#     deltay3.append(0.9989)
+#     deltax3.append(20)
+# 
+#     deltay3.append(0.9997)
+#     deltax3.append(30)
+#     
+#     deltay3.append(0.9944)
+#     deltax3.append(40)
+# 
+#     deltay3.append(0.999)
+#     deltax3.append(50)
+# 
+#     deltay3.append(0.9546)
+#     deltax3.append(60)
+# 
+#     deltay3.append(0.7525)
+#     deltax3.append(70)
+#     
+#     deltay3.append(0.994)
+#     deltax3.append(80)
+#     
+#     deltay3.append(0.9985)
+#     deltax3.append(90)
+# 
+#     deltay3.append(0.9915)
+#     deltax3.append(100)
+#     
+#     plt.plot(deltax1,deltay1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+#     plt.plot(deltax2,deltay2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(deltax3,deltay3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#  
+#     xlabel(r'Upper Bound for Perturbation Step [$\delta$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PerturbationStepParams49.png", dpi=300)
+ 
+ 
+#     l1 = deltay1
+#     l2 = deltay2
+#     l3 = deltay3
+# 
+# 
+#     etay1 = []
+#     etay2 = []
+#     etay3 = []
+# 
+#     etax1 = []
+#     etax2 = []
+#     etax3 = []
+# 
+#     etay1.append(0.7938)
+#     etax1.append(2)
+# 
+#     etay1.append(0.7669)
+#     etax1.append(3)
+# 
+#     etay1.append(0.7941)
+#     etax1.append(4)
+# 
+#     etay1.append(0.762)
+#     etax1.append(5)
+# 
+#     etay1.append(0.7747)
+#     etax1.append(6)
+# 
+#     etay1.append(0.7747)
+#     etax1.append(7)
+# 
+#     etay1.append(0.7949)
+#     etax1.append(8)
+# 
+#     etay1.append(0.8159)
+#     etax1.append(9)
+# 
+# 
+#     etay2.append(0.6945)
+#     etax2.append(2)
+# 
+#     etay2.append(0.6427)
+#     etax2.append(3)
+# 
+#     etay2.append(0.6417)
+#     etax2.append(4)
+# 
+#     etay2.append(0.6921)
+#     etax2.append(5)
+# 
+#     etay2.append(0.6455)
+#     etax2.append(6)
+# 
+#     etay2.append(0.6455)
+#     etax2.append(7)
+# 
+#     etay2.append(0.6583)
+#     etax2.append(8)
+# 
+#     etay2.append(0.6249)
+#     etax2.append(9)
+# 
+# 
+#     etay3.append(0.7583)
+#     etax3.append(2)
+# 
+#     etay3.append(0.998)
+#     etax3.append(3)
+# 
+#     etay3.append(0.9875)
+#     etax3.append(4)
+# 
+#     etay3.append(0.9995)
+#     etax3.append(5)
+# 
+#     etay3.append(0.9997)
+#     etax3.append(6)
+# 
+#     etay3.append(0.9997)
+#     etax3.append(7)
+# 
+#     etay3.append(0.9559)
+#     etax3.append(8)
+# 
+#     etay3.append(1.0)
+#     etax3.append(9)
+# 
+#     plt.plot(etax1,etay1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+#     plt.plot(etax2,etay2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(etax3,etay3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#  
+#     xlabel(r'Upper Bound for Perturbation Index [$\eta$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PerturbationIndexParams49.png", dpi=300)
+ 
+#     l1 = etay1
+#     l2 = etay2
+#     l3 = etay3
+#     
+# 
+#     ReductionRatey1 = []
+#     ReductionRatey2 = []
+#     ReductionRatey3 = []
+# 
+#     ReductionRatex1 = []
+#     ReductionRatex2 = []
+#     ReductionRatex3 = []
+# 
+#     ReductionRatey1.append(0.8043)
+#     ReductionRatex1.append(0.5)
+# 
+#     ReductionRatey1.append(0.8179)
+#     ReductionRatex1.append(0.6)
+# 
+#     ReductionRatey1.append(0.8231)
+#     ReductionRatex1.append(0.7)
+# 
+#     ReductionRatey1.append(0.813)
+#     ReductionRatex1.append(0.8)
+# 
+#     ReductionRatey1.append(0.8068)
+#     ReductionRatex1.append(0.9)
+# 
+#     ReductionRatey2.append(0.7835)
+#     ReductionRatex2.append(0.5)
+# 
+#     ReductionRatey2.append(0.6893)
+#     ReductionRatex2.append(0.6)
+# 
+#     ReductionRatey2.append(0.7002)
+#     ReductionRatex2.append(0.7)
+# 
+#     ReductionRatey2.append(0.6289)
+#     ReductionRatex2.append(0.8)
+# 
+#     ReductionRatey2.append(0.6618)
+#     ReductionRatex2.append(0.9)
+# 
+#     ReductionRatey3.append(0.9997)
+#     ReductionRatex3.append(0.5)
+# 
+#     ReductionRatey3.append(0.8003)
+#     ReductionRatex3.append(0.6)
+# 
+#     ReductionRatey3.append(0.8203)
+#     ReductionRatex3.append(0.7)
+# 
+#     ReductionRatey3.append(0.9997)
+#     ReductionRatex3.append(0.8)
+# 
+#     ReductionRatey3.append(0.9992)
+#     ReductionRatex3.append(0.9)
+# 
+
+#     plt.plot(ReductionRatex1,ReductionRatey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+#     plt.plot(ReductionRatex2,ReductionRatey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(ReductionRatex3,ReductionRatey3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#  
+#     xlabel(r'Reduction Rate [$\rho$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/ReductionRateParams49.png", dpi=300)
+
+
+#     l1 = ReductionRatey1
+#     l2 = ReductionRatey2
+#     l3 = ReductionRatey3
+# 
     SampleSizey1 = []
     SampleSizey2 = []
     SampleSizey3 = []
-
+ 
     SampleSizex1 = []
     SampleSizex2 = []
     SampleSizex3 = []
-
+ 
     SampleSizey1.append(0.8048)
     SampleSizex1.append(10)
-
+ 
     SampleSizey1.append(0.7725)
     SampleSizex1.append(20)
-
+ 
     SampleSizey1.append(0.7756)
     SampleSizex1.append(30)
-
+ 
     SampleSizey1.append(0.7535)
     SampleSizex1.append(40)
-
+ 
     SampleSizey1.append(0.7966)
     SampleSizex1.append(50)
-
+ 
     SampleSizey1.append(0.7858)
     SampleSizex1.append(60)
-
+ 
     SampleSizey1.append(0.7817)
     SampleSizex1.append(70)
-
+ 
     SampleSizey1.append(0.807)
     SampleSizex1.append(80)
-
+ 
     SampleSizey1.append(0.7901)
     SampleSizex1.append(90)
-
+ 
     SampleSizey1.append(0.7851)
     SampleSizex1.append(100)
-
+ 
     SampleSizey2.append(0.6409)
     SampleSizex2.append(10)
-
+ 
     SampleSizey2.append(0.6624)
     SampleSizex2.append(20)
-
+ 
     SampleSizey2.append(0.6641)
     SampleSizex2.append(30)
-
+ 
     SampleSizey2.append(0.6393)
     SampleSizex2.append(40)
-
+ 
     SampleSizey2.append(0.6419)
     SampleSizex2.append(50)
-
+ 
     SampleSizey2.append(0.6419)
     SampleSizex2.append(60)
-
+ 
     SampleSizey2.append(0.6599)
     SampleSizex2.append(70)
-
+ 
     SampleSizey2.append(0.6448)
     SampleSizex2.append(80)
-
+ 
     SampleSizey2.append(0.6878)
     SampleSizex2.append(90)
-
+ 
     SampleSizey2.append(0.6677)
     SampleSizex2.append(100)
-
+ 
     SampleSizey3.append(0.9976)
     SampleSizex3.append(10)
-
+ 
     SampleSizey3.append(0.9772)
     SampleSizex3.append(20)
-
+ 
     SampleSizey3.append(0.8984)
     SampleSizex3.append(30)
-
+ 
     SampleSizey3.append(0.7804)
     SampleSizex3.append(40)
-
+ 
     SampleSizey3.append(0.9988)
     SampleSizex3.append(50)
-
+ 
     SampleSizey3.append(0.9958)
     SampleSizex3.append(60)
-
+ 
     SampleSizey3.append(0.9794)
     SampleSizex3.append(70)
-
+ 
     SampleSizey3.append(0.9998)
     SampleSizex3.append(80)
-
+ 
     SampleSizey3.append(0.9813)
     SampleSizex3.append(90)
-
+ 
     SampleSizey3.append(0.9971)
     SampleSizex3.append(100)
-
+# 
+    plt.plot(SampleSizex1,SampleSizey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+    plt.plot(SampleSizex2,SampleSizey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+    plt.plot(SampleSizex3,SampleSizey3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+ 
+    xlabel(r'Sample Size [$\nu$]', fontsize=20)    
+    ylabel('Testing performance : f1score', fontsize=20)
+    ax = plt.subplot(111)
+    box = ax.get_position()
+    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+    plt.grid(linestyle='-', linewidth=0.4)
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SampleSizeParams49.png", dpi=300)
+ 
     l1 = SampleSizey1
     l2 = SampleSizey2
     l3 = SampleSizey3
 
-    
     
     
     
@@ -3293,10 +3447,11 @@ if __name__ == '__main__':
 #     binarizer(InDir,'TestSplit/','test.bin')
 #     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')    generatereports()
 
-    generatereports()
+#     generatereports()
 #     trainplots()
 #     ttest()
 #     gaplots()
+    saplots()
 
 
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')

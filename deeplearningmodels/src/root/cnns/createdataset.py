@@ -3451,7 +3451,7 @@ if __name__ == '__main__':
 #     trainplots()
 #     ttest()
 #     gaplots()
-    saplots()
+#     saplots()
 
 
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')

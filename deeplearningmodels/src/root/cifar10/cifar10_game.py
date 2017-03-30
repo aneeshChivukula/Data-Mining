@@ -157,6 +157,8 @@ def main(argv=None):
     perf = perfmetrics[str(perfmetric)]
     print('initial original training data performance of cifar10_eval without alphastar on original training data',perf)
     finalresults.append((1, 0, 1, perf, perfmetrics, gen))
+    
+    sys.exit()
       
     createdataset.binarizer(InDir,'TestSplit/','test.bin')
     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')

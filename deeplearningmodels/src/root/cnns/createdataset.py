@@ -771,6 +771,111 @@ def generatereports():
     delta = 20
     max_steps = 3000
 
+    # 7 and 9 for lambda from 1 to 20 in steps of 2. default is 1.
+
+    rls = 
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 1
+    
+    rls = [(1, 0, 1, 0.9409, {'recall': 0.9409, 'fpr': 0.1103, 'f1score': 0.8012, 'precision': 0.6976, 'tpr': 0.9409}, 0), (0, 0, 1, 0.9452, {'recall': 0.9452, 'fpr': 0.1042, 'f1score': 0.8109, 'precision': 0.7099, 'tpr': 0.9452}, 0), (0.7466, 0.1957, 0.4491, 0.9348, {'recall': 0.9348, 'fpr': 0.3095, 'f1score': 0.6076, 'precision': 0.4501, 'tpr': 0.9348}, 0), (0.7466, 0.1957, 0.4491, 0.9348, {'recall': 0.9348, 'fpr': 0.3095, 'f1score': 0.6076, 'precision': 0.4501, 'tpr': 0.9348}, 1), (0.7466, 0.1957, 0.4491, 0.9978, {'recall': 0.9978, 'fpr': 0.0003, 'f1score': 0.9984, 'precision': 0.9989, 'tpr': 0.9978}, 2), (0.7466, 0.1957, 0.4491, 0.9438, {'recall': 0.9438, 'fpr': 0.3142, 'f1score': 0.6076, 'precision': 0.448, 'tpr': 0.9438}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 3
+     
+    rls = 
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 5
+    
+
+    rls = [(1, 0, 1, 0.9453, {'recall': 0.9453, 'fpr': 0.1102, 'f1score': 0.8047, 'precision': 0.7005, 'tpr': 0.9453}, 0), (0, 0, 1, 0.9577, {'recall': 0.9577, 'fpr': 0.1109, 'f1score': 0.8099, 'precision': 0.7016, 'tpr': 0.9577}, 0), (0.9955, 0.4385, 0.443, 0.9374, {'recall': 0.9374, 'fpr': 0.2889, 'f1score': 0.6259, 'precision': 0.4698, 'tpr': 0.9374}, 0), (0.9955, 0.4385, 0.443, 0.9374, {'recall': 0.9374, 'fpr': 0.2889, 'f1score': 0.6259, 'precision': 0.4698, 'tpr': 0.9374}, 1), (0.9955, 0.4385, 0.443, 0.9942, {'recall': 0.9942, 'fpr': 0.002, 'f1score': 0.9934, 'precision': 0.9927, 'tpr': 0.9942}, 2), (0.9955, 0.4385, 0.443, 0.9549, {'recall': 0.9549, 'fpr': 0.2783, 'f1score': 0.6423, 'precision': 0.4839, 'tpr': 0.9549}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 7
+
+    rls = [(1, 0, 1, 0.961, {'recall': 0.961, 'fpr': 0.0964, 'f1score': 0.8306, 'precision': 0.7314, 'tpr': 0.961}, 0), (0, 0, 1, 0.9645, {'recall': 0.9645, 'fpr': 0.0994, 'f1score': 0.8275, 'precision': 0.7245, 'tpr': 0.9645}, 0), (1.0734, 0.4451, 0.3717, 0.9505, {'recall': 0.9505, 'fpr': 0.2541, 'f1score': 0.6583, 'precision': 0.5035, 'tpr': 0.9505}, 0), (1.0734, 0.4451, 0.3717, 0.9505, {'recall': 0.9505, 'fpr': 0.2541, 'f1score': 0.6583, 'precision': 0.5035, 'tpr': 0.9505}, 1), (1.0734, 0.4451, 0.3717, 0.9989, {'recall': 0.9989, 'fpr': 0.0, 'f1score': 0.9995, 'precision': 1.0, 'tpr': 0.9989}, 2), (1.0734, 0.4451, 0.3717, 0.9553, {'recall': 0.9553, 'fpr': 0.2647, 'f1score': 0.6516, 'precision': 0.4944, 'tpr': 0.9553}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 9
+
+    rls = ('finalresults', [(1, 0, 1, 0.9511, {'recall': 0.9511, 'fpr': 0.0969, 'f1score': 0.8245, 'precision': 0.7277, 'tpr': 0.9511}, 0), (0, 0, 1, 0.9487, {'recall': 0.9487, 'fpr': 0.0949, 'f1score': 0.8263, 'precision': 0.7319, 'tpr': 0.9487}, 0), (1.1447, 0.6978, 0.5531, 0.9366, {'recall': 0.9366, 'fpr': 0.3563, 'f1score': 0.5776, 'precision': 0.4176, 'tpr': 0.9366}, 0), (1.1447, 0.6978, 0.5531, 0.9366, {'recall': 0.9366, 'fpr': 0.3563, 'f1score': 0.5776, 'precision': 0.4176, 'tpr': 0.9366}, 1), (1.1447, 0.6978, 0.5531, 0.9996, {'recall': 0.9996, 'fpr': 0.0003, 'f1score': 0.9993, 'precision': 0.9989, 'tpr': 0.9996}, 2), (1.1447, 0.6978, 0.5531, 0.9479, {'recall': 0.9479, 'fpr': 0.3548, 'f1score': 0.5819, 'precision': 0.4198, 'tpr': 0.9479}, 2)])
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 11
+
+    rls = ('finalresults', [(1, 0, 1, 0.956, {'recall': 0.956, 'fpr': 0.0912, 'f1score': 0.8341, 'precision': 0.7398, 'tpr': 0.956}, 0), (0, 0, 1, 0.957, {'recall': 0.957, 'fpr': 0.0912, 'f1score': 0.8355, 'precision': 0.7414, 'tpr': 0.957}, 0), (1.4173, 0.8241, 0.4068, 0.9411, {'recall': 0.9411, 'fpr': 0.2753, 'f1score': 0.6371, 'precision': 0.4816, 'tpr': 0.9411}, 0), (1.4173, 0.8241, 0.4068, 0.9411, {'recall': 0.9411, 'fpr': 0.2753, 'f1score': 0.6371, 'precision': 0.4816, 'tpr': 0.9411}, 1), (1.4173, 0.8241, 0.4068, 0.9934, {'recall': 0.9934, 'fpr': 0.0137, 'f1score': 0.9721, 'precision': 0.9517, 'tpr': 0.9934}, 2), (1.4173, 0.8241, 0.4068, 0.9525, {'recall': 0.9525, 'fpr': 0.2777, 'f1score': 0.6387, 'precision': 0.4804, 'tpr': 0.9525}, 2)])
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 14
+
+    rls = ('finalresults', [(1, 0, 1, 0.9447, {'recall': 0.9447, 'fpr': 0.106, 'f1score': 0.8092, 'precision': 0.7076, 'tpr': 0.9447}, 0), (0, 0, 1, 0.9444, {'recall': 0.9444, 'fpr': 0.1031, 'f1score': 0.8128, 'precision': 0.7134, 'tpr': 0.9444}, 0), (1.8265, 1.1387, 0.3122, 0.933, {'recall': 0.933, 'fpr': 0.1848, 'f1score': 0.7151, 'precision': 0.5797, 'tpr': 0.933}, 0), (1.8265, 1.1387, 0.3122, 0.933, {'recall': 0.933, 'fpr': 0.1848, 'f1score': 0.7151, 'precision': 0.5797, 'tpr': 0.933}, 1), (1.8265, 1.1387, 0.3122, 0.971, {'recall': 0.971, 'fpr': 0.0481, 'f1score': 0.9037, 'precision': 0.845, 'tpr': 0.971}, 2), (1.8265, 1.1387, 0.3122, 0.9447, {'recall': 0.9447, 'fpr': 0.1888, 'f1score': 0.717, 'precision': 0.5778, 'tpr': 0.9447}, 2)])
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 17
+
+    rls = ('finalresults', [(1, 0, 1, 0.9505, {'recall': 0.9505, 'fpr': 0.097, 'f1score': 0.8234, 'precision': 0.7263, 'tpr': 0.9505}, 0), (0, 0, 1, 0.954, {'recall': 0.954, 'fpr': 0.0951, 'f1score': 0.8283, 'precision': 0.7319, 'tpr': 0.954}, 0), (1.8078, 1.2924, 0.4846, 0.9354, {'recall': 0.9354, 'fpr': 0.3395, 'f1score': 0.5878, 'precision': 0.4286, 'tpr': 0.9354}, 0), (1.8078, 1.2924, 0.4846, 0.9354, {'recall': 0.9354, 'fpr': 0.3395, 'f1score': 0.5878, 'precision': 0.4286, 'tpr': 0.9354}, 1), (1.8078, 1.2924, 0.4846, 0.9985, {'recall': 0.9985, 'fpr': 0.0012, 'f1score': 0.9971, 'precision': 0.9956, 'tpr': 0.9985}, 2), (1.8078, 1.2924, 0.4846, 0.9493, {'recall': 0.9493, 'fpr': 0.3406, 'f1score': 0.5935, 'precision': 0.4317, 'tpr': 0.9493}, 2)])
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 20
+
+
+
+    
     # 7 and 9 for lambda from 0.1 to 10 in steps of 10. default is 1.
     rls = [(1, 0, 1, 0.9597, {'recall': 0.9597, 'fpr': 0.1001, 'f1score': 0.824, 'precision': 0.722, 'tpr': 0.9597}, 0), (0, 0, 1, 0.9594, {'recall': 0.9594, 'fpr': 0.101, 'f1score': 0.8229, 'precision': 0.7204, 'tpr': 0.9594}, 0), (1.2216, 0.4677, 0.2461, 0.9532, {'recall': 0.9532, 'fpr': 0.2081, 'f1score': 0.7013, 'precision': 0.5548, 'tpr': 0.9532}, 0), (1.2216, 0.4677, 0.2461, 0.9532, {'recall': 0.9532, 'fpr': 0.2081, 'f1score': 0.7013, 'precision': 0.5548, 'tpr': 0.9532}, 1), (1.2216, 0.4677, 0.2461, 0.996, {'recall': 0.996, 'fpr': 0.001, 'f1score': 0.9962, 'precision': 0.9963, 'tpr': 0.996}, 2), (1.2216, 0.4677, 0.2461, 0.9608, {'recall': 0.9608, 'fpr': 0.2257, 'f1score': 0.6882, 'precision': 0.536, 'tpr': 0.9608}, 2)]
     gen = 2
@@ -1173,6 +1278,112 @@ def generatereports():
     delta = 20
     max_steps = 3000
 
+
+    
+    
+    # 4 and 9 for lambda from 1 to 20 in steps of 2. default is 1.
+
+    rls = [(1, 0, 1, 0.982, {'recall': 0.982, 'fpr': 0.1299, 'f1score': 0.8126, 'precision': 0.693, 'tpr': 0.982}, 0), (0, 0, 1, 0.978, {'recall': 0.978, 'fpr': 0.1359, 'f1score': 0.8048, 'precision': 0.6837, 'tpr': 0.978}, 0), (0.5369, 0.0206, 0.4837, 0.9794, {'recall': 0.9794, 'fpr': 0.2086, 'f1score': 0.7324, 'precision': 0.5849, 'tpr': 0.9794}, 0), (0.5391, 0.0, 0.4609, 1.0, {'recall': 1.0, 'fpr': 0.0, 'f1score': 1.0, 'precision': 1.0, 'tpr': 1.0}, 1), (0.5391, 0.0, 0.4609, 1.0, {'recall': 1.0, 'fpr': 0.0, 'f1score': 1.0, 'precision': 1.0, 'tpr': 1.0}, 2), (0.5391, 0.0, 0.4609, 1.0, {'recall': 1.0, 'fpr': 0.0, 'f1score': 1.0, 'precision': 1.0, 'tpr': 1.0}, 3), (0.5391, 0.0, 0.4609, 0.9776, {'recall': 0.9776, 'fpr': 0.1742, 'f1score': 0.764, 'precision': 0.627, 'tpr': 0.9776}, 3)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 1
+    
+    rls = [(1, 0, 1, 0.9776, {'recall': 0.9776, 'fpr': 0.136, 'f1score': 0.8034, 'precision': 0.6819, 'tpr': 0.9776}, 0), (0, 0, 1, 0.9766, {'recall': 0.9766, 'fpr': 0.1405, 'f1score': 0.7984, 'precision': 0.6753, 'tpr': 0.9766}, 0), (0.551, 0.0927, 0.5417, 0.9691, {'recall': 0.9691, 'fpr': 0.3273, 'f1score': 0.6324, 'precision': 0.4693, 'tpr': 0.9691}, 0), (0.551, 0.0927, 0.5417, 0.9691, {'recall': 0.9691, 'fpr': 0.3273, 'f1score': 0.6324, 'precision': 0.4693, 'tpr': 0.9691}, 1), (0.551, 0.0927, 0.5417, 0.9997, {'recall': 0.9997, 'fpr': 0.0001, 'f1score': 0.9997, 'precision': 0.9997, 'tpr': 0.9997}, 2), (0.551, 0.0927, 0.5417, 0.9666, {'recall': 0.9666, 'fpr': 0.331, 'f1score': 0.6309, 'precision': 0.4682, 'tpr': 0.9666}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 3
+     
+    rls = [(1, 0, 1, 0.9909, {'recall': 0.9909, 'fpr': 0.2083, 'f1score': 0.7389, 'precision': 0.589, 'tpr': 0.9909}, 0), (0, 0, 1, 0.9862, {'recall': 0.9862, 'fpr': 0.2074, 'f1score': 0.7372, 'precision': 0.5886, 'tpr': 0.9862}, 0), (0.755, 0.0593, 0.3043, 0.9881, {'recall': 0.9881, 'fpr': 0.318, 'f1score': 0.6483, 'precision': 0.4824, 'tpr': 0.9881}, 0), (0.755, 0.0593, 0.3043, 0.9627, {'recall': 0.9627, 'fpr': 0.0193, 'f1score': 0.9498, 'precision': 0.9373, 'tpr': 0.9627}, 1), (0.755, 0.0593, 0.3043, 0.9871, {'recall': 0.9871, 'fpr': 0.3242, 'f1score': 0.6429, 'precision': 0.4767, 'tpr': 0.9871}, 1)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 5
+    
+
+    rls = [(1, 0, 1, 0.9797, {'recall': 0.9797, 'fpr': 0.1226, 'f1score': 0.8206, 'precision': 0.7059, 'tpr': 0.9797}, 0), (0, 0, 1, 0.9738, {'recall': 0.9738, 'fpr': 0.1237, 'f1score': 0.8156, 'precision': 0.7016, 'tpr': 0.9738}, 0), (0.7201, 0.1768, 0.4567, 0.9747, {'recall': 0.9747, 'fpr': 0.3347, 'f1score': 0.6285, 'precision': 0.4637, 'tpr': 0.9747}, 0), (0.7201, 0.1768, 0.4567, 0.9747, {'recall': 0.9747, 'fpr': 0.3347, 'f1score': 0.6285, 'precision': 0.4637, 'tpr': 0.9747}, 1), (0.7201, 0.1768, 0.4567, 0.9993, {'recall': 0.9993, 'fpr': 0.0, 'f1score': 0.9997, 'precision': 1.0, 'tpr': 0.9993}, 2), (0.7201, 0.1768, 0.4567, 0.9769, {'recall': 0.9769, 'fpr': 0.3304, 'f1score': 0.6344, 'precision': 0.4697, 'tpr': 0.9769}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 7
+
+    rls = [(1, 0, 1, 0.9782, {'recall': 0.9782, 'fpr': 0.1335, 'f1score': 0.8061, 'precision': 0.6855, 'tpr': 0.9782}, 0), (0, 0, 1, 0.9711, {'recall': 0.9711, 'fpr': 0.1383, 'f1score': 0.7979, 'precision': 0.6772, 'tpr': 0.9711}, 0), (0.8196, 0.2824, 0.4628, 0.9686, {'recall': 0.9686, 'fpr': 0.3215, 'f1score': 0.635, 'precision': 0.4723, 'tpr': 0.9686}, 0), (0.8196, 0.2824, 0.4628, 0.9686, {'recall': 0.9686, 'fpr': 0.3215, 'f1score': 0.635, 'precision': 0.4723, 'tpr': 0.9686}, 1), (0.8196, 0.2824, 0.4628, 0.999, {'recall': 0.999, 'fpr': 0.0006, 'f1score': 0.9985, 'precision': 0.998, 'tpr': 0.999}, 2), (0.8196, 0.2824, 0.4628, 0.9696, {'recall': 0.9696, 'fpr': 0.3249, 'f1score': 0.6356, 'precision': 0.4728, 'tpr': 0.9696}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 9
+
+    rls = [(1, 0, 1, 0.973, {'recall': 0.973, 'fpr': 0.1428, 'f1score': 0.7949, 'precision': 0.672, 'tpr': 0.973}, 0), (0, 0, 1, 0.968, {'recall': 0.968, 'fpr': 0.1516, 'f1score': 0.7839, 'precision': 0.6586, 'tpr': 0.968}, 0), (1.0108, 0.3649, 0.3541, 0.9668, {'recall': 0.9668, 'fpr': 0.3213, 'f1score': 0.6336, 'precision': 0.4712, 'tpr': 0.9668}, 0), (1.0108, 0.3649, 0.3541, 0.9668, {'recall': 0.9668, 'fpr': 0.3213, 'f1score': 0.6336, 'precision': 0.4712, 'tpr': 0.9668}, 1), (1.0108, 0.3649, 0.3541, 0.9993, {'recall': 0.9993, 'fpr': 0.0004, 'f1score': 0.999, 'precision': 0.9986, 'tpr': 0.9993}, 2), (1.0108, 0.3649, 0.3541, 0.9712, {'recall': 0.9712, 'fpr': 0.3171, 'f1score': 0.6414, 'precision': 0.4788, 'tpr': 0.9712}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 11
+
+    rls = 
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 14
+
+    rls = [(1, 0, 1, 0.9706, {'recall': 0.9706, 'fpr': 0.157, 'f1score': 0.7764, 'precision': 0.6469, 'tpr': 0.9706}, 0), (0, 0, 1, 0.9699, {'recall': 0.9699, 'fpr': 0.1539, 'f1score': 0.7813, 'precision': 0.6541, 'tpr': 0.9699}, 0), (1.1108, 0.6024, 0.4916, 0.9646, {'recall': 0.9646, 'fpr': 0.3451, 'f1score': 0.6174, 'precision': 0.454, 'tpr': 0.9646}, 0), (1.1108, 0.6024, 0.4916, 0.9646, {'recall': 0.9646, 'fpr': 0.3451, 'f1score': 0.6174, 'precision': 0.454, 'tpr': 0.9646}, 1), (1.1108, 0.6024, 0.4916, 0.9993, {'recall': 0.9993, 'fpr': 0.0002, 'f1score': 0.9993, 'precision': 0.9993, 'tpr': 0.9993}, 2), (1.1108, 0.6024, 0.4916, 0.9702, {'recall': 0.9702, 'fpr': 0.3466, 'f1score': 0.6207, 'precision': 0.4563, 'tpr': 0.9702}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 17
+
+    rls = [(1, 0, 1, 0.9667, {'recall': 0.9667, 'fpr': 0.1271, 'f1score': 0.8085, 'precision': 0.6947, 'tpr': 0.9667}, 0), (0, 0, 1, 0.9717, {'recall': 0.9717, 'fpr': 0.1275, 'f1score': 0.8098, 'precision': 0.6941, 'tpr': 0.9717}, 0), (1.0809, 0.7267, 0.6458, 0.9637, {'recall': 0.9637, 'fpr': 0.3497, 'f1score': 0.615, 'precision': 0.4516, 'tpr': 0.9637}, 0), (1.0809, 0.7267, 0.6458, 0.9637, {'recall': 0.9637, 'fpr': 0.3497, 'f1score': 0.615, 'precision': 0.4516, 'tpr': 0.9637}, 1), (1.0809, 0.7267, 0.6458, 0.9997, {'recall': 0.9997, 'fpr': 0.0002, 'f1score': 0.9995, 'precision': 0.9993, 'tpr': 0.9997}, 2), (1.0809, 0.7267, 0.6458, 0.9718, {'recall': 0.9718, 'fpr': 0.348, 'f1score': 0.6196, 'precision': 0.4548, 'tpr': 0.9718}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.6
+    eta = 2
+    delta = 20
+    max_steps = 3000
+    mylambda = 20
+
+    
     # 4 and 9 for lambda from 0.1 to 1 in steps of *10. default is 1.
     
     rls = [(1, 0, 1, 0.9589, {'recall': 0.9589, 'fpr': 0.118, 'f1score': 0.8146, 'precision': 0.7081, 'tpr': 0.9589}, 0), (0, 0, 1, 0.9556, {'recall': 0.9556, 'fpr': 0.1238, 'f1score': 0.8055, 'precision': 0.6962, 'tpr': 0.9556}, 0), (0.4533, 0.0044, 0.5511, 0.9565, {'recall': 0.9565, 'fpr': 0.3386, 'f1score': 0.6211, 'precision': 0.4599, 'tpr': 0.9565}, 0), (0.4581, 0.0002, 0.5421, 0.9976, {'recall': 0.9976, 'fpr': 0.0002, 'f1score': 0.9985, 'precision': 0.9993, 'tpr': 0.9976}, 1), (0.4596, 0.0001, 0.5405, 0.9986, {'recall': 0.9986, 'fpr': 0.0002, 'f1score': 0.999, 'precision': 0.9993, 'tpr': 0.9986}, 2), (0.4596, 0.0001, 0.5405, 0.9986, {'recall': 0.9986, 'fpr': 0.0002, 'f1score': 0.999, 'precision': 0.9993, 'tpr': 0.9986}, 3), (0.4596, 0.0001, 0.5405, 0.9997, {'recall': 0.9997, 'fpr': 0.0, 'f1score': 0.9998, 'precision': 1.0, 'tpr': 0.9997}, 4), (0.4596, 0.0001, 0.5405, 0.9595, {'recall': 0.9595, 'fpr': 0.349, 'f1score': 0.6128, 'precision': 0.4502, 'tpr': 0.9595}, 4)]
@@ -2117,6 +2328,99 @@ def saplots():
 #  
 #     SampleSizey3.append(0.7765)
 #     SampleSizex3.append(100)
+
+
+    mylambday1 = []
+    mylambday2 = []
+    mylambday3 = []
+  
+    mylambdax1 = []
+    mylambdax2 = []
+    mylambdax3 = []
+  
+    mylambday1.append()
+    mylambdax1.append(1)
+  
+    mylambday1.append(0.8109)
+    mylambdax1.append(3)
+  
+    mylambday1.append()
+    mylambdax1.append(5)
+  
+    mylambday1.append(0.8099)
+    mylambdax1.append(7)
+  
+    mylambday1.append(0.8275)
+    mylambdax1.append(9)
+  
+    mylambday1.append(0.8263)
+    mylambdax1.append(11)
+  
+    mylambday1.append(0.8355)
+    mylambdax1.append(14)
+  
+    mylambday1.append(0.8128)
+    mylambdax1.append(17)
+  
+    mylambday1.append(0.8283)
+    mylambdax1.append(20)
+    
+    
+    mylambday2.append()
+    mylambdax2.append(1)
+  
+    mylambday2.append(0.6076)
+    mylambdax2.append(3)
+  
+    mylambday2.append()
+    mylambdax2.append(5)
+  
+    mylambday2.append(0.6423)
+    mylambdax2.append(7)
+  
+    mylambday2.append(0.6516)
+    mylambdax2.append(9)
+  
+    mylambday2.append(0.5819)
+    mylambdax2.append(11)
+  
+    mylambday2.append(0.6387)
+    mylambdax2.append(14)
+  
+    mylambday2.append(0.717)
+    mylambdax2.append(17)
+  
+    mylambday2.append(0.5935)
+    mylambdax2.append(20)
+
+    mylambday3.append()
+    mylambdax3.append(1)
+  
+    mylambday3.append(0.9984)
+    mylambdax3.append(3)
+  
+    mylambday3.append()
+    mylambdax3.append(5)
+  
+    mylambday3.append(0.9934)
+    mylambdax3.append(7)
+  
+    mylambday3.append(0.9995)
+    mylambdax3.append(9)
+  
+    mylambday3.append(0.9993)
+    mylambdax3.append(11)
+  
+    mylambday3.append(0.9721)
+    mylambdax3.append(14)
+  
+    mylambday3.append(0.9037)
+    mylambdax3.append(17)
+  
+    mylambday3.append(0.9971)
+    mylambdax3.append(20)
+    
+
 #  
 # 
 #     plt.plot(SampleSizex1,SampleSizey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
@@ -2527,6 +2831,101 @@ def saplots():
  
     SampleSizey3.append(0.9971)
     SampleSizex3.append(100)
+
+
+
+    mylambday1 = []
+    mylambday2 = []
+    mylambday3 = []
+  
+    mylambdax1 = []
+    mylambdax2 = []
+    mylambdax3 = []
+  
+    mylambday1.append(0.8048)
+    mylambdax1.append(1)
+  
+    mylambday1.append(0.7984)
+    mylambdax1.append(3)
+  
+    mylambday1.append(0.7372)
+    mylambdax1.append(5)
+  
+    mylambday1.append(0.8156)
+    mylambdax1.append(7)
+  
+    mylambday1.append(0.7979)
+    mylambdax1.append(9)
+  
+    mylambday1.append(0.7839)
+    mylambdax1.append(11)
+  
+    mylambday1.append()
+    mylambdax1.append(14)
+  
+    mylambday1.append(0.7813)
+    mylambdax1.append(17)
+  
+    mylambday1.append(0.8098)
+    mylambdax1.append(20)
+    
+    
+    mylambday2.append(0.764)
+    mylambdax2.append(1)
+  
+    mylambday2.append(0.6309)
+    mylambdax2.append(3)
+  
+    mylambday2.append(0.6429)
+    mylambdax2.append(5)
+  
+    mylambday2.append(0.6344)
+    mylambdax2.append(7)
+  
+    mylambday2.append(0.6356)
+    mylambdax2.append(9)
+  
+    mylambday2.append(0.6414)
+    mylambdax2.append(11)
+  
+    mylambday2.append()
+    mylambdax2.append(14)
+  
+    mylambday2.append(0.6207)
+    mylambdax2.append(17)
+  
+    mylambday2.append(0.6196)
+    mylambdax2.append(20)
+
+    mylambday3.append(0.9)
+    mylambdax3.append(1)
+  
+    mylambday3.append(0.9997)
+    mylambdax3.append(3)
+  
+    mylambday3.append(0.9498)
+    mylambdax3.append(5)
+  
+    mylambday3.append(0.9997)
+    mylambdax3.append(7)
+  
+    mylambday3.append(0.9985)
+    mylambdax3.append(9)
+  
+    mylambday3.append(0.999)
+    mylambdax3.append(11)
+  
+    mylambday3.append()
+    mylambdax3.append(14)
+  
+    mylambday3.append(0.9993)
+    mylambdax3.append(17)
+  
+    mylambday3.append(0.9995)
+    mylambdax3.append(20)
+
+
+
 # 
     plt.plot(SampleSizex1,SampleSizey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
     plt.plot(SampleSizex2,SampleSizey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)

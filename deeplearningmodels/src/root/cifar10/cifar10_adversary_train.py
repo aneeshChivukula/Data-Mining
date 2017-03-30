@@ -320,15 +320,16 @@ def adversary_test_cnn():
 
                 is_label_one = sess.run(labels).astype(bool)
                 is_label_zero = np.logical_not(is_label_one)
-                
+                   
                 correct_prediction = sess.run([top_k_op])
                 false_prediction = np.logical_not(correct_prediction)
-                
+                  
                 true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
                 false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
-                 
+                   
                 true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
                 false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))     
+
                 
 #                 true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
 #                 false_positives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))

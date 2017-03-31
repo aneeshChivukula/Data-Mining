@@ -40,6 +40,7 @@ TempMin = 5
 SampleSize = 5
 ReductionRate = 0.1
 
+executetwolabel = True
 
 def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
     if tf.gfile.Exists(AdvInDir):
@@ -315,7 +316,12 @@ def main(argv=None):
                 perf = round(perfmetrics[str(perfmetric)],FLAGS.numdecimalplaces)
     
                 print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
-                finalresults.append((adv_payoff, error,round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
+
+                if(executetwolabel == True):
+                    finalresults.append((adv_payoff, error,round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
+                else:
+                    finalresults.append((adv_payoff, error,round(error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
+                    
                 print('finalresults',finalresults)
                 pickle.dump(finalresults,fp1)
                 
@@ -386,7 +392,10 @@ def main(argv=None):
             perf = round(perfmetrics[str(perfmetric)],FLAGS.numdecimalplaces)
     
             print('payoff: %f and performance: %f in iteration: %f' % (adv_payoff, perf, gen))
-            finalresults.append((adv_payoff, error,round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
+            if(executetwolabel == True):
+                finalresults.append((adv_payoff, error,round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
+            else:
+                finalresults.append((adv_payoff, error,round(error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
             print('finalresults',finalresults)
             pickle.dump(finalresults,fp1)
             if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
@@ -491,8 +500,12 @@ def main(argv=None):
 #         distortedimages.append((cifar10_adversary_train.distorted_image(x[1],bestalpha),x[0]))
 #     precision = 1-cifar10_adversary_train.evaluate(distortedimages)
     print('final manipulated testing data precision of cifar10_eval with alphastar on manipulated training data',perf)
-    finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
 
+    if(executetwolabel == True):
+        finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
+    else:
+        finalresults.append((adv_payoff, error,round(error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
+        
 #     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
 #     createdataset.binarizer(InDir,'TrainSplit/','train.bin')
 #     copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
@@ -528,8 +541,11 @@ def main(argv=None):
     transformer(AdvInDirTest,imagespopulation,alphastar[0],labels,filesd)
 
     print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',perf)
-    finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
-
+    
+    if(executetwolabel == True):
+        finalresults.append((adv_payoff, error, round(1+error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
+    else:
+        finalresults.append((adv_payoff, error,round(error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
 
     if(searchalg=="GA"):
         print('alphastar',alphastar)

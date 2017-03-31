@@ -773,7 +773,7 @@ def generatereports():
 
     # 7 and 9 for lambda from 1 to 20 in steps of 2. default is 1.
 
-    rls = 
+    rls = [(1, 0, 1, 0.9401, {'recall': 0.9401, 'fpr': 0.0965, 'f1score': 0.8192, 'precision': 0.7259, 'tpr': 0.9401}, 0), (0, 0, 1, 0.9421, {'recall': 0.9421, 'fpr': 0.0968, 'f1score': 0.8195, 'precision': 0.7251, 'tpr': 0.9421}, 0), (0.4848, 0.0675, 0.5827, 0.9325, {'recall': 0.9325, 'fpr': 0.1445, 'f1score': 0.7571, 'precision': 0.6373, 'tpr': 0.9325}, 0), (0.4848, 0.0675, 0.5827, 0.9325, {'recall': 0.9325, 'fpr': 0.1445, 'f1score': 0.7571, 'precision': 0.6373, 'tpr': 0.9325}, 1), (0.4848, 0.0675, 0.5827, 0.9993, {'recall': 0.9993, 'fpr': 0.0003, 'f1score': 0.9991, 'precision': 0.9989, 'tpr': 0.9993}, 2), (0.4848, 0.0675, 0.5827, 0.9447, {'recall': 0.9447, 'fpr': 0.1362, 'f1score': 0.7734, 'precision': 0.6547, 'tpr': 0.9447}, 2)]
     gen = 2
     TempMin = 5
     TempMax = 1000
@@ -795,7 +795,7 @@ def generatereports():
     max_steps = 3000
     mylambda = 3
      
-    rls = 
+    rls = [(1, 0, 1, 0.9491, {'recall': 0.9491, 'fpr': 0.1017, 'f1score': 0.8178, 'precision': 0.7185, 'tpr': 0.9491}, 0), (0, 0, 1, 0.9427, {'recall': 0.9427, 'fpr': 0.0992, 'f1score': 0.8162, 'precision': 0.7197, 'tpr': 0.9427}, 0), (1.0495, 0.3314, 0.2819, 0.9337, {'recall': 0.9337, 'fpr': 0.2347, 'f1score': 0.6672, 'precision': 0.519, 'tpr': 0.9337}, 0), (1.0495, 0.3314, 0.2819, 0.9337, {'recall': 0.9337, 'fpr': 0.2347, 'f1score': 0.6672, 'precision': 0.519, 'tpr': 0.9337}, 1), (1.0495, 0.3314, 0.2819, 0.972, {'recall': 0.972, 'fpr': 0.1718, 'f1score': 0.7474, 'precision': 0.6071, 'tpr': 0.972}, 2), (1.0495, 0.3314, 0.2819, 0.9435, {'recall': 0.9435, 'fpr': 0.2259, 'f1score': 0.6794, 'precision': 0.5308, 'tpr': 0.9435}, 2)]
     gen = 2
     TempMin = 5
     TempMax = 1000
@@ -1350,7 +1350,7 @@ def generatereports():
     max_steps = 3000
     mylambda = 11
 
-    rls = 
+    rls = [(1, 0, 1, 0.9759, {'recall': 0.9759, 'fpr': 0.1639, 'f1score': 0.7729, 'precision': 0.6398, 'tpr': 0.9759}, 0), (0, 0, 1, 0.9774, {'recall': 0.9774, 'fpr': 0.1599, 'f1score': 0.7793, 'precision': 0.6479, 'tpr': 0.9774}, 0), (0.9637, 0.3531, 0.3894, 0.9748, {'recall': 0.9748, 'fpr': 0.3233, 'f1score': 0.6367, 'precision': 0.4727, 'tpr': 0.9748}, 0), (0.9637, 0.3531, 0.3894, 0.9748, {'recall': 0.9748, 'fpr': 0.3233, 'f1score': 0.6367, 'precision': 0.4727, 'tpr': 0.9748}, 1), (0.9637, 0.3531, 0.3894, 0.9963, {'recall': 0.9963, 'fpr': 0.0014, 'f1score': 0.9958, 'precision': 0.9953, 'tpr': 0.9963}, 2), (0.9637, 0.3531, 0.3894, 0.9733, {'recall': 0.9733, 'fpr': 0.3235, 'f1score': 0.638, 'precision': 0.4745, 'tpr': 0.9733}, 2)]
     gen = 2
     TempMin = 5
     TempMax = 1000
@@ -2330,97 +2330,6 @@ def saplots():
 #     SampleSizex3.append(100)
 
 
-    mylambday1 = []
-    mylambday2 = []
-    mylambday3 = []
-  
-    mylambdax1 = []
-    mylambdax2 = []
-    mylambdax3 = []
-  
-    mylambday1.append()
-    mylambdax1.append(1)
-  
-    mylambday1.append(0.8109)
-    mylambdax1.append(3)
-  
-    mylambday1.append()
-    mylambdax1.append(5)
-  
-    mylambday1.append(0.8099)
-    mylambdax1.append(7)
-  
-    mylambday1.append(0.8275)
-    mylambdax1.append(9)
-  
-    mylambday1.append(0.8263)
-    mylambdax1.append(11)
-  
-    mylambday1.append(0.8355)
-    mylambdax1.append(14)
-  
-    mylambday1.append(0.8128)
-    mylambdax1.append(17)
-  
-    mylambday1.append(0.8283)
-    mylambdax1.append(20)
-    
-    
-    mylambday2.append()
-    mylambdax2.append(1)
-  
-    mylambday2.append(0.6076)
-    mylambdax2.append(3)
-  
-    mylambday2.append()
-    mylambdax2.append(5)
-  
-    mylambday2.append(0.6423)
-    mylambdax2.append(7)
-  
-    mylambday2.append(0.6516)
-    mylambdax2.append(9)
-  
-    mylambday2.append(0.5819)
-    mylambdax2.append(11)
-  
-    mylambday2.append(0.6387)
-    mylambdax2.append(14)
-  
-    mylambday2.append(0.717)
-    mylambdax2.append(17)
-  
-    mylambday2.append(0.5935)
-    mylambdax2.append(20)
-
-    mylambday3.append()
-    mylambdax3.append(1)
-  
-    mylambday3.append(0.9984)
-    mylambdax3.append(3)
-  
-    mylambday3.append()
-    mylambdax3.append(5)
-  
-    mylambday3.append(0.9934)
-    mylambdax3.append(7)
-  
-    mylambday3.append(0.9995)
-    mylambdax3.append(9)
-  
-    mylambday3.append(0.9993)
-    mylambdax3.append(11)
-  
-    mylambday3.append(0.9721)
-    mylambdax3.append(14)
-  
-    mylambday3.append(0.9037)
-    mylambdax3.append(17)
-  
-    mylambday3.append(0.9971)
-    mylambdax3.append(20)
-    
-
 #  
 # 
 #     plt.plot(SampleSizex1,SampleSizey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
@@ -2440,6 +2349,115 @@ def saplots():
 #     l1 = SampleSizey1
 #     l2 = SampleSizey2
 #     l3 = SampleSizey3
+
+
+#     mylambday1 = []
+#     mylambday2 = []
+#     mylambday3 = []
+#   
+#     mylambdax1 = []
+#     mylambdax2 = []
+#     mylambdax3 = []
+#   
+#     mylambday1.append(0.8195)
+#     mylambdax1.append(1)
+#   
+#     mylambday1.append(0.8109)
+#     mylambdax1.append(3)
+#   
+#     mylambday1.append(0.8162)
+#     mylambdax1.append(5)
+#   
+#     mylambday1.append(0.8099)
+#     mylambdax1.append(7)
+#   
+#     mylambday1.append(0.8275)
+#     mylambdax1.append(9)
+#   
+#     mylambday1.append(0.8263)
+#     mylambdax1.append(11)
+#   
+#     mylambday1.append(0.8355)
+#     mylambdax1.append(14)
+#   
+#     mylambday1.append(0.8128)
+#     mylambdax1.append(17)
+#   
+#     mylambday1.append(0.8283)
+#     mylambdax1.append(20)
+#     
+#     
+#     mylambday2.append(0.7734)
+#     mylambdax2.append(1)
+#   
+#     mylambday2.append(0.6076)
+#     mylambdax2.append(3)
+#   
+#     mylambday2.append(0.6794)
+#     mylambdax2.append(5)
+#   
+#     mylambday2.append(0.6423)
+#     mylambdax2.append(7)
+#   
+#     mylambday2.append(0.6516)
+#     mylambdax2.append(9)
+#   
+#     mylambday2.append(0.5819)
+#     mylambdax2.append(11)
+#   
+#     mylambday2.append(0.6387)
+#     mylambdax2.append(14)
+#   
+#     mylambday2.append(0.717)
+#     mylambdax2.append(17)
+#   
+#     mylambday2.append(0.5935)
+#     mylambdax2.append(20)
+# 
+#     mylambday3.append(0.9991)
+#     mylambdax3.append(1)
+#   
+#     mylambday3.append(0.9984)
+#     mylambdax3.append(3)
+#   
+#     mylambday3.append(0.7474)
+#     mylambdax3.append(5)
+#   
+#     mylambday3.append(0.9934)
+#     mylambdax3.append(7)
+#   
+#     mylambday3.append(0.9995)
+#     mylambdax3.append(9)
+#   
+#     mylambday3.append(0.9993)
+#     mylambdax3.append(11)
+#   
+#     mylambday3.append(0.9721)
+#     mylambdax3.append(14)
+#   
+#     mylambday3.append(0.9037)
+#     mylambdax3.append(17)
+#   
+#     mylambday3.append(0.9971)
+#     mylambdax3.append(20)
+#  
+#     plt.plot(mylambdax1,mylambday1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+#     plt.plot(mylambdax2,mylambday2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(mylambdax3,mylambday3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#  
+#     xlabel(r'Error Weight [$\lambda$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/mylambda79.png", dpi=300)
+#  
+#  
+#     l1 = mylambday1
+#     l2 = mylambday2
+#     l3 = mylambday3
 
 
     # (4,9)
@@ -2734,215 +2752,233 @@ def saplots():
 #     l2 = ReductionRatey2
 #     l3 = ReductionRatey3
 # 
-    SampleSizey1 = []
-    SampleSizey2 = []
-    SampleSizey3 = []
- 
-    SampleSizex1 = []
-    SampleSizex2 = []
-    SampleSizex3 = []
- 
-    SampleSizey1.append(0.8048)
-    SampleSizex1.append(10)
- 
-    SampleSizey1.append(0.7725)
-    SampleSizex1.append(20)
- 
-    SampleSizey1.append(0.7756)
-    SampleSizex1.append(30)
- 
-    SampleSizey1.append(0.7535)
-    SampleSizex1.append(40)
- 
-    SampleSizey1.append(0.7966)
-    SampleSizex1.append(50)
- 
-    SampleSizey1.append(0.7858)
-    SampleSizex1.append(60)
- 
-    SampleSizey1.append(0.7817)
-    SampleSizex1.append(70)
- 
-    SampleSizey1.append(0.807)
-    SampleSizex1.append(80)
- 
-    SampleSizey1.append(0.7901)
-    SampleSizex1.append(90)
- 
-    SampleSizey1.append(0.7851)
-    SampleSizex1.append(100)
- 
-    SampleSizey2.append(0.6409)
-    SampleSizex2.append(10)
- 
-    SampleSizey2.append(0.6624)
-    SampleSizex2.append(20)
- 
-    SampleSizey2.append(0.6641)
-    SampleSizex2.append(30)
- 
-    SampleSizey2.append(0.6393)
-    SampleSizex2.append(40)
- 
-    SampleSizey2.append(0.6419)
-    SampleSizex2.append(50)
- 
-    SampleSizey2.append(0.6419)
-    SampleSizex2.append(60)
- 
-    SampleSizey2.append(0.6599)
-    SampleSizex2.append(70)
- 
-    SampleSizey2.append(0.6448)
-    SampleSizex2.append(80)
- 
-    SampleSizey2.append(0.6878)
-    SampleSizex2.append(90)
- 
-    SampleSizey2.append(0.6677)
-    SampleSizex2.append(100)
- 
-    SampleSizey3.append(0.9976)
-    SampleSizex3.append(10)
- 
-    SampleSizey3.append(0.9772)
-    SampleSizex3.append(20)
- 
-    SampleSizey3.append(0.8984)
-    SampleSizex3.append(30)
- 
-    SampleSizey3.append(0.7804)
-    SampleSizex3.append(40)
- 
-    SampleSizey3.append(0.9988)
-    SampleSizex3.append(50)
- 
-    SampleSizey3.append(0.9958)
-    SampleSizex3.append(60)
- 
-    SampleSizey3.append(0.9794)
-    SampleSizex3.append(70)
- 
-    SampleSizey3.append(0.9998)
-    SampleSizex3.append(80)
- 
-    SampleSizey3.append(0.9813)
-    SampleSizex3.append(90)
- 
-    SampleSizey3.append(0.9971)
-    SampleSizex3.append(100)
-
+#     SampleSizey1 = []
+#     SampleSizey2 = []
+#     SampleSizey3 = []
+#  
+#     SampleSizex1 = []
+#     SampleSizex2 = []
+#     SampleSizex3 = []
+#  
+#     SampleSizey1.append(0.8048)
+#     SampleSizex1.append(10)
+#  
+#     SampleSizey1.append(0.7725)
+#     SampleSizex1.append(20)
+#  
+#     SampleSizey1.append(0.7756)
+#     SampleSizex1.append(30)
+#  
+#     SampleSizey1.append(0.7535)
+#     SampleSizex1.append(40)
+#  
+#     SampleSizey1.append(0.7966)
+#     SampleSizex1.append(50)
+#  
+#     SampleSizey1.append(0.7858)
+#     SampleSizex1.append(60)
+#  
+#     SampleSizey1.append(0.7817)
+#     SampleSizex1.append(70)
+#  
+#     SampleSizey1.append(0.807)
+#     SampleSizex1.append(80)
+#  
+#     SampleSizey1.append(0.7901)
+#     SampleSizex1.append(90)
+#  
+#     SampleSizey1.append(0.7851)
+#     SampleSizex1.append(100)
+#  
+#     SampleSizey2.append(0.6409)
+#     SampleSizex2.append(10)
+#  
+#     SampleSizey2.append(0.6624)
+#     SampleSizex2.append(20)
+#  
+#     SampleSizey2.append(0.6641)
+#     SampleSizex2.append(30)
+#  
+#     SampleSizey2.append(0.6393)
+#     SampleSizex2.append(40)
+#  
+#     SampleSizey2.append(0.6419)
+#     SampleSizex2.append(50)
+#  
+#     SampleSizey2.append(0.6419)
+#     SampleSizex2.append(60)
+#  
+#     SampleSizey2.append(0.6599)
+#     SampleSizex2.append(70)
+#  
+#     SampleSizey2.append(0.6448)
+#     SampleSizex2.append(80)
+#  
+#     SampleSizey2.append(0.6878)
+#     SampleSizex2.append(90)
+#  
+#     SampleSizey2.append(0.6677)
+#     SampleSizex2.append(100)
+#  
+#     SampleSizey3.append(0.9976)
+#     SampleSizex3.append(10)
+#  
+#     SampleSizey3.append(0.9772)
+#     SampleSizex3.append(20)
+#  
+#     SampleSizey3.append(0.8984)
+#     SampleSizex3.append(30)
+#  
+#     SampleSizey3.append(0.7804)
+#     SampleSizex3.append(40)
+#  
+#     SampleSizey3.append(0.9988)
+#     SampleSizex3.append(50)
+#  
+#     SampleSizey3.append(0.9958)
+#     SampleSizex3.append(60)
+#  
+#     SampleSizey3.append(0.9794)
+#     SampleSizex3.append(70)
+#  
+#     SampleSizey3.append(0.9998)
+#     SampleSizex3.append(80)
+#  
+#     SampleSizey3.append(0.9813)
+#     SampleSizex3.append(90)
+#  
+#     SampleSizey3.append(0.9971)
+#     SampleSizex3.append(100)
+# 
+# # 
+#     plt.plot(SampleSizex1,SampleSizey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+#     plt.plot(SampleSizex2,SampleSizey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(SampleSizex3,SampleSizey3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#  
+#     xlabel(r'Sample Size [$\nu$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SampleSizeParams49.png", dpi=300)
+#  
+#     l1 = SampleSizey1
+#     l2 = SampleSizey2
+#     l3 = SampleSizey3
 
 
     mylambday1 = []
     mylambday2 = []
     mylambday3 = []
-  
+   
     mylambdax1 = []
     mylambdax2 = []
     mylambdax3 = []
-  
+   
     mylambday1.append(0.8048)
     mylambdax1.append(1)
-  
+   
     mylambday1.append(0.7984)
     mylambdax1.append(3)
-  
+   
     mylambday1.append(0.7372)
     mylambdax1.append(5)
-  
+   
     mylambday1.append(0.8156)
     mylambdax1.append(7)
-  
+   
     mylambday1.append(0.7979)
     mylambdax1.append(9)
-  
+   
     mylambday1.append(0.7839)
     mylambdax1.append(11)
-  
-    mylambday1.append()
+   
+    mylambday1.append(0.7793)
     mylambdax1.append(14)
-  
+   
     mylambday1.append(0.7813)
     mylambdax1.append(17)
-  
+   
     mylambday1.append(0.8098)
     mylambdax1.append(20)
-    
-    
+     
+     
     mylambday2.append(0.764)
     mylambdax2.append(1)
-  
+   
     mylambday2.append(0.6309)
     mylambdax2.append(3)
-  
+   
     mylambday2.append(0.6429)
     mylambdax2.append(5)
-  
+   
     mylambday2.append(0.6344)
     mylambdax2.append(7)
-  
+   
     mylambday2.append(0.6356)
     mylambdax2.append(9)
-  
+   
     mylambday2.append(0.6414)
     mylambdax2.append(11)
-  
-    mylambday2.append()
+   
+    mylambday2.append(0.638)
     mylambdax2.append(14)
-  
+   
     mylambday2.append(0.6207)
     mylambdax2.append(17)
-  
+   
     mylambday2.append(0.6196)
     mylambdax2.append(20)
-
+ 
     mylambday3.append(0.9)
     mylambdax3.append(1)
-  
+   
     mylambday3.append(0.9997)
     mylambdax3.append(3)
-  
+   
     mylambday3.append(0.9498)
     mylambdax3.append(5)
-  
+   
     mylambday3.append(0.9997)
     mylambdax3.append(7)
-  
+   
     mylambday3.append(0.9985)
     mylambdax3.append(9)
-  
+   
     mylambday3.append(0.999)
     mylambdax3.append(11)
-  
-    mylambday3.append()
+   
+    mylambday3.append(0.9958)
     mylambdax3.append(14)
-  
+   
     mylambday3.append(0.9993)
     mylambdax3.append(17)
-  
+   
     mylambday3.append(0.9995)
     mylambdax3.append(20)
-
-
-
-# 
-    plt.plot(SampleSizex1,SampleSizey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
-    plt.plot(SampleSizex2,SampleSizey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
-    plt.plot(SampleSizex3,SampleSizey3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
  
-    xlabel(r'Sample Size [$\nu$]', fontsize=20)    
+  
+    plt.plot(mylambdax1,mylambday1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+    plt.plot(mylambdax2,mylambday2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+    plt.plot(mylambdax3,mylambday3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+  
+    xlabel(r'Error Weight [$\lambda$]', fontsize=20)    
     ylabel('Testing performance : f1score', fontsize=20)
     ax = plt.subplot(111)
     box = ax.get_position()
     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
     plt.grid(linestyle='-', linewidth=0.4)
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SampleSizeParams49.png", dpi=300)
- 
-    l1 = SampleSizey1
-    l2 = SampleSizey2
-    l3 = SampleSizey3
+    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/mylambda49.png", dpi=300)
+  
+  
+    l1 = mylambday1
+    l2 = mylambday2
+    l3 = mylambday3
+
+
 
     
     
@@ -3850,7 +3886,7 @@ if __name__ == '__main__':
 #     trainplots()
 #     ttest()
 #     gaplots()
-#     saplots()
+    saplots()
 
 
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')

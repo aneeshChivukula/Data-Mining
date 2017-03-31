@@ -3323,6 +3323,7 @@ and FLAGS.minwidthstartidx is 20, FLAGS.minwidthenddx is 25
 
 setwd("/home/achivuku/Documents/BigLearningDatasets")
 mydata = read.csv("threemonth_sample_demomarket_1000seriesalerts.csv")
+mydata = read.csv("Alert1001_TradeOutput.csv")
 head(mydata)
 myvar = mydata$instrument
 sort(table(myvar),decreasing=TRUE)[1:3]

@@ -74,6 +74,7 @@ tf.app.flags.DEFINE_boolean('max_iter_eval', 100,
 tf.app.flags.DEFINE_boolean('numdecimalplaces', 4,
                          """Number of decimal places to retain in the performance metrics.""")
 
+executetwolabel = True
 
 def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,logits,labels):
   """Run Eval once.
@@ -137,10 +138,14 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
 #       num_iter = int(math.ceil(FLAGS.num_examples / FLAGS.batch_size))
 
       num_iter = FLAGS.max_iter_eval
-      true_positives_count = 0
-      false_positives_count = 0
-      true_negatives_count = 0
-      false_negatives_count = 0
+
+      
+      if(executetwolabel == True):
+          true_positives_count = 0
+          false_positives_count = 0
+          true_negatives_count = 0
+          false_negatives_count = 0
+      
       perfmetrics = {}
       
       true_count = 0  # Counts the number of correct predictions.
@@ -150,52 +155,53 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
 
         print('sess.run(labels)',sess.run(labels))
 
-        is_label_one = sess.run(labels).astype(bool)
-        is_label_zero = np.logical_not(is_label_one)
-           
-        correct_prediction = sess.run([top_k_op])
-        false_prediction = np.logical_not(correct_prediction)
-          
-        true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
-        false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
-           
-        true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
-        false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))     
-
-
-#         predictions = sess.run([top_k_op])
-#         true_count += np.sum(predictions)
+        if(executetwolabel == True):
+            is_label_one = sess.run(labels).astype(bool)
+            is_label_zero = np.logical_not(is_label_one)
+               
+            correct_prediction = sess.run([top_k_op])
+            false_prediction = np.logical_not(correct_prediction)
+              
+            true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
+            false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
+               
+            true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
+            false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))     
+        else:
+            predictions = sess.run([top_k_op])
+            true_count += np.sum(predictions)
 #         print('predictions',predictions)
         step += 1
-#         print('step',step)
+        print('step',step)
 #         print('correct_prediction',correct_prediction)
 #         print('np.logical_and(correct_prediction,is_label_one)',np.logical_and(correct_prediction,is_label_one))
       
+      if(executetwolabel == True):
       # Compute precision @ 1.
-#       precision = true_count / total_sample_count
-
-
-      print('max_iter_eval',FLAGS.max_iter_eval)
-      print('true_positives_count',true_positives_count)
-      print('false_positives_count',false_positives_count)
-      print('false_negatives_count',false_negatives_count)
-      print('true_negatives_count',true_negatives_count)
-      precision = float(true_positives_count) / float(true_positives_count+false_positives_count)
-      recall = float(true_positives_count) / float(true_positives_count+false_negatives_count)
-      f1score = 2*float(true_positives_count) / (2*float(true_positives_count)+float(false_positives_count + false_negatives_count))
-      tpr = float(true_positives_count) / float(true_positives_count+false_negatives_count)
-      fpr = float(false_positives_count) / float(false_positives_count+true_negatives_count)
-      
-      perfmetrics['precision'] = round(precision,FLAGS.numdecimalplaces)
-      perfmetrics['recall'] = round(recall,FLAGS.numdecimalplaces)
-      perfmetrics['f1score'] = round(f1score,FLAGS.numdecimalplaces)
-      perfmetrics['tpr'] = round(tpr,FLAGS.numdecimalplaces)
-      perfmetrics['fpr'] = round(fpr,FLAGS.numdecimalplaces)
+          print('max_iter_eval',FLAGS.max_iter_eval)
+          print('true_positives_count',true_positives_count)
+          print('false_positives_count',false_positives_count)
+          print('false_negatives_count',false_negatives_count)
+          print('true_negatives_count',true_negatives_count)
+          precision = float(true_positives_count) / float(true_positives_count+false_positives_count)
+          recall = float(true_positives_count) / float(true_positives_count+false_negatives_count)
+          f1score = 2*float(true_positives_count) / (2*float(true_positives_count)+float(false_positives_count + false_negatives_count))
+          tpr = float(true_positives_count) / float(true_positives_count+false_negatives_count)
+          fpr = float(false_positives_count) / float(false_positives_count+true_negatives_count)
+          
+          perfmetrics['precision'] = round(precision,FLAGS.numdecimalplaces)
+          perfmetrics['recall'] = round(recall,FLAGS.numdecimalplaces)
+          perfmetrics['f1score'] = round(f1score,FLAGS.numdecimalplaces)
+          perfmetrics['tpr'] = round(tpr,FLAGS.numdecimalplaces)
+          perfmetrics['fpr'] = round(fpr,FLAGS.numdecimalplaces)
+      else:
+        precision = true_count / total_sample_count
+        perfmetrics['precision'] = round(precision,FLAGS.numdecimalplaces)
       
 #       print('logits',sess.run(logits))
 #       print('labels',sess.run(labels))
 
-      print('%s: classification training precision @ 1 = %.3f' % (datetime.now(), precision))
+      print('%s: classification testing precision @ 1 = %.3f' % (datetime.now(), precision))
 
       summary = tf.Summary()
       summary.ParseFromString(sess.run(summary_op))

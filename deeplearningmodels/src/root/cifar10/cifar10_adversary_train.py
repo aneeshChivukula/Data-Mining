@@ -184,6 +184,7 @@ perfmetric = "recall"
 # perfmetric = "tpr"
 # perfmetric = "fpr"
 executeonserver = False
+executetwolabel = True
 
 
 current_milli_time = lambda: int(round(time.time()))
@@ -305,30 +306,35 @@ def adversary_test_cnn():
                                          start=True))
 #             num_iter = int(math.ceil(FLAGS.num_examples / FLAGS.batch_size))
             num_iter = FLAGS.max_iter_test
-#             true_count = 0
-            true_positives_count = 0
-            false_positives_count = 0
-            true_negatives_count = 0
-            false_negatives_count = 0
+            if(executetwolabel == True):
+                true_positives_count = 0
+                false_positives_count = 0
+                true_negatives_count = 0
+                false_negatives_count = 0
+            else:
+                true_count = 0
+
+            
             perfmetrics = {}
 
-#             total_sample_count = num_iter * FLAGS.batch_size
+            total_sample_count = num_iter * FLAGS.batch_size
             step = 0
             
             while step < num_iter and not coord.should_stop():
 #                 predictions = sess.run([top_k_op])
 
-                is_label_one = sess.run(labels).astype(bool)
-                is_label_zero = np.logical_not(is_label_one)
-                   
-                correct_prediction = sess.run([top_k_op])
-                false_prediction = np.logical_not(correct_prediction)
-                  
-                true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
-                false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
-                   
-                true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
-                false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))     
+                if(executetwolabel == True):
+                    is_label_one = sess.run(labels).astype(bool)
+                    is_label_zero = np.logical_not(is_label_one)
+                       
+                    correct_prediction = sess.run([top_k_op])
+                    false_prediction = np.logical_not(correct_prediction)
+                      
+                    true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
+                    false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
+                       
+                    true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
+                    false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))     
 
                 
 #                 true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
@@ -337,37 +343,44 @@ def adversary_test_cnn():
 #                 true_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))
 #                 false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_zero))     
 #                 print('labels',sess.run(labels))
-                
-#                 true_count += np.sum(predictions)
+
+                else:
+                    predictions = sess.run([top_k_op])
+                    true_count += np.sum(predictions)
                 step += 1
 #                 print('is_label_one',is_label_one)
 #                 print('sess.run(softmax_linear)',sess.run(softmax_linear))
 #                 print('predictions',predictions)
 #                 print('labels',labels)
 #             sys.exit()            
-            print('true_positives_count',true_positives_count)
-            print('false_positives_count',false_positives_count)
-            print('false_negatives_count',false_negatives_count)
-            print('true_negatives_count',true_negatives_count)
-            
-            precision = float(true_positives_count) / float(true_positives_count+false_positives_count)
-            recall = float(true_positives_count) / float(true_positives_count+false_negatives_count)
-            f1score = 2*float(true_positives_count) / (2*float(true_positives_count)+float(false_positives_count + false_negatives_count))
-            tpr = float(true_positives_count) / float(true_positives_count+false_negatives_count)
-            fpr = float(false_positives_count) / float(false_positives_count+true_negatives_count)
 
-            perfmetrics['precision'] = precision
-            perfmetrics['recall'] = recall
-            perfmetrics['f1score'] = f1score
-            perfmetrics['tpr'] = tpr
-            perfmetrics['fpr'] = fpr
-
-            print('precision',precision)
-            print('recall',recall)
-            print('f1score',f1score)
             
-#             precision = (true_count / total_sample_count)
-#             print('%s: adversary_test_cnn precision @ 1 = %.3f' % (datetime.now(), precision))
+            if(executetwolabel == True):
+                
+                print('true_positives_count',true_positives_count)
+                print('false_positives_count',false_positives_count)
+                print('false_negatives_count',false_negatives_count)
+                print('true_negatives_count',true_negatives_count)
+            
+                precision = float(true_positives_count) / float(true_positives_count+false_positives_count)
+                recall = float(true_positives_count) / float(true_positives_count+false_negatives_count)
+                f1score = 2*float(true_positives_count) / (2*float(true_positives_count)+float(false_positives_count + false_negatives_count))
+                tpr = float(true_positives_count) / float(true_positives_count+false_negatives_count)
+                fpr = float(false_positives_count) / float(false_positives_count+true_negatives_count)
+
+                perfmetrics['precision'] = precision
+                perfmetrics['recall'] = recall
+                perfmetrics['f1score'] = f1score
+                perfmetrics['tpr'] = tpr
+                perfmetrics['fpr'] = fpr
+
+                print('precision',precision)
+                print('recall',recall)
+                print('f1score',f1score)
+            else:
+                precision = (true_count / total_sample_count)
+                perfmetrics['precision'] = precision
+                print('%s: adversary_test_cnn precision @ 1 = %.3f' % (datetime.now(), precision))
         except Exception as e:  
             coord.request_stop(e)
 
@@ -670,20 +683,27 @@ def alphafitness(curralpha,imagespopulation,toolbox):
         else:
             distortedimages.append((distorted_image(x[1],np.zeros(curralpha[0].shape)),x[0]))
     perfmetrics = toolbox.evaluate(distortedimages)
-    error = FLAGS.mylambda * (1-perfmetrics[str(perfmetric)])
-    fit = 1 + error - tensornorm(curralpha[0])
-
+    
+    if(executetwolabel == True):
+        error = FLAGS.mylambda * (1-perfmetrics[str(perfmetric)])
+        fit = 1 + error - tensornorm(curralpha[0])
+    else:
+        error = FLAGS.mylambda * (perfmetrics[str(perfmetric)])
+        fit = error - tensornorm(curralpha[0])
+        
     curralpha[0].fitness.error = error
 #         curralpha.fitness.payoff = fit
     curralpha[0].fitness.weights = (fit,)
     curralpha[0].fitness.values = [fit]
 
-    curralpha[0].fitness.precision = perfmetrics['precision']
-    curralpha[0].fitness.recall = perfmetrics['recall']
-    curralpha[0].fitness.f1score = perfmetrics['f1score']
-    curralpha[0].fitness.tpr = perfmetrics['tpr']
-    curralpha[0].fitness.fpr = perfmetrics['fpr']
-
+    if(executetwolabel == True):
+        curralpha[0].fitness.precision = perfmetrics['precision']
+        curralpha[0].fitness.recall = perfmetrics['recall']
+        curralpha[0].fitness.f1score = perfmetrics['f1score']
+        curralpha[0].fitness.tpr = perfmetrics['tpr']
+        curralpha[0].fitness.fpr = perfmetrics['fpr']
+    else:
+        curralpha[0].fitness.precision = perfmetrics['precision']
     print('Reset fitnesses in alphafitnesses')
     print('curralpha[0].fitness.error after', curralpha[0].fitness.error)
 
@@ -718,8 +738,14 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
         
         
         perfmetrics = toolbox.evaluate(distortedimages)
-        error = FLAGS.mylambda * (1-perfmetrics[str(perfmetric)])
-        fit = 1 + error - tensornorm(curralpha)
+
+        if(executetwolabel == True):
+            error = FLAGS.mylambda * (1-perfmetrics[str(perfmetric)])
+            fit = 1 + error - tensornorm(curralpha)
+        else:
+            error = FLAGS.mylambda * (perfmetrics[str(perfmetric)])
+            fit = error - tensornorm(curralpha)
+            
         fitnesses.append(fit)
 #         fitnesses.append(1 + error - (alphanorms[index]/totnorm))
         alphaspopulation[index].fitness.error = error
@@ -727,11 +753,14 @@ def alphasfitnesses(alphaspopulation,imagespopulation,toolbox):
         alphaspopulation[index].fitness.weights = (fit,)
         alphaspopulation[index].fitness.values = [fit]
 
-        alphaspopulation[index].fitness.precision = perfmetrics['precision']
-        alphaspopulation[index].fitness.recall = perfmetrics['recall']
-        alphaspopulation[index].fitness.f1score = perfmetrics['f1score']
-        alphaspopulation[index].fitness.tpr = perfmetrics['tpr']
-        alphaspopulation[index].fitness.fpr = perfmetrics['fpr']
+        if(executetwolabel == True):
+            alphaspopulation[index].fitness.precision = perfmetrics['precision']
+            alphaspopulation[index].fitness.recall = perfmetrics['recall']
+            alphaspopulation[index].fitness.f1score = perfmetrics['f1score']
+            alphaspopulation[index].fitness.tpr = perfmetrics['tpr']
+            alphaspopulation[index].fitness.fpr = perfmetrics['fpr']
+        else:
+            alphaspopulation[index].fitness.precision = perfmetrics['precision']
         
         print('Reset fitnesses in alphasfitnesses')
         

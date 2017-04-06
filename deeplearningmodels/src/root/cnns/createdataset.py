@@ -16,10 +16,10 @@ from PIL import Image
 
 
 # import cv2
-# width = 32
-# height = 32
-width = 1024
-height = 1024
+width = 32
+height = 32
+#width = 1024
+#height = 1024
 length = 3073
 
 # width = 224
@@ -3852,6 +3852,12 @@ def mnistimages(TrainFile,TestFile,SaveDir):
 
     
 if __name__ == '__main__':
+
+
+#     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/TrainSplit/0/'
+    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/TestSplit/0/'
+    resizer(InDir)
+
     
 #     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/'
 #     partitoner(InDir)
@@ -3886,7 +3892,7 @@ if __name__ == '__main__':
 #     trainplots()
 #     ttest()
 #     gaplots()
-    saplots()
+#     saplots()
 
 
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')

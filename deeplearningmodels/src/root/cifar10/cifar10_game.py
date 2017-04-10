@@ -21,6 +21,7 @@ from root.cnns import createdataset
 import tensorflow as tf
 
 import time
+import heapq
 
 
 
@@ -133,22 +134,22 @@ def main(argv=None):
     if tf.gfile.Exists(TrainWeightsDir):
       tf.gfile.DeleteRecursively(TrainWeightsDir)
     tf.gfile.MakeDirs(TrainWeightsDir)
-
+ 
     StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
     AlphasFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphas.pkl'
     fp1 = open(StdoutFile,'wb')
     fp2 = open(AlphasFile,'wb')
-    
-    cifar10_train.train()
      
+    cifar10_train.train()
+      
     if(os.path.exists(InitialCheckpointsDir)):
         shutil.rmtree(InitialCheckpointsDir)
     shutil.copytree(CheckpointsDir, InitialCheckpointsDir)
     # For 2 class problem, change input bin file to include 2 classes and train over 2000 iterations
     # For 1000 class problem, change input bin file to include 1000 classes and train over 10000 iterations
-
+ 
 # Comment while testing on laptop
-
+ 
     createdataset.binarizer(InDir,'TrainSplit/','test.bin')
     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
     if tf.gfile.Exists(EvalDir):
@@ -158,9 +159,8 @@ def main(argv=None):
     perf = perfmetrics[str(perfmetric)]
     print('initial original training data performance of cifar10_eval without alphastar on original training data',perf)
     finalresults.append((1, 0, 1, perf, perfmetrics, gen))
-    
-    sys.exit()
-      
+     
+       
     createdataset.binarizer(InDir,'TestSplit/','test.bin')
     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
     if tf.gfile.Exists(EvalDir):
@@ -173,16 +173,16 @@ def main(argv=None):
 
 # Comment while testing on laptop
  
-#     createdataset.binarizer(InDir,'TrainSplit/','train.bin')
-#     copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
-#     if tf.gfile.Exists(TrainWeightsDir):
-#       tf.gfile.DeleteRecursively(TrainWeightsDir)
-#     tf.gfile.MakeDirs(TrainWeightsDir)
-#     cifar10_train.train()
+    createdataset.binarizer(InDir,'TrainSplit/','train.bin')
+    copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
+    if tf.gfile.Exists(TrainWeightsDir):
+      tf.gfile.DeleteRecursively(TrainWeightsDir)
+    tf.gfile.MakeDirs(TrainWeightsDir)
+    cifar10_train.train()
     # IS this retraining needed?
  
-#     createdataset.binarizer(InDir,'TestSplit/','test.bin')
-#     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
+    createdataset.binarizer(InDir,'TestSplit/','test.bin')
+    copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
 
     
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/' 
@@ -227,9 +227,15 @@ def main(argv=None):
         
         mask1 = positiveimagesmean != 0
         mask2 = negativeimagesmean != 0
+
+        positiveval = min(heapq.nlargest(FLAGS.positiveintensitysize, np.ndarray.flatten(positiveimagesmean[:,:,0])))
+        mask3 = positiveimagesmean >= positiveval
+        negativeval = min(heapq.nlargest(FLAGS.negativeintensitysize, np.ndarray.flatten(negativeimagesmean[:,:,0])))
+        mask4 = negativeimagesmean >= positiveval
         
-        mask = mask2
+#         mask = mask2
 #         mask = np.logical_and(mask1,mask2)
+        mask = np.logical_and.reduce((mask1,mask2,mask3,mask4))
         
         AdvInDirN = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphan/'
         AdvInDirG = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphag/'

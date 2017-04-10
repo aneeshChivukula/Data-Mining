@@ -124,6 +124,11 @@ tf.app.flags.DEFINE_integer('offspringsizefactor', 100/50,
 # tf.app.flags.DEFINE_integer('offspringsizefactor', 100/80,
 #                             """offspring size varying from 20% to 80% (increment by 10%)""")
 
+tf.app.flags.DEFINE_integer('positiveintensitysize', 500,
+                            """selecting positiveintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
+tf.app.flags.DEFINE_integer('negativeintensitysize', 100,
+                            """selecting negativeintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
+
 
 tf.app.flags.DEFINE_integer('max_iter_test', 100,
                             """Set max_iter to get sufficient mix of positive and negative classes in testing CNN and training GA.""")
@@ -510,7 +515,7 @@ def initImagePopulation(ind_init, InDir):
                 filesd[index] = f
                 index = index+1
                 images.append((ind,a))
-                if(ind==1):
+                if(ind==0):
                     positiveimagesmean = positiveimagesmean + a
                     numpos = numpos + 1
                 else:
@@ -519,7 +524,8 @@ def initImagePopulation(ind_init, InDir):
                     
 #         ind = ind + 1
 #     print('l',l)
-    return images,np.floor(np.divide(positiveimagesmean, numpos)),np.floor(np.divide(negativeimagesmean, numneg)),filesd
+#     return images,np.floor(np.divide(positiveimagesmean, numpos)),np.floor(np.divide(negativeimagesmean, numneg)),filesd
+    return images,positiveimagesmean,negativeimagesmean,filesd
 
 def evaluate(currpopulation):
     binarizer(FLAGS.data_dir + '/imagenet2010-batches-bin/',currpopulation,'test.bin')

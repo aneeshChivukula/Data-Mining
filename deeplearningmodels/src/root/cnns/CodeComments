@@ -3351,6 +3351,7 @@ for(s in unique(mydata$security)){
     mydata2$Timestampdiff = Timestampdiff
 
     export <- mydata2[,c("Timestampdiff","price","binarylabels")]
+    
     write.csv(file=file.path("./inputs",paste(s,"filteredsample.csv",sep=".")), x=export,row.names=FALSE)
         
 }

@@ -3340,6 +3340,24 @@ for(v in unique(mydata$security)){
 	print(c(v,nrow(mydata[mydata$security==v,])))
 }
 
+for(s in unique(mydata$security)){
+    mydata2 = mydata[mydata$security==s,]
+    startdate = as.character(mydata2[1,]$Timestamp)
+
+    Timestampdiff <- 0
+    for(i in 1:nrow(mydata2)) {
+        Timestampdiff[i] <- difftime(mydata2[i,]$Timestamp,startdate,unit="secs")
+    }
+    mydata2$Timestampdiff = Timestampdiff
+
+    export <- mydata2[,c("Timestampdiff","price","binarylabels")]
+    write.csv(file=file.path("./inputs",paste(s,"filteredsample.csv",sep=".")), x=export,row.names=FALSE)
+        
+}
+
+cd /home/achivuku/Documents/BigLearningDatasets/inputs
+find ./ -exec sed -i 's/\"//g' {} \;
+
 s = "SEC0000009"
 mydata2 = mydata[mydata$security==s,]
 
@@ -3374,6 +3392,16 @@ Timestampdiff[i] <- difftime(mydata2[i,]$Timestamp,startdate,unit="secs")
 
 mydata2$Timestampdiff = Timestampdiff
 head(mydata2)
+
+export <- mydata2[,c("Timestampdiff","price","binarylabels")]
+write.csv(file=file.path("./inputs",paste(s,"filteredsample.csv",sep=".")), x=export,row.names=FALSE)
+
+
+cd /home/achivuku/Documents/BigLearningDatasets/inputs
+find ./ -exec sed -i 's/\"//g' {} \;
+sed 's/\"//g' filteredsample.csv > input.csv
+
+
 
 
 

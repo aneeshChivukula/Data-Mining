@@ -3358,6 +3358,9 @@ for(s in unique(mydata$security)){
 
 cd /home/achivuku/Documents/BigLearningDatasets/inputs
 find ./ -exec sed -i 's/\"//g' {} \;
+find ./ -exec sed -i '/Timestampdiff,price,binarylabels/d' {} \;
+find . -type f -exec grep -F -L 'P' '{}' + | xargs -d '\n' rm
+scp -r /home/aneesh/workspace/financedataanalysis/src/preprocessing/randomsampling.py achivuku@phoenix18:/home/achivuku/Documents/BigLearningDatasets/
 
 s = "SEC0000009"
 mydata2 = mydata[mydata$security==s,]

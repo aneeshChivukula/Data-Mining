@@ -128,6 +128,8 @@ tf.app.flags.DEFINE_integer('positiveintensitysize', 500,
                             """selecting positiveintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
 tf.app.flags.DEFINE_integer('negativeintensitysize', 100,
                             """selecting negativeintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
+tf.app.flags.DEFINE_integer('minclassfreq', 5,
+                            """selecting negativeintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
 
 
 tf.app.flags.DEFINE_integer('max_iter_test', 100,
@@ -506,6 +508,30 @@ def initImagePopulation(ind_init, InDir):
     
     filesd = dict()
     index = 0
+
+    imagesbyclass = dict()
+    imagesbyclass[0] = np.zeros((32, 32, 3))
+    imagesbyclass[1] = np.zeros((32, 32, 3))
+    imagesbyclass[2] = np.zeros((32, 32, 3))
+    imagesbyclass[3] = np.zeros((32, 32, 3))
+    imagesbyclass[4] = np.zeros((32, 32, 3))
+    imagesbyclass[5] = np.zeros((32, 32, 3))
+    imagesbyclass[6] = np.zeros((32, 32, 3))
+    imagesbyclass[7] = np.zeros((32, 32, 3))
+    imagesbyclass[8] = np.zeros((32, 32, 3))
+    imagesbyclass[9] = np.zeros((32, 32, 3))
+
+    numimagesbyclass = dict()
+    numimagesbyclass[0] = 0
+    numimagesbyclass[1] = 0
+    numimagesbyclass[2] = 0
+    numimagesbyclass[3] = 0
+    numimagesbyclass[4] = 0
+    numimagesbyclass[5] = 0
+    numimagesbyclass[6] = 0
+    numimagesbyclass[7] = 0
+    numimagesbyclass[8] = 0
+    numimagesbyclass[9] = 0
     
     for d in ls:
         ind = ls.index(d)
@@ -515,17 +541,59 @@ def initImagePopulation(ind_init, InDir):
                 filesd[index] = f
                 index = index+1
                 images.append((ind,a))
+
+                if(ind==0):
+                    imagesbyclass[0] = imagesbyclass[0] + a
+                    numimagesbyclass[0] = numimagesbyclass[0] + 1
+                elif(ind==1):
+                    imagesbyclass[1] = imagesbyclass[1] + a
+                    numimagesbyclass[1] = numimagesbyclass[1] + 1
+                elif(ind==2):
+                    imagesbyclass[2] = imagesbyclass[2] + a
+                    numimagesbyclass[2] = numimagesbyclass[2] + 1
+                elif(ind==3):
+                    imagesbyclass[3] = imagesbyclass[3] + a
+                    numimagesbyclass[3] = numimagesbyclass[3] + 1
+                elif(ind==4):
+                    imagesbyclass[4] = imagesbyclass[4] + a
+                    numimagesbyclass[4] = numimagesbyclass[4] + 1
+                elif(ind==5):
+                    imagesbyclass[5] = imagesbyclass[5] + a
+                    numimagesbyclass[5] = numimagesbyclass[5] + 1
+                elif(ind==6):
+                    imagesbyclass[6] = imagesbyclass[6] + a
+                    numimagesbyclass[6] = numimagesbyclass[6] + 1
+                elif(ind==7):
+                    imagesbyclass[7] = imagesbyclass[7] + a
+                    numimagesbyclass[7] = numimagesbyclass[7] + 1
+                elif(ind==8):
+                    imagesbyclass[8] = imagesbyclass[8] + a
+                    numimagesbyclass[8] = numimagesbyclass[8] + 1
+                elif(ind==9):
+                    imagesbyclass[9] = imagesbyclass[9] + a
+                    numimagesbyclass[9] = numimagesbyclass[9] + 1
+                
                 if(ind==0):
                     positiveimagesmean = positiveimagesmean + a
                     numpos = numpos + 1
                 else:
                     negativeimagesmean = negativeimagesmean + a
                     numneg = numneg + 1
+
+
+
+
+
                     
 #         ind = ind + 1
 #     print('l',l)
 #     return images,np.floor(np.divide(positiveimagesmean, numpos)),np.floor(np.divide(negativeimagesmean, numneg)),filesd
-    return images,positiveimagesmean,negativeimagesmean,filesd
+
+    
+    for i in xrange(0,10):
+        imagesbyclass[i] = np.floor(np.divide(imagesbyclass[i], numimagesbyclass[i]))
+    
+    return images,positiveimagesmean,negativeimagesmean,imagesbyclass,filesd
 
 def evaluate(currpopulation):
     binarizer(FLAGS.data_dir + '/imagenet2010-batches-bin/',currpopulation,'test.bin')

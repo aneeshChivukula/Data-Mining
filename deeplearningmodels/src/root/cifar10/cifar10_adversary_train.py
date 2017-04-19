@@ -126,7 +126,7 @@ tf.app.flags.DEFINE_integer('offspringsizefactor', 100/50,
 
 tf.app.flags.DEFINE_integer('positiveintensitysize', 500,
                             """selecting positiveintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
-tf.app.flags.DEFINE_integer('negativeintensitysize', 100,
+tf.app.flags.DEFINE_integer('negativeintensitysize', 500,
                             """selecting negativeintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
 tf.app.flags.DEFINE_integer('minclassfreq', 5,
                             """selecting negativeintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
@@ -489,11 +489,22 @@ def initIndividualImage(filename):
 #     return np.array(Image.open(filename).getdata()).reshape((32,32,3))
 
 
+# # def initIndividual(icls):
+# def initIndividual(meanimage):
+# #     return meanimage + np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
+# #     return meanimage + np.random.randint(low=FLAGS.steplow,high=FLAGS.stephigh, size=(32, 32, 3))
+#     return meanimage + np.random.randint(low=random.randint(math.floor(FLAGS.low/FLAGS.dividend),0),high=random.randint(1,math.ceil(FLAGS.high/FLAGS.dividend)), size=(32, 32, 3))
+
+
 # def initIndividual(icls):
 def initIndividual(meanimage):
 #     return meanimage + np.random.randint(low=FLAGS.low,high=FLAGS.high, size=(32, 32, 3))
 #     return meanimage + np.random.randint(low=FLAGS.steplow,high=FLAGS.stephigh, size=(32, 32, 3))
-    return meanimage + np.random.randint(low=random.randint(math.floor(FLAGS.low/FLAGS.dividend),0),high=random.randint(1,math.ceil(FLAGS.high/FLAGS.dividend)), size=(32, 32, 3))
+#    return meanimage + np.random.randint(low=random.randint(math.floor(FLAGS.low/FLAGS.dividend),0),high=random.randint(1,math.ceil(FLAGS.high/FLAGS.dividend)), size=(32, 32, 3))
+    array = np.random.randint(low=random.randint(math.floor(FLAGS.low/FLAGS.dividend),0),high=random.randint(1,math.ceil(FLAGS.high/FLAGS.dividend)), size=(32, 32))
+    arrays = [array,np.copy(array),np.copy(array)]
+    return meanimage + np.stack(arrays, axis=2)
+
 
 def initImagePopulation(ind_init, InDir):
     images = list()
@@ -657,8 +668,30 @@ def mutation(individual):
 #     individual[0][mask] = individual[0][mask] + r[mask]
 #     return individual
 
+# def perturbation(individual,mask2):
+#      
+#     np.random.seed(current_milli_time())
+#      
+#     heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+#     heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+#      
+#     widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+#     widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+#      
+#     mask1 = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+#     mask = np.logical_and(mask1,mask2)[heightstartind:heightendind,widthstartind:widthendind,]
+#     
+#     
+#     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh),dtype=np.int64)
+#  
+#     individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[heightstartind:heightendind,widthstartind:widthendind,][mask]
+#      
+#     return individual
+
+
 def perturbation(individual,mask2):
      
+#    individual[0][np.logical_not(mask2)] = 0
     np.random.seed(current_milli_time())
      
     heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
@@ -667,15 +700,26 @@ def perturbation(individual,mask2):
     widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
     widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
      
-    mask1 = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+#    mask1 = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+    array = np.random.randint(0,2,size=(32, 32)).astype(np.bool)
+    arrays = [array,np.copy(array),np.copy(array)]
+    mask1 = np.stack(arrays, axis=2)
+
     mask = np.logical_and(mask1,mask2)[heightstartind:heightendind,widthstartind:widthendind,]
+
+    individual[0][np.logical_not(np.logical_and(mask1,mask2))] = 0
+    print('np.count_nonzero(mask2)',np.count_nonzero(mask2))
+    print('np.count_nonzero(mask)',np.count_nonzero(mask))
+    print('np.count_nonzero(np.logical_and(mask1,mask2))',np.count_nonzero(np.logical_and(mask1,mask2)))
     
-    
-    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh),dtype=np.int64)
+    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
  
     individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[heightstartind:heightendind,widthstartind:widthendind,][mask]
+
+#    individual[0][mask][heightstartind:heightendind,widthstartind:widthendind,] += r[mask][heightstartind:heightendind,widthstartind:widthendind,]
      
     return individual
+
 
 def crossover(individual1,individual2):
     

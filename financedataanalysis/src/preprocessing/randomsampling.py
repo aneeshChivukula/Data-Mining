@@ -197,33 +197,63 @@ def createfilteredsample(InFile,PositiveClassFile,PositiveSampleFile,LabelledSam
 
     sampletimestamps = np.array(cPickle.load(open(Sampletimestampsfile, 'rb')),dtype=np.float32)
     
-    selectedindices = []
-     
+#     selectedindices = []
+#     numsamples = 0
+#     while(numsamples <= positivesamplesize):
+#         curridx = random.randint(0,numpositivelines)
+#         if(curridx not in selectedindices):
+#             selectedindices.append(curridx)
+#              
+#             line = linecache.getline(PositiveClassFile, curridx)
+#              
+#             if(line):
+#                 splitline = line.split(',')
+#                 searchtimestamp = float(splitline[0])
+#                  
+#                 sampleline = ""
+#                  
+#                 for d in xrange(1,windowsize+1):
+#                     curridx = find_nearest(sampletimestamps, searchtimestamp-(windowsize/d))
+#                     splitline = inlines[curridx].rstrip('\n').split(',')
+#                      
+#                     sampleline += splitline[1] + ","
+#                  
+#                 fs.write(sampleline + "P" + '\n')
+#                  
+#                 numsamples = numsamples + 1
+            
+
+
     numsamples = 0
-     
+    selectedindices = []
+    discardedindices = []
+    positivesampletimestamps = np.array(cPickle.load(open(Positivetimestampsfile, 'rb')),dtype=np.float32)
     while(numsamples <= positivesamplesize):
         curridx = random.randint(0,numpositivelines)
-        if(curridx not in selectedindices):
-            selectedindices.append(curridx)
-             
+        if(curridx not in discardedindices and curridx not in selectedindices):
             line = linecache.getline(PositiveClassFile, curridx)
-             
             if(line):
                 splitline = line.split(',')
                 searchtimestamp = float(splitline[0])
-                 
+
+                if(sum((positivesampletimestamps > searchtimestamp-windowsize) & (positivesampletimestamps < searchtimestamp)) != 0):
+                    discardedindices.append(curridx)
+                else:
+                    selectedindices.append(curridx)
+
                 sampleline = ""
-                 
+
                 for d in xrange(1,windowsize+1):
                     curridx = find_nearest(sampletimestamps, searchtimestamp-(windowsize/d))
                     splitline = inlines[curridx].rstrip('\n').split(',')
-                     
+                      
                     sampleline += splitline[1] + ","
-                 
+                  
                 fs.write(sampleline + "P" + '\n')
-                 
+                  
                 numsamples = numsamples + 1
-            
+
+    print("check positives")
 
 
             
@@ -302,8 +332,9 @@ if __name__ == '__main__':
         NegativeSampleFile = ClassesDir + inputfilename + '_negativesample.csv'
         
         (numpositivelines,numnegativelines) = createfilteredpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile, Sampletimestampsfile,Positivetimestampsfile)
-        positivesamplesize = numpositivelines
-        negativesamplesize = numpositivelines
+        positivesamplesize = numpositivelines - 1
+        negativesamplesize = numpositivelines - 1
+        # Store the file sizes if repeatedly calling createfilteredsample to create different data sequences in the input files
         
         
         print(InFile,PositiveClassFile,PositiveSampleFile,LabelledSampleFile,positivesamplesize,negativesamplesize,numpositivelines,numnegativelines,windowsize,Sampletimestampsfile,Positivetimestampsfile,NegativeClassFile,NegativeSampleFile)

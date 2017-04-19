@@ -44,6 +44,7 @@ ReductionRate = 0.1
 executetwolabel = True
 
 def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
+
     if tf.gfile.Exists(AdvInDir):
       tf.gfile.DeleteRecursively(AdvInDir)
     tf.gfile.MakeDirs(AdvInDir)
@@ -54,12 +55,29 @@ def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
     for i,x in enumerate(imagespopulation):
         CurrLabel = labels[x[0]]
         if(x[0] == 0):
-            CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
+            CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)
         else:
             CurrImage = np.array(x[1], np.uint8)
-#         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
-        Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(filesd[i]) + ".jpeg")
-        print('AdvInDir + CurrLabel + "/" + str(filesd[i])',AdvInDir + CurrLabel + "/" + str(filesd[i]))
+
+        Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(filesd[i]))
+
+# def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
+#     if tf.gfile.Exists(AdvInDir):
+#       tf.gfile.DeleteRecursively(AdvInDir)
+#     tf.gfile.MakeDirs(AdvInDir)
+#     
+#     for Label in labels:
+#         tf.gfile.MakeDirs(AdvInDir + Label)
+#     
+#     for i,x in enumerate(imagespopulation):
+#         CurrLabel = labels[x[0]]
+#         if(x[0] == 0):
+#             CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
+#         else:
+#             CurrImage = np.array(x[1], np.uint8)
+# #         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(i) + ".jpeg")
+#         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(filesd[i]) + ".jpeg")
+#         print('AdvInDir + CurrLabel + "/" + str(filesd[i])',AdvInDir + CurrLabel + "/" + str(filesd[i]))
 
 def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
     CurrImage = np.array(curralpha, np.uint8)
@@ -242,8 +260,9 @@ def main(argv=None):
             
 #         mask = mask2
 #         mask = np.logical_and(mask1,mask2)
-        mask = np.logical_and.reduce((mask1,mask2,mask3,mask4))
+#         mask = np.logical_and.reduce((mask1,mask2,mask3,mask4))
 #        mask = np.logical_and.reduce((mask1,mask2,mask3,mask4,mask5))
+        mask = np.logical_or(mask3,mask4)
         
         print('np.count_nonzero(mask)',np.count_nonzero(mask))
         sys.exit()

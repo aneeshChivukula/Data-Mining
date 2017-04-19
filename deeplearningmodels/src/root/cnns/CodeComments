@@ -3361,6 +3361,8 @@ find ./ -exec sed -i 's/\"//g' {} \;
 find ./ -exec sed -i '/Timestampdiff,price,binarylabels/d' {} \;
 find . -type f -exec grep -F -L 'P' '{}' + | xargs -d '\n' rm
 scp -r /home/aneesh/workspace/financedataanalysis/src/preprocessing/randomsampling.py achivuku@phoenix18:/home/achivuku/Documents/BigLearningDatasets/
+scp -r achivuku@phoenix18:/home/achivuku/Desktop/UTS Literature Survey/NASDAQ Project/sample-old.csv /home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/
+
 
 s = "SEC0000009"
 mydata2 = mydata[mydata$security==s,]
@@ -4947,5 +4949,399 @@ https://en.wikipedia.org/wiki/Confusion_matrix
 
 
 
+
+
+
+
+
+require(jpeg)
+img <- readJPEG("/scratch/cifar10_20/ExperimentalImages/PlotImages/Averaged.jpeg")
+dim(img)
+img = img*255
+img[,,1]
+img[,,2]
+img[,,3]
+library(scatterplot3d)
+
+with(img, {
+   scatterplot3d(img,main="3-D Scatterplot Example 1")
+})
+
+with(mtcars, {
+   scatterplot3d(disp,   # x axis
+                 wt,     # y axis
+                 mpg,    # z axis
+                 main="3-D Scatterplot Example 1")
+})
+
+Plot in Python not R matplotlib and pillow or opencv
+
+import numpy as np
+import matplotlib.image as mpimg
+from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+img = mpimg.imread('/home/aneesh/Documents/AdversarialLearningDatasets/ExperimentalImages/3:3A.jpeg')
+I=mpimg.imread('/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3A.jpeg');
+s=img.shape[0]*img.shape[1]
+R=double(reshape(I(:,:,1),1,s));
+
+
+
+from PIL import Image
+Image.fromarray(img).save('/scratch/cifar10_20/ExperimentalImages/PlotImages/Temp.jpeg')
+
+import numpy as np
+import matplotlib.image as mpimg
+from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+img = mpimg.imread('/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3A.jpeg')
+img = mpimg.imread('/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3NB.jpeg')
+img = mpimg.imread('/scratch/cifar10_20/ExperimentalImages/PlotImages/4:4NB.jpeg')
+pixels = img.shape[0]*img.shape[1]
+channels = 3
+data = np.reshape(img[:, :, :channels], (pixels, channels))
+
+nbins = 256
+histo_rgb, [bx, by, bz] = np.histogramdd(data, bins=(nbins,nbins,nbins),range=((0,255),(0,255),(0,255)))
+r, g, b = np.nonzero(histo_rgb)
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter3D(r, g, b)
+ax.set_xlabel('Red')
+ax.set_ylabel('Green')
+ax.set_zlabel('Blue')
+plt.title('RGB colors')
+plt.show()
+
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3A.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3NB.jpeg"
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/4:4A.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/4:4NB.jpeg"
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/Original7.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/Manipulated7.jpeg"
+
+
+
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import pyplot
+from PIL import Image
+
+im = Image.open(image_path)
+r, g, b = list(im.getdata(0)), list(im.getdata(1)), list(im.getdata(2))
+
+fig = pyplot.figure()
+axis = fig.add_subplot(1, 1, 1, projection="3d") # 3D plot with scalar values in each axis
+
+axis.scatter(r, g, b, c="#ff0000", marker="o")
+axis.set_xlabel("Red")
+axis.set_ylabel("Green")
+axis.set_zlabel("Blue")
+pyplot.show()
+
+
+
+
+img[:,:,0]
+np.max(img[:,:,0])
+np.min(img[:,:,0])
+
+img[:,:,1]
+np.max(img[:,:,1])
+np.min(img[:,:,1])
+
+img[:,:,2]
+np.max(img[:,:,2])
+np.min(img[:,:,2])
+
+img[:,:,0][0]
+img[:,:,0][0][0]
+
+
+import numpy as np
+import matplotlib.image as mpimg
+from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3A.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3NB.jpeg"
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/4:4A.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/4:4NB.jpeg"
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/Original7.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/Manipulated7.jpeg"
+
+image_path = '/home/aneesh/Documents/AdversarialLearningDatasets/ExperimentalImages/7Three/3:3A.jpeg'
+image_path = '/home/aneesh/Documents/AdversarialLearningDatasets/ExperimentalImages/7Three/3:3NB.jpeg'
+
+img = mpimg.imread(image_path)
+xpixels = img.shape[0]
+ypixels = img.shape[1]
+channels = 3
+
+x = []
+y = []
+z = []
+for ridx in xrange(0,xpixels):
+    for cidx in xrange(0,ypixels):
+        print('ridx,cidx,val',ridx,cidx,img[:,:,0][ridx][cidx])     
+        x.append(ridx)
+        y.append(cidx)
+        z.append(img[:,:,0][ridx][cidx])
+
+fig = plt.figure()
+axis = fig.add_subplot(1, 1, 1, projection="3d") # 3D plot with scalar values in each axis
+axis.scatter3D(x, y, z, c="#ff0000", marker="o")
+axis.set_xlabel("X")
+axis.set_ylabel("Y")
+axis.set_zlabel("Z")
+plt.title('Intensities vs Positions')
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://stackoverflow.com/questions/27704490/interactive-pixel-information-of-an-image-in-python
+
+
+http://au.mathworks.com/help/matlab/ref/scatter3.html
+https://plot.ly/matlab/3d-scatter-plots/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    StdoutFile = '/scratch/cifar10_20/cifar10_train/Stdout.txt'
+    AlphasFile = '/scratch/cifar10_20/cifar10_train/alphas.pkl'
+    fp1 = open(StdoutFile,'wb')
+    fp2 = open(AlphasFile,'wb')
+
+
+Replaced by following
+
+'''
+    InDir = '/scratch/cifar10_20/' 
+    createdataset.binarizer(InDir,'TrainSplit/','train.bin')
+    copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
+    if tf.gfile.Exists(TrainWeightsDir):
+      tf.gfile.DeleteRecursively(TrainWeightsDir)
+    tf.gfile.MakeDirs(TrainWeightsDir)
+
+    StdoutFile = '/scratch/cifar10_20/cifar10_train/Stdout.txt'
+    AlphasFile = '/scratch/cifar10_20/cifar10_train/alphas.pkl'
+    fp1 = open(StdoutFile,'wb')
+    fp2 = open(AlphasFile,'wb')
+
+    fp2 = open(AlphasFile,'wb')
+
+    cifar10_train.train()
+    
+    if(os.path.exists(InitialCheckpointsDir)):
+        shutil.rmtree(InitialCheckpointsDir)
+    shutil.copytree(CheckpointsDir, InitialCheckpointsDir)
+    # For 2 class problem, change input bin file to include 2 classes and train over 2000 iterations
+    # For 1000 class problem, change input bin file to include 1000 classes and train over 10000 iterations
+
+    createdataset.binarizer(InDir,'TrainSplit/','test.bin')
+    copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
+    if tf.gfile.Exists(EvalDir):
+      tf.gfile.DeleteRecursively(EvalDir)
+    tf.gfile.MakeDirs(EvalDir)
+    perfmetrics = cifar10_eval.evaluate()
+    perf = perfmetrics[str(perfmetric)]
+    print('initial original training data performance of cifar10_eval without alphastar on original training data',perf)
+    finalresults.append((1, 0, 1, perf, perfmetrics, gen))
+    
+    createdataset.binarizer(InDir,'TestSplit/','test.bin')
+    copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
+    if tf.gfile.Exists(EvalDir):
+      tf.gfile.DeleteRecursively(EvalDir)
+    tf.gfile.MakeDirs(EvalDir)
+    perfmetrics = cifar10_eval.evaluate()
+    perf = perfmetrics[str(perfmetric)]
+    print('initial original testing data precision of cifar10_eval without alphastar on original training data',perf)
+    finalresults.append((0, 0, 1, perf, perfmetrics, gen)) 
+    print('finalresults',finalresults)
+'''
+
+
+
+
+
+
+
+
+More masking :
+
+
+        mask1 = positiveimagesmean != 0
+        mask2 = negativeimagesmean != 0
+
+        positiveval = min(heapq.nlargest(FLAGS.positiveintensitysize, np.ndarray.flatten(positiveimagesmean[:,:,0])))
+        mask3 = positiveimagesmean >= positiveval
+
+#        mask3 = positiveimagesmean < positiveval
+#        positiveimagesmean[mask3] = 0 
+        
+
+        negativeval = min(heapq.nlargest(FLAGS.negativeintensitysize, np.ndarray.flatten(negativeimagesmean[:,:,0])))
+        mask4 = negativeimagesmean >= negativeval
+
+#        mask4 = negativeimagesmean < negativeval
+#        negativeimagesmean[mask4] = 0 
+
+
+        alphasaver(AdvInDir,positiveimagesmean,3,3)
+        alphasaver(AdvInDir,negativeimagesmean,4,4)
+
+        print('np.count_nonzero(mask3)',np.count_nonzero(mask3))
+        print('np.count_nonzero(mask4)',np.count_nonzero(mask4))
+        print('np.count_nonzero(positiveimagesmean)',np.count_nonzero(positiveimagesmean))
+        print('np.count_nonzero(negativeimagesmean)',np.count_nonzero(negativeimagesmean))
+
+        print('np.max(positiveimagesmean)',np.max(positiveimagesmean))
+        print('np.min(positiveimagesmean)',np.min(positiveimagesmean))
+        print('np.max(negativeimagesmean)',np.max(negativeimagesmean))
+        print('np.min(negativeimagesmean)',np.min(negativeimagesmean))
+
+
+        np.set_printoptions(threshold=np.inf)
+#        print('np.transpose(np.nonzero(positiveimagesmean))',np.transpose(np.nonzero(positiveimagesmean)))
+#        print('np.transpose(np.nonzero(negativeimagesmean))',np.transpose(np.nonzero(negativeimagesmean)))
+
+
+        transp3 = np.transpose(np.nonzero(positiveimagesmean))
+        transp4 = np.transpose(np.nonzero(negativeimagesmean))
+
+        for index in range(len(transp3)):
+            height,width,depth = transp3[index]
+#            print 'Height index ',height,'Width index ',width,'Depth index ',depth,' value : ', positiveimagesmean[height,width,depth]
+
+        for index in range(len(transp4)):
+            height,width,depth = transp4[index]
+#            print 'Height index ',height,'Width index ',width,'Depth index ',depth,' value : ', negativeimagesmean[height,width,depth]
+            
+
+        sys.exit()
+
+
+        mask1 = positiveimagesmean != 0
+        mask2 = negativeimagesmean != 0
+
+        positiveval = min(heapq.nlargest(FLAGS.positiveintensitysize, np.ndarray.flatten(positiveimagesmean[:,:,0])))
+#        mask3 = positiveimagesmean >= positiveval
+
+        mask3 = positiveimagesmean < positiveval
+        positiveimagesmean[mask3] = 0 
+
+        negativeval = min(heapq.nlargest(FLAGS.negativeintensitysize, np.ndarray.flatten(negativeimagesmean[:,:,0])))
+#        mask4 = negativeimagesmean >= negativeval
+        
+        mask4 = negativeimagesmean < negativeval
+        negativeimagesmean[mask4] = 0 
+
+#        alphasaver(AdvInDir,positiveimagesmean,900,':AAp7')
+#        alphasaver(AdvInDir,negativeimagesmean,300,':AAn19')
+
+#        alphasaver(AdvInDir,positiveimagesmean,900,':ABp7')
+#        alphasaver(AdvInDir,negativeimagesmean,300,':ABn19')
+
+        alphasaver(AdvInDir,positiveimagesmean,900,'NAA:p7')
+        alphasaver(AdvInDir,negativeimagesmean,300,'NAA:n19')
+
+#        alphasaver(AdvInDir,positiveimagesmean,900,'NAB:p7')
+#        alphasaver(AdvInDir,negativeimagesmean,300,'NAB:n19')
+
+        #mask = mask2
+        #mask = np.logical_and(mask1,mask2)
+        mask = np.logical_and.reduce((mask1,mask2,mask3,mask4))
+
+
+        #mask = mask2
+        #mask = np.logical_and(mask1,mask2)
+        mask = np.logical_or(mask3,mask4)
+
+
+        maskedimage = positiveimagesmean +  negativeimagesmean       
+        maskedimage = maskedimage[mask]
+
+#        maskedimage = np.floor(np.divide(maskedimage, 2))
+#        maskedimage[np.logical_not(mask)] = 0
+
+        alphasaver(AdvInDir,maskedimage,500,'Bp7:n19')
+#        alphasaver(AdvInDir,maskedimage,500,'Ap7:n19')
+
+#        alphasaver(AdvInDir,maskedimage,500,'DBp7:n19')
+#        alphasaver(AdvInDir,maskedimage,500,'DAp7:n19')
+
+        alphasaver(AdvInDir,maskedimage,500,'p7:n19')
+
+        print('np.count_nonzero(mask)',np.count_nonzero(mask))
+        sys.exit()
+        
+        print('np.count_nonzero(mask)',np.count_nonzero(mask))
+        sys.exit()
+
+
+        mask1 = positiveimagesmean != 0
+        mask2 = negativeimagesmean != 0
+
+        positiveval = min(heapq.nlargest(FLAGS.positiveintensitysize, np.ndarray.flatten(positiveimagesmean[:,:,0])))
+        mask3 = positiveimagesmean >= positiveval
+
+        negativeval = min(heapq.nlargest(FLAGS.negativeintensitysize, np.ndarray.flatten(negativeimagesmean[:,:,0])))
+        mask4 = negativeimagesmean >= negativeval
+        
+        #mask = mask2
+        #mask = np.logical_and(mask1,mask2)
+        #mask = np.logical_and.reduce((mask1,mask2,mask3,mask4))
+        mask = np.logical_or(mask3,mask4)
+#        maskedimage = positiveimagesmean +  negativeimagesmean
+#        maskedimage = np.floor(np.divide(maskedimage, 2))
+#        print('np.count_nonzero(maskedimage) b',np.count_nonzero(maskedimage))
+#        maskedimage[np.logical_not(mask)] = 0
+#        print('np.count_nonzero(mask) a',np.count_nonzero(mask))
+#        sys.exit()
+        mask = mask.astype(int)
+        print('mask[np.nonzero(mask)]',mask[np.nonzero(mask)])
+        alphasaver(AdvInDir,255*mask,500,'p7:n19')
+
+#        alphasaver(AdvInDir,maskedimage,500,'Bp7:n19')
+#        alphasaver(AdvInDir,maskedimage,500,'Ap7:n19')
+
+#        alphasaver(AdvInDir,maskedimage,500,'DBp7:n19')
+#        alphasaver(AdvInDir,maskedimage,500,'DAp7:n19')
+
+        print('np.count_nonzero(mask)',np.count_nonzero(mask))
+        sys.exit()
 
 '''

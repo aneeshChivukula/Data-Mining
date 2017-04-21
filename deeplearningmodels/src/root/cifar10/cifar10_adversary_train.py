@@ -39,7 +39,7 @@ tf.app.flags.DEFINE_integer('low', -255,
                             """Lower limit for pixel value.""")
 tf.app.flags.DEFINE_integer('high', 255,
                             """Upper limit for pixel value.""")
-tf.app.flags.DEFINE_integer('dividend', 1,
+tf.app.flags.DEFINE_integer('dividend', 10,
                             """Factor to control the GA norm initialization boundaries.""")
 tf.app.flags.DEFINE_integer('steplow', -20,
                             """Small step limit for mutation operator.""")
@@ -688,10 +688,44 @@ def mutation(individual):
 #      
 #     return individual
 
+# def perturbation(individual,mask2):
+#      
+# #    individual[0][np.logical_not(mask2)] = 0
+#     np.random.seed(current_milli_time())
+#      
+#     heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+#     heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+#      
+#     widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+#     widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+#      
+# #    mask1 = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+#     array = np.random.randint(0,2,size=(32, 32)).astype(np.bool)
+#     arrays = [array,np.copy(array),np.copy(array)]
+#     mask1 = np.stack(arrays, axis=2)
+# 
+#     mask3 = np.logical_and(mask1,np.logical_not(individual[0] != 0))
+#     mask = np.logical_and(mask3,mask2)[heightstartind:heightendind,widthstartind:widthendind,]
+# 
+#     individual[0][np.logical_and(mask3,mask2)] = 0
+# 
+#     print('np.count_nonzero(mask2)',np.count_nonzero(mask2))
+#     print('np.count_nonzero(mask)',np.count_nonzero(mask))
+#     print('np.count_nonzero(np.logical_and(mask1,mask2))',np.count_nonzero(np.logical_and(mask1,mask2)))
+#     
+#     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
+#  
+#     individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[heightstartind:heightendind,widthstartind:widthendind,][mask]
+# 
+# #    individual[0][mask][heightstartind:heightendind,widthstartind:widthendind,] += r[mask][heightstartind:heightendind,widthstartind:widthendind,]
+#      
+#     return individual
+
 
 def perturbation(individual,mask2):
-     
-#    individual[0][np.logical_not(mask2)] = 0
+
+    AdvInDirN = '/scratch/cifar10_20/AdversarialSplitAlphan/'
+
     np.random.seed(current_milli_time())
      
     heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
@@ -699,25 +733,16 @@ def perturbation(individual,mask2):
      
     widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
     widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
-     
-#    mask1 = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
-    array = np.random.randint(0,2,size=(32, 32)).astype(np.bool)
+
+    individual[0][np.logical_not(mask2)] = 0
+    mask = mask2[heightstartind:heightendind,widthstartind:widthendind,]
+
+    array = np.full((heightendind-heightstartind, widthendind-widthstartind),random.randint(FLAGS.steplow,FLAGS.stephigh),np.int64)
     arrays = [array,np.copy(array),np.copy(array)]
-    mask1 = np.stack(arrays, axis=2)
-
-    mask = np.logical_and(mask1,mask2)[heightstartind:heightendind,widthstartind:widthendind,]
-
-    individual[0][np.logical_not(np.logical_and(mask1,mask2))] = 0
-    print('np.count_nonzero(mask2)',np.count_nonzero(mask2))
-    print('np.count_nonzero(mask)',np.count_nonzero(mask))
-    print('np.count_nonzero(np.logical_and(mask1,mask2))',np.count_nonzero(np.logical_and(mask1,mask2)))
-    
-    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
+    r = np.stack(arrays, axis=2)
  
-    individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[heightstartind:heightendind,widthstartind:widthendind,][mask]
+    individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[mask]
 
-#    individual[0][mask][heightstartind:heightendind,widthstartind:widthendind,] += r[mask][heightstartind:heightendind,widthstartind:widthendind,]
-     
     return individual
 
 

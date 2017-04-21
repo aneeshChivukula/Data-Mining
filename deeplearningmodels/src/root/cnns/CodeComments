@@ -5344,4 +5344,241 @@ More masking :
         print('np.count_nonzero(mask)',np.count_nonzero(mask))
         sys.exit()
 
+
+
+
+
+
+require(jpeg)
+img <- readJPEG("/scratch/cifar10_20/ExperimentalImages/PlotImages/Averaged.jpeg")
+dim(img)
+img = img*255
+img[,,1]
+img[,,2]
+img[,,3]
+library(scatterplot3d)
+
+with(img, {
+   scatterplot3d(img,main="3-D Scatterplot Example 1")
+})
+
+with(mtcars, {
+   scatterplot3d(disp,   # x axis
+                 wt,     # y axis
+                 mpg,    # z axis
+                 main="3-D Scatterplot Example 1")
+})
+
+Plot in Python not R matplotlib and pillow or opencv
+
+import numpy as np
+import matplotlib.image as mpimg
+from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+img = mpimg.imread('/home/aneesh/Documents/AdversarialLearningDatasets/ExperimentalImages/3:3A.jpeg')
+I=mpimg.imread('/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3A.jpeg');
+s=img.shape[0]*img.shape[1]
+R=double(reshape(I(:,:,1),1,s));
+
+
+
+from PIL import Image
+Image.fromarray(img).save('/scratch/cifar10_20/ExperimentalImages/PlotImages/Temp.jpeg')
+
+import numpy as np
+import matplotlib.image as mpimg
+from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+img = mpimg.imread('/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3A.jpeg')
+img = mpimg.imread('/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3NB.jpeg')
+img = mpimg.imread('/scratch/cifar10_20/ExperimentalImages/PlotImages/4:4NB.jpeg')
+pixels = img.shape[0]*img.shape[1]
+channels = 3
+data = np.reshape(img[:, :, :channels], (pixels, channels))
+
+nbins = 256
+histo_rgb, [bx, by, bz] = np.histogramdd(data, bins=(nbins,nbins,nbins),range=((0,255),(0,255),(0,255)))
+r, g, b = np.nonzero(histo_rgb)
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter3D(r, g, b)
+ax.set_xlabel('Red')
+ax.set_ylabel('Green')
+ax.set_zlabel('Blue')
+plt.title('RGB colors')
+plt.show()
+
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3A.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3NB.jpeg"
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/4:4A.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/4:4NB.jpeg"
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/Original7.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/Manipulated7.jpeg"
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/Manipulated7.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/Manipulated7.jpeg"
+
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import pyplot
+from PIL import Image
+
+im = Image.open(image_path)
+r, g, b = list(im.getdata(0)), list(im.getdata(1)), list(im.getdata(2))
+
+fig = pyplot.figure()
+axis = fig.add_subplot(1, 1, 1, projection="3d") # 3D plot with scalar values in each axis
+
+axis.scatter(r, g, b, c="#ff0000", marker="o")
+axis.set_xlabel("Red")
+axis.set_ylabel("Green")
+axis.set_zlabel("Blue")
+pyplot.show()
+
+
+
+
+img[:,:,0]
+np.max(img[:,:,0])
+np.min(img[:,:,0])
+
+img[:,:,1]
+np.max(img[:,:,1])
+np.min(img[:,:,1])
+
+img[:,:,2]
+np.max(img[:,:,2])
+np.min(img[:,:,2])
+
+img[:,:,0][0]
+img[:,:,0][0][0]
+
+
+import numpy as np
+import matplotlib.image as mpimg
+from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3A.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/3:3NB.jpeg"
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/4:4A.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/4:4NB.jpeg"
+
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/Original7.jpeg"
+image_path = "/scratch/cifar10_20/ExperimentalImages/PlotImages/Manipulated7.jpeg"
+
+image_path = '/home/aneesh/Documents/AdversarialLearningDatasets/ExperimentalImages/7Three/3:3A.jpeg'
+image_path = '/home/aneesh/Documents/AdversarialLearningDatasets/ExperimentalImages/7Three/3:3NB.jpeg'
+
+
+
+
+
+
+
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/900::ABp7.jpeg'
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/900::AAp7.jpeg' 
+
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/300::ABn19.jpeg'
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/300::AAn19.jpeg' 
+
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/900:NAB:p7.jpeg'
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/900:NAA:p7.jpeg' 
+
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/300:NAB:n19.jpeg'
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/300:NAA:n19.jpeg' 
+
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/300:NAB:n19.jpeg'
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/300:NAA:n19.jpeg' 
+
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/900::AAp7.jpeg' 
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/900:NAA:p7.jpeg' 
+
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/300::AAn19.jpeg' 
+image_path = '/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/300:NAA:n19.jpeg' 
+
+image_path = "/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/500:p7:n19.jpeg"
+image_path = "/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/1000:0-4.jpeg"
+image_path = "/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/1000:0-3.jpeg"
+
+image_path = "/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/500:Bp7:n19.jpeg"
+image_path = "/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/500:Ap7:n19.jpeg"
+image_path = "/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/500:DBp7:n19.jpeg"
+image_path = "/home/aneesh/Documents/BigLearningDatasets/PlotImages/New/500:DAp7:n19.jpeg"
+
+img = mpimg.imread(image_path)
+xpixels = img.shape[0]
+ypixels = img.shape[1]
+channels = 3
+
+x = []
+y = []
+z = []
+for ridx in xrange(0,xpixels):
+    for cidx in xrange(0,ypixels):
+        print('ridx,cidx,val',ridx,cidx,img[:,:,0][ridx][cidx])     
+        x.append(ridx)
+        y.append(cidx)
+        z.append(img[:,:,0][ridx][cidx])
+
+fig = plt.figure()
+axis = fig.add_subplot(1, 1, 1, projection="3d") # 3D plot with scalar values in each axis
+axis.scatter3D(x, y, z, c="#ff0000", marker="o")
+axis.set_xlabel("X")
+axis.set_ylabel("Y")
+axis.set_zlabel("Z")
+plt.title('Intensities vs Positions')
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://stackoverflow.com/questions/27704490/interactive-pixel-information-of-an-image-in-python
+
+
+http://au.mathworks.com/help/matlab/ref/scatter3.html
+https://plot.ly/matlab/3d-scatter-plots/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://au.mathworks.com/help/matlab/ref/scatter3.html?requestedDomain=au.mathworks.com
+
+http://stackoverflow.com/questions/36700674/how-to-extract-rgb-from-an-image-and-plot-only-rg-as-a-graph-r-for-x-and-g-for
+https://gist.github.com/Uberi/4885a318e7ef2afa7f22
+http://stackoverflow.com/questions/29399248/matplotlib-3d-scatterplot-with-marker-color-corresponding-to-rgb-values
+http://machinethatsees.blogspot.com.au/2012/07/how-to-plot-color-in-3d-rgb-color-space.html
+
+
 '''

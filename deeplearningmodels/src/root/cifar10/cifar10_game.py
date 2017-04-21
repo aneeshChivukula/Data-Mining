@@ -231,18 +231,6 @@ def main(argv=None):
 
 
     if(searchalg=="SA"):
-        toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=1)
-        
-        alphac = toolbox.population() # 'alphac[0].shape', (1, 32, 32, 3))
-        pickle.dump(alphac,fp2)
-
-        binarizer(GameInDir,AdvInDir,imagespopulation,alphac[0],labels,'train.bin')
-
-        cifar10_adversary_train.alphafitness(alphac,imagespopulation,toolbox)
-        evalc = alphac[0].fitness.weights[0]
-        alphag = alphac
-        alphan = alphac
-        
         mask1 = positiveimagesmean != 0
         mask2 = negativeimagesmean != 0
 
@@ -264,8 +252,22 @@ def main(argv=None):
 #        mask = np.logical_and.reduce((mask1,mask2,mask3,mask4,mask5))
         mask = np.logical_or(mask3,mask4)
         
-        print('np.count_nonzero(mask)',np.count_nonzero(mask))
-        sys.exit()
+        toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=1)
+        alphac = toolbox.population() # 'alphac[0].shape', (1, 32, 32, 3))
+        alphac[0][0][np.logical_not(mask)] = 0
+
+        while(np.count_nonzero(alphac) == 0):
+            alphac = toolbox.population() # 'alphac[0].shape', (1, 32, 32, 3))
+            alphac[0][0][np.logical_not(mask)] = 0
+
+        pickle.dump(alphac,fp2)
+
+        binarizer(GameInDir,AdvInDir,imagespopulation,alphac[0],labels,'train.bin')
+
+        cifar10_adversary_train.alphafitness(alphac,imagespopulation,toolbox)
+        evalc = alphac[0].fitness.weights[0]
+        alphag = alphac
+        alphan = alphac
         
         AdvInDirN = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphan/'
         AdvInDirG = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphag/'
@@ -372,7 +374,7 @@ def main(argv=None):
                 gen = gen + 1 
                 
                 
-                transformer(AdvInDirG,imagespopulation,alphag[0],labels,filesd)
+                transformer(AdvInDirG,imagespopulation,alphag[0][0],labels,filesd)
                 alphasaver(AdvInDirC,alphac[0][0],TempCurrent,idx)
                 print('Iteration completed')
                 sys.exit()
@@ -569,12 +571,12 @@ def main(argv=None):
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TrainSplit/'
     AdvInDirTrain = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTrain/'
     imagespopulation,positiveimagesmean,negativeimagesmean,imagesbyclass,filesd = toolbox.imagepopulation(InDir)
-    transformer(AdvInDirTrain,imagespopulation,alphastar[0],labels,filesd)
+    transformer(AdvInDirTrain,imagespopulation,alphastar[0][0],labels,filesd)
 
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/TestSplit/'
     AdvInDirTest = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitTest/'
     imagespopulation,positiveimagesmean,negativeimagesmean,imagesbyclass,filesd = toolbox.imagepopulation(InDir)
-    transformer(AdvInDirTest,imagespopulation,alphastar[0],labels,filesd)
+    transformer(AdvInDirTest,imagespopulation,alphastar[0][0],labels,filesd)
 
     print('final manipulated testing data precision of cifar10_eval without alphastar on original training data',perf)
     

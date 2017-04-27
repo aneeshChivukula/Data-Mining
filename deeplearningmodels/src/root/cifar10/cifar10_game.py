@@ -79,11 +79,16 @@ def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
 #         Image.fromarray(CurrImage).save(AdvInDir + CurrLabel + "/" + str(filesd[i]) + ".jpeg")
 #         print('AdvInDir + CurrLabel + "/" + str(filesd[i])',AdvInDir + CurrLabel + "/" + str(filesd[i]))
 
+# def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
+#     CurrImage = np.array(curralpha, np.uint8)
+#     
+#     print('CurrImage',CurrImage)
+#     Image.fromarray(CurrImage).save(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".jpeg")
+
 def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
-    CurrImage = np.array(curralpha, np.uint8)
-    
-    print('CurrImage',CurrImage)
-    Image.fromarray(CurrImage).save(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".jpeg")
+    fp = open(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".pkl",'wb')
+    pickle.dump(np.array(curralpha, np.int32),fp)
+# curralpha = pickle.load(open('/scratch/cifar10_20/AdversarialSplitAlphan/0:0.pkl','rb'))
     
     
 
@@ -155,8 +160,10 @@ def main(argv=None):
 #  
     StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
     AlphasFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphas.pkl'
+    FinalAlphaFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphac.pkl'    
     fp1 = open(StdoutFile,'wb')
     fp2 = open(AlphasFile,'wb')
+    fp3 = open(FinalAlphaFile,'wb')    
 #      
 #     cifar10_train.train()
 #       
@@ -390,6 +397,7 @@ def main(argv=None):
         print('alphastar[0].fitness.f1score',alphastar.fitness.f1score)
         print('alphastar[0].fitness.tpr',alphastar.fitness.tpr)
         print('alphastar[0].fitness.fpr',alphastar.fitness.fpr)
+        pickle.dump(alphastar,fp3)
     
     elif(searchalg=="GA"):
         toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=FLAGS.numalphas)

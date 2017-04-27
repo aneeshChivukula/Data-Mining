@@ -724,7 +724,7 @@ def mutation(individual):
 
 def perturbation(individual,mask2):
 
-    AdvInDirN = '/scratch/cifar10_20/AdversarialSplitAlphan/'
+#    AdvInDirN = '/scratch/cifar10_20/AdversarialSplitAlphan/'
 
     np.random.seed(current_milli_time())
      

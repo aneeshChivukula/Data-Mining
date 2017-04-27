@@ -241,6 +241,10 @@ def main(argv=None):
         mask1 = positiveimagesmean != 0
         mask2 = negativeimagesmean != 0
 
+        print('len(positiveimagesmean[positiveimagesmean<0])',len(positiveimagesmean[positiveimagesmean<0]))
+        print('len(positiveimagesmean[positiveimagesmean!=0])',len(positiveimagesmean[positiveimagesmean!=0]))
+        print('len(positiveimagesmean[positiveimagesmean<=math.ceil(FLAGS.high/FLAGS.dividend)] & positiveimagesmean[positiveimagesmean>0])',len(positiveimagesmean[np.logical_and(positiveimagesmean<=math.ceil(FLAGS.high/FLAGS.dividend),positiveimagesmean>0)]))
+
         positiveval = min(heapq.nlargest(FLAGS.positiveintensitysize, np.ndarray.flatten(positiveimagesmean[:,:,0])))
         mask3 = positiveimagesmean >= positiveval
         negativeval = min(heapq.nlargest(FLAGS.negativeintensitysize, np.ndarray.flatten(negativeimagesmean[:,:,0])))

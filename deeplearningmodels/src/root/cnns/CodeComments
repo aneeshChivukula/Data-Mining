@@ -5584,6 +5584,7 @@ http://machinethatsees.blogspot.com.au/2012/07/how-to-plot-color-in-3d-rgb-color
 
 import cPickle as pickle
 f = "/scratch/cifar10_20/AdversarialSplitAlphac/2.0:4.pkl"
+f = "/scratch/cifar10_20/AdversarialSplitAlphac/3.62797056:49.pkl"
 a = pickle.load(open(f,'rb'))
 a[a!=0]
 a[a<0]
@@ -5597,13 +5598,54 @@ from PIL import Image
 Image.fromarray(CurrImage).save('/scratch/cifar10_20/AdversarialSplitAlphac/alpha.jpeg')
 
 f = "/scratch/cifar10_20/TestSplit/1/3.jpeg"
-x = pickle.load(open(f,'rb'))
+f = "/scratch/cifar10_20/TestSplit/1/6.jpeg"
+img = Image.open(f)
+img.load()
+x = np.asarray(img, dtype="int32")
 xm = x+a
+len(xm[xm!=0])
+len(xm[xm<0])
 xm[xm!=0]
 xm[xm<0] = 0
+xm[xm>255]
 xm[xm>255] = 255
-CurrImage = np.array(x, np.uint8)
-Image.fromarray(CurrImage).save('/scratch/cifar10_20/AdversarialSplitAlphac/modified3.jpeg')
+CurrImage = np.array(xm, np.uint8)
+len(xm[xm!=0])
+len(CurrImage[CurrImage!=0])
+
+Image.fromarray(CurrImage).save('/scratch/cifar10_20/AdversarialSplitAlphac/modified6.jpeg')
+
+
+>>> len(xm[xm!=0])
+1821
+>>> len(xm[xm<0])
+984
+>>> xm[xm<0] = 0
+>>> xm[xm>255] 
+array([257, 257, 257, 256, 256, 256, 258, 258, 258], dtype=int32)
+>>> xm[xm>255] = 255
+>>> 
+
+
+>>> CurrImage = np.array(x, np.uint8)
+>>> len(CurrImage[CurrImage!=0])
+837
+>>> len(xm[xm!=0])
+837
+>>> xm = x+a
+>>> len(xm[xm!=0])
+1821
+>>> xm[xm<0] = 0
+>>> xm[xm>255] = 255
+>>> len(xm[xm!=0])
+837
+>>> CurrImage = np.array(xm, np.uint8)
+>>> len(xm[xm!=0])
+837
+>>> len(CurrImage[CurrImage!=0])
+837
+>>> 
+
 
 
 '''

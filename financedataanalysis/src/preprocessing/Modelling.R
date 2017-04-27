@@ -1,3 +1,64 @@
+setwd("/home/achivuku/Documents/BigLearningDatasets")
+mydata = read.csv('sample1.csv',header=FALSE)
+drops <- c("V601")
+head(mydata[,!(names(mydata) %in% drops)])
+mymatrix = data.matrix(mydata[,!(names(mydata) %in% drops)])
+
+mymatrixmean = apply(mymatrix,1,mean)
+mymatrixvar = apply(mymatrix,1,var)
+
+mymatrix2 = (mymatrix - mymatrix[,1])
+mymatrix3 = (mymatrix2 / mymatrix[,1])
+head(mymatrix3,1)[2]
+
+head(((mymatrix - mymatrix[,1]) / mymatrix[,1]),1)[2]
+
+mymatrix2 = ((mymatrix - mymatrix[,1]) / mymatrix[,1])
+
+mymatrix2mean = apply(mymatrix2,1,mean)
+mymatrix2var = apply(mymatrix2,1,var)
+
+class = mydata$V601
+mymatrixstatsdf = cbind.data.frame(mymatrix2,mymatrixmean,mymatrixvar,mymatrix2mean,mymatrix2var,class)
+head(mymatrixstatsdf)
+
+smp_size <- floor(0.75 * nrow(mymatrixstatsdf))
+set.seed(123)
+train_ind <- sample(seq_len(nrow(mymatrixstatsdf)), size = smp_size)
+train <- mymatrixstatsdf[train_ind, ]
+test <- mymatrixstatsdf[-train_ind, ]
+
+library(e1071)
+model <- naiveBayes(class ~ ., data = train)
+
+class(model)
+summary(model)
+print(model)
+
+pred_nb <- predict(model, newdata = test)
+truth <- test$class
+
+pred <- pred_nb
+
+xtab <- table(pred, truth)
+library(caret) 
+confusionMatrix(xtab)
+
+library(caret) 
+set.seed(400)
+ctrl <- trainControl(method="repeatedcv",repeats = 3) #,classProbs=TRUE,summaryFunction = twoClassSummary)
+knnFit <- train(class ~ ., data = train, method = "knn", trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
+knnFit
+
+pred_knn <- predict(knnFit,newdata = test )
+pred <- pred_knn
+
+xtab <- table(pred, truth)
+confusionMatrix(xtab)
+
+
+
+
 
 import numpy as np
 from pandas import DataFrame

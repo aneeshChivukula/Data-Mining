@@ -109,6 +109,13 @@ tf.app.flags.DEFINE_integer('minwidthstartidx', 2,
 #                             """Minimum window width start idx for the crossover op.""")
 tf.app.flags.DEFINE_integer('minwidthenddx', 10,
                             """Minimum window width end idx for the crossover op.""")
+
+tf.app.flags.DEFINE_integer('maxwidthlength', 10,
+                            """Maximum width for the perturbation op.""")
+tf.app.flags.DEFINE_integer('maxheightlength', 10,
+                            """Maximum height for the perturbation op.""")
+
+
 # tf.app.flags.DEFINE_integer('offspringsizefactor', 100/20,
 #                             """offspring size varying from 20% to 80% (increment by 10%)""")
 # tf.app.flags.DEFINE_integer('offspringsizefactor', 100/30,
@@ -727,12 +734,24 @@ def perturbation(individual,mask2):
 #    AdvInDirN = '/scratch/cifar10_20/AdversarialSplitAlphan/'
 
     np.random.seed(current_milli_time())
-     
-    heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
-    heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
-     
-    widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
-    widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+
+    heightstartind = np.random.randint(low=0,high=32)
+    heightendind = (heightstartind + np.random.randint(1,FLAGS.maxheightlength))
+    while( heightendind > 32 ):
+        heightstartind = np.random.randint(low=0,high=32)
+        heightendind = (heightstartind + np.random.randint(1,FLAGS.maxheightlength))
+    
+    widthstartind = np.random.randint(low=0,high=32)
+    widthendind = (widthstartind + np.random.randint(1,FLAGS.maxwidthlength))
+    while( widthendind > 32 ):
+        widthstartind = np.random.randint(low=0,high=32)
+        widthendind = (widthstartind + np.random.randint(1,FLAGS.maxwidthlength))
+
+#    heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+#    heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+
+#    widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+#    widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
 
     individual[0][np.logical_not(mask2)] = 0
     mask = mask2[heightstartind:heightendind,widthstartind:widthendind,]

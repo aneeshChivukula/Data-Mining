@@ -816,3 +816,42 @@ addEventLines(event.dates = anomaly.dates, event.labels = anomaly.labels, date.f
 3572858 |1005|1040 2012-10-09 15:20:59.589     3131458.6
 3654199 |1005|1040 2012-10-10 10:43:23.415     3201202.4
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+setwd("/home/achivuku/Documents/BigLearningDatasets")
+mydatao = read.csv("Alert1001_TradeOutput.csv")
+head(mydatao)
+l = length(unique(mydatao$security))
+print(l)
+df <- data.frame(security = character(520), numpositives = numeric(520), positivesmean = numeric(520), positivesvariance = numeric(520), stringsAsFactors = FALSE)
+i = 1
+for(v in unique(mydatao$security)){
+    mydataos = mydatao[mydatao$security==v,]
+    emptylabels = is.na(mydataos$alert1001)
+    np = nrow(mydataos[emptylabels==FALSE,])
+    mn = mean(mydataos[emptylabels==FALSE,]$price)
+    vn = var(mydataos[emptylabels==FALSE,]$price)
+	print(c(v,np,mn,vn))
+    df$security[i] <- v
+    df$numpositives[i] <- np
+    df$positivesmean[i] <- mn
+    df$positivesvariance[i] <- vn
+}
+print(df)
+write.csv(file="summarystats.csv", x=df)
+

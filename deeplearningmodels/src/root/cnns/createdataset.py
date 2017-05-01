@@ -1440,9 +1440,318 @@ def generatereports():
 #     final_payoff = 
 
 
+#     Multilabel classification : Positive class : 9, Negative class : 1,7
+    rls = [(1, 0, 1, 0.8574, {'precision': 0.8574}, 0), (0, 0, 1, 0.8548, {'precision': 0.8548}, 0), (0.844, 0.8565, 0.0125, 0.8565, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8565, 'tpr': 0.0}, 0), (0.844, 0.8565, 0.0125, 0.8454, {'precision': 0.8454}, 1), (0.844, 0.8565, 0.0125, 0.8534, {'precision': 0.8534}, 1)]
+    gen = 1
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 50
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+
+    rls = [(1, 0, 1, 0.7702, {'precision': 0.7702}, 0), (0, 0, 1, 0.7731, {'precision': 0.7731}, 0), (0.7547, 0.7914, 0.0367, 0.7914, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.7914, 'tpr': 0.0}, 0), (0.8218, 0.8594, 0.0376, 0.8594, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8594, 'tpr': 0.0}, 1), (0.8218, 0.8594, 0.0376, 0.8594, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8594, 'tpr': 0.0}, 2), (0.8218, 0.8594, 0.0376, 0.8601, {'precision': 0.8601}, 3), (0.8218, 0.8594, 0.0376, 0.7791, {'precision': 0.7791}, 3)]
+    gen = 3
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 20
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+
+    rls = [(1, 0, 1, 0.8335, {'precision': 0.8335}, 0), (0, 0, 1, 0.8309, {'precision': 0.8309}, 0), (0.8119, 0.832, 0.0201, 0.832, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.832, 'tpr': 0.0}, 0), (0.8119, 0.832, 0.0201, 0.8488, {'precision': 0.8488}, 1), (0.8119, 0.832, 0.0201, 0.8273, {'precision': 0.8273}, 1)]
+    gen = 1
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 17
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+
+    rls = 
+    gen = 3
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 12
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+    # workspace 17
+
+    rls = 
+    gen = 3
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 20
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+    # workspace 16
+
+
+    rls = [(1, 0, 1, 0.8039, {'precision': 0.8039}, 0), (0, 0, 1, 0.8067, {'precision': 0.8067}, 0), (0.7554, 0.8071, 0.0517, 0.8071, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8071, 'tpr': 0.0}, 0), (0.7554, 0.8071, 0.0517, 0.8352, {'precision': 0.8352}, 1), (0.7554, 0.8071, 0.0517, 0.8087, {'precision': 0.8087}, 1)]
+    gen = 1
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 5
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+
+    rls = 
+    gen = 1
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 10
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+    # workspace 14
+
+    rls = [(1, 0, 1, 0.8363, {'precision': 0.8363}, 0), (0, 0, 1, 0.8341, {'precision': 0.8341}, 0), (0.8267, 0.8361, 0.0094, 0.8361, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8361, 'tpr': 0.0}, 0), (0.8267, 0.8361, 0.0094, 0.8361, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8361, 'tpr': 0.0}, 1), (0.8267, 0.8361, 0.0094, 0.8649, {'precision': 0.8649}, 2), (0.8267, 0.8361, 0.0094, 0.8345, {'precision': 0.8345}, 2)]
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+
+    rls = 
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 5
+    maxheightlength = 10
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+    # workspace 12
+
+    rls = 
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 15
+    maxheightlength = 15
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+    # workspace 11
+
+    rls = 
+    gen = 2
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 20
+    maxheightlength = 10
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+    # workspace 10
+
+    rls = 
+    gen = 3
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 600
+    mylambda = 1
+    # workspace 20
+
+    rls = 
+    gen = 3
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 600
+    negativeintensitysize = 700
+    mylambda = 1
+    # workspace 19
+
+    rls = 
+    gen = 3
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 700
+    negativeintensitysize = 800
+    mylambda = 1
+    # workspace 18
+    
+    rls = 
+    gen = 3
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 20
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 800
+    negativeintensitysize = 900
+    mylambda = 1
+    # workspace 15
+
+
+#     rls = 
+#     gen = 3
+#     TempMin = 5
+#     TempMax = 1000
+#     SampleSize = 50
+#     ReductionRate = 0.8
+#     eta = 5,15
+#     delta = 20
+#     max_steps = 6000
+#     low = -255
+#     high = +255
+#     dividend = 20
+#     maxwidthlength = 10
+#     maxheightlength = 5
+#     positiveintensitysize = 500
+#     negativeintensitysize = 700
+#     mylambda = 1
 
 
 
+
+
+
+
+
+    
+    
+    
+    
     
     results = {}
 

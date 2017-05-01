@@ -1,3 +1,5 @@
+
+
 setwd("/home/achivuku/Documents/BigLearningDatasets")
 mydata = read.csv('sample1.csv',header=FALSE)
 drops <- c("V601")
@@ -25,18 +27,18 @@ head(mymatrixstatsdf)
 smp_size <- floor(0.75 * nrow(mymatrixstatsdf))
 set.seed(123)
 train_ind <- sample(seq_len(nrow(mymatrixstatsdf)), size = smp_size)
-train <- mymatrixstatsdf[train_ind, ]
-test <- mymatrixstatsdf[-train_ind, ]
+training <- mymatrixstatsdf[train_ind, ]
+testing <- mymatrixstatsdf[-train_ind, ]
 
 library(e1071)
-model <- naiveBayes(class ~ ., data = train)
+model <- naiveBayes(class ~ ., data = training)
 
 class(model)
 summary(model)
 print(model)
 
-pred_nb <- predict(model, newdata = test)
-truth <- test$class
+pred_nb <- predict(model, newdata = testing)
+truth <- testing$class
 
 pred <- pred_nb
 

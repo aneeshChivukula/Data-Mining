@@ -11,8 +11,8 @@ from os import listdir
 
 def createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,Sampletimestampsfile,Samplepricesfile):
 
-    startdate = date(2012, 9, 03)
-    starttime = time(9, 25, 0, 1)
+    startdate = date(2012, 1, 02)
+    starttime = time(9, 25, 0, 0)
     startdatetime = datetime.combine(startdate, starttime)    
     
     fp = open(PositiveClassFile, 'w')
@@ -26,8 +26,8 @@ def createpositivenegativepartitions(InFile,PositiveClassFile,NegativeClassFile,
     with open(InFile) as fileobject:
         for line in fileobject:
             row = line.rstrip('\n').split(',')
-            d = row[0].split('/')
-            t = row[1].split(':')
+            d = row[1].split('/')
+            t = row[2].split(':')
             ts = t[-1].split('.')
 
             currdate = date(int(d[2]), int(d[1]), int(d[0]))

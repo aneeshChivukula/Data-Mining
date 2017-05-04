@@ -851,7 +851,32 @@ for(v in unique(mydatao$security)){
     df$numpositives[i] <- np
     df$positivesmean[i] <- mn
     df$positivesvariance[i] <- vn
+    i <- i + 1
 }
 print(df)
 write.csv(file="summarystats.csv", x=df)
+
+emptylabels = is.na(mydatao$alert1001)
+np = nrow(mydatao[emptylabels==FALSE,])
+print(np)
+
+dfm = df$positivesmean
+dfmnas = is.na(dfm) 
+dfmc1 = dfm[dfmnas==FALSE]
+dfmzeros = dfmc1 == 0
+dfmc2 = dfmc1[dfmzeros==FALSE]
+sort(dfmc2)
+
+dfm = df$positivesvariance
+dfmnas = is.na(dfm) 
+dfmc1 = dfm[dfmnas==FALSE]
+dfmzeros = dfmc1 == 0
+dfmc2 = dfmc1[dfmzeros==FALSE]
+sort(dfmc2)
+
+dfm = df$numpositives
+dfmzeros = dfm == 0
+dfmc1 = dfm[dfmzeros==FALSE]
+sort(dfmc1)
+
 

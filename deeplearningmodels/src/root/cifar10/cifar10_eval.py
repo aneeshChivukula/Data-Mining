@@ -145,12 +145,16 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
           false_positives_count = 0
           true_negatives_count = 0
           false_negatives_count = 0
+          total_sample_count = num_iter * FLAGS.batch_size
+      else:
+          total_positives_count = 0
+
       
       perfmetrics = {}
       
       true_count = 0  # Counts the number of correct predictions.
-      total_sample_count = num_iter * FLAGS.batch_size
       step = 0
+      
       while step < num_iter and not coord.should_stop():
 
         print('sess.run(labels)',sess.run(labels))
@@ -168,8 +172,18 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
             true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
             false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))     
         else:
-            predictions = sess.run([top_k_op])
-            true_count += np.sum(predictions)
+#            predictions = sess.run([top_k_op])
+#            true_count += np.sum(predictions)
+
+            actuals = sess.run(labels)
+            predictions  = sess.run([top_k_op[1]])[0].flatten()
+            # predictions is a numpy array of numpy arrays. can flatten prediction in row-major (C-style) order to get top1 predictions but not top3 predictions. to get best prediction in top3 predictions retrieve predicted label by looping the list.  
+            actualspos = (actuals == 0)
+            # assuming 0 is index of the positive class
+            true_count += np.sum(actuals[actualspos] == predictions[actualspos])
+            total_positives_count += np.sum(actualspos)
+
+
 #         print('predictions',predictions)
         step += 1
         print('step',step)
@@ -195,7 +209,8 @@ def eval_once(saver, summary_writer, top_k_op, summary_op,variables_to_restore,l
           perfmetrics['tpr'] = round(tpr,FLAGS.numdecimalplaces)
           perfmetrics['fpr'] = round(fpr,FLAGS.numdecimalplaces)
       else:
-        precision = true_count / total_sample_count
+        #precision = true_count / total_sample_count
+        precision = true_count / total_positives_count
         perfmetrics['precision'] = round(precision,FLAGS.numdecimalplaces)
       
 #       print('logits',sess.run(logits))
@@ -228,8 +243,11 @@ def evaluate():
     logits = cifar10.inference(images)
     print('logits',logits)
     # Calculate predictions.
-    top_k_op = tf.nn.in_top_k(logits, labels, 1)
-
+    if(executetwolabel == True):
+        top_k_op = tf.nn.in_top_k(logits, labels, 1)
+    else:
+        top_k_op = tf.nn.top_k(logits, 1, sorted=True)
+        
     # Restore the moving average version of the learned variables for eval.
     variable_averages = tf.train.ExponentialMovingAverage(
         cifar10.MOVING_AVERAGE_DECAY)

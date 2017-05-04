@@ -1441,7 +1441,7 @@ def generatereports():
 
 
 #     Multilabel classification : Positive class : 9, Negative class : 1,7
-    rls = [(1, 0, 1, 0.8574, {'precision': 0.8574}, 0), (0, 0, 1, 0.8548, {'precision': 0.8548}, 0), (0.844, 0.8565, 0.0125, 0.8565, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8565, 'tpr': 0.0}, 0), (0.844, 0.8565, 0.0125, 0.8454, {'precision': 0.8454}, 1), (0.844, 0.8565, 0.0125, 0.8534, {'precision': 0.8534}, 1)]
+    rls = 
     gen = 1
     TempMin = 5
     TempMax = 1000
@@ -1459,7 +1459,25 @@ def generatereports():
     negativeintensitysize = 700
     mylambda = 1
 
-    rls = [(1, 0, 1, 0.7702, {'precision': 0.7702}, 0), (0, 0, 1, 0.7731, {'precision': 0.7731}, 0), (0.7547, 0.7914, 0.0367, 0.7914, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.7914, 'tpr': 0.0}, 0), (0.8218, 0.8594, 0.0376, 0.8594, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8594, 'tpr': 0.0}, 1), (0.8218, 0.8594, 0.0376, 0.8594, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8594, 'tpr': 0.0}, 2), (0.8218, 0.8594, 0.0376, 0.8601, {'precision': 0.8601}, 3), (0.8218, 0.8594, 0.0376, 0.7791, {'precision': 0.7791}, 3)]
+    rls = 
+    gen = 1
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 20
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 25
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+    
+    rls = 
     gen = 3
     TempMin = 5
     TempMax = 1000
@@ -1477,7 +1495,7 @@ def generatereports():
     negativeintensitysize = 700
     mylambda = 1
 
-    rls = [(1, 0, 1, 0.8335, {'precision': 0.8335}, 0), (0, 0, 1, 0.8309, {'precision': 0.8309}, 0), (0.8119, 0.832, 0.0201, 0.832, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.832, 'tpr': 0.0}, 0), (0.8119, 0.832, 0.0201, 0.8488, {'precision': 0.8488}, 1), (0.8119, 0.832, 0.0201, 0.8273, {'precision': 0.8273}, 1)]
+    rls = [(1, 0, 1, 0.7216, {'precision': 0.7216}, 0), (0, 0, 1, 0.7224, {'precision': 0.7224}, 0), (0.8465, 0.8627, 0.0162, 0.8627, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8627, 'tpr': 0.0}, 0), (0.8465, 0.8627, 0.0162, 0.7111, {'precision': 0.7111}, 1), (0.8465, 0.8627, 0.0162, 0.7185, {'precision': 0.7185}, 1)]
     gen = 1
     TempMin = 5
     TempMax = 1000
@@ -1495,8 +1513,8 @@ def generatereports():
     negativeintensitysize = 700
     mylambda = 1
 
-    rls = 
-    gen = 3
+    rls = [(1, 0, 1, 0.7133, {'precision': 0.7133}, 0), (0, 0, 1, 0.7151, {'precision': 0.7151}, 0), (0.8292, 0.8601, 0.0309, 0.8601, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8601, 'tpr': 0.0}, 0), (0.8292, 0.8601, 0.0309, 0.704, {'precision': 0.704}, 1), (0.8292, 0.8601, 0.0309, 0.7111, {'precision': 0.7111}, 1)]
+    gen = 1
     TempMin = 5
     TempMax = 1000
     SampleSize = 50
@@ -1512,10 +1530,9 @@ def generatereports():
     positiveintensitysize = 500
     negativeintensitysize = 700
     mylambda = 1
-    # workspace 17
 
     rls = 
-    gen = 3
+    gen = 2
     TempMin = 5
     TempMax = 1000
     SampleSize = 50
@@ -1525,16 +1542,14 @@ def generatereports():
     max_steps = 6000
     low = -255
     high = +255
-    dividend = 20
+    dividend = 10
     maxwidthlength = 10
     maxheightlength = 5
     positiveintensitysize = 500
     negativeintensitysize = 700
     mylambda = 1
-    # workspace 16
 
-
-    rls = [(1, 0, 1, 0.8039, {'precision': 0.8039}, 0), (0, 0, 1, 0.8067, {'precision': 0.8067}, 0), (0.7554, 0.8071, 0.0517, 0.8071, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8071, 'tpr': 0.0}, 0), (0.7554, 0.8071, 0.0517, 0.8352, {'precision': 0.8352}, 1), (0.7554, 0.8071, 0.0517, 0.8087, {'precision': 0.8087}, 1)]
+    rls = [(1, 0, 1, 0.7349, {'precision': 0.7349}, 0), (0, 0, 1, 0.7265, {'precision': 0.7265}, 0), (0.8352, 0.8598, 0.0246, 0.8598, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8598, 'tpr': 0.0}, 0), (0.8352, 0.8598, 0.0246, 0.7168, {'precision': 0.7168}, 1), (0.8352, 0.8598, 0.0246, 0.7264, {'precision': 0.7264}, 1)]
     gen = 1
     TempMin = 5
     TempMax = 1000
@@ -1552,7 +1567,7 @@ def generatereports():
     negativeintensitysize = 700
     mylambda = 1
 
-    rls = 
+    rls = [(1, 0, 1, 0.6926, {'precision': 0.6926}, 0), (0, 0, 1, 0.6946, {'precision': 0.6946}, 0), (0.8238, 0.851, 0.0272, 0.851, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.851, 'tpr': 0.0}, 0), (0.8238, 0.851, 0.0272, 0.7124, {'precision': 0.7124}, 1), (0.8238, 0.851, 0.0272, 0.703, {'precision': 0.703}, 1)]
     gen = 1
     TempMin = 5
     TempMax = 1000
@@ -1569,9 +1584,26 @@ def generatereports():
     positiveintensitysize = 500
     negativeintensitysize = 700
     mylambda = 1
-    # workspace 14
 
-    rls = [(1, 0, 1, 0.8363, {'precision': 0.8363}, 0), (0, 0, 1, 0.8341, {'precision': 0.8341}, 0), (0.8267, 0.8361, 0.0094, 0.8361, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8361, 'tpr': 0.0}, 0), (0.8267, 0.8361, 0.0094, 0.8361, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8361, 'tpr': 0.0}, 1), (0.8267, 0.8361, 0.0094, 0.8649, {'precision': 0.8649}, 2), (0.8267, 0.8361, 0.0094, 0.8345, {'precision': 0.8345}, 2)]
+    rls = [(1, 0, 1, 0.7214, {'precision': 0.7214}, 0), (0, 0, 1, 0.7238, {'precision': 0.7238}, 0), (0.8312, 0.8668, 0.0356, 0.8668, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8668, 'tpr': 0.0}, 0), (0.8312, 0.8668, 0.0356, 0.7145, {'precision': 0.7145}, 1), (0.8312, 0.8668, 0.0356, 0.7268, {'precision': 0.7268}, 1)]
+    gen = 1
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 15
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 600
+    mylambda = 1
+
+    rls = [(1, 0, 1, 0.7202, {'precision': 0.7202}, 0), (0, 0, 1, 0.7224, {'precision': 0.7224}, 0), (0.817, 0.8609, 0.0439, 0.8609, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8609, 'tpr': 0.0}, 0), (0.817, 0.8609, 0.0439, 0.8609, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8609, 'tpr': 0.0}, 1), (0.817, 0.8609, 0.0439, 0.719, {'precision': 0.719}, 2), (0.817, 0.8609, 0.0439, 0.7187, {'precision': 0.7187}, 2)]
     gen = 2
     TempMin = 5
     TempMax = 1000
@@ -1589,7 +1621,27 @@ def generatereports():
     negativeintensitysize = 700
     mylambda = 1
 
-    rls = 
+
+    rls = [(1, 0, 1, 0.6844, {'precision': 0.6844}, 0), (0, 0, 1, 0.6839, {'precision': 0.6839}, 0), (0.8033, 0.8355, 0.0322, 0.8355, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8355, 'tpr': 0.0}, 0), (0.8425, 0.8748, 0.0323, 0.8748, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8748, 'tpr': 0.0}, 1), (0.8425, 0.8748, 0.0323, 0.8748, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8748, 'tpr': 0.0}, 2), (0.8425, 0.8748, 0.0323, 0.7173, {'precision': 0.7173}, 3), (0.8425, 0.8748, 0.0323, 0.6814, {'precision': 0.6814}, 3)]
+    gen = 3
+    TempMin = 5
+    TempMax = 1000
+    SampleSize = 50
+    ReductionRate = 0.8
+    eta = 5,15
+    delta = 25
+    max_steps = 6000
+    low = -255
+    high = +255
+    dividend = 10
+    maxwidthlength = 10
+    maxheightlength = 5
+    positiveintensitysize = 500
+    negativeintensitysize = 700
+    mylambda = 1
+    
+
+    rls = [(1, 0, 1, 0.6926, {'precision': 0.6926}, 0), (0, 0, 1, 0.6867, {'precision': 0.6867}, 0), (0.8147, 0.8413, 0.0266, 0.8413, {'recall': 0.0, 'fpr': 0.0, 'f1score': 0.0, 'precision': 0.8413, 'tpr': 0.0}, 0), (0.8147, 0.8413, 0.0266, 0.6962, {'precision': 0.6962}, 1), (0.8147, 0.8413, 0.0266, 0.692, {'precision': 0.692}, 1)]
     gen = 2
     TempMin = 5
     TempMax = 1000
@@ -1606,10 +1658,12 @@ def generatereports():
     positiveintensitysize = 500
     negativeintensitysize = 700
     mylambda = 1
-    # workspace 12
 
+
+
+    
     rls = 
-    gen = 2
+    gen = 1
     TempMin = 5
     TempMax = 1000
     SampleSize = 50
@@ -1625,10 +1679,9 @@ def generatereports():
     positiveintensitysize = 500
     negativeintensitysize = 700
     mylambda = 1
-    # workspace 11
 
     rls = 
-    gen = 2
+    gen = 1
     TempMin = 5
     TempMax = 1000
     SampleSize = 50
@@ -1644,10 +1697,9 @@ def generatereports():
     positiveintensitysize = 500
     negativeintensitysize = 700
     mylambda = 1
-    # workspace 10
 
     rls = 
-    gen = 3
+    gen = 2
     TempMin = 5
     TempMax = 1000
     SampleSize = 50
@@ -1663,7 +1715,6 @@ def generatereports():
     positiveintensitysize = 500
     negativeintensitysize = 600
     mylambda = 1
-    # workspace 20
 
     rls = 
     gen = 3
@@ -1682,7 +1733,6 @@ def generatereports():
     positiveintensitysize = 600
     negativeintensitysize = 700
     mylambda = 1
-    # workspace 19
 
     rls = 
     gen = 3
@@ -1701,10 +1751,9 @@ def generatereports():
     positiveintensitysize = 700
     negativeintensitysize = 800
     mylambda = 1
-    # workspace 18
     
     rls = 
-    gen = 3
+    gen = 2
     TempMin = 5
     TempMax = 1000
     SampleSize = 50
@@ -1720,7 +1769,6 @@ def generatereports():
     positiveintensitysize = 800
     negativeintensitysize = 900
     mylambda = 1
-    # workspace 15
 
 
 #     rls = 

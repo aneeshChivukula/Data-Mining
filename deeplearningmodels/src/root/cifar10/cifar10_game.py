@@ -85,11 +85,17 @@ def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
 #     print('CurrImage',CurrImage)
 #     Image.fromarray(CurrImage).save(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".jpeg")
 
-def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
-    fp = open(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".pkl",'wb')
-    pickle.dump(np.array(curralpha, np.int32),fp)
-# curralpha = pickle.load(open('/scratch/cifar10_20/AdversarialSplitAlphan/0:0.pkl','rb'))
+# def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
+#     fp = open(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".pkl",'wb')
+#     pickle.dump(np.array(curralpha, np.int32),fp)
+# # curralpha = pickle.load(open('/scratch/cifar10_20/AdversarialSplitAlphan/0:0.pkl','rb'))
     
+
+def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
+    CurrImage = np.array(curralpha, np.uint8)
+    print('CurrImage',CurrImage)
+    print('Image.fromarray(CurrImage)',Image.fromarray(CurrImage))
+    Image.fromarray(CurrImage).save(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".jpeg")
     
 
 def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
@@ -228,7 +234,8 @@ def main(argv=None):
     
     toolbox.register("individualImage", cifar10_adversary_train.initIndividualImage)
     toolbox.register("imagepopulation", cifar10_adversary_train.initImagePopulation, toolbox.individualImage)
-    imagespopulation,positiveimagesmean,negativeimagesmean,imagesbyclass,filesd = toolbox.imagepopulation(InDir)
+#     imagespopulation,positiveimagesmean,negativeimagesmean,imagesbyclass,filesd = toolbox.imagepopulation(InDir)
+    imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
     
     
 
@@ -250,12 +257,12 @@ def main(argv=None):
         negativeval = min(heapq.nlargest(FLAGS.negativeintensitysize, np.ndarray.flatten(negativeimagesmean[:,:,0])))
         mask4 = negativeimagesmean >= negativeval
 
-        freqmask = np.zeros((32, 32, 3))
-        
-        for i in xrange(0,10):
-            freqmask = freqmask + (imagesbyclass[i] != 0).astype(int)
-        print('freqmask',freqmask)
-        mask5 = freqmask > FLAGS.minclassfreq
+#         freqmask = np.zeros((32, 32, 3))
+#         
+#         for i in xrange(0,10):
+#             freqmask = freqmask + (imagesbyclass[i] != 0).astype(int)
+#         print('freqmask',freqmask)
+#         mask5 = freqmask > FLAGS.minclassfreq
             
 #         mask = mask2
 #         mask = np.logical_and(mask1,mask2)
@@ -271,11 +278,11 @@ def main(argv=None):
             alphac = toolbox.population() # 'alphac[0].shape', (1, 32, 32, 3))
             alphac[0][0][np.logical_not(mask)] = 0
 
-        pickle.dump(alphac,fp2)
+#        pickle.dump(alphac,fp2)
 
-        binarizer(GameInDir,AdvInDir,imagespopulation,alphac[0],labels,'train.bin')
+#        binarizer(GameInDir,AdvInDir,imagespopulation,alphac[0],labels,'train.bin')
 
-        cifar10_adversary_train.alphafitness(alphac,imagespopulation,toolbox)
+#        cifar10_adversary_train.alphafitness(alphac,imagespopulation,toolbox)
         evalc = alphac[0].fitness.weights[0]
         alphag = alphac
         alphan = alphac
@@ -308,7 +315,8 @@ def main(argv=None):
             
             print('adv_payoff - adv_payoff_highest',adv_payoff - adv_payoff_highest)
             
-            if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
+#            if abs(adv_payoff - adv_payoff_highest) > FLAGS.myepsilon:
+            if True:
                 adv_payoff_highest = adv_payoff
     
                 print('adv_payoff_highest',adv_payoff_highest)
@@ -324,7 +332,7 @@ def main(argv=None):
                         
                         
                         alphasaver(AdvInDirN,alphan[0][0],TempCurrent,idx)
-                        
+                        sys.exit()
                         
                         cifar10_adversary_train.alphafitness(alphan,imagespopulation,toolbox)
                         

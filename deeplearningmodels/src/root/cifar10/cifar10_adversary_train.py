@@ -13,6 +13,7 @@ import random
 import sys
 import time
 
+import cPickle as pickle
 import numpy as np
 from root.cifar10 import cifar10
 from root.cifar10 import cifar10_eval
@@ -110,9 +111,13 @@ tf.app.flags.DEFINE_integer('minwidthstartidx', 2,
 tf.app.flags.DEFINE_integer('minwidthenddx', 10,
                             """Minimum window width end idx for the crossover op.""")
 
-tf.app.flags.DEFINE_integer('maxwidthlength', 10,
+tf.app.flags.DEFINE_integer('minwidthlength', 10,
+                            """Minimum width for the perturbation op.""")
+tf.app.flags.DEFINE_integer('maxwidthlength', 15,
                             """Maximum width for the perturbation op.""")
-tf.app.flags.DEFINE_integer('maxheightlength', 10,
+tf.app.flags.DEFINE_integer('minheightlength', 10,
+                            """Minimum height for the perturbation op.""")
+tf.app.flags.DEFINE_integer('maxheightlength', 15,
                             """Maximum height for the perturbation op.""")
 
 
@@ -131,9 +136,9 @@ tf.app.flags.DEFINE_integer('offspringsizefactor', 100/50,
 # tf.app.flags.DEFINE_integer('offspringsizefactor', 100/80,
 #                             """offspring size varying from 20% to 80% (increment by 10%)""")
 
-tf.app.flags.DEFINE_integer('positiveintensitysize', 500,
+tf.app.flags.DEFINE_integer('positiveintensitysize', 100,
                             """selecting positiveintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
-tf.app.flags.DEFINE_integer('negativeintensitysize', 500,
+tf.app.flags.DEFINE_integer('negativeintensitysize', 200,
                             """selecting negativeintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
 tf.app.flags.DEFINE_integer('minclassfreq', 5,
                             """selecting negativeintensitysize number of pixels in SA high intensity mask assuming a image size of 1024(32*32) """)
@@ -205,6 +210,18 @@ current_milli_time = lambda: int(round(time.time()))
 StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/StdoutGeneticOps.txt'
 fp = open(StdoutFile,'w')
 fp.close()
+
+
+# def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
+#     fp = open(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".pkl",'wb')
+#     pickle.dump(np.array(curralpha, np.int32),fp)
+# # curralpha = pickle.load(open('/scratch/cifar10_20/AdversarialSplitAlphan/0:0.pkl','rb'))
+
+def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
+    CurrImage = np.array(curralpha, np.uint8)
+    print('CurrImage',CurrImage)
+    print('Image.fromarray(CurrImage)',Image.fromarray(CurrImage))
+    Image.fromarray(CurrImage).save(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".jpeg")
 
 
 def train(total_loss, global_step):
@@ -512,7 +529,6 @@ def initIndividual(meanimage):
     arrays = [array,np.copy(array),np.copy(array)]
     return meanimage + np.stack(arrays, axis=2)
 
-
 def initImagePopulation(ind_init, InDir):
     images = list()
 #     ind = 0
@@ -527,91 +543,134 @@ def initImagePopulation(ind_init, InDir):
     filesd = dict()
     index = 0
 
-    imagesbyclass = dict()
-    imagesbyclass[0] = np.zeros((32, 32, 3))
-    imagesbyclass[1] = np.zeros((32, 32, 3))
-    imagesbyclass[2] = np.zeros((32, 32, 3))
-    imagesbyclass[3] = np.zeros((32, 32, 3))
-    imagesbyclass[4] = np.zeros((32, 32, 3))
-    imagesbyclass[5] = np.zeros((32, 32, 3))
-    imagesbyclass[6] = np.zeros((32, 32, 3))
-    imagesbyclass[7] = np.zeros((32, 32, 3))
-    imagesbyclass[8] = np.zeros((32, 32, 3))
-    imagesbyclass[9] = np.zeros((32, 32, 3))
 
-    numimagesbyclass = dict()
-    numimagesbyclass[0] = 0
-    numimagesbyclass[1] = 0
-    numimagesbyclass[2] = 0
-    numimagesbyclass[3] = 0
-    numimagesbyclass[4] = 0
-    numimagesbyclass[5] = 0
-    numimagesbyclass[6] = 0
-    numimagesbyclass[7] = 0
-    numimagesbyclass[8] = 0
-    numimagesbyclass[9] = 0
+
+#    print('ind_init',ind_init)
+#    print('ls',ls)
     
     for d in ls:
         ind = ls.index(d)
+#        print('InDir + d',InDir + d)
+#        print('ind',ind)
+
         for f in listdir(InDir + d):
+#            print('InDir + d + f',InDir + d + '/' + f)
             a = ind_init(filename=InDir + d + '/' + f)
             if(len(a.shape) == 3):
                 filesd[index] = f
                 index = index+1
                 images.append((ind,a))
-
-                if(ind==0):
-                    imagesbyclass[0] = imagesbyclass[0] + a
-                    numimagesbyclass[0] = numimagesbyclass[0] + 1
-                elif(ind==1):
-                    imagesbyclass[1] = imagesbyclass[1] + a
-                    numimagesbyclass[1] = numimagesbyclass[1] + 1
-                elif(ind==2):
-                    imagesbyclass[2] = imagesbyclass[2] + a
-                    numimagesbyclass[2] = numimagesbyclass[2] + 1
-                elif(ind==3):
-                    imagesbyclass[3] = imagesbyclass[3] + a
-                    numimagesbyclass[3] = numimagesbyclass[3] + 1
-                elif(ind==4):
-                    imagesbyclass[4] = imagesbyclass[4] + a
-                    numimagesbyclass[4] = numimagesbyclass[4] + 1
-                elif(ind==5):
-                    imagesbyclass[5] = imagesbyclass[5] + a
-                    numimagesbyclass[5] = numimagesbyclass[5] + 1
-                elif(ind==6):
-                    imagesbyclass[6] = imagesbyclass[6] + a
-                    numimagesbyclass[6] = numimagesbyclass[6] + 1
-                elif(ind==7):
-                    imagesbyclass[7] = imagesbyclass[7] + a
-                    numimagesbyclass[7] = numimagesbyclass[7] + 1
-                elif(ind==8):
-                    imagesbyclass[8] = imagesbyclass[8] + a
-                    numimagesbyclass[8] = numimagesbyclass[8] + 1
-                elif(ind==9):
-                    imagesbyclass[9] = imagesbyclass[9] + a
-                    numimagesbyclass[9] = numimagesbyclass[9] + 1
-                
                 if(ind==0):
                     positiveimagesmean = positiveimagesmean + a
                     numpos = numpos + 1
                 else:
                     negativeimagesmean = negativeimagesmean + a
                     numneg = numneg + 1
-
-
-
-
-
                     
 #         ind = ind + 1
 #     print('l',l)
-#     return images,np.floor(np.divide(positiveimagesmean, numpos)),np.floor(np.divide(negativeimagesmean, numneg)),filesd
+    return images,np.floor(np.divide(positiveimagesmean, numpos)),np.floor(np.divide(negativeimagesmean, numneg)),filesd
+#    return images,positiveimagesmean,negativeimagesmean,filesd
 
-    
-    for i in xrange(0,10):
-        imagesbyclass[i] = np.floor(np.divide(imagesbyclass[i], numimagesbyclass[i]))
-    
-    return images,positiveimagesmean,negativeimagesmean,imagesbyclass,filesd
+# def initImagePopulation(ind_init, InDir):
+#     images = list()
+# #     ind = 0
+#     ls = listdir(InDir)
+#     ls.sort()
+#     positiveimagesmean = np.zeros((32, 32, 3))
+#     negativeimagesmean = np.zeros((32, 32, 3))
+# #     d = ls[0]
+#     numpos = 0
+#     numneg = 0
+#     
+#     filesd = dict()
+#     index = 0
+# 
+#     imagesbyclass = dict()
+#     imagesbyclass[0] = np.zeros((32, 32, 3))
+#     imagesbyclass[1] = np.zeros((32, 32, 3))
+#     imagesbyclass[2] = np.zeros((32, 32, 3))
+#     imagesbyclass[3] = np.zeros((32, 32, 3))
+#     imagesbyclass[4] = np.zeros((32, 32, 3))
+#     imagesbyclass[5] = np.zeros((32, 32, 3))
+#     imagesbyclass[6] = np.zeros((32, 32, 3))
+#     imagesbyclass[7] = np.zeros((32, 32, 3))
+#     imagesbyclass[8] = np.zeros((32, 32, 3))
+#     imagesbyclass[9] = np.zeros((32, 32, 3))
+# 
+#     numimagesbyclass = dict()
+#     numimagesbyclass[0] = 0
+#     numimagesbyclass[1] = 0
+#     numimagesbyclass[2] = 0
+#     numimagesbyclass[3] = 0
+#     numimagesbyclass[4] = 0
+#     numimagesbyclass[5] = 0
+#     numimagesbyclass[6] = 0
+#     numimagesbyclass[7] = 0
+#     numimagesbyclass[8] = 0
+#     numimagesbyclass[9] = 0
+#     
+#     for d in ls:
+#         ind = ls.index(d)
+#         for f in listdir(InDir + d):
+#             a = ind_init(filename=InDir + d + '/' + f)
+#             if(len(a.shape) == 3):
+#                 filesd[index] = f
+#                 index = index+1
+#                 images.append((ind,a))
+# 
+#                 if(ind==0):
+#                     imagesbyclass[0] = imagesbyclass[0] + a
+#                     numimagesbyclass[0] = numimagesbyclass[0] + 1
+#                 elif(ind==1):
+#                     imagesbyclass[1] = imagesbyclass[1] + a
+#                     numimagesbyclass[1] = numimagesbyclass[1] + 1
+#                 elif(ind==2):
+#                     imagesbyclass[2] = imagesbyclass[2] + a
+#                     numimagesbyclass[2] = numimagesbyclass[2] + 1
+#                 elif(ind==3):
+#                     imagesbyclass[3] = imagesbyclass[3] + a
+#                     numimagesbyclass[3] = numimagesbyclass[3] + 1
+#                 elif(ind==4):
+#                     imagesbyclass[4] = imagesbyclass[4] + a
+#                     numimagesbyclass[4] = numimagesbyclass[4] + 1
+#                 elif(ind==5):
+#                     imagesbyclass[5] = imagesbyclass[5] + a
+#                     numimagesbyclass[5] = numimagesbyclass[5] + 1
+#                 elif(ind==6):
+#                     imagesbyclass[6] = imagesbyclass[6] + a
+#                     numimagesbyclass[6] = numimagesbyclass[6] + 1
+#                 elif(ind==7):
+#                     imagesbyclass[7] = imagesbyclass[7] + a
+#                     numimagesbyclass[7] = numimagesbyclass[7] + 1
+#                 elif(ind==8):
+#                     imagesbyclass[8] = imagesbyclass[8] + a
+#                     numimagesbyclass[8] = numimagesbyclass[8] + 1
+#                 elif(ind==9):
+#                     imagesbyclass[9] = imagesbyclass[9] + a
+#                     numimagesbyclass[9] = numimagesbyclass[9] + 1
+#                 
+#                 if(ind==0):
+#                     positiveimagesmean = positiveimagesmean + a
+#                     numpos = numpos + 1
+#                 else:
+#                     negativeimagesmean = negativeimagesmean + a
+#                     numneg = numneg + 1
+# 
+# 
+# 
+# 
+# 
+#                     
+# #         ind = ind + 1
+# #     print('l',l)
+# #     return images,np.floor(np.divide(positiveimagesmean, numpos)),np.floor(np.divide(negativeimagesmean, numneg)),filesd
+# 
+#     
+#     for i in xrange(0,10):
+#         imagesbyclass[i] = np.floor(np.divide(imagesbyclass[i], numimagesbyclass[i]))
+#     
+#     return images,positiveimagesmean,negativeimagesmean,imagesbyclass,filesd
 
 def evaluate(currpopulation):
     binarizer(FLAGS.data_dir + '/imagenet2010-batches-bin/',currpopulation,'test.bin')
@@ -729,6 +788,50 @@ def mutation(individual):
 #     return individual
 
 
+# def perturbation(individual,mask2):
+# 
+# #    AdvInDirN = '/scratch/cifar10_20/AdversarialSplitAlphan/'
+# 
+#     np.random.seed(current_milli_time())
+# 
+#     heightstartind = np.random.randint(low=0,high=32)
+#     heightendind = (heightstartind + np.random.randint(1,FLAGS.maxheightlength))
+#     while( heightendind > 32 ):
+#         heightstartind = np.random.randint(low=0,high=32)
+#         heightendind = (heightstartind + np.random.randint(1,FLAGS.maxheightlength))
+#     
+#     widthstartind = np.random.randint(low=0,high=32)
+#     widthendind = (widthstartind + np.random.randint(1,FLAGS.maxwidthlength))
+#     while( widthendind > 32 ):
+#         widthstartind = np.random.randint(low=0,high=32)
+#         widthendind = (widthstartind + np.random.randint(1,FLAGS.maxwidthlength))
+# 
+# #    heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+# #    heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+# 
+# #    widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+# #    widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+# 
+#     individual[0][np.logical_not(mask2)] = 0
+#     AdvInDirN = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/AdversarialSplitAlphan/'
+#     alphasaver(AdvInDirN,individual[0][0],0,0)
+#     
+#     mask = mask2[heightstartind:heightendind,widthstartind:widthendind,]
+# 
+#     array = np.full((heightendind-heightstartind, widthendind-widthstartind),random.randint(FLAGS.steplow,FLAGS.stephigh),np.int64)
+#     arrays = [array,np.copy(array),np.copy(array)]
+#     r = np.stack(arrays, axis=2)
+#  
+#     individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[mask]
+# 
+#     alphasaver(AdvInDirN,individual[0][0],1,1)
+# 
+# 
+#     return individual
+
+
+
+
 def perturbation(individual,mask2):
 
 #    AdvInDirN = '/scratch/cifar10_20/AdversarialSplitAlphan/'
@@ -736,33 +839,40 @@ def perturbation(individual,mask2):
     np.random.seed(current_milli_time())
 
     heightstartind = np.random.randint(low=0,high=32)
-    heightendind = (heightstartind + np.random.randint(1,FLAGS.maxheightlength))
+    heightendind = (heightstartind + np.random.randint(FLAGS.minheightlength,FLAGS.maxheightlength))
     while( heightendind > 32 ):
         heightstartind = np.random.randint(low=0,high=32)
-        heightendind = (heightstartind + np.random.randint(1,FLAGS.maxheightlength))
+        heightendind = (heightstartind + np.random.randint(FLAGS.minheightlength,FLAGS.maxheightlength))
     
     widthstartind = np.random.randint(low=0,high=32)
-    widthendind = (widthstartind + np.random.randint(1,FLAGS.maxwidthlength))
+    widthendind = (widthstartind + np.random.randint(FLAGS.minwidthlength,FLAGS.maxwidthlength))
     while( widthendind > 32 ):
         widthstartind = np.random.randint(low=0,high=32)
-        widthendind = (widthstartind + np.random.randint(1,FLAGS.maxwidthlength))
+        widthendind = (widthstartind + np.random.randint(FLAGS.minwidthlength,FLAGS.maxwidthlength))
 
 #    heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
 #    heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
-
+     
 #    widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
 #    widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
 
     individual[0][np.logical_not(mask2)] = 0
-    mask = mask2[heightstartind:heightendind,widthstartind:widthendind,]
+    mask3 = np.zeros_like(mask2)
+    mask3[heightstartind:heightendind,widthstartind:widthendind,] = True
+    mask = np.logical_and(mask2,mask3)
 
-    array = np.full((heightendind-heightstartind, widthendind-widthstartind),random.randint(FLAGS.steplow,FLAGS.stephigh),np.int64)
+#    mask = mask2[heightstartind:heightendind,widthstartind:widthendind,]
+
+#    array = np.full((heightendind-heightstartind, widthendind-widthstartind),random.randint(FLAGS.steplow,FLAGS.stephigh),np.int64)
+    array = np.full((32, 32),random.randint(FLAGS.steplow,FLAGS.stephigh),np.int64)
     arrays = [array,np.copy(array),np.copy(array)]
     r = np.stack(arrays, axis=2)
  
-    individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[mask]
+#    individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[mask]
+    individual[0][mask] += r[mask]
 
     return individual
+
 
 
 def crossover(individual1,individual2):

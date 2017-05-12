@@ -43,6 +43,27 @@ ReductionRate = 0.1
 
 executetwolabel = True
 
+def guidedmasking(mask):
+    heightstartind = np.random.randint(low=0,high=32)
+    heightendind = (heightstartind + np.random.randint(FLAGS.minheightlength,FLAGS.maxheightlength))
+    while( heightendind > 32 ):
+        heightstartind = np.random.randint(low=0,high=32)
+        heightendind = (heightstartind + np.random.randint(FLAGS.minheightlength,FLAGS.maxheightlength))
+    
+    widthstartind = np.random.randint(low=0,high=32)
+    widthendind = (widthstartind + np.random.randint(FLAGS.minwidthlength,FLAGS.maxwidthlength))
+    while( widthendind > 32 ):
+        widthstartind = np.random.randint(low=0,high=32)
+        widthendind = (widthstartind + np.random.randint(FLAGS.minwidthlength,FLAGS.maxwidthlength))
+
+    mask5 = np.zeros_like(mask)
+    mask5[heightstartind:heightendind,widthstartind:widthendind,] = True
+    mask = np.logical_and(mask,mask5)
+    
+    return mask
+    
+
+
 def transformer(AdvInDir,imagespopulation,curralpha,labels,filesd):
 
     if tf.gfile.Exists(AdvInDir):
@@ -268,7 +289,13 @@ def main(argv=None):
 #         mask = np.logical_and(mask1,mask2)
 #         mask = np.logical_and.reduce((mask1,mask2,mask3,mask4))
 #        mask = np.logical_and.reduce((mask1,mask2,mask3,mask4,mask5))
-        mask = np.logical_or(mask3,mask4)
+        masko = np.logical_or(mask3,mask4)
+#         masko = np.logical_xor(mask3,mask4)
+        
+        mask = guidedmasking(masko)
+#         while(np.count_nonzero(mask5) < (FLAGS.negativeintensitysize - FLAGS.positiveintensitysize)):
+        while(np.count_nonzero(mask) < 100):
+            mask = guidedmasking(masko)
         
         toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=1)
         alphac = toolbox.population() # 'alphac[0].shape', (1, 32, 32, 3))
@@ -277,6 +304,7 @@ def main(argv=None):
         while(np.count_nonzero(alphac) == 0):
             alphac = toolbox.population() # 'alphac[0].shape', (1, 32, 32, 3))
             alphac[0][0][np.logical_not(mask)] = 0
+
 
 #        pickle.dump(alphac,fp2)
 

@@ -309,6 +309,131 @@ def loss_function_input(images,flag):
         raise ValueError('Please supply a input directory')
         
     
+# def adversary_test_cnn():
+#     with tf.Graph().as_default():
+#         sess = tf.Session(config=tf.ConfigProto(
+#         log_device_placement=FLAGS.adv_log_device_placement))
+#         coord = tf.train.Coordinator()
+# 
+# #         global_step = tf.Variable(0, trainable=False)
+#         
+#         eval_data = FLAGS.adv_eval_data == 'test'
+#         
+#         images, labels = cifar10.inputs(eval_data=eval_data)
+#         
+        softmax_linear = loss_function_input(images,'test')
+        labels = tf.cast(labels, tf.int64)
+        logits = softmax_linear
+        #top_k_op = tf.nn.in_top_k(softmax_linear, labels, 1)
+        if(executetwolabel == True):
+            top_k_op = tf.nn.in_top_k(logits, labels, 1)
+        else:
+            top_k_op = tf.nn.top_k(logits, 1, sorted=True)
+# 
+#         
+#         init = tf.initialize_all_variables()
+#         sess.run(init)
+#         try:
+#             threads = []
+#             for qr in tf.get_collection(tf.GraphKeys.QUEUE_RUNNERS):
+#                 threads.extend(qr.create_threads(sess, coord=coord, daemon=True,
+#                                          start=True))
+# #             num_iter = int(math.ceil(FLAGS.num_examples / FLAGS.batch_size))
+#             num_iter = FLAGS.max_iter_test
+# 
+#             if(executetwolabel == True):
+#                 true_positives_count = 0
+#                 false_positives_count = 0
+#                 true_negatives_count = 0
+#                 false_negatives_count = 0
+#             else:
+#                 true_count = 0
+#                 total_positives_count = 0
+# 
+# 
+# 
+#             perfmetrics = {}
+# 
+#             total_sample_count = num_iter * FLAGS.batch_size
+#             step = 0
+#             
+#             while step < num_iter and not coord.should_stop():
+# #                 predictions = sess.run([top_k_op])
+# 
+#                 if(executetwolabel == True):
+#                     is_label_one = sess.run(labels).astype(bool)
+#                     is_label_zero = np.logical_not(is_label_one)
+#                 
+#                     correct_prediction = sess.run([top_k_op])
+#                     false_prediction = np.logical_not(correct_prediction)
+#                 
+#                     true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
+#                     false_positives_count += np.sum(np.logical_and(false_prediction, is_label_zero))
+#                  
+#                     true_negatives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
+#                     false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))     
+# #                 true_positives_count += np.sum(np.logical_and(correct_prediction, is_label_one))
+# #                 false_positives_count += np.sum(np.logical_and(correct_prediction, is_label_zero))
+# #  
+# #                 true_negatives_count += np.sum(np.logical_and(false_prediction, is_label_one))
+# #                 false_negatives_count += np.sum(np.logical_and(false_prediction, is_label_zero))     
+# #                 print('labels',sess.run(labels))
+# 
+#                 else:
+# #                    predictions = sess.run([top_k_op])                
+# #                    true_count += np.sum(predictions)
+#                   actuals = sess.run(labels)
+#                   predictions  = sess.run([top_k_op[1]])[0].flatten()
+#                   actualspos = (actuals == 0)
+#                   true_count += np.sum(actuals[actualspos] == predictions[actualspos])
+#                   total_positives_count += np.sum(actualspos)
+# 
+#                 step += 1
+# #                 print('is_label_one',is_label_one)
+# #                 print('sess.run(softmax_linear)',sess.run(softmax_linear))
+# #                 print('predictions',predictions)
+# #                 print('labels',labels)
+# #             sys.exit()            
+# 
+# 
+#             if(executetwolabel == True):
+#                 print('true_positives_count',true_positives_count)
+#                 print('false_positives_count',false_positives_count)
+#                 print('false_negatives_count',false_negatives_count)
+#                 print('true_negatives_count',true_negatives_count)
+#             
+#                 precision = float(true_positives_count) / float(true_positives_count+false_positives_count)
+#                 recall = float(true_positives_count) / float(true_positives_count+false_negatives_count)
+#                 f1score = 2*float(true_positives_count) / (2*float(true_positives_count)+float(false_positives_count + false_negatives_count))
+#                 tpr = float(true_positives_count) / float(true_positives_count+false_negatives_count)
+#                 fpr = float(false_positives_count) / float(false_positives_count+true_negatives_count)
+# 
+#                 perfmetrics['precision'] = precision
+#                 perfmetrics['recall'] = recall
+#                 perfmetrics['f1score'] = f1score
+#                 perfmetrics['tpr'] = tpr
+#                 perfmetrics['fpr'] = fpr
+# 
+#                 print('precision',precision)
+#                 print('recall',recall)
+#                 print('f1score',f1score)
+#             else:
+# #                precision = (true_count / total_sample_count)
+# #                perfmetrics['precision'] = precision
+#                 precision = (true_count / total_sample_count)
+#                 perfmetrics['precision'] = round(precision,FLAGS.numdecimalplaces)
+# 
+#                 print('%s: adversary_test_cnn precision @ 1 = %.3f' % (datetime.now(), precision))
+#         except Exception as e:  
+#             coord.request_stop(e)
+# 
+#         coord.request_stop()
+#         coord.join(threads, stop_grace_period_secs=10)
+#         
+#         print('%s: adversary training error @ 1 = %.3f' % (datetime.now(), FLAGS.mylambda * perfmetrics[str(perfmetric)]))
+#         
+# #         return(1-precision)
+#         return perfmetrics
             
         
 def adversary_test_cnn():
@@ -729,30 +854,30 @@ def mutation(individual):
 # def perturbation(individual,mask2):
 #     mask1 = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
 #     mask = np.logical_and(mask1,mask2)
-# 
+#  
 #     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh))
 #     individual[0][mask] = individual[0][mask] + r[mask]
 #     return individual
 
-# def perturbation(individual,mask2):
-#      
-#     np.random.seed(current_milli_time())
-#      
-#     heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
-#     heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
-#      
-#     widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
-#     widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
-#      
-#     mask1 = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
-#     mask = np.logical_and(mask1,mask2)[heightstartind:heightendind,widthstartind:widthendind,]
-#     
-#     
-#     r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh),dtype=np.int64)
-#  
-#     individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[heightstartind:heightendind,widthstartind:widthendind,][mask]
-#      
-#     return individual
+def perturbation(individual,mask2):
+      
+    np.random.seed(current_milli_time())
+      
+    heightstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+    heightendind = np.random.randint(heightstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+      
+    widthstartind = np.random.randint(low=0,high=np.random.randint(1,16))
+    widthendind = np.random.randint(widthstartind + np.random.randint(FLAGS.minwidthstartidx,FLAGS.minwidthenddx),32)
+      
+    mask1 = np.random.randint(0,2,size=(32, 32, 3)).astype(np.bool)
+    mask = np.logical_and(mask1,mask2)[heightstartind:heightendind,widthstartind:widthendind,]
+     
+     
+    r = np.full((32, 32, 3),random.randint(FLAGS.steplow,FLAGS.stephigh),dtype=np.int64)
+  
+    individual[0][heightstartind:heightendind,widthstartind:widthendind,][mask] += r[heightstartind:heightendind,widthstartind:widthendind,][mask]
+      
+    return individual
 
 # def perturbation(individual,mask2):
 #      

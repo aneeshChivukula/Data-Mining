@@ -42,6 +42,8 @@ SampleSize = 5
 ReductionRate = 0.1
 
 executetwolabel = True
+multiplayer = False # Make true only on server
+trainmultiplayercnn = False
 
 def guidedmasking(mask):
     heightstartind = np.random.randint(low=0,high=32)
@@ -119,6 +121,25 @@ def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
     Image.fromarray(CurrImage).save(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".jpeg")
     
 
+def binarizermulti(GameInDir,AdvInDir,imagespopulation,curralphas,labels,infile):
+    binfile = open(GameInDir + infile, 'wb',)
+    L = []
+
+    for curralpha in curralphas:
+        for i,x in enumerate(imagespopulation):
+            CurrLabel = labels[x[0]]
+            if(int(x[0]) == 0):
+                CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
+            else:
+                CurrImage = np.array(x[1], np.uint8)
+
+            l = np.insert(CurrImage.flatten(order='F'),0, x[0])
+            if(len(l) == createdataset.length):
+                L.append(l)
+
+    np.concatenate(L).astype('int16').tofile(binfile)
+    binfile.close()
+
 def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
     if tf.gfile.Exists(AdvInDir):
       tf.gfile.DeleteRecursively(AdvInDir)
@@ -163,6 +184,173 @@ def main(argv=None):
     TrainWeightsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
     CheckpointsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train'
     InitialCheckpointsDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train_initial'
+#     InitialCheckpointsDir = '/scratch/cifar10_22/cifar10_train_initial'
+
+
+    if(trainmultiplayercnn==True):
+        if(os.path.exists(CheckpointsDir)):
+            shutil.rmtree(CheckpointsDir)
+            shutil.copytree(InitialCheckpointsDir,CheckpointsDir, CheckpointsDir)
+    else:
+        createdataset.binarizer(InDir,'TrainSplit/','train.bin')
+        copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
+        if tf.gfile.Exists(TrainWeightsDir):
+          tf.gfile.DeleteRecursively(TrainWeightsDir)
+        tf.gfile.MakeDirs(TrainWeightsDir)
+        cifar10_train.train()
+        if(os.path.exists(InitialCheckpointsDir)):
+            shutil.rmtree(InitialCheckpointsDir)
+        shutil.copytree(CheckpointsDir, InitialCheckpointsDir)
+        # For 2 class problem, change input bin file to include 2 classes and train over 2000 iterations
+        # For 1000 class problem, change input bin file to include 1000 classes and train over 10000 iterations
+
+
+#     if(trainmultiplayercnn==True):
+#         InitialCheckpointsDir = '/scratch/cifar10_22/cifar10_train_initial'
+#         if(os.path.exists(CheckpointsDir)):
+#             shutil.rmtree(CheckpointsDir)
+#             shutil.copytree(InitialCheckpointsDir,CheckpointsDir, CheckpointsDir)
+#     else:
+#         InDir = '/scratch/cifar10_23/' 
+#         createdataset.binarizer(InDir,'TrainSplit/','train.bin')
+#         copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
+#         if tf.gfile.Exists(TrainWeightsDir):
+#           tf.gfile.DeleteRecursively(TrainWeightsDir)
+#         tf.gfile.MakeDirs(TrainWeightsDir)
+#         cifar10_train.train()
+#         if(os.path.exists(InitialCheckpointsDir)):
+#             shutil.rmtree(InitialCheckpointsDir)
+#         shutil.copytree(CheckpointsDir, InitialCheckpointsDir)
+#         # For 2 class problem, change input bin file to include 2 classes and train over 2000 iterations
+#         # For 1000 class problem, change input bin file to include 1000 classes and train over 10000 iterations
+
+
+    if(multiplayer==True): # Set all file paths appropriately
+        InDir = '/scratch/cifar10_25/TrainSplit/'
+        labels = listdir(InDir)
+        labels.sort()
+
+
+        creator.create("FitnessMax", base.Fitness, weights=(0.0,),error=0.0,precision=0.0,recall=0.0,f1score=0.0,tpr=0.0,fpr=0.0)
+        creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+        
+        toolbox = base.Toolbox()
+        
+        toolbox.register("mutate", cifar10_adversary_train.mutation)
+        toolbox.register("mate", cifar10_adversary_train.crossover)
+        toolbox.register("evaluate", cifar10_adversary_train.evaluate)
+        toolbox.register("select", cifar10_adversary_train.select)
+        toolbox.register("perturbate", cifar10_adversary_train.perturbation)
+        
+        toolbox.register("individualImage", cifar10_adversary_train.initIndividualImage)
+        toolbox.register("imagepopulation", cifar10_adversary_train.initImagePopulation, toolbox.individualImage)
+    
+        toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=0)
+        toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
+
+
+        alphastars = []
+
+
+
+        '''
+
+        alphastar1 = pickle.load(open('/scratch/cifar10_26/AdversarialSplitAlphac/7:7.pkl','rb'))
+        alphastar2 = pickle.load(open('/scratch/cifar10_25/AdversarialSplitAlphac/6:6.pkl','rb'))
+        alphastar3 = pickle.load(open('/scratch/cifar10_24/AdversarialSplitAlphac/4:4.pkl','rb'))
+        alphastar4 = pickle.load(open('/scratch/cifar10_23/AdversarialSplitAlphac/4:4.pkl','rb'))
+        alphastar5 = pickle.load(open('/scratch/cifar10_22/AdversarialSplitAlphac/2:2.pkl','rb'))
+        
+        '''
+
+
+        alphastar1 = pickle.load(open('/scratch/cifar10_31/AdversarialSplitAlphac/7:7.pkl','rb'))
+#        alphastar2 = pickle.load(open('/scratch/cifar10_30/AdversarialSplitAlphac/6:6.pkl','rb'))
+#        alphastar3 = pickle.load(open('/scratch/cifar10_29/AdversarialSplitAlphac/4:4.pkl','rb'))
+        alphastar4 = pickle.load(open('/scratch/cifar10_28/AdversarialSplitAlphac/4:4.pkl','rb'))
+#        alphastar5 = pickle.load(open('/scratch/cifar10_27/AdversarialSplitAlphac/2:2.pkl','rb'))
+
+        finalresultsmulti = []
+
+
+        '''
+        InDir = '/scratch/cifar10_22/' 
+        createdataset.binarizer(InDir,'TestSplit/','test.bin')
+        copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
+        if tf.gfile.Exists(EvalDir):
+          tf.gfile.DeleteRecursively(EvalDir)
+        tf.gfile.MakeDirs(EvalDir)
+        perfmetrics = cifar10_eval.evaluate()
+        finalresultsmulti.append(perfmetrics)
+
+        InDir = '/scratch/cifar10_22/TestSplit/'
+        imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
+        binarizer(GameInDir,AdvInDir,imagespopulation,alphastar5,labels,'test.bin')
+        if tf.gfile.Exists(EvalDir):
+          tf.gfile.DeleteRecursively(EvalDir)
+        tf.gfile.MakeDirs(EvalDir)
+        perfmetrics = cifar10_eval.evaluate()
+        finalresultsmulti.append(perfmetrics)
+
+        print(finalresultsmulti)
+
+        sys.exit()
+        
+        '''
+
+        alphastars.append(alphastar1)
+#        alphastars.append(alphastar2)
+#        alphastars.append(alphastar3)
+        alphastars.append(alphastar4)
+#        alphastars.append(alphastar5)
+        
+#        InDir = '/scratch/cifar10_26/' 
+#        createdataset.binarizer(InDir,'TrainSplit/','train.bin')
+#        copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
+#        if tf.gfile.Exists(TrainWeightsDir):
+#          tf.gfile.DeleteRecursively(TrainWeightsDir)
+#        tf.gfile.MakeDirs(TrainWeightsDir)
+#        cifar10_train.train()
+        if(os.path.exists(CheckpointsDir)):
+            shutil.rmtree(CheckpointsDir)
+            shutil.copytree(InitialCheckpointsDir,CheckpointsDir, CheckpointsDir)
+
+        FLAGS.max_iter_eval = 10000
+        
+        includetest = False
+        InDir = '/scratch/cifar10_25/TestSplit/'
+        imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
+        binarizermulti(GameInDir,AdvInDir,imagespopulation,alphastars,labels,'test.bin',includetest)
+        if tf.gfile.Exists(EvalDir):
+          tf.gfile.DeleteRecursively(EvalDir)
+        tf.gfile.MakeDirs(EvalDir)
+        perfmetrics = cifar10_eval.evaluate()
+
+        finalresultsmulti.append(perfmetrics)
+
+        includetest = False
+        InDir = '/scratch/cifar10_25/TrainSplit/'
+        imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
+        binarizermulti(GameInDir,AdvInDir,imagespopulation,alphastars,labels,'train.bin',includetest)
+        if tf.gfile.Exists(TrainWeightsDir):
+            tf.gfile.DeleteRecursively(TrainWeightsDir)
+        tf.gfile.MakeDirs(TrainWeightsDir)
+        cifar10_train.train()
+
+        includetest = True
+        InDir = '/scratch/cifar10_25/TestSplit/'
+        imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
+        binarizermulti(GameInDir,AdvInDir,imagespopulation,alphastars,labels,'test.bin',includetest)
+        if tf.gfile.Exists(EvalDir):
+          tf.gfile.DeleteRecursively(EvalDir)
+        tf.gfile.MakeDirs(EvalDir)
+        perfmetrics = cifar10_eval.evaluate()
+
+        finalresultsmulti.append(perfmetrics)
+
+        print('finalresultsmulti',finalresultsmulti)
+        sys.exit()
+
     
 #     maxiters = 11
     LoopingFlag = True
@@ -178,30 +366,17 @@ def main(argv=None):
 #     imagespopulation,positiveimagesmean = toolbox.imagepopulation(InDir)
 #     precision = 1-cifar10_adversary_train.evaluate(imagespopulation)
 
-#     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
-#     createdataset.binarizer(InDir,'TrainSplit/','train.bin')
-#     copyfile(InDir + 'train.bin', GameInDir + 'train.bin')
-#     if tf.gfile.Exists(TrainWeightsDir):
-#       tf.gfile.DeleteRecursively(TrainWeightsDir)
-#     tf.gfile.MakeDirs(TrainWeightsDir)
-#  
     StdoutFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/Stdout.txt'
     AlphasFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphas.pkl'
     FinalAlphaFile = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/cifar10_train/alphac.pkl'    
     fp1 = open(StdoutFile,'wb')
     fp2 = open(AlphasFile,'wb')
     fp3 = open(FinalAlphaFile,'wb')    
-#      
-#     cifar10_train.train()
-#       
-#     if(os.path.exists(InitialCheckpointsDir)):
-#         shutil.rmtree(InitialCheckpointsDir)
-#     shutil.copytree(CheckpointsDir, InitialCheckpointsDir)
-    # For 2 class problem, change input bin file to include 2 classes and train over 2000 iterations
-    # For 1000 class problem, change input bin file to include 1000 classes and train over 10000 iterations
  
 # Comment while testing on laptop
  
+#     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/' 
+#     InDir = '/scratch/cifar10_22/' 
 #     createdataset.binarizer(InDir,'TrainSplit/','test.bin')
 #     copyfile(InDir + 'test.bin', GameInDir + 'test.bin')
 #     if tf.gfile.Exists(EvalDir):
@@ -263,6 +438,7 @@ def main(argv=None):
 #     toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=positiveimagesmean)
     toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=0)
     toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
+
 
 
     if(searchalg=="SA"):
@@ -440,6 +616,24 @@ def main(argv=None):
         pickle.dump(alphastar,fp3)
     
     elif(searchalg=="GA"):
+
+        AdvInDirN = '/scratch/cifar10_26/AdversarialSplitAlphan/'
+        AdvInDirG = '/scratch/cifar10_26/AdversarialSplitAlphag/'
+        AdvInDirC = '/scratch/cifar10_26/AdversarialSplitAlphac/'
+
+        if tf.gfile.Exists(AdvInDirN):
+            tf.gfile.DeleteRecursively(AdvInDirN)
+        tf.gfile.MakeDirs(AdvInDirN)
+
+        if tf.gfile.Exists(AdvInDirG):
+            tf.gfile.DeleteRecursively(AdvInDirG)
+        tf.gfile.MakeDirs(AdvInDirG)
+
+        if tf.gfile.Exists(AdvInDirC):
+            tf.gfile.DeleteRecursively(AdvInDirC)
+        tf.gfile.MakeDirs(AdvInDirC)
+
+
         toolbox.register("population", tools.initRepeat, list, toolbox.individual, n=FLAGS.numalphas)
         alphaspopulation = toolbox.population()
         pickle.dump(alphaspopulation,fp2)
@@ -458,6 +652,8 @@ def main(argv=None):
                 if(alphaspopulation[index].fitness.weights > bestalphafitness):
                     bestalphafitness = alphaspopulation[index].fitness.weights
                     bestalpha = alphaspopulation[index]
+
+            alphasaver(AdvInDirN,bestalpha[0],gen,gen)
             
             print('bestalpha selected for game',bestalpha)
             print('bestalphafitness selected for game',bestalphafitness)
@@ -634,6 +830,7 @@ def main(argv=None):
         finalresults.append((adv_payoff, error,round(error-adv_payoff,FLAGS.numdecimalplaces), perf, perfmetrics, gen))
 
     if(searchalg=="GA"):
+        alphasaver(AdvInDirC,alphastar[0],gen,gen)
         print('alphastar',alphastar)
         print('bestalpha.fitness.weights[0]',alphastar.fitness.weights[0])
         print('adv_payoff_highest',adv_payoff_highest)
@@ -647,7 +844,7 @@ def main(argv=None):
         print('FLAGS.numalphas',FLAGS.numalphas)
         print('FLAGS.myepsilon',FLAGS.myepsilon)
         print('FLAGS.mylambda',FLAGS.mylambda)
-    elif(searchalg=="GA"):
+    elif(searchalg=="SA"):
         print('TempMax',TempMax)
         print('TempMin',TempMin)
         print('SampleSize',SampleSize)
@@ -658,6 +855,10 @@ def main(argv=None):
 
     fp1.close()
     fp2.close()
+
+        
+        
+
     
 # wstar are neural network weights stored in files on disk
 # Need to check whether game is converging as expected

@@ -2316,120 +2316,130 @@ def saplots():
     
 
     # (7,9)
-
+ 
 #     deltay1 = []
 #     deltay2 = []
 #     deltay3 = []
-#  
+#      
 #     deltax1 = []
 #     deltax2 = []
 #     deltax3 = []
-#  
+#      
 #     deltay1.append(0.8331)
 #     deltax1.append(10)
-#  
+#      
 #     deltay1.append(0.8167)
 #     deltax1.append(20)
-#  
+#      
 #     deltay1.append(0.8107)
 #     deltax1.append(30)
-#      
+#          
 #     deltay1.append(0.8226)
 #     deltax1.append(40)
-#  
+#      
 #     deltay1.append(0.8151)
 #     deltax1.append(50)
-#  
+#      
 #     deltay1.append(0.8185)
 #     deltax1.append(60)
-#      
+#          
 #     deltay1.append(0.8085)
 #     deltax1.append(70)
-#  
+#      
 #     deltay1.append(0.8118)
 #     deltax1.append(80)
-#  
+#      
 #     deltay1.append(0.824)
 #     deltax1.append(90)
-#  
+#      
 #     deltay1.append(0.8231)
 #     deltax1.append(100)
-#  
 #      
+#          
 #     deltay2.append(0.7018)
 #     deltax2.append(10)
-#  
+#      
 #     deltay2.append(0.6874)
 #     deltax2.append(20)
-#  
+#      
 #     deltay2.append(0.6868)
 #     deltax2.append(30)
-#  
+#      
 #     deltay2.append(0.5895)
 #     deltax2.append(40)
-#  
+#      
 #     deltay2.append(0.6117)
 #     deltax2.append(50)
-#  
+#      
 #     deltay2.append(0.5911)
 #     deltax2.append(60)
-#  
+#      
 #     deltay2.append(0.6343)
 #     deltax2.append(70)
-#  
+#      
 #     deltay2.append(0.6719)
 #     deltax2.append(80)
-#      
+#          
 #     deltay2.append(0.6475)
 #     deltax2.append(90)
-#  
+#      
 #     deltay2.append(0.6011)
 #     deltax2.append(100)
-#      
-#      
+#          
+#          
 #     deltay3.append(0.9919)
 #     deltax3.append(10)
-#  
+#      
 #     deltay3.append(0.8273)
 #     deltax3.append(20)
-#  
+#      
 #     deltay3.append(0.8486)
 #     deltax3.append(30)
-#      
+#          
 #     deltay3.append(0.9991)
 #     deltax3.append(40)
-#  
+#      
 #     deltay3.append(0.9998)
 #     deltax3.append(50)
-#  
+#      
 #     deltay3.append(0.9995)
 #     deltax3.append(60)
-#  
+#      
 #     deltay3.append(0.9995)
 #     deltax3.append(70)
-#      
+#          
 #     deltay3.append(0.9956)
 #     deltax3.append(80)
-#      
+#          
 #     deltay3.append(0.9995)
 #     deltax3.append(90)
-#  
+#      
 #     deltay3.append(0.9998)
 #     deltax3.append(100)
-#  
-#     plt.plot(deltax1,deltay1, label='learner performance', linestyle='-', marker='o', linewidth=2)
-#     plt.plot(deltax2,deltay2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
-#     plt.plot(deltax3,deltay3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
-#  
-#     xlabel(r'Upper Bound for Perturbation Step [$\delta$]', fontsize=20)    
-#     ylabel('Testing performance : f1score', fontsize=20)
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
-#     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PerturbationStepParams79.png", dpi=300)
+#        
+#     fig = plt.figure(1)
+#     ax = fig.add_subplot(111)
+#    
+#     ax.plot(deltax1,deltay1, label='Original Learner Performance', linestyle='-', marker='o', linewidth=2)
+#     ax.plot(deltax2,deltay2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     ax.plot(deltax3,deltay3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
 #      
+#     xlabel(r'Upper bound for Annealing step [$\delta$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#        
+# #     box = ax.get_position()
+# #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+# #     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#    
+#     handles, labels = ax.get_legend_handles_labels()
+#     lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
+#        
+# #     ax.grid('on')
+#    
+# #     ax.legend(loc='best', bbox_to_anchor=(0.1, 1.05))
+#     ax.grid(linestyle='-', linewidth=0.4)
+#     fig.savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PerturbationStepParams79.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
+#          
 #     l1 = deltay1
 #     l2 = deltay2
 #     l3 = deltay3
@@ -2438,98 +2448,117 @@ def saplots():
 #     etay1 = []
 #     etay2 = []
 #     etay3 = []
-#  
+#       
 #     etax1 = []
 #     etax2 = []
 #     etax3 = []
-#  
+#       
 #     etay1.append(0.806)
-#     etax1.append(2)
-#  
-#     etay1.append(0.8319)
-#     etax1.append(3)
-#  
-#     etay1.append(0.7975)
-#     etax1.append(4)
-#  
-#     etay1.append(0.8181)
-#     etax1.append(5)
-#  
-#     etay1.append(0.8054)
-#     etax1.append(6)
-#  
-#     etay1.append(0.814)
-#     etax1.append(7)
-#  
-#     etay1.append(0.8064)
+# #     etax1.append(2)
 #     etax1.append(8)
-#  
+#       
+#     etay1.append(0.8319)
+# #     etax1.append(3)
+#     etax1.append(7)
+#       
+#     etay1.append(0.7975)
+# #     etax1.append(4)
+#     etax1.append(6)
+#       
+#     etay1.append(0.8181)
+# #     etax1.append(5)
+#     etax1.append(5)
+#       
+#     etay1.append(0.8054)
+# #     etax1.append(6)
+#     etax1.append(4)
+#       
+#     etay1.append(0.814)
+# #     etax1.append(7)
+#     etax1.append(3)
+#       
+#     etay1.append(0.8064)
+# #     etax1.append(8)
+#     etax1.append(2)
+#       
 #     etay1.append(0.811)
-#     etax1.append(9)
-#  
-#  
+# #     etax1.append(9)
+#     etax1.append(1)
+#       
+#       
 #     etay2.append(0.6104)
 #     etax2.append(2)
-#  
+#       
 #     etay2.append(0.7425)
 #     etax2.append(3)
-#  
+#       
 #     etay2.append(0.7275)
 #     etax2.append(4)
-#  
+#       
 #     etay2.append(0.7992)
 #     etax2.append(5)
-#  
+#       
 #     etay2.append(0.5966)
 #     etax2.append(6)
-#  
+#       
 #     etay2.append(0.7033)
 #     etax2.append(7)
-#  
+#       
 #     etay2.append(0.6811)
 #     etax2.append(8)
-#  
+#       
 #     etay2.append(0.6515)
 #     etax2.append(9)
-#  
-#  
+#       
+#       
 #     etay3.append(0.9996)
 #     etax3.append(2)
-#  
+#       
 #     etay3.append(0.9998)
 #     etax3.append(3)
-#  
+#       
 #     etay3.append(0.9976)
 #     etax3.append(4)
-#  
+#       
 #     etay3.append(0.9995)
 #     etax3.append(5)
-#  
+#       
 #     etay3.append(0.9996)
 #     etax3.append(6)
-#  
+#       
 #     etay3.append(0.9943)
 #     etax3.append(7)
-#  
+#       
 #     etay3.append(0.8179)
 #     etax3.append(8)
-#  
+#       
 #     etay3.append(0.9978)
 #     etax3.append(9)
-# 
-#     plt.plot(etax1,etay1, label='learner performance', linestyle='-', marker='o', linewidth=2)
-#     plt.plot(etax2,etay2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
-#     plt.plot(etax3,etay3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
-# 
-#     xlabel(r'Upper Bound for Perturbation Index [$\eta$]', fontsize=20)    
-#     ylabel('Testing performance : f1score', fontsize=20)
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
-#     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PerturbationIndexParams79.png", dpi=300)
 #     
+#     fig = plt.figure(1)
+#     ax = fig.add_subplot(111)
+#     
+#      
+#     ax.plot(etax1,etay1, label='Original Learner Performance', linestyle='-', marker='o', linewidth=2)
+#     ax.plot(etax1,etay2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     ax.plot(etax1,etay3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#      
+#     xlabel(r'Upper bound for Annealing width [$\eta$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     
+# #     ax = plt.subplot(111)
+# #     box = ax.get_position()
+# #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+# #     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+# #     plt.grid(linestyle='-', linewidth=0.4)
+#     
+#     handles, labels = ax.get_legend_handles_labels()
+#     lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
+#     
+#     ax.grid(linestyle='-', linewidth=0.4)
+#     
+#     fig.savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PerturbationIndexParams79.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
+#          
 #     l1 = etay1
 #     l2 = etay2
 #     l3 = etay3
@@ -2538,70 +2567,78 @@ def saplots():
 #     ReductionRatey1 = []
 #     ReductionRatey2 = []
 #     ReductionRatey3 = []
-#  
+#      
 #     ReductionRatex1 = []
 #     ReductionRatex2 = []
 #     ReductionRatex3 = []
-#  
+#      
 #     ReductionRatey1.append(0.8262)
 #     ReductionRatex1.append(0.5)
-#  
+#      
 #     ReductionRatey1.append(0.8219)
 #     ReductionRatex1.append(0.6)
-#  
+#      
 #     ReductionRatey1.append(0.8149)
 #     ReductionRatex1.append(0.7)
-#  
+#      
 #     ReductionRatey1.append(0.8102)
 #     ReductionRatex1.append(0.8)
-#  
+#      
 #     ReductionRatey1.append(0.8212)
 #     ReductionRatex1.append(0.9)
-#  
+#      
 #     ReductionRatey2.append(0.607)
 #     ReductionRatex2.append(0.5)
-#  
+#      
 #     ReductionRatey2.append(0.5826)
 #     ReductionRatex2.append(0.6)
-#  
+#      
 #     ReductionRatey2.append(0.6483)
 #     ReductionRatex2.append(0.7)
-#  
+#      
 #     ReductionRatey2.append(0.6657)
 #     ReductionRatex2.append(0.8)
-#  
+#      
 #     ReductionRatey2.append(0.6405)
 #     ReductionRatex2.append(0.9)
-#  
+#      
 #     ReductionRatey3.append(0.9991)
 #     ReductionRatex3.append(0.5)
-#  
+#      
 #     ReductionRatey3.append(1.0)
 #     ReductionRatex3.append(0.6)
-#  
+#      
 #     ReductionRatey3.append(0.8124)
 #     ReductionRatex3.append(0.7)
-#  
+#      
 #     ReductionRatey3.append(0.9091)
 #     ReductionRatex3.append(0.8)
-#  
+#      
 #     ReductionRatey3.append(0.9971)
 #     ReductionRatex3.append(0.9)
-# 
-# 
-#     plt.plot(ReductionRatex1,ReductionRatey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
-#     plt.plot(ReductionRatex2,ReductionRatey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
-#     plt.plot(ReductionRatex3,ReductionRatey3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
-# 
-#     xlabel(r'Reduction Rate [$\rho$]', fontsize=20)    
+#     
+#     
+#     fig = plt.figure(1)
+#     ax = fig.add_subplot(111)
+#    
+#     ax.plot(ReductionRatex1,ReductionRatey1, label='Original Learner Performance', linestyle='-', marker='o', linewidth=2)
+#     ax.plot(ReductionRatex2,ReductionRatey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     ax.plot(ReductionRatex3,ReductionRatey3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#     
+#     xlabel(r'Reduction rate [$\rho$]', fontsize=20)    
 #     ylabel('Testing performance : f1score', fontsize=20)
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
-#     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/ReductionRateParams79.png", dpi=300)
-#  
+#    
+# #     ax = plt.subplot(111)
+# #     box = ax.get_position()
+# #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+# #     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#    
+#     handles, labels = ax.get_legend_handles_labels()
+#     lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
+#        
+#     ax.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/ReductionRateParams79.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
+#      
 #     l1 = ReductionRatey1
 #     l2 = ReductionRatey2
 #     l3 = ReductionRatey3
@@ -2609,230 +2646,245 @@ def saplots():
 #     SampleSizey1 = []
 #     SampleSizey2 = []
 #     SampleSizey3 = []
-#  
+#     
 #     SampleSizex1 = []
 #     SampleSizex2 = []
 #     SampleSizex3 = []
-#  
+#     
 #     SampleSizey1.append(0.8158)
 #     SampleSizex1.append(10)
-#  
+#     
 #     SampleSizey1.append(0.8081)
 #     SampleSizex1.append(20)
-#  
+#     
 #     SampleSizey1.append(0.8144)
 #     SampleSizex1.append(30)
-#  
+#     
 #     SampleSizey1.append(0.8139)
 #     SampleSizex1.append(40)
-#  
+#     
 #     SampleSizey1.append(0.8166)
 #     SampleSizex1.append(50)
-#  
+#     
 #     SampleSizey1.append(0.8327)
 #     SampleSizex1.append(60)
-#  
+#     
 #     SampleSizey1.append(0.8165)
 #     SampleSizex1.append(70)
-#  
+#     
 #     SampleSizey1.append(0.8155)
 #     SampleSizex1.append(80)
-#  
+#     
 #     SampleSizey1.append(0.8226)
 #     SampleSizex1.append(90)
-#  
+#     
 #     SampleSizey1.append(0.8014)
 #     SampleSizex1.append(100)
-#  
+#     
 #     SampleSizey2.append(0.5894)
 #     SampleSizex2.append(10)
-#  
+#     
 #     SampleSizey2.append(0.705)
 #     SampleSizex2.append(20)
-#  
+#     
 #     SampleSizey2.append(0.6813)
 #     SampleSizex2.append(30)
-#  
+#     
 #     SampleSizey2.append(0.6256)
 #     SampleSizex2.append(40)
-#  
+#     
 #     SampleSizey2.append(0.6639)
 #     SampleSizex2.append(50)
-#  
+#     
 #     SampleSizey2.append(0.663)
 #     SampleSizex2.append(60)
-#  
+#     
 #     SampleSizey2.append(0.6305)
 #     SampleSizex2.append(70)
-#  
+#     
 #     SampleSizey2.append(0.7048)
 #     SampleSizex2.append(80)
-#  
+#     
 #     SampleSizey2.append(0.6416)
 #     SampleSizex2.append(90)
-#  
+#     
 #     SampleSizey2.append(0.6608)
 #     SampleSizex2.append(100)
-#  
+#     
 #     SampleSizey3.append(0.9995)
 #     SampleSizex3.append(10)
-#  
+#     
 #     SampleSizey3.append(0.8709)
 #     SampleSizex3.append(20)
-#  
+#     
 #     SampleSizey3.append(0.9985)
 #     SampleSizex3.append(30)
-#  
+#     
 #     SampleSizey3.append(0.9945)
 #     SampleSizex3.append(40)
-#  
+#     
 #     SampleSizey3.append(0.9973)
 #     SampleSizex3.append(50)
-#  
+#     
 #     SampleSizey3.append(0.994)
 #     SampleSizex3.append(60)
-#  
+#     
 #     SampleSizey3.append(0.9985)
 #     SampleSizex3.append(70)
-#  
+#     
 #     SampleSizey3.append(0.753)
 #     SampleSizex3.append(80)
-#  
+#     
 #     SampleSizey3.append(0.7698)
 #     SampleSizex3.append(90)
-#  
+#     
 #     SampleSizey3.append(0.7765)
 #     SampleSizex3.append(100)
-
-
-#  
-# 
-#     plt.plot(SampleSizex1,SampleSizey1, label='learner performance', linestyle='-', marker='o', linewidth=2)
-#     plt.plot(SampleSizex2,SampleSizey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
-#     plt.plot(SampleSizex3,SampleSizey3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
-# 
-#     xlabel(r'Sample Size [$\nu$]', fontsize=20)    
+#    
+#    
+#     
+#     fig = plt.figure(1)
+#     ax = fig.add_subplot(111)
+#    
+#     ax.plot(SampleSizex1,SampleSizey1, label='Original Learner Performance', linestyle='-', marker='o', linewidth=2)
+#     ax.plot(SampleSizex2,SampleSizey2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     ax.plot(SampleSizex3,SampleSizey3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#    
+#     xlabel(r'Sample size [$\nu$]', fontsize=20)    
 #     ylabel('Testing performance : f1score', fontsize=20)
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#   
+# #     ax = plt.subplot(111)
+# #     box = ax.get_position()
+# #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+# #     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#   
+#     handles, labels = ax.get_legend_handles_labels()
+#     lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
 #     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SampleSizeParams79.png", dpi=300)
-# 
-# 
+#     fig.savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SampleSizeParams79.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
+#    
+#    
 #     l1 = SampleSizey1
 #     l2 = SampleSizey2
 #     l3 = SampleSizey3
 
 
-#     mylambday1 = []
-#     mylambday2 = []
-#     mylambday3 = []
-#   
-#     mylambdax1 = []
-#     mylambdax2 = []
-#     mylambdax3 = []
-#   
-#     mylambday1.append(0.8195)
-#     mylambdax1.append(1)
-#   
-#     mylambday1.append(0.8109)
-#     mylambdax1.append(3)
-#   
-#     mylambday1.append(0.8162)
-#     mylambdax1.append(5)
-#   
-#     mylambday1.append(0.8099)
-#     mylambdax1.append(7)
-#   
-#     mylambday1.append(0.8275)
-#     mylambdax1.append(9)
-#   
-#     mylambday1.append(0.8263)
-#     mylambdax1.append(11)
-#   
-#     mylambday1.append(0.8355)
-#     mylambdax1.append(14)
-#   
-#     mylambday1.append(0.8128)
-#     mylambdax1.append(17)
-#   
-#     mylambday1.append(0.8283)
-#     mylambdax1.append(20)
-#     
-#     
-#     mylambday2.append(0.7734)
-#     mylambdax2.append(1)
-#   
-#     mylambday2.append(0.6076)
-#     mylambdax2.append(3)
-#   
-#     mylambday2.append(0.6794)
-#     mylambdax2.append(5)
-#   
-#     mylambday2.append(0.6423)
-#     mylambdax2.append(7)
-#   
-#     mylambday2.append(0.6516)
-#     mylambdax2.append(9)
-#   
-#     mylambday2.append(0.5819)
-#     mylambdax2.append(11)
-#   
-#     mylambday2.append(0.6387)
-#     mylambdax2.append(14)
-#   
-#     mylambday2.append(0.717)
-#     mylambdax2.append(17)
-#   
-#     mylambday2.append(0.5935)
-#     mylambdax2.append(20)
-# 
-#     mylambday3.append(0.9991)
-#     mylambdax3.append(1)
-#   
-#     mylambday3.append(0.9984)
-#     mylambdax3.append(3)
-#   
-#     mylambday3.append(0.7474)
-#     mylambdax3.append(5)
-#   
-#     mylambday3.append(0.9934)
-#     mylambdax3.append(7)
-#   
-#     mylambday3.append(0.9995)
-#     mylambdax3.append(9)
-#   
-#     mylambday3.append(0.9993)
-#     mylambdax3.append(11)
-#   
-#     mylambday3.append(0.9721)
-#     mylambdax3.append(14)
-#   
-#     mylambday3.append(0.9037)
-#     mylambdax3.append(17)
-#   
-#     mylambday3.append(0.9971)
-#     mylambdax3.append(20)
-#  
-#     plt.plot(mylambdax1,mylambday1, label='learner performance', linestyle='-', marker='o', linewidth=2)
-#     plt.plot(mylambdax2,mylambday2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
-#     plt.plot(mylambdax3,mylambday3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
-#  
-#     xlabel(r'Error Weight [$\lambda$]', fontsize=20)    
-#     ylabel('Testing performance : f1score', fontsize=20)
+    mylambday1 = []
+    mylambday2 = []
+    mylambday3 = []
+     
+    mylambdax1 = []
+    mylambdax2 = []
+    mylambdax3 = []
+     
+    mylambday1.append(0.8195)
+    mylambdax1.append(1)
+     
+    mylambday1.append(0.8109)
+    mylambdax1.append(3)
+     
+    mylambday1.append(0.8162)
+    mylambdax1.append(5)
+     
+    mylambday1.append(0.8099)
+    mylambdax1.append(7)
+     
+    mylambday1.append(0.8275)
+    mylambdax1.append(9)
+     
+    mylambday1.append(0.8263)
+    mylambdax1.append(11)
+     
+    mylambday1.append(0.8355)
+    mylambdax1.append(14)
+     
+    mylambday1.append(0.8128)
+    mylambdax1.append(17)
+     
+    mylambday1.append(0.8283)
+    mylambdax1.append(20)
+       
+       
+    mylambday2.append(0.7734)
+    mylambdax2.append(1)
+     
+    mylambday2.append(0.6076)
+    mylambdax2.append(3)
+     
+    mylambday2.append(0.6794)
+    mylambdax2.append(5)
+     
+    mylambday2.append(0.6423)
+    mylambdax2.append(7)
+     
+    mylambday2.append(0.6516)
+    mylambdax2.append(9)
+     
+    mylambday2.append(0.5819)
+    mylambdax2.append(11)
+     
+    mylambday2.append(0.6387)
+    mylambdax2.append(14)
+     
+    mylambday2.append(0.717)
+    mylambdax2.append(17)
+     
+    mylambday2.append(0.5935)
+    mylambdax2.append(20)
+   
+    mylambday3.append(0.9991)
+    mylambdax3.append(1)
+     
+    mylambday3.append(0.9984)
+    mylambdax3.append(3)
+     
+    mylambday3.append(0.7474)
+    mylambdax3.append(5)
+     
+    mylambday3.append(0.9934)
+    mylambdax3.append(7)
+     
+    mylambday3.append(0.9995)
+    mylambdax3.append(9)
+     
+    mylambday3.append(0.9993)
+    mylambdax3.append(11)
+     
+    mylambday3.append(0.9721)
+    mylambdax3.append(14)
+     
+    mylambday3.append(0.9037)
+    mylambdax3.append(17)
+     
+    mylambday3.append(0.9971)
+    mylambdax3.append(20)
+  
+  
+    fig = plt.figure(1)
+    ax = fig.add_subplot(111)
+    
+    ax.plot(mylambdax1,mylambday1, label='Original Learner Performance', linestyle='-', marker='o', linewidth=2)
+    ax.plot(mylambdax2,mylambday2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+    ax.plot(mylambdax3,mylambday3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+    
+    xlabel(r'Error weight [$\lambda$]', fontsize=20)    
+    ylabel('Testing performance : f1score', fontsize=20)
+    
 #     ax = plt.subplot(111)
 #     box = ax.get_position()
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 #     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
-#     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/mylambda79.png", dpi=300)
-#  
-#  
-#     l1 = mylambday1
-#     l2 = mylambday2
-#     l3 = mylambday3
+  
+    handles, labels = ax.get_legend_handles_labels()
+    lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
+      
+    ax.grid(linestyle='-', linewidth=0.4)
+    fig.savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/mylambda79.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
+    
+    
+    l1 = mylambday1
+    l2 = mylambday2
+    l3 = mylambday3
 
 
     # (4,9)
@@ -3244,114 +3296,114 @@ def saplots():
 #     l3 = SampleSizey3
 
 
-    mylambday1 = []
-    mylambday2 = []
-    mylambday3 = []
-   
-    mylambdax1 = []
-    mylambdax2 = []
-    mylambdax3 = []
-   
-    mylambday1.append(0.8048)
-    mylambdax1.append(1)
-   
-    mylambday1.append(0.7984)
-    mylambdax1.append(3)
-   
-    mylambday1.append(0.7372)
-    mylambdax1.append(5)
-   
-    mylambday1.append(0.8156)
-    mylambdax1.append(7)
-   
-    mylambday1.append(0.7979)
-    mylambdax1.append(9)
-   
-    mylambday1.append(0.7839)
-    mylambdax1.append(11)
-   
-    mylambday1.append(0.7793)
-    mylambdax1.append(14)
-   
-    mylambday1.append(0.7813)
-    mylambdax1.append(17)
-   
-    mylambday1.append(0.8098)
-    mylambdax1.append(20)
-     
-     
-    mylambday2.append(0.764)
-    mylambdax2.append(1)
-   
-    mylambday2.append(0.6309)
-    mylambdax2.append(3)
-   
-    mylambday2.append(0.6429)
-    mylambdax2.append(5)
-   
-    mylambday2.append(0.6344)
-    mylambdax2.append(7)
-   
-    mylambday2.append(0.6356)
-    mylambdax2.append(9)
-   
-    mylambday2.append(0.6414)
-    mylambdax2.append(11)
-   
-    mylambday2.append(0.638)
-    mylambdax2.append(14)
-   
-    mylambday2.append(0.6207)
-    mylambdax2.append(17)
-   
-    mylambday2.append(0.6196)
-    mylambdax2.append(20)
- 
-    mylambday3.append(0.9)
-    mylambdax3.append(1)
-   
-    mylambday3.append(0.9997)
-    mylambdax3.append(3)
-   
-    mylambday3.append(0.9498)
-    mylambdax3.append(5)
-   
-    mylambday3.append(0.9997)
-    mylambdax3.append(7)
-   
-    mylambday3.append(0.9985)
-    mylambdax3.append(9)
-   
-    mylambday3.append(0.999)
-    mylambdax3.append(11)
-   
-    mylambday3.append(0.9958)
-    mylambdax3.append(14)
-   
-    mylambday3.append(0.9993)
-    mylambdax3.append(17)
-   
-    mylambday3.append(0.9995)
-    mylambdax3.append(20)
- 
-  
-    plt.plot(mylambdax1,mylambday1, label='learner performance', linestyle='-', marker='o', linewidth=2)
-    plt.plot(mylambdax2,mylambday2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
-    plt.plot(mylambdax3,mylambday3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
-  
-    xlabel(r'Error Weight [$\lambda$]', fontsize=20)    
-    ylabel('Testing performance : f1score', fontsize=20)
-    ax = plt.subplot(111)
-    box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-    ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
-    plt.grid(linestyle='-', linewidth=0.4)
-    savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/mylambda49.png", dpi=300)
-  
-  
-    l1 = mylambday1
-    l2 = mylambday2
-    l3 = mylambday3
+#     mylambday1 = []
+#     mylambday2 = []
+#     mylambday3 = []
+#    
+#     mylambdax1 = []
+#     mylambdax2 = []
+#     mylambdax3 = []
+#    
+#     mylambday1.append(0.8048)
+#     mylambdax1.append(1)
+#    
+#     mylambday1.append(0.7984)
+#     mylambdax1.append(3)
+#    
+#     mylambday1.append(0.7372)
+#     mylambdax1.append(5)
+#    
+#     mylambday1.append(0.8156)
+#     mylambdax1.append(7)
+#    
+#     mylambday1.append(0.7979)
+#     mylambdax1.append(9)
+#    
+#     mylambday1.append(0.7839)
+#     mylambdax1.append(11)
+#    
+#     mylambday1.append(0.7793)
+#     mylambdax1.append(14)
+#    
+#     mylambday1.append(0.7813)
+#     mylambdax1.append(17)
+#    
+#     mylambday1.append(0.8098)
+#     mylambdax1.append(20)
+#      
+#      
+#     mylambday2.append(0.764)
+#     mylambdax2.append(1)
+#    
+#     mylambday2.append(0.6309)
+#     mylambdax2.append(3)
+#    
+#     mylambday2.append(0.6429)
+#     mylambdax2.append(5)
+#    
+#     mylambday2.append(0.6344)
+#     mylambdax2.append(7)
+#    
+#     mylambday2.append(0.6356)
+#     mylambdax2.append(9)
+#    
+#     mylambday2.append(0.6414)
+#     mylambdax2.append(11)
+#    
+#     mylambday2.append(0.638)
+#     mylambdax2.append(14)
+#    
+#     mylambday2.append(0.6207)
+#     mylambdax2.append(17)
+#    
+#     mylambday2.append(0.6196)
+#     mylambdax2.append(20)
+#  
+#     mylambday3.append(0.9)
+#     mylambdax3.append(1)
+#    
+#     mylambday3.append(0.9997)
+#     mylambdax3.append(3)
+#    
+#     mylambday3.append(0.9498)
+#     mylambdax3.append(5)
+#    
+#     mylambday3.append(0.9997)
+#     mylambdax3.append(7)
+#    
+#     mylambday3.append(0.9985)
+#     mylambdax3.append(9)
+#    
+#     mylambday3.append(0.999)
+#     mylambdax3.append(11)
+#    
+#     mylambday3.append(0.9958)
+#     mylambdax3.append(14)
+#    
+#     mylambday3.append(0.9993)
+#     mylambdax3.append(17)
+#    
+#     mylambday3.append(0.9995)
+#     mylambdax3.append(20)
+#  
+#   
+#     plt.plot(mylambdax1,mylambday1, label='learner performance', linestyle='-', marker='o', linewidth=2)
+#     plt.plot(mylambdax2,mylambday2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     plt.plot(mylambdax3,mylambday3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#   
+#     xlabel(r'Error Weight [$\lambda$]', fontsize=20)    
+#     ylabel('Testing performance : f1score', fontsize=20)
+#     ax = plt.subplot(111)
+#     box = ax.get_position()
+#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#     plt.grid(linestyle='-', linewidth=0.4)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/mylambda49.png", dpi=300)
+#   
+#   
+#     l1 = mylambday1
+#     l2 = mylambday2
+#     l3 = mylambday3
 
 
 
@@ -3383,149 +3435,157 @@ def saplots():
 def gaplots():
 #     mutationx1 = []
 #     mutationy1 = []
-#                   
+#                      
 #     mutationx1.append(5)
 #     mutationy1.append(0.7988)
-#              
+#                 
 #     mutationx1.append(10)
 # #     mutationy1.append(0.8008)
 #     mutationy1.append(0.7988)
-#               
+#                  
 #     mutationx1.append(20)
 # #     mutationy1.append(0.8051)
 #     mutationy1.append(0.7988)
-#               
+#                  
 #     mutationx1.append(30)
 # #     mutationy1.append(0.7726)
 #     mutationy1.append(0.7988)
-#               
+#                  
 #     mutationx1.append(40)
 # #     mutationy1.append(0.7817)
 #     mutationy1.append(0.7988)
-#               
+#                  
 #     mutationx1.append(50)
 # #     mutationy1.append(0.7939)
 #     mutationy1.append(0.7988)
-#               
+#                  
 #     mutationx1.append(60)
 # #     mutationy1.append(0.798)
 #     mutationy1.append(0.7988)
-#               
+#                  
 #     mutationx1.append(70)
 # #     mutationy1.append(0.7728)
 #     mutationy1.append(0.7988)
-#               
+#                  
 #     mutationx1.append(80)
 # #     mutationy1.append(0.7936)
 # #     mutationx1.append(80)
 # #     mutationy1.append(0.6241)
 #     mutationy1.append(0.7988)
-#               
+#                  
 #     mutationx1.append(90)
 # #     mutationy1.append(0.8092)
 #     mutationy1.append(0.7988)
-#               
+#                  
 #     mutationx1.append(100)
 # #     mutationy1.append(0.7916)
 #     mutationy1.append(0.7988)
-#               
+#                  
 #     mutationx1.append(200)
 # #     mutationy1.append(0.7866)
 #     mutationy1.append(0.7988)
-#               
-#             
+#                  
+#                
 #     mutationx2 = []
 #     mutationy2 = []
 #     mutationx2.append(5)
 #     mutationy2.append(0.5908)
-#             
+#                
 #     mutationx2.append(10)
 #     mutationy2.append(0.6231)
-#             
+#                
 #     mutationx2.append(20)
 #     mutationy2.append(0.5949)
-#             
+#                
 #     mutationx2.append(30)
 #     mutationy2.append(0.6084)
-#             
+#                
 #     mutationx2.append(40)
 #     mutationy2.append(0.5933)
-#             
+#                
 #     mutationx2.append(50)
 #     mutationy2.append(0.6336)
-#             
+#                
 #     mutationx2.append(60)
 #     mutationy2.append(0.6446)
-#             
+#                
 #     mutationx2.append(70)
 #     mutationy2.append(0.6275)
-#             
+#                
 #     mutationx2.append(80)
 #     mutationy2.append(0.5936)
-#             
+#                
 #     mutationx2.append(90)
 #     mutationy2.append(0.6274)
-#             
+#                
 #     mutationx2.append(100)
 #     mutationy2.append(0.6973)
-#              
+#                 
 #     mutationx2.append(200)
 #     mutationy2.append(0.6222)
-#             
+#                
 #     mutationx3 = []
 #     mutationy3 = []
-#                 
+#                    
 #     mutationx3.append(5)
 #     mutationy3.append(0.7041)
-#             
+#                
 #     mutationx3.append(10)
 #     mutationy3.append(0.7274)
-#             
+#                
 #     mutationx3.append(20)
 #     mutationy3.append(0.6779)
-#             
+#                
 #     mutationx3.append(30)
 #     mutationy3.append(0.9047)
-#             
+#                
 #     mutationx3.append(40)
 #     mutationy3.append(0.7988)
-#             
+#                
 #     mutationx3.append(50)
 #     mutationy3.append(0.7601)
-#             
+#                
 #     mutationx3.append(60)
 #     mutationy3.append(0.7209)
-#              
+#                 
 #     mutationx3.append(70)
 #     mutationy3.append(0.6829)
-#              
+#                 
 #     mutationx3.append(80)
 #     mutationy3.append(0.7374)
-#              
+#                 
 #     mutationx3.append(90)
 #     mutationy3.append(0.7616)
-#              
+#                 
 #     mutationx3.append(100)
 #     mutationy3.append(0.9508)
-#              
+#                 
 #     mutationx3.append(200)
 #     mutationy3.append(0.7034)
-#             
-#    #plt.plot(mutationx1,mutationy1, label='learner performance', linestyle='-', marker='o', linewidth=2)
-#     plt.plot(mutationx2,mutationy2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
-#     plt.plot(mutationx3,mutationy3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
+#   
+#     fig = plt.figure(1)
+#     ax = fig.add_subplot(111)
+#   
+#     ax.plot(mutationx1,mutationy1, label='Original Learner Performance', linestyle='-', marker='o', linewidth=2)
+#     ax.plot(mutationx2,mutationy2, label='Manipulated Learner Performance', linestyle='--', marker='v', linewidth=2)
+#     ax.plot(mutationx3,mutationy3, label='Secure Learner Performance (Our method)', linestyle='-', marker='^', linewidth=2)
 # #    title('Parameter Tuning : Mutation Operation')
 # #     xlabel('Upper Bound for Mutation')
-#     xlabel(r'Upper Bound for Mutation [$\delta$]', fontsize=20)
+#     xlabel(r'Upper bound for Mutation [$\delta$]', fontsize=20)
 #     ylabel('Testing performance : f1score', fontsize=20)
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#   
+#     handles, labels = ax.get_legend_handles_labels()
+#     lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
+#       
+# #     ax = plt.subplot(111)
+# #     box = ax.get_position()
+# #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+# #     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
 # #     plt.legend()
 # #     plt.grid()
-#     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/MutationParams.png", dpi=300)
+#   
+#     ax.grid(linestyle='-', linewidth=0.4)
+#     fig.savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/MutationParams.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
 #     l1 = mutationy1
 #     l2 = mutationy2
 #     l3 = mutationy3
@@ -3536,111 +3596,119 @@ def gaplots():
 
 #     crossoverx1 = []
 #     crossovery1 = []
-#             
+#                
 #     crossoverx1.append(2)
 #     crossovery1.append(0.7867)
-#             
+#                
 #     crossoverx1.append(3)
-# #     crossovery1.append(0.7786)
-#     crossovery1.append(0.7867)
-#             
+#     crossovery1.append(0.7786)
+# #     crossovery1.append(0.7867)
+#                
 #     crossoverx1.append(4)
 # #     crossovery1.append()
 #     crossovery1.append(0.7867)
-#             
+#                
 #     crossoverx1.append(5)
-# #     crossovery1.append(0.7957)
-#     crossovery1.append(0.7867)
-#             
+#     crossovery1.append(0.7957)
+# #     crossovery1.append(0.7867)
+#                
 #     crossoverx1.append(6)
-# #     crossovery1.append(0.8091)
-#     crossovery1.append(0.7867)
-#             
+#     crossovery1.append(0.8091)
+# #     crossovery1.append(0.7867)
+#                
 #     crossoverx1.append(7)
 # #     crossovery1.append()
 #     crossovery1.append(0.7867)
-#             
+#                
 #     crossoverx1.append(8)
 # #     crossovery1.append(0.7869)
 #     crossovery1.append(0.7867)
-#           
+#              
 #     crossoverx1.append(9)
-# #     crossovery1.append(0.7929)
-#     crossovery1.append(0.7867)
-#           
-#           
+#     crossovery1.append(0.7929)
+# #     crossovery1.append(0.7867)
+#              
+#              
 #     crossoverx2 = []
 #     crossovery2 = []
-#             
+#                
 #     crossoverx2.append(2)
 #     crossovery2.append(0.791)
-#             
+#                
 #     crossoverx2.append(3)
 #     crossovery2.append(0.6722)
-#             
+#                
 #     crossoverx2.append(4)
 #     crossovery2.append(0.6669)
-#             
+#                
 #     crossoverx2.append(5)
 #     crossovery2.append(0.6081)
-#             
+#                
 #     crossoverx2.append(6)
 #     crossovery2.append(0.6823)
-#             
+#                
 #     crossoverx2.append(7)
 #     crossovery2.append(0.5673)
-#             
+#                
 #     crossoverx2.append(8)
 #     crossovery2.append(0.6509)
-#           
+#              
 #     crossoverx2.append(9)
 #     crossovery2.append(0.6222)
-#           
-#           
-#           
+#              
+#              
+#              
 #     crossoverx3 = []
 #     crossovery3 = []
-#             
+#                
 #     crossoverx3.append(2)
 #     crossovery3.append(0.9936)
-#             
+#                
 #     crossoverx3.append(3)
 #     crossovery3.append(0.7165)
-#             
+#                
 #     crossoverx3.append(4)
 #     crossovery3.append(0.7345)
-#             
+#                
 #     crossoverx3.append(5)
 #     crossovery3.append(0.9753)
-#             
+#                
 #     crossoverx3.append(6)
 #     crossovery3.append(0.7734)
-#             
+#                
 #     crossoverx3.append(7)
 #     crossovery3.append(0.9945)
-#             
+#                
 #     crossoverx3.append(8)
 #     crossovery3.append(0.9929)
-#           
+#              
 #     crossoverx3.append(9)
 #     crossovery3.append(0.7135)
-#            
-#    #plt.plot(crossoverx1,crossovery1, label='learner performance', linestyle='-', marker='<', linewidth=2)
-#     plt.plot(crossoverx2,crossovery2, label='Manipulated Learner Performance', linestyle='--', marker='>', linewidth=2)
-#     plt.plot(crossoverx3,crossovery3, label='Secure Learner Performance (Our method)', linestyle='-', marker='s', linewidth=2)
-#           
+#       
+#     fig = plt.figure(1)
+#     ax = fig.add_subplot(111)
+#               
+#     ax.plot(crossoverx1,crossovery1, label='Original Learner Performance', linestyle='-', marker='<', linewidth=2)
+#     ax.plot(crossoverx2,crossovery2, label='Manipulated Learner Performance', linestyle='--', marker='>', linewidth=2)
+#     ax.plot(crossoverx3,crossovery3, label='Secure Learner Performance (Our method)', linestyle='-', marker='s', linewidth=2)
+#              
 # ##     title('Parameter Tuning : Crossover Operation')
 # #     xlabel('Minimum width for Crossover')
 #     xlabel(r'Minimum width for Crossover [$\eta$]', fontsize=20)    
 #     ylabel('Testing performance : f1score', fontsize=20)
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#       
+#     handles, labels = ax.get_legend_handles_labels()
+#     lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
+#       
+# #     ax = plt.subplot(111)
+# #     box = ax.get_position()
+# #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+# #     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
 # #     plt.legend()
 # #     plt.grid()
-#     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/CrossoverParams.png", dpi=300)
+#   
+#     ax.grid(linestyle='-', linewidth=0.4)
+#     fig.savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/CrossoverParams.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
 #     l1 = crossovery1
 #     l2 = crossovery2
 #     l3 = crossovery3
@@ -3651,110 +3719,118 @@ def gaplots():
    
 #     selectionx1 = []
 #     selectiony1 = []
-#                
+#                   
 #     selectionx1.append(20)
 #     selectiony1.append(0.7881)
-#                
+#                   
 #     selectionx1.append(30)
 # #     selectiony1.append()
 #     selectiony1.append(0.7881)
-#                    
+#                       
 #     selectionx1.append(40)
-# #     selectiony1.append(0.7905)
-#     selectiony1.append(0.7881)
-#              
+#     selectiony1.append(0.7905)
+# #     selectiony1.append(0.7881)
+#                 
 #     selectionx1.append(50)
-# #     selectiony1.append(0.8065)
-#     selectiony1.append(0.7881)
-#                
+#     selectiony1.append(0.8065)
+# #     selectiony1.append(0.7881)
+#                   
 #     selectionx1.append(60)
 # # #     selectiony1.append()
 #     selectiony1.append(0.7881)
-#                
+#                   
 #     selectionx1.append(70)
-# #     selectiony1.append(0.796)
-#     selectiony1.append(0.7881)
-#                
+#     selectiony1.append(0.796)
+# #     selectiony1.append(0.7881)
+#                   
 #     selectionx1.append(80)
-# #     selectiony1.append(0.7845)
-#     selectiony1.append(0.7881)
-#             
-#             
-#             
-#             
-#             
+#     selectiony1.append(0.7845)
+# #     selectiony1.append(0.7881)
+#                
+#                
+#                
+#                
+#                
 #     selectionx2 = []
 #     selectiony2 = []
-#                
+#                   
 #     selectionx2.append(20)
 #     selectiony2.append(0.6277)
-#                
+#                   
 #     selectionx2.append(30)
 #     selectiony2.append(0.5937)
-#                    
+#                       
 #     selectionx2.append(40)
 #     selectiony2.append(0.6783)
-#              
+#                 
 #     selectionx2.append(50)
 #     selectiony2.append(0.6012)
-#                
+#                   
 #     selectionx2.append(60)
 #     selectiony2.append(0.6238)
-#                
+#                   
 #     selectionx2.append(70)
 #     selectiony2.append(0.6619)
-#                
+#                   
 #     selectionx2.append(80)
 #     selectiony2.append(0.613)
-#             
-#             
-#             
-#             
-#             
-#             
-#             
-#             
-#             
+#                
+#                
+#                
+#                
+#                
+#                
+#                
+#                
+#                
 #     selectionx3 = []
 #     selectiony3 = []
-#                
+#                   
 #     selectionx3.append(20)
 #     selectiony3.append(0.8076)
-#                
+#                   
 #     selectionx3.append(30)
 #     selectiony3.append(0.7869)
-#                    
+#                       
 #     selectionx3.append(40)
 #     selectiony3.append(0.759)
-#              
+#                 
 #     selectionx3.append(50)
 #     selectiony3.append(0.7691)
-#                
+#                   
 #     selectionx3.append(60)
 #     selectiony3.append(0.7775)
-#                
+#                   
 #     selectionx3.append(70)
 #     selectiony3.append(0.9266)
-#                
+#                   
 #     selectionx3.append(80)
 #     selectiony3.append(0.8918)
-#             
-#             
-#               
-#    #plt.plot(selectionx1,selectiony1, label='learner performance', linestyle='-', marker='p', linewidth=2)
-#     plt.plot(selectionx2,selectiony2, label='Manipulated Learner Performance', linestyle='--', marker='H', linewidth=2)
-#     plt.plot(selectionx3,selectiony3, label='Secure Learner Performance (Our method)', linestyle='-', marker='d', linewidth=2)
+#                
+#                
+#     fig = plt.figure(1)
+#     ax = fig.add_subplot(111)
+#   
+#                  
+#     ax.plot(selectionx1,selectiony1, label='Original Learner Performance', linestyle='-', marker='p', linewidth=2)
+#     ax.plot(selectionx2,selectiony2, label='Manipulated Learner Performance', linestyle='--', marker='H', linewidth=2)
+#     ax.plot(selectionx3,selectiony3, label='Secure Learner Performance (Our method)', linestyle='-', marker='d', linewidth=2)
 # #    title('Parameter Tuning : Selection Operation')
 # #     xlabel('Percentage offspring size for Selection')
 #     xlabel(r'Percentage offspring size for Selection [$\zeta$]', fontsize=20)
 #     ylabel('Testing performance : f1score', fontsize=20)
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+#       
+# #     ax = plt.subplot(111)
+# #     box = ax.get_position()
+# #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+# #     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
 # #     plt.legend()color='r', linestyle='-', linewidth=2
+#   
+#     handles, labels = ax.get_legend_handles_labels()
+#     lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
+#       
 #     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.png", dpi=300)
+#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/SelectionParams.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
 #     l1 = selectiony1
 #     l2 = selectiony2
 #     l3 = selectiony3
@@ -3763,160 +3839,166 @@ def gaplots():
     
     
     
-#     populationx1 = []
-#     populationy1 = []
-#            
-#     populationx1.append(500)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(1500)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(2000)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(2500)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(3000)
-#     populationy1.append(0.7864)
-#     
-#     populationx1.append(3500)
-#     populationy1.append(0.7789)
-#        
-#     populationx1.append(4000)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(4500)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(5000)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(6000)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(7000)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(8000)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(9000)
-#     populationy1.append(0.7864)
-#        
-#     populationx1.append(10000)
-#     populationy1.append(0.7864)
-#            
-#     populationx2 = []
-#     populationy2 = []
-#            
-#     populationx2.append(500)
-#     populationy2.append(0.6403)
-#        
-#     populationx2.append(1500)
-#     populationy2.append(0.6194)
-#        
-#     populationx2.append(2000)
-#     populationy2.append(0.6104)
-#        
-#     populationx2.append(2500)
-#     populationy2.append(0.6101)
-#        
-#     populationx2.append(3000)
-#     populationy2.append(0.5777)
-#        
-#     populationx2.append(3500)
-#     populationy2.append(0.65)
-#        
-#     populationx2.append(4000)
-#     populationy2.append(0.5974)
-#        
-#     populationx2.append(4500)
-#     populationy2.append(0.6091)
-#        
-#     populationx2.append(5000)
-#     populationy2.append(0.6073)
-#        
-#     populationx2.append(6000)
-#     populationy2.append(0.6268)
-#        
-#     populationx2.append(7000)
-#     populationy2.append(0.6174)
-#        
-#     populationx2.append(8000)
-#     populationy2.append(0.5853)
-#        
-#     populationx2.append(9000)
-#     populationy2.append(0.5846)
-#        
-#     populationx2.append(10000)
-#     populationy2.append(0.6322)
-#        
-#     populationx3 = []
-#     populationy3 = []
-#            
-#     populationx3.append(500)
-#     populationy3.append(0.7711)
-#        
-#     populationx3.append(1500)
-#     populationy3.append(0.6792)
-#        
-#     populationx3.append(2000)
-#     populationy3.append(0.774)
-#        
-#     populationx3.append(2500)
-#     populationy3.append(0.6953)
-#        
-#     populationx3.append(3000)
-#     populationy3.append(0.759)
-#        
-#     populationx3.append(3500)
-#     populationy3.append(0.8285)
-#     
-#     populationx3.append(4000)
-#     populationy3.append(0.7503)
-#        
-#     populationx3.append(4500)
-#     populationy3.append(0.7388)
-#        
-#     populationx3.append(5000)
-#     populationy3.append(0.6914)
-#        
-#     populationx3.append(6000)
-#     populationy3.append(0.7792)
-#        
-#     populationx3.append(7000)
-#     populationy3.append(0.7205)
-#        
-#     populationx3.append(8000)
-#     populationy3.append(0.6984)
-#        
-#     populationx3.append(9000)
-#     populationy3.append(0.8452)
-#        
-#     populationx3.append(10000)
-#     populationy3.append(0.7477)
-#            
-#            
-# #    #plt.plot(populationx1,populationy1, label='learner performance', linestyle='-', marker='p', linewidth=2)
-#     plt.plot(populationx2,populationy2, label='Manipulated Learner Performance', linestyle='--', marker='H', linewidth=2)
-#     plt.plot(populationx3,populationy3, label='Secure Learner Performance (Our method)', linestyle='-', marker='d', linewidth=2)
-# #    title('Parameter Tuning : Selection Operation')
-# #     xlabel('Population Size')
-#     xlabel(r'Population Size [$\psi$]', fontsize=20)
-#     ylabel('Testing performance : f1score', fontsize=20)
-#      
+    populationx1 = []
+    populationy1 = []
+              
+    populationx1.append(500)
+    populationy1.append(0.7864)
+          
+    populationx1.append(1500)
+    populationy1.append(0.7864)
+          
+    populationx1.append(2000)
+    populationy1.append(0.7864)
+          
+    populationx1.append(2500)
+    populationy1.append(0.7864)
+          
+    populationx1.append(3000)
+    populationy1.append(0.7864)
+       
+    populationx1.append(3500)
+    populationy1.append(0.7789)
+          
+    populationx1.append(4000)
+    populationy1.append(0.7864)
+          
+    populationx1.append(4500)
+    populationy1.append(0.7864)
+          
+    populationx1.append(5000)
+    populationy1.append(0.7864)
+          
+    populationx1.append(6000)
+    populationy1.append(0.7864)
+          
+    populationx1.append(7000)
+    populationy1.append(0.7864)
+          
+    populationx1.append(8000)
+    populationy1.append(0.7864)
+          
+    populationx1.append(9000)
+    populationy1.append(0.7864)
+          
+    populationx1.append(10000)
+    populationy1.append(0.7864)
+              
+    populationx2 = []
+    populationy2 = []
+              
+    populationx2.append(500)
+    populationy2.append(0.6403)
+          
+    populationx2.append(1500)
+    populationy2.append(0.6194)
+          
+    populationx2.append(2000)
+    populationy2.append(0.6104)
+          
+    populationx2.append(2500)
+    populationy2.append(0.6101)
+          
+    populationx2.append(3000)
+    populationy2.append(0.5777)
+          
+    populationx2.append(3500)
+    populationy2.append(0.65)
+          
+    populationx2.append(4000)
+    populationy2.append(0.5974)
+          
+    populationx2.append(4500)
+    populationy2.append(0.6091)
+          
+    populationx2.append(5000)
+    populationy2.append(0.6073)
+          
+    populationx2.append(6000)
+    populationy2.append(0.6268)
+          
+    populationx2.append(7000)
+    populationy2.append(0.6174)
+          
+    populationx2.append(8000)
+    populationy2.append(0.5853)
+          
+    populationx2.append(9000)
+    populationy2.append(0.5846)
+          
+    populationx2.append(10000)
+    populationy2.append(0.6322)
+          
+    populationx3 = []
+    populationy3 = []
+              
+    populationx3.append(500)
+    populationy3.append(0.7711)
+          
+    populationx3.append(1500)
+    populationy3.append(0.6792)
+          
+    populationx3.append(2000)
+    populationy3.append(0.774)
+          
+    populationx3.append(2500)
+    populationy3.append(0.6953)
+          
+    populationx3.append(3000)
+    populationy3.append(0.759)
+          
+    populationx3.append(3500)
+    populationy3.append(0.8285)
+       
+    populationx3.append(4000)
+    populationy3.append(0.7503)
+          
+    populationx3.append(4500)
+    populationy3.append(0.7388)
+          
+    populationx3.append(5000)
+    populationy3.append(0.6914)
+          
+    populationx3.append(6000)
+    populationy3.append(0.7792)
+          
+    populationx3.append(7000)
+    populationy3.append(0.7205)
+          
+    populationx3.append(8000)
+    populationy3.append(0.6984)
+          
+    populationx3.append(9000)
+    populationy3.append(0.8452)
+          
+    populationx3.append(10000)
+    populationy3.append(0.7477)
+              
+    fig = plt.figure(1)
+    ax = fig.add_subplot(111)
+              
+    ax.plot(populationx1,populationy1, label='Original Learner Performance', linestyle='-', marker='p', linewidth=2)
+    ax.plot(populationx2,populationy2, label='Manipulated Learner Performance', linestyle='--', marker='H', linewidth=2)
+    ax.plot(populationx3,populationy3, label='Secure Learner Performance (Our method)', linestyle='-', marker='d', linewidth=2)
+#    title('Parameter Tuning : Selection Operation')
+#     xlabel('Population Size')
+    xlabel(r'Population size [$\psi$]', fontsize=20)
+    ylabel('Testing performance : f1score', fontsize=20)
+  
+    handles, labels = ax.get_legend_handles_labels()
+    lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
+        
 #     ax = plt.subplot(111)
 #     box = ax.get_position()
 #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 #     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
-# #     plt.legend()color='r', linestyle='-', linewidth=2
-#     plt.grid(linestyle='-', linewidth=0.4)
-#     savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PopulationParams.png", dpi=300)
-#     l1 = populationy1
-#     l2 = populationy2
-#     l3 = populationy3
+#     plt.legend()color='r', linestyle='-', linewidth=2
+  
+    ax.grid(linestyle='-', linewidth=0.4)
+    fig.savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PopulationParams.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
+    l1 = populationy1
+    l2 = populationy2
+    l3 = populationy3
 
 
 
@@ -3966,39 +4048,39 @@ def gaplots():
 
 
 
-    mediumstrengthattacky1 = []
-    mediumstrengthattacky1.append(0.859)
-    mediumstrengthattacky1.append(0.7253)
-    mediumstrengthattacky1.append(0.9767)
-    mediumstrengthattacky1.append(0.8371)
-    mediumstrengthattacky1.append(0.857)
-    mediumstrengthattacky1.append(0.8025)
-    mediumstrengthattacky1.append(0.7082)
-    mediumstrengthattacky1.append(0.8747)
-       
-    mediumstrengthattacky2 = []
-    mediumstrengthattacky2.append(0.7868)
-    mediumstrengthattacky2.append(0.6786)
-    mediumstrengthattacky2.append(0.5634)
-    mediumstrengthattacky2.append(0.6499)
-    mediumstrengthattacky2.append(0.7172)
-    mediumstrengthattacky2.append(0.6471)
-    mediumstrengthattacky2.append(0.6168)
-    mediumstrengthattacky2.append(0.8087)
-   
-    mediumstrengthattacky3 = []
-    mediumstrengthattacky3.append(0.84)
-    mediumstrengthattacky3.append(0.7938)
-    mediumstrengthattacky3.append(0.9886)
-    mediumstrengthattacky3.append(0.8354)
-    mediumstrengthattacky3.append(0.8721)
-    mediumstrengthattacky3.append(0.7841)
-    mediumstrengthattacky3.append(0.9598)
-    mediumstrengthattacky3.append(0.9233)
-   
-    l1 = mediumstrengthattacky1
-    l2 = mediumstrengthattacky2
-    l3 = mediumstrengthattacky3
+#     mediumstrengthattacky1 = []
+#     mediumstrengthattacky1.append(0.859)
+#     mediumstrengthattacky1.append(0.7253)
+#     mediumstrengthattacky1.append(0.9767)
+#     mediumstrengthattacky1.append(0.8371)
+#     mediumstrengthattacky1.append(0.857)
+#     mediumstrengthattacky1.append(0.8025)
+#     mediumstrengthattacky1.append(0.7082)
+#     mediumstrengthattacky1.append(0.8747)
+#        
+#     mediumstrengthattacky2 = []
+#     mediumstrengthattacky2.append(0.7868)
+#     mediumstrengthattacky2.append(0.6786)
+#     mediumstrengthattacky2.append(0.5634)
+#     mediumstrengthattacky2.append(0.6499)
+#     mediumstrengthattacky2.append(0.7172)
+#     mediumstrengthattacky2.append(0.6471)
+#     mediumstrengthattacky2.append(0.6168)
+#     mediumstrengthattacky2.append(0.8087)
+#    
+#     mediumstrengthattacky3 = []
+#     mediumstrengthattacky3.append(0.84)
+#     mediumstrengthattacky3.append(0.7938)
+#     mediumstrengthattacky3.append(0.9886)
+#     mediumstrengthattacky3.append(0.8354)
+#     mediumstrengthattacky3.append(0.8721)
+#     mediumstrengthattacky3.append(0.7841)
+#     mediumstrengthattacky3.append(0.9598)
+#     mediumstrengthattacky3.append(0.9233)
+#    
+#     l1 = mediumstrengthattacky1
+#     l2 = mediumstrengthattacky2
+#     l3 = mediumstrengthattacky3
  
  
  
@@ -4231,7 +4313,7 @@ if __name__ == '__main__':
 
 #     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/TrainSplit/0/'
     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/TestSplit/0/'
-    resizer(InDir)
+#     resizer(InDir)
 
     
 #     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/'
@@ -4267,7 +4349,7 @@ if __name__ == '__main__':
 #     trainplots()
 #     ttest()
 #     gaplots()
-#     saplots()
+    saplots()
 
 
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')

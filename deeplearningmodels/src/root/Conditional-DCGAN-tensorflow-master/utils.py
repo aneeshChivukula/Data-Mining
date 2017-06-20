@@ -19,7 +19,7 @@ import hickle as hkl
 import sys
 from PIL import Image
 
-labels = [7,9]
+labels = [4,9]
 
 
 tempfilepath = "/home/achivuku/Desktop/Conditional-DCGAN-master/samples/temp.png"
@@ -37,6 +37,9 @@ def get_image(image_path, input_height, input_width,
   image = imread(image_path, grayscale)
   return transform(image, input_height, input_width,
                    resize_height, resize_width, crop)
+
+def save_images_train(images, size, image_path):
+  return imsave_train(inverse_transform(images), size, image_path)
 
 def save_images(images, labels, size, image_path, images_file_path, classes_file_path):
   return imsave(inverse_transform(images), labels, size, image_path, images_file_path, classes_file_path)
@@ -70,6 +73,10 @@ def merge(images, size):
   else:
     raise ValueError('in merge(images,size) images parameter '
                      'must have dimensions: HxW or HxWx3 or HxWx4')
+
+def imsave_train(images, size, path):
+  image = np.squeeze(merge(images, size))
+  return scipy.misc.imsave(path, image)
 
 def imsave(images, labels, size, path, images_file_path, classes_file_path):
   samples = []

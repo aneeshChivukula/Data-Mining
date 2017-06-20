@@ -45,6 +45,19 @@ executetwolabel = True
 multiplayer = False # Make true only on server
 trainmultiplayercnn = False
 
+testgenadv = True
+
+def load_gansamples(CurrDir):
+    os.chdir(CurrDir)
+    allsamples = []        
+    for savedfile in sorted(os.listdir(CurrDir),key=lambda x: int(x.split('_')[-1].split('-')[0])):
+        if savedfile.endswith(".pkl"):
+            fp = open(savedfile,'rb')
+            samples = pickle.load(fp)
+            fp.close()
+            allsamples.extend(samples)    
+    return allsamples
+
 def guidedmasking(mask):
     heightstartind = np.random.randint(low=0,high=32)
     heightendind = (heightstartind + np.random.randint(FLAGS.minheightlength,FLAGS.maxheightlength))
@@ -121,7 +134,26 @@ def alphasaver(AdvInDir,curralpha,TempCurrent,idx):
     Image.fromarray(CurrImage).save(AdvInDir + "/" + str(TempCurrent) + ":" + str(idx) + ".jpeg")
     
 
-def binarizermulti(GameInDir,AdvInDir,imagespopulation,curralphas,labels,infile):
+# def binarizermulti(GameInDir,AdvInDir,imagespopulation,curralphas,labels,infile):
+#     binfile = open(GameInDir + infile, 'wb',)
+#     L = []
+# 
+#     for curralpha in curralphas:
+#         for i,x in enumerate(imagespopulation):
+#             CurrLabel = labels[x[0]]
+#             if(int(x[0]) == 0):
+#                 CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
+#             else:
+#                 CurrImage = np.array(x[1], np.uint8)
+# 
+#             l = np.insert(CurrImage.flatten(order='F'),0, x[0])
+#             if(len(l) == createdataset.length):
+#                 L.append(l)
+# 
+#     np.concatenate(L).astype('int16').tofile(binfile)
+#     binfile.close()
+
+def binarizermulti(GameInDir,AdvInDir,imagespopulation,curralphas,labels,infile,includetest):
     binfile = open(GameInDir + infile, 'wb',)
     L = []
 
@@ -129,7 +161,7 @@ def binarizermulti(GameInDir,AdvInDir,imagespopulation,curralphas,labels,infile)
         for i,x in enumerate(imagespopulation):
             CurrLabel = labels[x[0]]
             if(int(x[0]) == 0):
-                CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)[0]
+                CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)
             else:
                 CurrImage = np.array(x[1], np.uint8)
 
@@ -137,8 +169,68 @@ def binarizermulti(GameInDir,AdvInDir,imagespopulation,curralphas,labels,infile)
             if(len(l) == createdataset.length):
                 L.append(l)
 
+    if(includetest==True):
+        for i,x in enumerate(imagespopulation):
+            CurrImage = np.array(x[1], np.uint8)
+            l = np.insert(CurrImage.flatten(order='F'),0, x[0])
+            if(len(l) == createdataset.length):
+                L.append(l)
+
+
+
     np.concatenate(L).astype('int16').tofile(binfile)
     binfile.close()
+    
+def binarizerganmulti(GameInDir,AdvInDir,imagespopulation,curralphas,labels,infile,includetest,ganimages,ganlabels):
+    binfile = open(GameInDir + infile, 'wb',)
+    L = []
+    
+    for curralpha in curralphas:
+        for i,x in enumerate(imagespopulation):
+            CurrLabel = labels[x[0]]
+            if(int(x[0]) == 0):
+                CurrImage = np.array(cifar10_adversary_train.distorted_image(x[1],curralpha), np.uint8)
+            else:
+                CurrImage = np.array(x[1], np.uint8)
+                
+            l = np.insert(CurrImage.flatten(order='F'),0, x[0])
+            if(len(l) == createdataset.length):
+                L.append(l)
+        
+        ld = dict() # This code hack works only for two label problems. Need to make a longer ld reflecting sorted order for multilabel problems.
+        ld[sorted(set(ganlabels),key=int)[0]] = 0
+        ld[sorted(set(ganlabels),key=int)[1]] = 1
+        
+        for image,label in zip(ganimages,ganlabels):
+            print image.shape # Check imahe shape is suitable for cifar10_adversary_train.distorted_image
+            print curralpha.shape
+            sys.exit()
+            
+            CurrLabel = label
+            if(ld[label] == 0):
+                CurrImage = np.array(cifar10_adversary_train.distorted_image(image,curralpha), np.uint8)
+            else:
+                CurrImage = np.array(image, np.uint8)
+            
+            l = np.insert(CurrImage.flatten(order='F'),0, x[0])
+            if(len(l) == createdataset.length):
+                L.append(l)
+            
+    if(includetest==True):
+        for i,x in enumerate(imagespopulation):
+            CurrImage = np.array(x[1], np.uint8)
+            l = np.insert(CurrImage.flatten(order='F'),0, x[0])
+            if(len(l) == createdataset.length):
+                L.append(l)
+
+
+    np.concatenate(L).astype('int16').tofile(binfile)
+    binfile.close()
+
+
+
+
+
 
 def binarizer(GameInDir,AdvInDir,imagespopulation,curralpha,labels,infile):
     if tf.gfile.Exists(AdvInDir):
@@ -224,6 +316,83 @@ def main(argv=None):
 #         # For 2 class problem, change input bin file to include 2 classes and train over 2000 iterations
 #         # For 1000 class problem, change input bin file to include 1000 classes and train over 10000 iterations
 
+    if(testgenadv==True): # Set all file paths appropriately
+        InDir = '/scratch/cifar10_25/TrainSplit/'
+        labels = listdir(InDir)
+        labels.sort()
+        
+        creator.create("FitnessMax", base.Fitness, weights=(0.0,),error=0.0,precision=0.0,recall=0.0,f1score=0.0,tpr=0.0,fpr=0.0)
+        creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+        
+        toolbox = base.Toolbox()
+        
+        toolbox.register("mutate", cifar10_adversary_train.mutation)
+        toolbox.register("mate", cifar10_adversary_train.crossover)
+        toolbox.register("evaluate", cifar10_adversary_train.evaluate)
+        toolbox.register("select", cifar10_adversary_train.select)
+        toolbox.register("perturbate", cifar10_adversary_train.perturbation)
+        
+        toolbox.register("individualImage", cifar10_adversary_train.initIndividualImage)
+        toolbox.register("imagepopulation", cifar10_adversary_train.initImagePopulation, toolbox.individualImage)
+    
+        toolbox.register("attribute",cifar10_adversary_train.initIndividual, meanimage=0)
+        toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
+
+
+        '''
+
+        alphastar1 = pickle.load(open('/scratch/cifar10_26/AdversarialSplitAlphac/7:7.pkl','rb'))
+        alphastar2 = pickle.load(open('/scratch/cifar10_25/AdversarialSplitAlphac/6:6.pkl','rb'))
+        alphastar3 = pickle.load(open('/scratch/cifar10_24/AdversarialSplitAlphac/4:4.pkl','rb'))
+        alphastar4 = pickle.load(open('/scratch/cifar10_23/AdversarialSplitAlphac/4:4.pkl','rb'))
+        alphastar5 = pickle.load(open('/scratch/cifar10_22/AdversarialSplitAlphac/2:2.pkl','rb'))
+        
+        '''
+        
+        alphastars = []
+        alphastar1 = pickle.load(open('/scratch/cifar10_26/AdversarialSplitAlphac/7:7.pkl','rb'))
+        alphastar2 = pickle.load(open('/scratch/cifar10_25/AdversarialSplitAlphac/6:6.pkl','rb'))
+        alphastar3 = pickle.load(open('/scratch/cifar10_24/AdversarialSplitAlphac/4:4.pkl','rb'))
+        alphastar4 = pickle.load(open('/scratch/cifar10_23/AdversarialSplitAlphac/4:4.pkl','rb'))
+        alphastar5 = pickle.load(open('/scratch/cifar10_22/AdversarialSplitAlphac/2:2.pkl','rb'))
+
+        alphastars.append(alphastar1)
+        alphastars.append(alphastar2)
+        alphastars.append(alphastar3)
+        alphastars.append(alphastar4)
+        alphastars.append(alphastar5)
+        
+        finalresultsmulti = []
+
+        FLAGS.max_iter_eval = 10000
+        
+        CurrDir = '/home/achivuku/Desktop/Conditional-DCGAN-master/samples/images'
+        ganimages = load_gansamples(CurrDir)
+        CurrDir = '/home/achivuku/Desktop/Conditional-DCGAN-master/samples/labels'
+        ganlabels = load_gansamples(CurrDir)
+
+        includetest = False
+        InDir = '/scratch/cifar10_25/TrainSplit/'
+        imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
+        binarizerganmulti(GameInDir,AdvInDir,imagespopulation,alphastars,labels,'train.bin',includetest,ganimages,ganlabels)        
+        if tf.gfile.Exists(TrainWeightsDir):
+            tf.gfile.DeleteRecursively(TrainWeightsDir)
+        tf.gfile.MakeDirs(TrainWeightsDir)
+        cifar10_train.train()
+
+        includetest = True
+        InDir = '/scratch/cifar10_25/TestSplit/'
+        imagespopulation,positiveimagesmean,negativeimagesmean,filesd = toolbox.imagepopulation(InDir)
+        binarizerganmulti(GameInDir,AdvInDir,imagespopulation,alphastars,labels,'test.bin',includetest,ganimages,ganlabels)
+        if tf.gfile.Exists(EvalDir):
+          tf.gfile.DeleteRecursively(EvalDir)
+        tf.gfile.MakeDirs(EvalDir)
+        perfmetrics = cifar10_eval.evaluate()
+
+        finalresultsmulti.append(perfmetrics)
+        
+        print('finalresultsmulti',finalresultsmulti)
+        sys.exit()
 
     if(multiplayer==True): # Set all file paths appropriately
         InDir = '/scratch/cifar10_25/TrainSplit/'

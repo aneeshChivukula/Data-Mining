@@ -15,7 +15,7 @@ from PIL import Image
 import cPickle as pickle
 import hickle as hkl 
 
-labels = [7,9]
+labels = [4,9]
 
 def conv_out_size_same(size, stride):
   return int(math.ceil(float(size) / float(stride)))
@@ -219,10 +219,10 @@ class DCGAN(object):
 
             manifold_h = int(np.ceil(np.sqrt(samples.shape[0])))
             manifold_w = int(np.floor(np.sqrt(samples.shape[0])))
-            save_images(samples, [manifold_h, manifold_w],
+            save_images_train(samples, [manifold_h, manifold_w],
                   './{}/train_{:02d}_{:04d}.png'.format(config.sample_dir, epoch, idx))
                         
-            self.save_samples(samples, './{}/train_{:02d}_{:04d}.pkl'.format(config.sample_dir, epoch, idx))
+            #self.save_samples(samples, './{}/train_{:02d}_{:04d}.pkl'.format(config.sample_dir, epoch, idx))
 
             print("Samples Written to disk" )
 

@@ -26,7 +26,7 @@ flags.DEFINE_string("dataset", "mnist", "The name of dataset [celebA, mnist, lsu
 flags.DEFINE_string("input_fname_pattern", "*.jpg", "Glob pattern of filename of input images [*]")
 flags.DEFINE_string("checkpoint_dir", "checkpoint", "Directory name to save the checkpoints [checkpoint]")
 flags.DEFINE_string("sample_dir", "samples", "Directory name to save the image samples [samples]")
-flags.DEFINE_boolean("train", False, "True for training, False for testing [False]")
+flags.DEFINE_boolean("train", True, "True for training, False for testing [False]")
 flags.DEFINE_boolean("crop", False, "True for training, False for testing [False]")
 flags.DEFINE_boolean("visualize", True, "True for visualizing, False for nothing [False]")
 FLAGS = flags.FLAGS
@@ -46,15 +46,11 @@ def load_samples(CurrDir):
 
 def main(_):
 
-  CurrDir = '/home/achivuku/Desktop/Conditional-DCGAN-master/samples/images'
-  allimages = load_samples(CurrDir)	
-  CurrDir = '/home/achivuku/Desktop/Conditional-DCGAN-master/samples/labels'
-  alllabels = load_samples(CurrDir)	
-
-  print(allimages[0][allimages[0]!=0])	
-  print(alllabels[0])	
-  scipy.misc.imsave('/home/achivuku/Desktop/Conditional-DCGAN-master/samples/test.png', allimages[0])
-  sys.exit()
+#  CurrDir = '/home/achivuku/Desktop/Conditional-DCGAN-master/samples/images'
+#  allimages = load_samples(CurrDir)	
+#  CurrDir = '/home/achivuku/Desktop/Conditional-DCGAN-master/samples/labels'
+#  alllabels = load_samples(CurrDir)	
+#  sys.exit()
 
 
   pp.pprint(flags.FLAGS.__flags)

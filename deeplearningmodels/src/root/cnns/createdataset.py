@@ -16,10 +16,10 @@ from PIL import Image
 
 
 # import cv2
-width = 32
-height = 32
-#width = 1024
-#height = 1024
+#width = 32
+#height = 32
+width = 1024
+height = 1024
 length = 3073
 
 # width = 224
@@ -3839,166 +3839,166 @@ def gaplots():
     
     
     
-    populationx1 = []
-    populationy1 = []
-              
-    populationx1.append(500)
-    populationy1.append(0.7864)
-          
-    populationx1.append(1500)
-    populationy1.append(0.7864)
-          
-    populationx1.append(2000)
-    populationy1.append(0.7864)
-          
-    populationx1.append(2500)
-    populationy1.append(0.7864)
-          
-    populationx1.append(3000)
-    populationy1.append(0.7864)
-       
-    populationx1.append(3500)
-    populationy1.append(0.7789)
-          
-    populationx1.append(4000)
-    populationy1.append(0.7864)
-          
-    populationx1.append(4500)
-    populationy1.append(0.7864)
-          
-    populationx1.append(5000)
-    populationy1.append(0.7864)
-          
-    populationx1.append(6000)
-    populationy1.append(0.7864)
-          
-    populationx1.append(7000)
-    populationy1.append(0.7864)
-          
-    populationx1.append(8000)
-    populationy1.append(0.7864)
-          
-    populationx1.append(9000)
-    populationy1.append(0.7864)
-          
-    populationx1.append(10000)
-    populationy1.append(0.7864)
-              
-    populationx2 = []
-    populationy2 = []
-              
-    populationx2.append(500)
-    populationy2.append(0.6403)
-          
-    populationx2.append(1500)
-    populationy2.append(0.6194)
-          
-    populationx2.append(2000)
-    populationy2.append(0.6104)
-          
-    populationx2.append(2500)
-    populationy2.append(0.6101)
-          
-    populationx2.append(3000)
-    populationy2.append(0.5777)
-          
-    populationx2.append(3500)
-    populationy2.append(0.65)
-          
-    populationx2.append(4000)
-    populationy2.append(0.5974)
-          
-    populationx2.append(4500)
-    populationy2.append(0.6091)
-          
-    populationx2.append(5000)
-    populationy2.append(0.6073)
-          
-    populationx2.append(6000)
-    populationy2.append(0.6268)
-          
-    populationx2.append(7000)
-    populationy2.append(0.6174)
-          
-    populationx2.append(8000)
-    populationy2.append(0.5853)
-          
-    populationx2.append(9000)
-    populationy2.append(0.5846)
-          
-    populationx2.append(10000)
-    populationy2.append(0.6322)
-          
-    populationx3 = []
-    populationy3 = []
-              
-    populationx3.append(500)
-    populationy3.append(0.7711)
-          
-    populationx3.append(1500)
-    populationy3.append(0.6792)
-          
-    populationx3.append(2000)
-    populationy3.append(0.774)
-          
-    populationx3.append(2500)
-    populationy3.append(0.6953)
-          
-    populationx3.append(3000)
-    populationy3.append(0.759)
-          
-    populationx3.append(3500)
-    populationy3.append(0.8285)
-       
-    populationx3.append(4000)
-    populationy3.append(0.7503)
-          
-    populationx3.append(4500)
-    populationy3.append(0.7388)
-          
-    populationx3.append(5000)
-    populationy3.append(0.6914)
-          
-    populationx3.append(6000)
-    populationy3.append(0.7792)
-          
-    populationx3.append(7000)
-    populationy3.append(0.7205)
-          
-    populationx3.append(8000)
-    populationy3.append(0.6984)
-          
-    populationx3.append(9000)
-    populationy3.append(0.8452)
-          
-    populationx3.append(10000)
-    populationy3.append(0.7477)
-              
-    fig = plt.figure(1)
-    ax = fig.add_subplot(111)
-              
-    ax.plot(populationx1,populationy1, label='Original Learner Performance', linestyle='-', marker='p', linewidth=2)
-    ax.plot(populationx2,populationy2, label='Manipulated Learner Performance', linestyle='--', marker='H', linewidth=2)
-    ax.plot(populationx3,populationy3, label='Secure Learner Performance (Our method)', linestyle='-', marker='d', linewidth=2)
-#    title('Parameter Tuning : Selection Operation')
-#     xlabel('Population Size')
-    xlabel(r'Population size [$\psi$]', fontsize=20)
-    ylabel('Testing performance : f1score', fontsize=20)
-  
-    handles, labels = ax.get_legend_handles_labels()
-    lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
-        
-#     ax = plt.subplot(111)
-#     box = ax.get_position()
-#     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-#     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
-#     plt.legend()color='r', linestyle='-', linewidth=2
-  
-    ax.grid(linestyle='-', linewidth=0.4)
-    fig.savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PopulationParams.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
-    l1 = populationy1
-    l2 = populationy2
-    l3 = populationy3
+#     populationx1 = []
+#     populationy1 = []
+#               
+#     populationx1.append(500)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(1500)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(2000)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(2500)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(3000)
+#     populationy1.append(0.7864)
+#        
+#     populationx1.append(3500)
+#     populationy1.append(0.7789)
+#           
+#     populationx1.append(4000)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(4500)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(5000)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(6000)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(7000)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(8000)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(9000)
+#     populationy1.append(0.7864)
+#           
+#     populationx1.append(10000)
+#     populationy1.append(0.7864)
+#               
+#     populationx2 = []
+#     populationy2 = []
+#               
+#     populationx2.append(500)
+#     populationy2.append(0.6403)
+#           
+#     populationx2.append(1500)
+#     populationy2.append(0.6194)
+#           
+#     populationx2.append(2000)
+#     populationy2.append(0.6104)
+#           
+#     populationx2.append(2500)
+#     populationy2.append(0.6101)
+#           
+#     populationx2.append(3000)
+#     populationy2.append(0.5777)
+#           
+#     populationx2.append(3500)
+#     populationy2.append(0.65)
+#           
+#     populationx2.append(4000)
+#     populationy2.append(0.5974)
+#           
+#     populationx2.append(4500)
+#     populationy2.append(0.6091)
+#           
+#     populationx2.append(5000)
+#     populationy2.append(0.6073)
+#           
+#     populationx2.append(6000)
+#     populationy2.append(0.6268)
+#           
+#     populationx2.append(7000)
+#     populationy2.append(0.6174)
+#           
+#     populationx2.append(8000)
+#     populationy2.append(0.5853)
+#           
+#     populationx2.append(9000)
+#     populationy2.append(0.5846)
+#           
+#     populationx2.append(10000)
+#     populationy2.append(0.6322)
+#           
+#     populationx3 = []
+#     populationy3 = []
+#               
+#     populationx3.append(500)
+#     populationy3.append(0.7711)
+#           
+#     populationx3.append(1500)
+#     populationy3.append(0.6792)
+#           
+#     populationx3.append(2000)
+#     populationy3.append(0.774)
+#           
+#     populationx3.append(2500)
+#     populationy3.append(0.6953)
+#           
+#     populationx3.append(3000)
+#     populationy3.append(0.759)
+#           
+#     populationx3.append(3500)
+#     populationy3.append(0.8285)
+#        
+#     populationx3.append(4000)
+#     populationy3.append(0.7503)
+#           
+#     populationx3.append(4500)
+#     populationy3.append(0.7388)
+#           
+#     populationx3.append(5000)
+#     populationy3.append(0.6914)
+#           
+#     populationx3.append(6000)
+#     populationy3.append(0.7792)
+#           
+#     populationx3.append(7000)
+#     populationy3.append(0.7205)
+#           
+#     populationx3.append(8000)
+#     populationy3.append(0.6984)
+#           
+#     populationx3.append(9000)
+#     populationy3.append(0.8452)
+#           
+#     populationx3.append(10000)
+#     populationy3.append(0.7477)
+#               
+#     fig = plt.figure(1)
+#     ax = fig.add_subplot(111)
+#               
+#     ax.plot(populationx1,populationy1, label='Original Learner Performance', linestyle='-', marker='p', linewidth=2)
+#     ax.plot(populationx2,populationy2, label='Manipulated Learner Performance', linestyle='--', marker='H', linewidth=2)
+#     ax.plot(populationx3,populationy3, label='Secure Learner Performance (Our method)', linestyle='-', marker='d', linewidth=2)
+# #    title('Parameter Tuning : Selection Operation')
+# #     xlabel('Population Size')
+#     xlabel(r'Population size [$\psi$]', fontsize=20)
+#     ylabel('Testing performance : f1score', fontsize=20)
+#   
+#     handles, labels = ax.get_legend_handles_labels()
+#     lgd = ax.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5,-0.1))
+#         
+# #     ax = plt.subplot(111)
+# #     box = ax.get_position()
+# #     ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+# #     ax.legend(loc='upper left', bbox_to_anchor=(0.1, 1.05), ncol=1, fancybox=True, shadow=True, prop={'size':10})
+# #     plt.legend()color='r', linestyle='-', linewidth=2
+#   
+#     ax.grid(linestyle='-', linewidth=0.4)
+#     fig.savefig("/home/aneesh/Documents/IJCNN Paper/IJCNN/images/PopulationParams.eps", format='eps', dpi=1200, bbox_extra_artists=(lgd,), bbox_inches='tight')
+#     l1 = populationy1
+#     l2 = populationy2
+#     l3 = populationy3
 
 
 
@@ -4127,8 +4127,189 @@ def gaplots():
 # t-statistic independent = -11.902 manipulated testing and manipulated training/testing pvalue =  1.04e-08
 # friedmantest-statistic = 16.000 pvalue =  3.35e-04
 
+
+#     multiplayerattacky1 = []
+#     multiplayerattacky1.append(0.6316)
+#     multiplayerattacky1.append(0.6027)
+#     multiplayerattacky1.append(0.629)
+#     multiplayerattacky1.append(0.6718)
+#     multiplayerattacky1.append(0.7455)
+#     multiplayerattacky1.append(0.6836)
+#     multiplayerattacky1.append(0.5827)
+#     multiplayerattacky1.append(0.6304)
+#        
+#     multiplayerattacky2 = []
+#     multiplayerattacky2.append(0.6748)
+#     multiplayerattacky2.append(0.7461)
+#     multiplayerattacky2.append(0.6034)
+#     multiplayerattacky2.append(0.6825)
+#     multiplayerattacky2.append(0.6698)
+#     multiplayerattacky2.append(0.6824)
+#     multiplayerattacky2.append(0.7444)
+#     multiplayerattacky2.append(0.8649)
+#     
+#     multiplayerattacky3 = []
+#     multiplayerattacky3.append(0.8715)
+#     multiplayerattacky3.append(0.829)
+#     multiplayerattacky3.append(0.833)
+#     multiplayerattacky3.append(0.8491)
+#     multiplayerattacky3.append(0.9041)
+#     multiplayerattacky3.append(0.9866)
+#     multiplayerattacky3.append(0.8528)
+#     multiplayerattacky3.append(0.936)
+
+
+#     multiplayerattacky1 = []
+#     multiplayerattacky1.append(0.6826)
+#     multiplayerattacky1.append(0.7123)
+#     multiplayerattacky1.append(0.5938)
+#     multiplayerattacky1.append(0.5251)
+#     multiplayerattacky1.append(0.6306)
+#     multiplayerattacky1.append(0.7176)
+#     multiplayerattacky1.append(0.5457)
+#     multiplayerattacky1.append(0.766)
+#        
+#     multiplayerattacky2 = []
+#     multiplayerattacky2.append()
+#     multiplayerattacky2.append(0.7238)
+#     multiplayerattacky2.append(0.6288)
+#     multiplayerattacky2.append(0.6452)
+#     multiplayerattacky2.append(0.6689)
+#     multiplayerattacky2.append(0.7136)
+#     multiplayerattacky2.append(0.6824)
+#     multiplayerattacky2.append(0.8332)
+#     
+#     multiplayerattacky3 = []
+#     multiplayerattacky3.append(0.9474)
+#     multiplayerattacky3.append(0.8823)
+#     multiplayerattacky3.append(0.8679)
+#     multiplayerattacky3.append(0.9998)
+#     multiplayerattacky3.append(0.8583)
+#     multiplayerattacky3.append(0.9885)
+#     multiplayerattacky3.append(0.7697)
+#     multiplayerattacky3.append(0.9264)
     
-    print('Output results for ',perfmetric)
+
+
+
+
+    multiplayerattacky1 = []
+    multiplayerattacky1.append(0.6826)
+    multiplayerattacky1.append(0.7123)
+    multiplayerattacky1.append(0.5938)
+    multiplayerattacky1.append(0.5251)
+    multiplayerattacky1.append(0.6306)
+    multiplayerattacky1.append(0.7176)
+    multiplayerattacky1.append(0.5457)
+    multiplayerattacky1.append(0.766)
+        
+    multiplayerattacky2 = []
+    multiplayerattacky2.append(0.6572)
+    multiplayerattacky2.append(0.7238)
+    multiplayerattacky2.append(0.6288)
+    multiplayerattacky2.append(0.6452)
+    multiplayerattacky2.append(0.6689)
+    multiplayerattacky2.append(0.7136)
+    multiplayerattacky2.append(0.6824)
+    multiplayerattacky2.append(0.8332)
+     
+    multiplayerattacky3 = []
+    multiplayerattacky3.append(0.9474)
+    multiplayerattacky3.append(0.8823)
+    multiplayerattacky3.append(0.8679)
+    multiplayerattacky3.append(0.9998)
+    multiplayerattacky3.append(0.8583)
+    multiplayerattacky3.append(0.9885)
+    multiplayerattacky3.append(0.7697)
+    multiplayerattacky3.append(0.9264)
+    
+
+
+
+
+
+#     multiplayerattacky1 = []
+#     multiplayerattacky1.append(0.7023)
+#     multiplayerattacky1.append(0.6354)
+#     multiplayerattacky1.append(0.5288)
+#     multiplayerattacky1.append(0.4881)
+#     multiplayerattacky1.append(0.5183)
+#     multiplayerattacky1.append(0.6546)
+#     multiplayerattacky1.append(0.5813)
+#     multiplayerattacky1.append(0.5702)
+#        
+#     multiplayerattacky2 = []
+#     multiplayerattacky2.append(0.7881)
+#     multiplayerattacky2.append(0.7502)
+#     multiplayerattacky2.append(0.6147)
+#     multiplayerattacky2.append(0.7041)
+#     multiplayerattacky2.append(0.6812)
+#     multiplayerattacky2.append(0.6592)
+#     multiplayerattacky2.append(0.761)
+#     multiplayerattacky2.append(0.8873)
+#     
+#     multiplayerattacky3 = []
+#     multiplayerattacky3.append(0.909)
+#     multiplayerattacky3.append(0.8586)
+#     multiplayerattacky3.append(0.8834)
+#     multiplayerattacky3.append(0.8141)
+#     multiplayerattacky3.append(0.9226)
+#     multiplayerattacky3.append(0.9987)
+#     multiplayerattacky3.append(0.9555)
+#     multiplayerattacky3.append(0.9612)
+    
+
+
+
+
+
+
+#     multiplayerattacky1 = []
+#     multiplayerattacky1.append(0.692)
+#     multiplayerattacky1.append(0.7094)
+#     multiplayerattacky1.append(0.5953)
+#     multiplayerattacky1.append(0.6395)
+#     multiplayerattacky1.append(0.5575)
+#     multiplayerattacky1.append(0.6181)
+#     multiplayerattacky1.append(0.6172)
+#     multiplayerattacky1.append(0.611)
+#        
+#     multiplayerattacky2 = []
+#     multiplayerattacky2.append(0.6834)
+#     multiplayerattacky2.append(0.763)
+#     multiplayerattacky2.append(0.693)
+#     multiplayerattacky2.append(0.6547)
+#     multiplayerattacky2.append(0.6433)
+#     multiplayerattacky2.append(0.7097)
+#     multiplayerattacky2.append(0.761)
+#     multiplayerattacky2.append(0.8581)
+#     
+#     multiplayerattacky3 = []
+#     multiplayerattacky3.append(0.9372)
+#     multiplayerattacky3.append(0.9146)
+#     multiplayerattacky3.append(0.9983)
+#     multiplayerattacky3.append(0.9639)
+#     multiplayerattacky3.append(0.9977)
+#     multiplayerattacky3.append(0.9991)
+#     multiplayerattacky3.append(0.93)
+#     multiplayerattacky3.append(0.989)
+    
+
+
+
+
+
+
+
+
+
+    
+    l1 = multiplayerattacky1
+    l2 = multiplayerattacky2
+    l3 = multiplayerattacky3
+
+    
+#     print('Output results for ',perfmetric)
     ttest=stats.ttest_ind(l1,l2,equal_var=True)
     print 't-statistic independent = %6.3f manipulated testing pvalue = ' % ttest[0],"{:.2e}".format(ttest[1])
 #     ttest=stats.ttest_rel(l1,l2)
@@ -4208,70 +4389,76 @@ def ttest():
 
     # SA Output
     # (7,9) for delta from 10 to 100 in steps of 10. default is 20.
-    record = {'testing error on original training data and original testing data': {'recall': 0.94, 'error': 0, 'precision': 0.7377, 'tpr': 0.94, 'fpr': 0.0908, 'f1score': 0.8266, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9419, 'error': 0.0784, 'precision': 0.617, 'tpr': 0.9419, 'fpr': 0.1591, 'f1score': 0.7456, 'norm': 0.4155, 'payoff': 0.6629}, 'training error on original training data and original testing data': {'recall': 0.9265, 'error': 0, 'precision': 0.7191, 'tpr': 0.9265, 'fpr': 0.0982, 'f1score': 0.8097, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9872, 'error': 0.0784, 'precision': 0.9664, 'tpr': 0.9872, 'fpr': 0.0093, 'f1score': 0.9767, 'norm': 0.4155, 'payoff': 0.6629}}
-    records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.9544, 'error': 0, 'precision': 0.7228, 'tpr': 0.9544, 'fpr': 0.0997, 'f1score': 0.8226, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9523, 'error': 0.0606, 'precision': 0.4269, 'tpr': 0.9523, 'fpr': 0.3458, 'f1score': 0.5895, 'norm': 0.4004, 'payoff': 0.6602}, 'training error on original training data and original testing data': {'recall': 0.9519, 'error': 0, 'precision': 0.7177, 'tpr': 0.9519, 'fpr': 0.1021, 'f1score': 0.8184, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9989, 'error': 0.0606, 'precision': 0.9993, 'tpr': 0.9989, 'fpr': 0.0002, 'f1score': 0.9991, 'norm': 0.4004, 'payoff': 0.6602}}
-    records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.9599, 'error': 0, 'precision': 0.7082, 'tpr': 0.9599, 'fpr': 0.1066, 'f1score': 0.8151, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9501, 'error': 0.0423, 'precision': 0.451, 'tpr': 0.9501, 'fpr': 0.3132, 'f1score': 0.6117, 'norm': 0.531, 'payoff': 0.5113}, 'training error on original training data and original testing data': {'recall': 0.9584, 'error': 0, 'precision': 0.7052, 'tpr': 0.9584, 'fpr': 0.1091, 'f1score': 0.8125, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 1.0, 'error': 0.0423, 'precision': 0.9996, 'tpr': 1.0, 'fpr': 0.0001, 'f1score': 0.9998, 'norm': 0.531, 'payoff': 0.5113}}
-    records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.9472, 'error': 0, 'precision': 0.7052, 'tpr': 0.9472, 'fpr': 0.1072, 'f1score': 0.8085, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9428, 'error': 0.0599, 'precision': 0.4779, 'tpr': 0.9428, 'fpr': 0.2813, 'f1score': 0.6343, 'norm': 0.4005, 'payoff': 0.6594}, 'training error on original training data and original testing data': {'recall': 0.9379, 'error': 0, 'precision': 0.6999, 'tpr': 0.9379, 'fpr': 0.1085, 'f1score': 0.8016, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9993, 'error': 0.0599, 'precision': 0.9996, 'tpr': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'norm': 0.4005, 'payoff': 0.6594}}
-    records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.9624, 'error': 0, 'precision': 0.719, 'tpr': 0.9624, 'fpr': 0.1024, 'f1score': 0.8231, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9619, 'error': 0.0426, 'precision': 0.4372, 'tpr': 0.9619, 'fpr': 0.3353, 'f1score': 0.6011, 'norm': 0.4942, 'payoff': 0.5484}, 'training error on original training data and original testing data': {'recall': 0.9637, 'error': 0, 'precision': 0.713, 'tpr': 0.9637, 'fpr': 0.1066, 'f1score': 0.8196, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9996, 'error': 0.0426, 'precision': 1.0, 'tpr': 0.9996, 'fpr': 0.0, 'f1score': 0.9998, 'norm': 0.4942, 'payoff': 0.5484}}
-    records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.9475, 'error': 0, 'precision': 0.7204, 'tpr': 0.9475, 'fpr': 0.1011, 'f1score': 0.8185, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9444, 'error': 0.0692, 'precision': 0.4301, 'tpr': 0.9444, 'fpr': 0.34, 'f1score': 0.5911, 'norm': 0.4301, 'payoff': 0.6391}, 'training error on original training data and original testing data': {'recall': 0.9387, 'error': 0, 'precision': 0.7034, 'tpr': 0.9387, 'fpr': 0.1071, 'f1score': 0.8042, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9993, 'error': 0.0692, 'precision': 0.9996, 'tpr': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'norm': 0.4301, 'payoff': 0.6391}}
-    records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.9618, 'error': 0, 'precision': 0.7347, 'tpr': 0.9618, 'fpr': 0.0939, 'f1score': 0.8331, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9619, 'error': 0.0428, 'precision': 0.5524, 'tpr': 0.9619, 'fpr': 0.2111, 'f1score': 0.7018, 'norm': 0.2883, 'payoff': 0.7545}, 'training error on original training data and original testing data': {'recall': 0.9669, 'error': 0, 'precision': 0.7299, 'tpr': 0.9669, 'fpr': 0.0978, 'f1score': 0.8318, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9937, 'error': 0.0428, 'precision': 0.9901, 'tpr': 0.9937, 'fpr': 0.0027, 'f1score': 0.9919, 'norm': 0.2883, 'payoff': 0.7545}}
-    records.append(record)
-    record = {'testing error on original training data and original testing data': {'recall': 0.9247, 'error': 0, 'precision': 0.7217, 'tpr': 0.9247, 'fpr': 0.0969, 'f1score': 0.8107, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9223, 'error': 0.0956, 'precision': 0.5471, 'tpr': 0.9223, 'fpr': 0.2068, 'f1score': 0.6868, 'norm': 0.3081, 'payoff': 0.7875}, 'training error on original training data and original testing data': {'recall': 0.9159, 'error': 0, 'precision': 0.7108, 'tpr': 0.9159, 'fpr': 0.1012, 'f1score': 0.8004, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9719, 'error': 0.0956, 'precision': 0.753, 'tpr': 0.9719, 'fpr': 0.087, 'f1score': 0.8486, 'norm': 0.3081, 'payoff': 0.7875}}
-    records.append(record)
-
-
-
-
-
-
-
-
-
-
-
-
+#     record = {'testing error on original training data and original testing data': {'recall': 0.94, 'error': 0, 'precision': 0.7377, 'tpr': 0.94, 'fpr': 0.0908, 'f1score': 0.8266, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9419, 'error': 0.0784, 'precision': 0.617, 'tpr': 0.9419, 'fpr': 0.1591, 'f1score': 0.7456, 'norm': 0.4155, 'payoff': 0.6629}, 'training error on original training data and original testing data': {'recall': 0.9265, 'error': 0, 'precision': 0.7191, 'tpr': 0.9265, 'fpr': 0.0982, 'f1score': 0.8097, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9872, 'error': 0.0784, 'precision': 0.9664, 'tpr': 0.9872, 'fpr': 0.0093, 'f1score': 0.9767, 'norm': 0.4155, 'payoff': 0.6629}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.9544, 'error': 0, 'precision': 0.7228, 'tpr': 0.9544, 'fpr': 0.0997, 'f1score': 0.8226, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9523, 'error': 0.0606, 'precision': 0.4269, 'tpr': 0.9523, 'fpr': 0.3458, 'f1score': 0.5895, 'norm': 0.4004, 'payoff': 0.6602}, 'training error on original training data and original testing data': {'recall': 0.9519, 'error': 0, 'precision': 0.7177, 'tpr': 0.9519, 'fpr': 0.1021, 'f1score': 0.8184, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9989, 'error': 0.0606, 'precision': 0.9993, 'tpr': 0.9989, 'fpr': 0.0002, 'f1score': 0.9991, 'norm': 0.4004, 'payoff': 0.6602}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.9599, 'error': 0, 'precision': 0.7082, 'tpr': 0.9599, 'fpr': 0.1066, 'f1score': 0.8151, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9501, 'error': 0.0423, 'precision': 0.451, 'tpr': 0.9501, 'fpr': 0.3132, 'f1score': 0.6117, 'norm': 0.531, 'payoff': 0.5113}, 'training error on original training data and original testing data': {'recall': 0.9584, 'error': 0, 'precision': 0.7052, 'tpr': 0.9584, 'fpr': 0.1091, 'f1score': 0.8125, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 1.0, 'error': 0.0423, 'precision': 0.9996, 'tpr': 1.0, 'fpr': 0.0001, 'f1score': 0.9998, 'norm': 0.531, 'payoff': 0.5113}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.9472, 'error': 0, 'precision': 0.7052, 'tpr': 0.9472, 'fpr': 0.1072, 'f1score': 0.8085, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9428, 'error': 0.0599, 'precision': 0.4779, 'tpr': 0.9428, 'fpr': 0.2813, 'f1score': 0.6343, 'norm': 0.4005, 'payoff': 0.6594}, 'training error on original training data and original testing data': {'recall': 0.9379, 'error': 0, 'precision': 0.6999, 'tpr': 0.9379, 'fpr': 0.1085, 'f1score': 0.8016, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9993, 'error': 0.0599, 'precision': 0.9996, 'tpr': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'norm': 0.4005, 'payoff': 0.6594}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.9624, 'error': 0, 'precision': 0.719, 'tpr': 0.9624, 'fpr': 0.1024, 'f1score': 0.8231, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9619, 'error': 0.0426, 'precision': 0.4372, 'tpr': 0.9619, 'fpr': 0.3353, 'f1score': 0.6011, 'norm': 0.4942, 'payoff': 0.5484}, 'training error on original training data and original testing data': {'recall': 0.9637, 'error': 0, 'precision': 0.713, 'tpr': 0.9637, 'fpr': 0.1066, 'f1score': 0.8196, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9996, 'error': 0.0426, 'precision': 1.0, 'tpr': 0.9996, 'fpr': 0.0, 'f1score': 0.9998, 'norm': 0.4942, 'payoff': 0.5484}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.9475, 'error': 0, 'precision': 0.7204, 'tpr': 0.9475, 'fpr': 0.1011, 'f1score': 0.8185, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9444, 'error': 0.0692, 'precision': 0.4301, 'tpr': 0.9444, 'fpr': 0.34, 'f1score': 0.5911, 'norm': 0.4301, 'payoff': 0.6391}, 'training error on original training data and original testing data': {'recall': 0.9387, 'error': 0, 'precision': 0.7034, 'tpr': 0.9387, 'fpr': 0.1071, 'f1score': 0.8042, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9993, 'error': 0.0692, 'precision': 0.9996, 'tpr': 0.9993, 'fpr': 0.0001, 'f1score': 0.9995, 'norm': 0.4301, 'payoff': 0.6391}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.9618, 'error': 0, 'precision': 0.7347, 'tpr': 0.9618, 'fpr': 0.0939, 'f1score': 0.8331, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9619, 'error': 0.0428, 'precision': 0.5524, 'tpr': 0.9619, 'fpr': 0.2111, 'f1score': 0.7018, 'norm': 0.2883, 'payoff': 0.7545}, 'training error on original training data and original testing data': {'recall': 0.9669, 'error': 0, 'precision': 0.7299, 'tpr': 0.9669, 'fpr': 0.0978, 'f1score': 0.8318, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9937, 'error': 0.0428, 'precision': 0.9901, 'tpr': 0.9937, 'fpr': 0.0027, 'f1score': 0.9919, 'norm': 0.2883, 'payoff': 0.7545}}
+#     records.append(record)
+#     record = {'testing error on original training data and original testing data': {'recall': 0.9247, 'error': 0, 'precision': 0.7217, 'tpr': 0.9247, 'fpr': 0.0969, 'f1score': 0.8107, 'norm': 1, 'payoff': 0}, 'testing error on original training data and manipulated testing data': {'recall': 0.9223, 'error': 0.0956, 'precision': 0.5471, 'tpr': 0.9223, 'fpr': 0.2068, 'f1score': 0.6868, 'norm': 0.3081, 'payoff': 0.7875}, 'training error on original training data and original testing data': {'recall': 0.9159, 'error': 0, 'precision': 0.7108, 'tpr': 0.9159, 'fpr': 0.1012, 'f1score': 0.8004, 'norm': 1, 'payoff': 1}, 'testing error on manipulated training data and manipulated testing data': {'recall': 0.9719, 'error': 0.0956, 'precision': 0.753, 'tpr': 0.9719, 'fpr': 0.087, 'f1score': 0.8486, 'norm': 0.3081, 'payoff': 0.7875}}
+#     records.append(record)
 
     
-    l1 = []
-    l2 = []
-    l3 = []
-    
-    for record in records:
-        l1.append(record['testing error on original training data and original testing data'][str(perfmetric)])
-        l2.append(record['testing error on original training data and manipulated testing data'][str(perfmetric)])
-        l3.append(record['testing error on manipulated training data and manipulated testing data'][str(perfmetric)])
-#         l.append(record['training error on original training data and original testing data']['precision'])
+#     l1 = []
+#     l2 = []
+#     l3 = []
+#     
+#     for record in records:
+#         l1.append(record['testing error on original training data and original testing data'][str(perfmetric)])
+#         l2.append(record['testing error on original training data and manipulated testing data'][str(perfmetric)])
+#         l3.append(record['testing error on manipulated training data and manipulated testing data'][str(perfmetric)])
+# #         l.append(record['training error on original training data and original testing data']['precision'])
+
+
+
+#     ttest=stats.ttest_ind(l1,l2,equal_var=True)
+#     print 't-statistic independent = %6.3f manipulated testing pvalue = ' % ttest[0],"{:.2e}".format(ttest[1])
+# #     ttest=stats.ttest_rel(l1,l2)
+# #     print 't-statistic dependent = %6.3f pvalue = %6.4f' % ttest
+#     
+#     ttest=stats.ttest_ind(l1,l3,equal_var=True)
+#     print 't-statistic independent = %6.3f manipulated training and manipulated testing pvalue = ' % ttest[0],"{:.2e}".format(ttest[1])
+# 
+#     ttest=stats.ttest_ind(l2,l3,equal_var=True)
+#     print 't-statistic independent = %6.3f manipulated testing and manipulated training/testing pvalue = ' % ttest[0],"{:.2e}".format(ttest[1])
+# 
+#     a = np.array([l1,l2,l3])
+#     friedmantest = stats.friedmanchisquare(*(a[i, :] for i in range(a.shape[0])))
+# #     print 'friedmantest-statistic = %6.3f pvalue = %6.100f' % friedmantest
+#     print 'friedmantest-statistic = %6.3f pvalue = ' % friedmantest[0],"{:.2e}".format(friedmantest[1])
         
-    print('Output results for ',perfmetric)
-    ttest=stats.ttest_ind(l1,l2,equal_var=True)
-    print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated testing' % ttest
-#     ttest=stats.ttest_rel(l1,l2)
-#     print 't-statistic dependent = %6.3f pvalue = %6.4f' % ttest
-    
-    ttest=stats.ttest_ind(l1,l3,equal_var=True)
-    print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated training and manipulated testing' % ttest
-
-    ttest=stats.ttest_ind(l2,l3,equal_var=True)
-    print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated testing and manipulated training/testing' % ttest
-
-    a = np.array([l1,l2,l3])
-    friedmantest = stats.friedmanchisquare(*(a[i, :] for i in range(a.shape[0])))
-    print 'friedmantest-statistic = %6.3f pvalue = %6.4f' % friedmantest
-
-    print('l1',l1)
-    print('l2',l2)
-    print('l3',l3)
-
-    print('len(l1)',len(l1))
-    print('len(l2)',len(l2))
-    print('len(l3)',len(l3))
-    print 'Need to have length of l to be 20'
+#     print('Output results for ',perfmetric)
+#     ttest=stats.ttest_ind(l1,l2,equal_var=True)
+#     print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated testing' % ttest
+# #     ttest=stats.ttest_rel(l1,l2)
+# #     print 't-statistic dependent = %6.3f pvalue = %6.4f' % ttest
+#     
+#     ttest=stats.ttest_ind(l1,l3,equal_var=True)
+#     print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated training and manipulated testing' % ttest
+# 
+#     ttest=stats.ttest_ind(l2,l3,equal_var=True)
+#     print 't-statistic independent = %6.3f pvalue = %6.4f on manipulated testing and manipulated training/testing' % ttest
+# 
+#     a = np.array([l1,l2,l3])
+#     friedmantest = stats.friedmanchisquare(*(a[i, :] for i in range(a.shape[0])))
+#     print 'friedmantest-statistic = %6.3f pvalue = %6.4f' % friedmantest
+# 
+#     print('l1',l1)
+#     print('l2',l2)
+#     print('l3',l3)
+# 
+#     print('len(l1)',len(l1))
+#     print('len(l2)',len(l2))
+#     print('len(l3)',len(l3))
+#     print 'Need to have length of l to be 20'
 
 
 
@@ -4312,9 +4499,12 @@ if __name__ == '__main__':
 
 
 #     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/TrainSplit/0/'
-    InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/TestSplit/0/'
-#     resizer(InDir)
+#     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/MNISTDatabase/TestSplit/0/'
 
+    InDir = '/home/aneesh/Documents/IJCNN Paper/IJCNN Journal Paper/IEEEtran/images/'
+
+    resizer(InDir)
+    sys.exit()
     
 #     InDir = '/home/aneesh/Documents/AdversarialLearningDatasets/Caltech101/'
 #     partitoner(InDir)
@@ -4348,8 +4538,8 @@ if __name__ == '__main__':
 #     generatereports()
 #     trainplots()
 #     ttest()
-#     gaplots()
-    saplots()
+    gaplots()
+#     saplots()
 
 
 #     resizer('/home/aneesh/Documents/AdversarialLearningDatasets/ILSVRC2010/'+'AdversarialSplit/BrownDog/')

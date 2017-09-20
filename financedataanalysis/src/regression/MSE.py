@@ -51,7 +51,7 @@ def restricted_model(lag):
     # model.compile(loss='mse', optimizer='adam', metrics=['msd'])
     return model
 
-Ypast,Ycurr = getstockdata(df[['Date','^DJI_prices']])
+Ypast,Ycurr = getstockdata(df[['Date','MSFT_prices']])
 modelr = restricted_model(p)
 np.random.seed(3)
 modelr.fit(Ypast, Ycurr, epochs=5, batch_size=32, verbose=2, validation_split=0.1)
@@ -65,7 +65,7 @@ print('modelr mse_value',mse_valuer)
 print('modelr mae_value',mae_valuer)
 print('modelr r2_score(Ycurrp, Ycurr)',r2_score(Ycurrp, Ycurr))
 
-Ypast,Ycurr = getstockdata(df[['Date','^GSPC_prices']])
+Ypast,Ycurr = getstockdata(df[['Date','ORCL_prices']])
 modelur = restricted_model(q)
 np.random.seed(7)
 modelur.fit(Ypast, Ycurr, epochs=5, batch_size=32, verbose=2, validation_split=0.1)
@@ -80,4 +80,4 @@ print('modelur mae_value',mae_valuer)
 print('modelur r2_score(Ycurrp, Ycurr)',r2_score(Ycurrp, Ycurr))
 
 # https://github.com/fchollet/keras/tree/master/examples
-# TO DO : Output causal graph
+# TO DO : Output causal graph for every pairs of stock prices

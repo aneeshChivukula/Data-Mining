@@ -2,6 +2,11 @@ import collections
 import networkx as nx
 import matplotlib.pyplot as plt
 import sys
+import pandas as pd
+import pickle
+
+columns = ['AAPL_restricted', 'ABT_restricted', 'AEM_restricted', 'AFG_restricted', 'APA_restricted', 'B_restricted', 'CAT_restricted', 'IXIC_restricted', 'LAKE_restricted', 'MCD_restricted', 'MSFT_restricted', 'ORCL_restricted', 'SUN_restricted', 'T_restricted', 'UTX_restricted', 'WWD_restricted','AAPL_unrestricted', 'ABT_unrestricted', 'AEM_unrestricted', 'AFG_unrestricted', 'APA_unrestricted', 'B_unrestricted', 'CAT_unrestricted', 'IXIC_unrestricted', 'LAKE_unrestricted', 'MCD_unrestricted', 'MSFT_unrestricted', 'ORCL_unrestricted', 'SUN_unrestricted', 'T_unrestricted', 'UTX_unrestricted', 'WWD_unrestricted']
+indexes = ['AAPL_prices', 'ABT_prices', 'AEM_prices', 'AFG_prices', 'APA_prices', 'B_prices', 'CAT_prices', 'IXIC_prices', 'LAKE_prices', 'MCD_prices', 'MSFT_prices', 'ORCL_prices', 'SUN_prices', 'T_prices', 'UTX_prices', 'WWD_prices']
 
 qmemodelrmae = collections.defaultdict(dict)
 qmemodelrmse = collections.defaultdict(dict)
@@ -26,24 +31,36 @@ msemodelurmae = {'CAT_prices': {'LAKE_prices': 1.259900835136962, 'SUN_prices': 
 MSEGraphPath = "/home/achivuku/PycharmProjects/financedataanalysis/MSE-Graph.png"
 QMEGraphPath = "/home/achivuku/PycharmProjects/financedataanalysis/QME-Graph.png"
 
+MSEErrorsDataframePath = "/home/achivuku/PycharmProjects/financedataanalysis/MSEErrors-Graph.pkl"
+QMEErrorsDataframePath = "/home/achivuku/PycharmProjects/financedataanalysis/QMEErrors-Graph.pkl"
+
+MSEModelFstatMAEPath = "/home/achivuku/PycharmProjects/financedataanalysis/MSECauses-Graph.pkl"
+QMEModelFstatMAEPath = "/home/achivuku/PycharmProjects/financedataanalysis/QMECauses-Graph.pkl"
+
 def calculatefstatistic(nestedrd, nestedurd, colour):
 
     nestedfstat = collections.defaultdict(dict)
     G = nx.DiGraph()
 
+    dfout = pd.DataFrame(columns=columns, index=indexes)
+
     for outerkey, outervalue in nestedrd.iteritems():
         for innerkey, innervalue in nestedrd[outerkey].iteritems():
             restrictederror = nestedrd[outerkey][innerkey]
             unrestrictederror = nestedurd[outerkey][innerkey]
+
+            dfout.loc[outerkey][innerkey.replace("prices", "restricted")] = restrictederror
+            dfout.loc[outerkey][innerkey.replace("prices", "unrestricted")] = unrestrictederror
+
             fstat = (restrictederror - unrestrictederror) / unrestrictederror
             if ( fstat > 0.05 ):
                 nestedfstat[outerkey][innerkey] = fstat
                 G.add_edge(innerkey.rstrip('_prices'), outerkey.rstrip('_prices'), color=colour)
     # innerkey is granger influencing outerkey stock
-    return nestedfstat, G
+    return nestedfstat, G, dfout
 
-msemodelfstatmae,msemodelgraph = calculatefstatistic(msemodelrmae,msemodelurmae, 'green')
-qmemodelfstatmae,qmemodelgraph = calculatefstatistic(qmemodelrmae,qmemodelurmae, 'red')
+msemodelfstatmae, msemodelgraph, mseerrorsframe = calculatefstatistic(msemodelrmae,msemodelurmae, 'green')
+qmemodelfstatmae, qmemodelgraph, qmeerrorsframe = calculatefstatistic(qmemodelrmae,qmemodelurmae, 'red')
 
 print('msemodelfstatmae',msemodelfstatmae)
 print('qmemodelfstatmae',qmemodelfstatmae)
@@ -60,6 +77,20 @@ graph_pos = nx.circular_layout(qmemodelgraph)
 
 nx.draw_networkx(qmemodelgraph, with_labels=True, arrows=True, node_color = 'red')
 plt.savefig(QMEGraphPath)
+
+mseerrorsframe.to_pickle(MSEErrorsDataframePath)
+qmeerrorsframe.to_pickle(QMEErrorsDataframePath)
+# QMEErrors = pd.read_pickle("QMEErrors-Graph.pkl")
+
+
+with open(MSEModelFstatMAEPath, 'wb') as handle:
+    pickle.dump(msemodelfstatmae,handle,protocol=pickle.HIGHEST_PROTOCOL)
+
+with open(QMEModelFstatMAEPath, 'wb') as handle:
+    pickle.dump(qmemodelfstatmae,handle,protocol=pickle.HIGHEST_PROTOCOL)
+
+
+
 
 # Plot Options :
 # https://networkx.github.io/documentation/networkx-1.10/reference/generated/networkx.drawing.nx_pylab.draw_networkx.html#networkx.drawing.nx_pylab.draw_networkx1

@@ -188,7 +188,14 @@ for stock1,stock2 in itertools.combinations(allcols,2):
     qmemodelrmae[stock1][stock2] = qme_mae_valuer
     qmemodelrmse[stock1][stock2] = qme_mse_valuer
 
-    Ypast,Ycurr = getstockdata(df[['Date', stock2]])
+    Ypast1, Ycurr1 = getstockdata(df[['Date', stock1]])
+    Ypast2, Ycurr2 = getstockdata(df[['Date', stock2]])
+    Ycurr2 = Ycurr1
+
+    Ypast = np.concatenate((Ypast1, Ypast2))
+    Ycurr = np.concatenate((Ycurr1, Ycurr2))
+
+    # Ypast,Ycurr = getstockdata(df[['Date', stock2]])
     # Ypast,Ycurr = getstockdata(df[['Date','ORCL_prices']])
     numrecords = len(Ycurr)
     numtestrecords = int(math.ceil(0.3*numrecords))
@@ -220,61 +227,68 @@ print('qmemodelurmse',qmemodelurmse)
 
 
 
-# msemodelrmae = collections.defaultdict(dict)
-# msemodelrmse = collections.defaultdict(dict)
-# msemodelurmae = collections.defaultdict(dict)
-# msemodelurmse = collections.defaultdict(dict)
-#
-# for stock1,stock2 in itertools.combinations(allcols,2):
-#     print('stock1,stock2',stock1,stock2)
-#     Ypast, Ycurr = getstockdata(df[['Date', stock1]])
-#     # Ypast,Ycurr = getstockdata(df[['Date','MSFT_prices']])
-#     numrecords = len(Ycurr)
-#     numtestrecords = int(math.ceil(0.3*numrecords))
-#     numtrainrecords = int(math.ceil(0.7*numrecords))
-#
-#     modelr = restricted_mse_model(p)
-#     np.random.seed(3)
-#     modelr.fit(Ypast[:numtrainrecords], Ycurr[:numtrainrecords], epochs=5, batch_size=32, verbose=2, validation_split=0.1)
-#     Ycurrp = modelr.predict(Ypast[-numtestrecords:], batch_size=128)
-#     mse_mse_valuer, mse_mae_valuer = modelr.evaluate(Ypast[-numtestrecords:], Ycurr[-numtestrecords:], batch_size=128, verbose=1)
-#
-#     print('\n')
-#     print('mse modelr Ycurrp.mean()',Ycurrp.mean())
-#     print('mse modelr Ycurrp.std()',Ycurrp.std())
-#     print('mse modelr mae_value',mse_mae_valuer)
-#     print('mse modelr mse_value',mse_mse_valuer)
-#     print('mse modelr r2_score(Ycurrp, Ycurr)',r2_score(Ycurrp, Ycurr[-numtestrecords:]))
-#
-#     msemodelrmae[stock1][stock2] = mse_mae_valuer
-#     msemodelrmse[stock1][stock2] = mse_mse_valuer
-#
-#     Ypast, Ycurr = getstockdata(df[['Date', stock2]])
-#     # Ypast,Ycurr = getstockdata(df[['Date','ORCL_prices']])
-#     numrecords = len(Ycurr)
-#     numtestrecords = int(math.ceil(0.3*numrecords))
-#     numtrainrecords = int(math.ceil(0.7*numrecords))
-#
-#     modelur = restricted_mse_model(q)
-#     np.random.seed(7)
-#     modelur.fit(Ypast[:numtrainrecords], Ycurr[:numtrainrecords], epochs=5, batch_size=32, verbose=2, validation_split=0.1)
-#     Ycurrp = modelur.predict(Ypast[-numtestrecords:], batch_size=128)
-#     mse_mse_valueur, mse_mae_valueur = modelur.evaluate(Ypast[-numtestrecords:], Ycurr[-numtestrecords:], batch_size=128, verbose=1)
-#
-#     print('\n')
-#     print('mse modelur Ycurrp.mean()',Ycurrp.mean())
-#     print('mse modelur Ycurrp.std()',Ycurrp.std())
-#     print('mse modelur mae_value',mse_mae_valueur)
-#     print('mse modelur mse_value',mse_mse_valueur)
-#     print('mse modelur r2_score(Ycurrp, Ycurr)',r2_score(Ycurrp, Ycurr[-numtestrecords:]))
-#
-#     msemodelurmae[stock1][stock2] = mse_mae_valueur
-#     msemodelurmse[stock1][stock2] = mse_mse_valueur
-#
-# print('msemodelrmae', msemodelrmae)
-# print('msemodelrmse', msemodelrmse)
-# print('msemodelurmae', msemodelurmae)
-# print('msemodelurmse', msemodelurmse)
+msemodelrmae = collections.defaultdict(dict)
+msemodelrmse = collections.defaultdict(dict)
+msemodelurmae = collections.defaultdict(dict)
+msemodelurmse = collections.defaultdict(dict)
+
+for stock1,stock2 in itertools.combinations(allcols,2):
+    print('stock1,stock2',stock1,stock2)
+    Ypast, Ycurr = getstockdata(df[['Date', stock1]])
+    # Ypast,Ycurr = getstockdata(df[['Date','MSFT_prices']])
+    numrecords = len(Ycurr)
+    numtestrecords = int(math.ceil(0.3*numrecords))
+    numtrainrecords = int(math.ceil(0.7*numrecords))
+
+    modelr = restricted_mse_model(p)
+    np.random.seed(3)
+    modelr.fit(Ypast[:numtrainrecords], Ycurr[:numtrainrecords], epochs=5, batch_size=32, verbose=2, validation_split=0.1)
+    Ycurrp = modelr.predict(Ypast[-numtestrecords:], batch_size=128)
+    mse_mse_valuer, mse_mae_valuer = modelr.evaluate(Ypast[-numtestrecords:], Ycurr[-numtestrecords:], batch_size=128, verbose=1)
+
+    print('\n')
+    print('mse modelr Ycurrp.mean()',Ycurrp.mean())
+    print('mse modelr Ycurrp.std()',Ycurrp.std())
+    print('mse modelr mae_value',mse_mae_valuer)
+    print('mse modelr mse_value',mse_mse_valuer)
+    print('mse modelr r2_score(Ycurrp, Ycurr)',r2_score(Ycurrp, Ycurr[-numtestrecords:]))
+
+    msemodelrmae[stock1][stock2] = mse_mae_valuer
+    msemodelrmse[stock1][stock2] = mse_mse_valuer
+
+    Ypast1, Ycurr1 = getstockdata(df[['Date', stock1]])
+    Ypast2, Ycurr2 = getstockdata(df[['Date', stock2]])
+    Ycurr2 = Ycurr1
+
+    Ypast = np.concatenate((Ypast1, Ypast2))
+    Ycurr = np.concatenate((Ycurr1, Ycurr2))
+
+    # Ypast, Ycurr = getstockdata(df[['Date', stock2]])
+    # Ypast,Ycurr = getstockdata(df[['Date','ORCL_prices']])
+    numrecords = len(Ycurr)
+    numtestrecords = int(math.ceil(0.3*numrecords))
+    numtrainrecords = int(math.ceil(0.7*numrecords))
+
+    modelur = restricted_mse_model(q)
+    np.random.seed(7)
+    modelur.fit(Ypast[:numtrainrecords], Ycurr[:numtrainrecords], epochs=5, batch_size=32, verbose=2, validation_split=0.1)
+    Ycurrp = modelur.predict(Ypast[-numtestrecords:], batch_size=128)
+    mse_mse_valueur, mse_mae_valueur = modelur.evaluate(Ypast[-numtestrecords:], Ycurr[-numtestrecords:], batch_size=128, verbose=1)
+
+    print('\n')
+    print('mse modelur Ycurrp.mean()',Ycurrp.mean())
+    print('mse modelur Ycurrp.std()',Ycurrp.std())
+    print('mse modelur mae_value',mse_mae_valueur)
+    print('mse modelur mse_value',mse_mse_valueur)
+    print('mse modelur r2_score(Ycurrp, Ycurr)',r2_score(Ycurrp, Ycurr[-numtestrecords:]))
+
+    msemodelurmae[stock1][stock2] = mse_mae_valueur
+    msemodelurmse[stock1][stock2] = mse_mse_valueur
+
+print('msemodelrmae', msemodelrmae)
+print('msemodelrmse', msemodelrmse)
+print('msemodelurmae', msemodelurmae)
+print('msemodelurmse', msemodelurmse)
 
 
 

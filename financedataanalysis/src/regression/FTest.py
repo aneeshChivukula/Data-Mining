@@ -1,8 +1,10 @@
 import collections
 import networkx as nx
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import plot, title, xlabel, ylabel, savefig, legend
 import sys
 import pandas as pd
+import numpy as np
 import pickle
 
 
@@ -56,6 +58,9 @@ with open(MsemodelurmaePath, 'rb') as handle:
 # with open(MsemodelurmsePath, 'rb') as handle:
 #     msemodelurmse = pickle.load(handle)
 
+df = pd.read_csv("/home/achivuku/Documents/financedataanalysis/pricesvolumes.csv")
+cols = [1,2,3,4,6,8,10,12,14,16,18,20,21,22,23,24,26,28,30,32,33,34,36,38,40,42]
+df.drop(df.columns[cols],axis=1,inplace=True)
 
 
 #qmemodelrmae = {'CAT_prices': {'LAKE_prices': 19.205559056101283, 'SUN_prices': 19.218854530184878, 'WWD_prices': 19.215366104225708, 'UTX_prices': 19.180149048449945, 'MCD_prices': 19.206985598296122, 'MSFT_prices': 19.221424860736125, 'ORCL_prices': 19.180376658720128, 'T_prices': 19.204294508890388}, 'APA_prices': {'LAKE_prices': 5.7584514524422437, 'SUN_prices': 5.7541227706896709, 'WWD_prices': 5.7591335552190648, 'T_prices': 5.7590264452828297, 'UTX_prices': 5.767062501813851, 'MCD_prices': 5.7594100626465545, 'MSFT_prices': 5.6686162805245592, 'ORCL_prices': 5.7592205617942058, 'B_prices': 5.754833067320531, 'CAT_prices': 5.7594521598878252}, 'SUN_prices': {'UTX_prices': 3.7850761718999326, 'T_prices': 3.8235217434128903, 'WWD_prices': 3.8255435167574414}, 'ABT_prices': {'LAKE_prices': 2.2049389103658839, 'APA_prices': 2.155419906915403, 'SUN_prices': 2.1468019320294749, 'WWD_prices': 1.9800979695288963, 'AEM_prices': 2.1698218479655149, 'T_prices': 2.2033986612083085, 'UTX_prices': 2.1688244171391906, 'AFG_prices': 2.2248364566977505, 'MSFT_prices': 2.1722148913963166, 'ORCL_prices': 2.1696760370840433, 'MCD_prices': 2.1676292463065754, 'B_prices': 2.1692243625915126, 'CAT_prices': 2.1692022940691777}, 'LAKE_prices': {'SUN_prices': 0.94402599537294674, 'WWD_prices': 0.9440784282933653, 'UTX_prices': 0.94400497620401824, 'MCD_prices': 0.94403566192178168, 'MSFT_prices': 0.94399833492204255, 'ORCL_prices': 0.94401997273264371, 'T_prices': 0.94400434852425574}, 'UTX_prices': {'WWD_prices': 14.231905200434666}, 'AEM_prices': {'LAKE_prices': 4.1646736805735074, 'APA_prices': 3.3386487995097838, 'SUN_prices': 3.6483609981786191, 'AFG_prices': 3.2854429170197132, 'WWD_prices': 3.6602927416757822, 'T_prices': 3.343673960991155, 'UTX_prices': 3.3397994234671002, 'MCD_prices': 3.2673763247097241, 'MSFT_prices': 3.2863030178095003, 'ORCL_prices': 3.3379766202440448, 'B_prices': 4.427591647353827, 'CAT_prices': 4.0143060054654391}, 'T_prices': {'UTX_prices': 1.7747480582567601, 'WWD_prices': 1.774789608226103}, 'AAPL_prices': {'LAKE_prices': 13.06590996536554, 'APA_prices': 12.728921558654386, 'SUN_prices': 12.81513218100554, 'ABT_prices': 12.825500969481624, 'WWD_prices': 11.644591073428883, 'AEM_prices': 12.78686757555195, 'T_prices': 13.040438281788546, 'UTX_prices': 12.785337288551082, 'AFG_prices': 12.085443860720964, 'MSFT_prices': 13.157636054045234, 'ORCL_prices': 12.814436392690622, 'MCD_prices': 12.138955830592735, 'B_prices': 13.663984862184213, 'CAT_prices': 11.286081954856325}, 'AFG_prices': {'LAKE_prices': 2.8914263064565224, 'APA_prices': 2.8066271900351532, 'SUN_prices': 2.5219881331998537, 'WWD_prices': 2.8469926553614, 'T_prices': 3.0113018571940904, 'UTX_prices': 2.8684329288457735, 'MCD_prices': 3.0320906707663942, 'MSFT_prices': 3.063460208543765, 'ORCL_prices': 2.8076129408443675, 'B_prices': 3.1040035702823814, 'CAT_prices': 2.8039333617765139}, 'MSFT_prices': {'ORCL_prices': 2.621190743976169, 'UTX_prices': 2.4921540624955121, 'WWD_prices': 2.4264311609704512, 'SUN_prices': 2.4079352765301474, 'T_prices': 2.4612351747899273}, 'ORCL_prices': {'UTX_prices': 1.3708341673308728, 'WWD_prices': 1.1241534931986941, 'SUN_prices': 1.1098476542366875, 'T_prices': 1.1243512996661118}, 'MCD_prices': {'SUN_prices': 4.9849234811620775, 'WWD_prices': 4.9450515373080384, 'UTX_prices': 4.9451769972159196, 'MSFT_prices': 4.7477419510386349, 'ORCL_prices': 4.9101077372731723, 'T_prices': 4.9529002320532705}, 'IXIC_prices': {'LAKE_prices': 431.39202745225697, 'APA_prices': 421.21791433695876, 'SUN_prices': 443.70006606158086, 'ABT_prices': 558.4200144250409, 'UTX_prices': 484.17550782845689, 'WWD_prices': 619.06548154743666, 'AEM_prices': 430.89779395807801, 'T_prices': 426.64695430581088, 'AAPL_prices': 108.87328353582645, 'AFG_prices': 387.9254679760902, 'MSFT_prices': 545.72614570567805, 'ORCL_prices': 430.89779395807801, 'MCD_prices': 542.90750884012459, 'CAT_prices': 566.39991231681472, 'B_prices': 427.17670012829353}, 'B_prices': {'LAKE_prices': 1.332223503262389, 'SUN_prices': 1.3322454901302563, 'WWD_prices': 1.3147632678349812, 'T_prices': 1.3318947552076352, 'UTX_prices': 1.5865024077346901, 'MCD_prices': 1.3322546687780643, 'MSFT_prices': 1.3322546687780643, 'ORCL_prices': 1.3322546687780643, 'CAT_prices': 1.3073783232495675}}
@@ -82,6 +87,8 @@ QMEErrorsDataframePath = "/home/achivuku/PycharmProjects/financedataanalysis/QME
 MSEModelFstatMAEPath = "/home/achivuku/PycharmProjects/financedataanalysis/MSECauses-Graph.pkl"
 QMEModelFstatMAEPath = "/home/achivuku/PycharmProjects/financedataanalysis/QMECauses-Graph.pkl"
 
+numdecimalplaces = 3
+
 def calculatefstatistic(nestedrd, nestedurd, colour):
 
     nestedfstat = collections.defaultdict(dict)
@@ -101,9 +108,60 @@ def calculatefstatistic(nestedrd, nestedurd, colour):
 
             if ( fstat > 0.05 ):
                 nestedfstat[outerkey][innerkey] = fstat
-                G.add_edge(innerkey.rstrip('_prices'), outerkey.rstrip('_prices'), color=colour)
+                G.add_edge(innerkey.rstrip('_prices'), outerkey.rstrip('_prices'), color=colour, weight=round(fstat,numdecimalplaces))
+
+    # print(G.edges(data=True))
+    # sys.exit()
     # innerkey is granger influencing outerkey stock
     return nestedfstat, G, dfout
+
+def plotskewedhistogram(stocskdf,stockname,colour,htype,filename):
+    for c in stocskdf.columns.tolist()[1:]:
+        ts = stocskdf[[c]]
+        print(ts.skew())
+
+    ts = stocskdf[[stockname]]
+    tss = ts.diff()[stockname]
+    tss[0] = 0
+
+    # fig, ax = plt.subplots(figsize=(10, 8))
+
+    tssh = tss.tolist()
+
+    plt.figure()
+    n, bins, patches = plt.hist(tssh,bins=100,alpha=0.75,histtype=htype, color=colour)
+
+    xlabel(stockname.rstrip("_prices") + ' Price difference')
+    ylabel(stockname.rstrip("_prices") + ' Price frequency')
+    # plt.title(r'$\mathrm{Histogram\ of\ IQ:}\$')
+    plt.grid(True)
+
+    savefig(filename, dpi=300)
+
+    # pyplot.hist(tssh2, bins1, alpha=0.5, color="blue", label='T')
+    # width = 0.7 * (bins[1] - bins[0])
+    # center = (bins[:-1] + bins[1:]) / 2
+    # ax.bar(center2, hist2, align='center', width=width1,color="blue",label='T')
+
+def savenetworkxgraph(modelgraph, nodecolour, SavePath):
+    edge_labels = dict([((u, v,), d['weight'])
+                        for u, v, d in modelgraph.edges(data=True)])
+    plt.figure(figsize=(20,10), dpi=100, facecolor='w', edgecolor='k')
+    graph_pos = nx.circular_layout(modelgraph)
+    # graph_pos = nx.circular_layout(qmemodelgraph)
+    nx.draw_networkx_edge_labels(modelgraph, graph_pos, edge_labels=edge_labels)
+    nx.draw(modelgraph, graph_pos, node_size=1500, font_size=8, font_weight='bold', with_labels=True,
+                     arrows=True, node_color=nodecolour)
+
+    plt.tight_layout()
+    plt.savefig(SavePath, format="PNG")
+
+
+# plotskewedhistogram(df,'AFG_prices','green','step',"/home/achivuku/PycharmProjects/financedataanalysis/"+ "AFG" +".png")
+# plotskewedhistogram(df,'T_prices','red','step',"/home/achivuku/PycharmProjects/financedataanalysis/"+ "T" +".png")
+# plotskewedhistogram(df,'AAPL_prices','blue','step',"/home/achivuku/PycharmProjects/financedataanalysis/"+ "AAPL" +".png")
+# plotskewedhistogram(df,'ORCL_prices','black','step',"/home/achivuku/PycharmProjects/financedataanalysis/"+ "ORCL" +".png")
+# sys.exit()
 
 msemodelfstatmae, msemodelgraph, mseerrorsframe = calculatefstatistic(msemodelrmae,msemodelurmae, 'green')
 qmemodelfstatmae, qmemodelgraph, qmeerrorsframe = calculatefstatistic(qmemodelrmae,qmemodelurmae, 'red')
@@ -114,15 +172,25 @@ print('qmemodelfstatmae',qmemodelfstatmae)
 # ('qmemodelfstatmae', defaultdict(<type 'dict'>, {'CAT_prices': {'LAKE_prices': 2.9990296485142887, 'T_prices': 0.2415261771139126}, 'APA_prices': {'LAKE_prices': 2.9350827151399748, 'T_prices': 0.2701803743954868, 'B_prices': 0.2798289054983286}, 'ABT_prices': {'LAKE_prices': 0.5988416614972505}, 'AFG_prices': {'LAKE_prices': 2.208465617139271}, 'AEM_prices': {'LAKE_prices': 2.6596392607051054, 'T_prices': 0.18007565387249022, 'B_prices': 0.1726207887379092}, 'AAPL_prices': {'LAKE_prices': 6.642026855054242, 'SUN_prices': 0.8564413961773346, 'ABT_prices': 2.2840728129980192, 'AFG_prices': 0.29928000234246777, 'WWD_prices': 0.4212150303155039, 'AEM_prices': 0.8352981585545118, 'MCD_prices': 0.7077200976252324, 'MSFT_prices': 0.11115810688563488, 'ORCL_prices': 0.4605767245197249, 'B_prices': 1.4735249862022477, 'T_prices': 1.3727994939031125}, 'MCD_prices': {'ORCL_prices': 0.7722290648732423, 'SUN_prices': 1.1790321888136366, 'MSFT_prices': 0.24996869346684367, 'T_prices': 1.6751475233263127, 'WWD_prices': 0.603798246597676}, 'IXIC_prices': {'LAKE_prices': 300.0949856251977, 'CAT_prices': 12.881075723891486, 'APA_prices': 12.461251536744735, 'T_prices': 78.72479919416715, 'ABT_prices': 98.6990367554397, 'UTX_prices': 29.512446574104708, 'AFG_prices': 42.62349447417956, 'WWD_prices': 45.74702528991151, 'AEM_prices': 60.02641159961811, 'AAPL_prices': 26.625627782636187, 'MCD_prices': 55.04425747114812, 'MSFT_prices': 34.19810617501382, 'ORCL_prices': 51.8291676957156, 'B_prices': 81.79045092026263, 'SUN_prices': 68.56326465155462}, 'B_prices': {'LAKE_prices': 1.512494908559331}}))
 # ('msemodelfstatmae', defaultdict(<type 'dict'>, {'UTX_prices': {'WWD_prices': 0.17098217553033543}, 'CAT_prices': {'ORCL_prices': 0.8187957585229688, 'LAKE_prices': 4.888523715022208, 'T_prices': 1.803260420387845, 'SUN_prices': 1.8332573315782354, 'WWD_prices': 0.18699646666044886}, 'APA_prices': {'ORCL_prices': 0.5207884386957298, 'LAKE_prices': 5.190654207852949, 'T_prices': 1.4093956434487138, 'SUN_prices': 0.8882164636825278, 'B_prices': 1.3637710201228903}, 'SUN_prices': {'T_prices': 0.4753646703836883}, 'ABT_prices': {'LAKE_prices': 3.5043729101268744, 'T_prices': 0.6347614964689184, 'AEM_prices': 0.1742994904357557, 'ORCL_prices': 0.2554533064626181, 'SUN_prices': 0.6694352687312496, 'B_prices': 0.4126958569891147}, 'AFG_prices': {'ORCL_prices': 0.421494559527839, 'LAKE_prices': 4.030640881109695, 'B_prices': 0.6089095844700808, 'T_prices': 0.6671301487602306, 'SUN_prices': 1.3563824260939688}, 'AEM_prices': {'LAKE_prices': 0.8086599384155568}, 'AAPL_prices': {'LAKE_prices': 4.755953068917847, 'T_prices': 1.0662155515443612, 'ABT_prices': 0.07547147046886388, 'AEM_prices': 1.0460720805864627, 'ORCL_prices': 0.44627383795014147, 'B_prices': 0.7922792490767873, 'SUN_prices': 1.2713923544894874}, 'MCD_prices': {'SUN_prices': 3.2651966183935706, 'WWD_prices': 0.9440778205584074, 'UTX_prices': 0.11115381244933568, 'MSFT_prices': 0.548360594894264, 'ORCL_prices': 1.8480374342318524, 'T_prices': 2.5874032973462535}, 'IXIC_prices': {'LAKE_prices': 118.36330516143713, 'CAT_prices': 12.984880922878757, 'APA_prices': 18.60977692291594, 'T_prices': 41.348232874851064, 'ABT_prices': 19.895479692526497, 'UTX_prices': 13.163384459398333, 'AFG_prices': 14.21649265244999, 'WWD_prices': 21.11588429255004, 'AEM_prices': 36.94697533047779, 'AAPL_prices': 8.466903207137525, 'MCD_prices': 9.232164188924152, 'MSFT_prices': 17.543535942677238, 'ORCL_prices': 33.14589515791778, 'B_prices': 42.842312922779485, 'SUN_prices': 42.94325628728047}, 'B_prices': {'LAKE_prices': 1.6624285361611508}}))
 
-graph_pos=nx.circular_layout(msemodelgraph)
 
-nx.draw_networkx(msemodelgraph, graph_pos, with_labels=True, arrows=True, node_color = 'green')
-plt.savefig(MSEGraphPath)
+print('qmemodelgraph',qmemodelgraph.edges())
+print('qmemodelgraph',qmemodelgraph.nodes())
 
-graph_pos = nx.circular_layout(qmemodelgraph)
 
-nx.draw_networkx(qmemodelgraph, with_labels=True, arrows=True, node_color = 'red')
-plt.savefig(QMEGraphPath)
+# graph_pos=nx.circular_layout(msemodelgraph)
+# nx.draw_networkx(msemodelgraph, graph_pos, node_size=1500, font_size=8, font_weight='bold', with_labels=True, arrows=True, node_color = 'green')
+# plt.tight_layout()
+# plt.savefig(MSEGraphPath, format="PNG")
+savenetworkxgraph(msemodelgraph, 'green', MSEGraphPath)
+
+# graph_pos = nx.circular_layout(qmemodelgraph)
+# # graph_pos = nx.circular_layout(qmemodelgraph)
+# nx.draw_networkx(qmemodelgraph, graph_pos, node_size=1500, font_size=8, font_weight='bold', with_labels=True, arrows=True, node_color = 'red')
+# plt.tight_layout()
+# plt.savefig(QMEGraphPath, format="PNG")
+savenetworkxgraph(qmemodelgraph, 'red', QMEGraphPath)
+
+sys.exit()
 
 mseerrorsframe.to_pickle(MSEErrorsDataframePath)
 qmeerrorsframe.to_pickle(QMEErrorsDataframePath)
@@ -143,3 +211,5 @@ with open(QMEModelFstatMAEPath, 'wb') as handle:
 # https://networkx.github.io/documentation/networkx-1.10/reference/generated/networkx.drawing.nx_pylab.draw_networkx.html#networkx.drawing.nx_pylab.draw_networkx1
 # https://www.udacity.com/wiki/creating-network-graphs-with-python
 # TO DO : Remove duplicate vertices and add Ftest values as edge weights
+
+# https://matplotlib.org/1.2.1/examples/pylab_examples/histogram_demo.html

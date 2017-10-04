@@ -39,7 +39,8 @@ cols = [1,2,3,4,6,8,10,12,14,16,18,20,21,22,23,24,26,28,30,32,33,34,36,38,40,42]
 df.drop(df.columns[cols],axis=1,inplace=True)
 # df['Date'] = pd.to_datetime(df['Date'])
 
-print(len(df.columns)) # 21
+print(len(df.columns)) # 17
+
 print((df.columns)) # Index([u'Date', u'^DJI_prices', u'^GSPC_prices', u'^IXIC_prices', u'AAPL_prices', u'ABT_prices', u'AEM_prices', u'AFG_prices', u'APA_prices', u'B_prices', u'CAT_prices', u'FRD_prices', u'GIGA_prices', u'LAKE_prices', u'MCD_prices', u'MSFT_prices', u'ORCL_prices', u'SUN_prices', u'T_prices', u'UTX_prices', u'WWD_prices'], dtype='object')
 print(len(df.index)) # 5285
 

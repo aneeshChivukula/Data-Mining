@@ -183,7 +183,12 @@ def restricted_qme_model(lag):
 # #     qmemodelurmae[stock1][stock2] = 0
 # #     qmemodelurmse[stock1][stock2] = 0
 #
-# for stock1,stock2 in itertools.combinations(allcols,2):
+# # for stock1,stock2 in itertools.permutations(allcols,2):
+# #     print('stock1,stock2',stock1,stock2)
+# #
+# # sys.exit()
+#
+# for stock1,stock2 in itertools.permutations(allcols,2):
 #     print('stock1,stock2',stock1,stock2)
 #     Ypast, Ycurr = getstockdata(df[['Date', stock1]], p)
 #     # Ypast, Ycurr = getstockdata(df[['Date', 'MSFT_prices']])
@@ -260,7 +265,7 @@ msemodelrmse = collections.defaultdict(dict)
 msemodelurmae = collections.defaultdict(dict)
 msemodelurmse = collections.defaultdict(dict)
 
-for stock1,stock2 in itertools.combinations(allcols,2):
+for stock1,stock2 in itertools.permutations(allcols,2):
     print('stock1,stock2',stock1,stock2)
     Ypast, Ycurr = getstockdata(df[['Date', stock1]],p)
     # Ypast,Ycurr = getstockdata(df[['Date','MSFT_prices']])

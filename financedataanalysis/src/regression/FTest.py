@@ -8,6 +8,9 @@ import numpy as np
 import pickle
 from scipy import stats
 
+import pygraphviz as pgv
+from networkx import *
+
 
 QmemodelrmaePath = "/home/achivuku/PycharmProjects/financedataanalysis/qmemodelrmae.pkl"
 QmemodelrmsePath = "/home/achivuku/PycharmProjects/financedataanalysis/qmemodelrmse.pkl"
@@ -136,15 +139,73 @@ def savenetworkxgraph(modelgraph, nodecolour, SavePath):
                         for u, v, d in modelgraph.edges(data=True)])
 
 
-    plt.figure(figsize=(20,10), dpi=300, facecolor='w', edgecolor='k')
+    plt.figure(figsize=(20,15), dpi=300, facecolor='w', edgecolor='k')
     graph_pos = nx.circular_layout(modelgraph)
+    # graph_pos = nx.graphviz_layout(modelgraph, prog='neato',args='-n2')
+    graph_pos = nx.circular_layout(modelgraph)
+
     # graph_pos = nx.circular_layout(qmemodelgraph)
-    nx.draw_networkx_edge_labels(modelgraph, graph_pos, edge_labels=edge_labels)
-    nx.draw(modelgraph, graph_pos, node_size=2000, font_size=16, font_weight='bold', with_labels=True,
+    nx.draw_networkx_edge_labels(modelgraph, graph_pos, edge_labels=edge_labels, font_size=16,alpha = 0.5, width=3)
+    nx.draw(modelgraph, graph_pos, node_size=5000, font_size=16, font_weight='bold', with_labels=True,
                      arrows=True, node_color=nodecolour)
 
     plt.tight_layout()
     plt.savefig(SavePath, format="PNG")
+
+
+    from networkx.drawing.nx_agraph import to_agraph
+    A = to_agraph(modelgraph)
+
+    print(A)
+    print(A.nodes())
+    print(SavePath)
+
+    # print(A.edge_attr)
+    # print(A.edges(keys=True))
+    sys.exit()
+
+    # A.graph['graph'] = {'rankdir': 'TD'}
+    # A.graph['node'] = {'shape': 'circle'}
+    # A.graph['edges'] = {'arrowsize': '4.0'}
+
+    A.graph_attr['rankdir'] = 'TD'
+    A.graph_attr['outputorder'] = 'edgesfirst'
+    # A.graph_attr['weight'] = 'true'
+
+    A.node_attr['fontsize'] = '16'
+    A.node_attr['style']='filled'
+    A.node_attr['shape'] = 'circle'
+
+    # A.edge_attr['arrowsize'] = '1.0'
+    A.edge_attr['fontsize'] = '16'
+    A.edge_attr['style'] = 'setlinewidth(2)'
+    # A.edge_attr['weight'] = 'true'
+    for u, v, d in modelgraph.edges(data=True):
+        print(A.get_edge(u, v).attr['weight'])
+        A.edge_attr['label'] = A.get_edge(u, v).attr['weight']
+        # A.edge_attr.update(len='2.0', color='blue')
+    # sys.exit()
+    A.layout('dot')
+    A.draw(SavePath + 'pgv.png',prog='neato',args='-n2')
+
+# Sage or pygraphviz to plot networkx graphs.
+    # Use dot language + Haskell to plot the graphs. Cannot assign edge weights in python using man pages.
+        # Change weight to label in the dot file.
+        # dot -n2 -Tpng undirected.gv > undirected.png
+    # Install sage with all its dependencies.
+    # Alternatives are TikZ, Mathematica, R Graphs Cookbook
+# http://pygraphviz.github.io/documentation/pygraphviz-1.3.1/examples.html#miles
+# https://pygraphviz.github.io/documentation/pygraphviz-1.3rc1/reference/agraph.html
+# http://www.graphviz.org/doc/info/attrs.html
+# http://www.graphviz.org/content/attrs#d:epsilon
+# Dot language examples : http://digitalassets.lib.berkeley.edu/techreports/ucb/text/EECS-2013-176.pdf
+# http://www.graphviz.org/Gallery.php
+# http://www.graphviz.org/Documentation/dotguide.pdf
+# https://mathoverflow.net/questions/55200/good-programs-for-drawing-graphs-directed-weighted-graphs
+# https://archives.haskell.org/projects.haskell.org/diagrams/doc/quickstart.html#diagrams-as-a-monoid
+# https://www.packtpub.com/big-data-and-business-intelligence/r-graphs-cookbook
+# https://en.wikipedia.org/wiki/DOT_(graph_description_language)
+# http://www.graphviz.org/doc/info/colors.html
 
 def findtstats(l1, l2):
     ttest = stats.ttest_ind(l1, l2, equal_var=True)
@@ -2316,7 +2377,7 @@ print('qmemodelgraph',qmemodelgraph.nodes())
 # nx.draw_networkx(msemodelgraph, graph_pos, node_size=1500, font_size=8, font_weight='bold', with_labels=True, arrows=True, node_color = 'green')
 # plt.tight_layout()
 # plt.savefig(MSEGraphPath, format="PNG")
-savenetworkxgraph(msemodelgraph, 'green', MSEGraphPath)
+# savenetworkxgraph(msemodelgraph, 'green', MSEGraphPath)
 
 # graph_pos = nx.circular_layout(qmemodelgraph)
 # # graph_pos = nx.circular_layout(qmemodelgraph)
@@ -2325,7 +2386,7 @@ savenetworkxgraph(msemodelgraph, 'green', MSEGraphPath)
 # plt.savefig(QMEGraphPath, format="PNG")
 savenetworkxgraph(qmemodelgraph, 'red', QMEGraphPath)
 
-# sys.exit()
+sys.exit()
 
 mseerrorsframe.to_pickle(MSEErrorsDataframePath)
 qmeerrorsframe.to_pickle(QMEErrorsDataframePath)

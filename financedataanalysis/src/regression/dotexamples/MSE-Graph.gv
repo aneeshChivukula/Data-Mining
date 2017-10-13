@@ -3,7 +3,6 @@ digraph {
 node[fontsize=50]
 edge[fontsize=50]
 
-SUN -> ABT	 [arrowsize=2,penwidth=2,color=red,label=0.062];
 ABT -> ORCL	 [arrowsize=2,penwidth=2,color=red,label=0.135];
 ABT -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.193];
 AAPL -> AFG	 [arrowsize=2,penwidth=2,color=red,label=0.301];
@@ -32,7 +31,6 @@ ORCL -> ABT	 [arrowsize=2,penwidth=2,color=red,label=1.874];
 ORCL -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.401];
 ORCL -> AFG	 [arrowsize=2,penwidth=2,color=red,label=0.612];
 
-SUN [shape=circle,color=burlywood3,style=filled];
 AAPL [shape=circle,color=burlywood3,style=filled];
 AFG [shape=circle,color=burlywood3,style=filled];
 CAT [shape=circle,color=burlywood3,style=filled];

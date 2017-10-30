@@ -22,6 +22,7 @@ ndp = 3
 nstd = 2
 numneighbours = 20
 # Optional LOF Score settings are distance metrics : algorithm, metric, p and parallel processes : n_jobs
+# Optionally try LOF Class method _local_reachability_density
 
 df = pd.read_csv("/home/achivuku/Documents/financedataanalysis/pricesvolumes.csv")
 cols = [1,2,3,4,6,8,10,12,14,16,18,20,21,22,23,24,26,28,30,32,33,34,36,38,40,42]
@@ -102,6 +103,7 @@ print(stockstatsdf.tail(10))
 
 X = stockstatsdf.values
 
+print(X.shape)
 numrecords = len(X)
 numtrainrecords = int(math.ceil(0.7 * numrecords))
 numtestrecords = int(math.ceil(0.3 * numrecords))
@@ -109,7 +111,7 @@ numtestrecords = int(math.ceil(0.3 * numrecords))
 clf = LocalOutlierFactor(n_neighbors=numneighbours)
 clf.fit(X[:numtrainrecords])
 
-y_pred = clf.fit_predict(X[-numtestrecords:])
+y_pred = clf._predict(X[-numtestrecords:])
 # y_pred = clf.fit_predict(X[:numtrainrecords])
 # Returns -1 for anomalies/outliers and 1 for inliers.
 print(y_pred)

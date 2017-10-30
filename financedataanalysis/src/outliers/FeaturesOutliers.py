@@ -2,6 +2,8 @@ import sys
 import pandas as pd
 import numpy as np
 from itertools import chain
+from sklearn.neighbors import LocalOutlierFactor
+import math
 
 def getlofindex(stock, lofw):
     lofindex = [0] * (len(stock))
@@ -18,6 +20,8 @@ lofw2 = 7
 # Time windows to discretize daily closing prices
 ndp = 3
 nstd = 2
+numneighbours = 20
+# Optional LOF Score settings are distance metrics : algorithm, metric, p and parallel processes : n_jobs
 
 df = pd.read_csv("/home/achivuku/Documents/financedataanalysis/pricesvolumes.csv")
 cols = [1,2,3,4,6,8,10,12,14,16,18,20,21,22,23,24,26,28,30,32,33,34,36,38,40,42]
@@ -78,8 +82,8 @@ for i in xrange(len(stock)-1, tw, -tw): # for many benchmarking window, replace 
 
 stockstatsdf = pd.DataFrame(
     {
-        dfstockname + '_prices': flatstock,
-        dfstockname + '_pricediffs': stockdiff,
+        # dfstockname + '_prices': flatstock,
+        # dfstockname + '_pricediffs': stockdiff,
         dfstockname + '_pricemeans': stockmeans,
         dfstockname + '_pricedeviations': stockdeviations,
         dfstockname + '_pricethresholds': stockthresholds,
@@ -95,3 +99,25 @@ print(stockstatsdf.tail(10))
 # print(stockstatsdf[[dfstockname + '_pricethresholds']])
 # print(stockstatsdf[[dfstockname + '_pricetimeindex_months']])
 # print(stockstatsdf[[dfstockname + '_pricetimeindex_weeks']])
+
+X = stockstatsdf.values
+
+numrecords = len(X)
+numtrainrecords = int(math.ceil(0.7 * numrecords))
+numtestrecords = int(math.ceil(0.3 * numrecords))
+
+clf = LocalOutlierFactor(n_neighbors=numneighbours)
+clf.fit(X[:numtrainrecords])
+
+y_pred = clf.fit_predict(X[-numtestrecords:])
+# y_pred = clf.fit_predict(X[:numtrainrecords])
+# Returns -1 for anomalies/outliers and 1 for inliers.
+print(y_pred)
+print(len(y_pred[y_pred == -1]))
+
+pred_lof_scores = clf._decision_function(X[-numtestrecords:])
+# Returns The opposite of the Local Outlier Factor of each input samples. The lower, the more abnormal.
+print(pred_lof_scores)
+print(len(pred_lof_scores))
+# print(clf._decision_function(X[:numtrainrecords]))
+# print(clf.negative_outlier_factor_)

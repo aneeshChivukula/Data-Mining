@@ -14,12 +14,13 @@ def getlofindex(stock, lofw):
     return lofindex
 
 generatestatsdf = False
-StockDataframePath = "/home/achivuku/Documents/financedataanalysis/AlertsBySecurity/SEC0000001.alerts.filtered.csv"
-StockstatsDataframePath = "/home/achivuku/PycharmProjects/financedataanalysis/stockstats.pkl"
+StockDataframePath = "/data/achivuku/financedataanalysis/AlertsBySecurity/SEC0000001.alerts.filtered.csv"
+StockstatsDataframePath = "/data/achivuku/PycharmProjects/financedataanalysis/stockstats.pkl"
 
 ndp = 3
 nstd = 2
-numneighbours = 20
+numneighbours = 35
+outliers_fraction = 0.01
 # Optional LOF Score settings are distance metrics : algorithm, metric, p and parallel processes : n_jobs
 # Optionally try LOF Class method _local_reachability_density
 
@@ -41,20 +42,20 @@ if(generatestatsdf == True):
     stockmeans = [0] * (rowscount)
     stockdeviations = [0] * (rowscount)
     stockthresholds = [0] * (rowscount)
-    lofdayindex = [0] * (rowscount)
-    lofhourindex = [0] * (rowscount)
+    # lofdayindex = [0] * (rowscount)
+    # lofhourindex = [0] * (rowscount)
 
 
-    for currindex, currdatetime in df['Timestamp'].iteritems():
-
-        lofdayindex[currindex] = currdatetime.day
-        if(currdatetime.minute <= 30):
-            lofhourindex[currindex] = 2 * currdatetime.hour - 1
-        else:
-            lofhourindex[currindex] = 2 * currdatetime.hour
-
-    df['timeindex_days'] = lofdayindex
-    df['timeindex_hours'] = lofhourindex
+    # for currindex, currdatetime in df['Timestamp'].iteritems():
+    #
+    #     lofdayindex[currindex] = currdatetime.day
+    #     if(currdatetime.minute <= 30):
+    #         lofhourindex[currindex] = 2 * currdatetime.hour - 1
+    #     else:
+    #         lofhourindex[currindex] = 2 * currdatetime.hour
+    #
+    # df['timeindex_days'] = lofdayindex
+    # df['timeindex_hours'] = lofhourindex
 
     df['TimestampIndex'] = pd.to_datetime(df['Timestamp'])
     df = df.set_index('TimestampIndex')
@@ -73,12 +74,14 @@ if(generatestatsdf == True):
     # print(df['Timestamp'].max()) # 2012-12-27 16:00:03.868000
 
     InitialDaysDFList = [group[1] for group in df.groupby([df.index.year,df.index.month,df.index.day])]
-    # print(DFList[-1])
-    # print(len(DFList))
+
+    # print(InitialDaysDFList[-1])
+    # print(len(InitialDaysDFList))
+
     FinalDaysDFList = []
 
 
-    for i in xrange(0,len(InitialDaysDFList)):
+    for i in xrange(len(InitialDaysDFList)-1,30,-1):
         dfl = InitialDaysDFList[i]
 
         MinutesDFList = []
@@ -103,19 +106,65 @@ if(generatestatsdf == True):
                 m = round(dfls['price'].mean(), ndp)
                 sd = round(dfls['price'].std(ddof=1), ndp)
 
+                dfl30 = InitialDaysDFList[i - 30:i]
+                dflbl = []
+                for dflp in dfl30:
+                    dflsp = dflp.loc[(dflp.index.hour == hr) & (mn < dflp.index.minute) & (dflp.index.minute < mn + nummn)]
+
+                    if (hr == 15 and mn == 30):
+                        dflpl = dflp.loc[dflp.index.hour == hr + 1]
+                        dflsp = dflp.append(dflpl)
+
+                dflbl.append(dflsp)
+
+                dflb30 = pd.concat(dflbl)
+                mb30 = round(dflb30['price'].mean(), ndp)
+                sdb30 = round(dflb30['price'].std(ddof=1), ndp)
+
+                mb1 = round(dfl['price'].mean(), ndp)
+                sdb1 = round(dfl['price'].std(ddof=1), ndp)
+
+                dflb7 = pd.concat(InitialDaysDFList[i - 7:i])
+                mb7 = round(dflb7['price'].mean(), ndp)
+                sdb7 = round(dflb7['price'].std(ddof=1), ndp)
+
+
                 if(math.isnan(m)):
                     m = 0
+                if(math.isnan(mb30)):
+                    mb30 = 0
+                if(math.isnan(mb1)):
+                    mb1 = 0
+                if(math.isnan(mb7)):
+                    mb7 = 0
+
                 if(math.isnan(sd)):
                     sd = 0
+                if(math.isnan(sdb30) or sdb30==0):
+                    sdb30 = 1
+                if(math.isnan(sdb1) or sdb1==0):
+                    sdb1 = 1
+                if(math.isnan(sdb7) or sdb7==0):
+                    sdb7 = 1
 
-                t = round(m + nstd * sd, ndp)
+                nummdev30 = ((m - mb30) / sdb30)
+                nummdev7 = ((m - mb7) / sdb7)
+                nummdev1 = ((m - mb1) / sdb1)
+
+                numsddev30 = ((sd - sdb30) / sdb30)
+                numsddev7 = ((sd - sdb7) / sdb7)
+                numsddev1 = ((sd - sdb1) / sdb1)
+
 
                 numrows = dfls.shape[0]
 
-                dfls['localwindow_means'] = [m] * (numrows)
-                dfls['localwindow_deviations'] = [sd] * (numrows)
-                dfls['localwindow_thresholds'] = [t] * (numrows)
+                dfls['numdev_means_30'] = [nummdev30] * (numrows)
+                dfls['numdev_means_7'] = [nummdev7] * (numrows)
+                dfls['numdev_means_1'] = [nummdev1] * (numrows)
 
+                dfls['numdev_deviations_30'] = [numsddev30] * (numrows)
+                dfls['numdev_deviations_7'] = [numsddev7] * (numrows)
+                dfls['numdev_deviations_1'] = [numsddev1] * (numrows)
 
                 # if(hr == 10 and mn == 0):
                 #     print(dfls)
@@ -136,26 +185,63 @@ if(generatestatsdf == True):
     stockstatsdf.to_pickle(StockstatsDataframePath)
     sys.exit()
 
-stockstatsdf = pd.read_pickle(StockstatsDataframePath)[['timeindex_days', 'timeindex_hours', 'localwindow_means', 'localwindow_deviations', 'localwindow_thresholds']]
+# stockstatsdf = pd.read_pickle(StockstatsDataframePath)
+
+stockstatsdf = pd.read_pickle(StockstatsDataframePath)[['Trans.ID','price','binarylabels','numdev_means_30', 'numdev_means_7', 'numdev_means_1', 'numdev_deviations_30', 'numdev_deviations_7', 'numdev_deviations_1']]
+# stockstatsdf = pd.read_pickle(StockstatsDataframePath)[['numdev_means_30', 'numdev_means_7', 'numdev_means_1', 'numdev_deviations_30', 'numdev_deviations_7', 'numdev_deviations_1']]
 # Keep Trans.ID, binarylabels for visualization
 X = stockstatsdf.values
+# X = stockstatsdf.values[0:100]
+# print('X.shape',X.shape)
 
 numrecords = len(X)
-numtrainrecords = int(math.ceil(0.7 * numrecords))
-numtestrecords = int(math.ceil(0.3 * numrecords))
 
-clf = LocalOutlierFactor(n_neighbors=numneighbours)
-clf.fit(X[:numtrainrecords])
+clf = LocalOutlierFactor(n_neighbors=numneighbours, contamination=outliers_fraction)
 
-y_pred = clf._predict(X[-numtestrecords:])
-# Returns -1 for anomalies/outliers and 1 for inliers.
-print(y_pred)
+y_pred = clf.fit_predict(X[:,3:])
+scores_pred = clf.negative_outlier_factor_
+# The lower, the more normal. Inliers tend to have a LOF score close to 1, while outliers tend to have a larger LOF score.
+
+print('y_pred', y_pred)
 print(len(y_pred[y_pred == -1]))
+print(len(y_pred))
 
-pred_lof_scores = clf._decision_function(X[-numtestrecords:])
-# Returns The opposite of the Local Outlier Factor of each input samples. The lower, the more abnormal.
-print(pred_lof_scores)
-print(len(pred_lof_scores))
+print('scores_pred', scores_pred)
+print(min(scores_pred))
+print(max(scores_pred))
+
+print(X[:,2])
+print(X[:,1])
+
+print(np.column_stack((X[:,0],X[:,1],X[:,2],y_pred,scores_pred,)))
+
+# TO DO :
+# To add first two pcs of the features
+# To show visualization for top 100 points
+
+# numtrainrecords = int(math.ceil(0.7 * numrecords))
+# numtestrecords = int(math.ceil(0.3 * numrecords))
+#
+# # clf = LocalOutlierFactor(n_neighbors=numneighbours)
+# clf = LocalOutlierFactor(n_neighbors=10)
+#
+# clf.fit(X[:numtrainrecords])
+# # clf.fit(X)
+#
+# # y_pred = clf.fit_predict(X)
+# y_pred = clf._predict(X[-numtestrecords:])
+# # y_pred = clf._predict(X)
+# # Returns -1 for anomalies/outliers and 1 for inliers.
+# print(y_pred)
+# print(len(y_pred[y_pred == -1]))
+#
+# # pred_lof_scores = clf.negative_outlier_factor_
+# pred_lof_scores = clf._decision_function(X[-numtestrecords:])
+# # pred_lof_scores = clf._decision_function(X)
+#
+# # Returns The opposite of the Local Outlier Factor of each input samples. The lower, the more abnormal.
+# print(pred_lof_scores)
+# print(len(pred_lof_scores))
 
 
 
@@ -166,7 +252,7 @@ print(len(pred_lof_scores))
 # lofw2 = 7
 # Time windows to discretize daily closing prices
 
-# df = pd.read_csv("/home/achivuku/Documents/financedataanalysis/pricesvolumes.csv")
+# df = pd.read_csv("/data/achivuku/Documents/financedataanalysis/pricesvolumes.csv")
 # cols = [1,2,3,4,6,8,10,12,14,16,18,20,21,22,23,24,26,28,30,32,33,34,36,38,40,42]
 # df.drop(df.columns[cols],axis=1,inplace=True)
 

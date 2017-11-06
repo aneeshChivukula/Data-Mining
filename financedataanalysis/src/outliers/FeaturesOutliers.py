@@ -4,6 +4,7 @@ import numpy as np
 from itertools import chain
 from sklearn.neighbors import LocalOutlierFactor
 import math
+from sklearn.preprocessing import StandardScaler
 
 def getlofindex(stock, lofw):
     lofindex = [0] * (len(stock))
@@ -21,6 +22,7 @@ ndp = 3
 nstd = 2
 numneighbours = 35
 outliers_fraction = 0.01
+N = 100
 # Optional LOF Score settings are distance metrics : algorithm, metric, p and parallel processes : n_jobs
 # Optionally try LOF Class method _local_reachability_density
 
@@ -210,10 +212,57 @@ print('scores_pred', scores_pred)
 print(min(scores_pred))
 print(max(scores_pred))
 
-print(X[:,2])
-print(X[:,1])
+# print(X[:,2])
+# print(X[:,1])
+# print(np.column_stack((X[:,0],X[:,1],X[:,2],y_pred,scores_pred,X[:,3:])))
 
-print(np.column_stack((X[:,0],X[:,1],X[:,2],y_pred,scores_pred,)))
+stockstatsdf['predictionlabels'] = y_pred
+stockstatsdf['predictionscores'] = scores_pred
+
+stockstatsdf = stockstatsdf.sort_values('predictionscores', ascending=True)
+
+X_top = stockstatsdf[['binarylabels','predictionlabels','predictionscores','numdev_means_30', 'numdev_means_7', 'numdev_means_1', 'numdev_deviations_30', 'numdev_deviations_7', 'numdev_deviations_1']].head(N).values
+X_std = StandardScaler().fit_transform(X_top[:,3:])
+cov_mat = np.cov(X_std.T)
+
+eig_vals, eig_vecs = np.linalg.eig(cov_mat)
+
+eig_pairs = [(np.abs(eig_vals[i]), eig_vecs[:,i]) for i in range(len(eig_vals))]
+
+# print('Eigenvectors \n%s' %eig_vecs)
+# print('\nEigenvalues \n%s' %eig_vals)
+# print(cov_mat.shape)
+
+eig_pairs.sort()
+eig_pairs.reverse()
+
+for i in eig_pairs:
+    print(i[0])
+
+matrix_w = np.hstack((eig_pairs[0][1].reshape(6,1),
+                      eig_pairs[1][1].reshape(6,1)))
+
+Y = X_std.dot(matrix_w)
+Y, X_top[:,0:], X_top[:,1:], X_top[:,2:]
+
+print(np.column_stack((Y,X_top[:,0],X_top[:,1])))
+
+sys.exit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # TO DO :
 # To add first two pcs of the features

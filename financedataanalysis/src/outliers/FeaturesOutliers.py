@@ -6,6 +6,9 @@ from sklearn.neighbors import LocalOutlierFactor
 import math
 from sklearn.preprocessing import StandardScaler
 
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+
 def getlofindex(stock, lofw):
     lofindex = [0] * (len(stock))
     for i in xrange(0, len(stock) - 1, lofw):
@@ -18,11 +21,14 @@ generatestatsdf = False
 StockDataframePath = "/data/achivuku/financedataanalysis/AlertsBySecurity/SEC0000001.alerts.filtered.csv"
 StockstatsDataframePath = "/data/achivuku/PycharmProjects/financedataanalysis/stockstats.pkl"
 
+MeansPlotPath = "/data/achivuku/PycharmProjects/financedataanalysis/MeansPlot.png"
+DeviationsPlotPath = "/data/achivuku/PycharmProjects/financedataanalysis/DeviationsPlot.png"
+
 ndp = 3
 nstd = 2
-numneighbours = 35
-outliers_fraction = 0.01
-N = 100
+numneighbours = 150
+outliers_fraction = 0.3
+N = 11925
 # Optional LOF Score settings are distance metrics : algorithm, metric, p and parallel processes : n_jobs
 # Optionally try LOF Class method _local_reachability_density
 
@@ -189,7 +195,10 @@ if(generatestatsdf == True):
 
 # stockstatsdf = pd.read_pickle(StockstatsDataframePath)
 
-stockstatsdf = pd.read_pickle(StockstatsDataframePath)[['Trans.ID','price','binarylabels','numdev_means_30', 'numdev_means_7', 'numdev_means_1', 'numdev_deviations_30', 'numdev_deviations_7', 'numdev_deviations_1']]
+# stockstatsdf = pd.read_pickle(StockstatsDataframePath)[['Trans.ID','price','binarylabels','numdev_means_30', 'numdev_means_7', 'numdev_means_1', 'numdev_deviations_30', 'numdev_deviations_7', 'numdev_deviations_1']]
+# stockstatsdf = pd.read_pickle(StockstatsDataframePath)[['Trans.ID','price','binarylabels', 'numdev_means_7', 'numdev_means_1', 'numdev_deviations_7', 'numdev_deviations_1']]
+stockstatsdf = pd.read_pickle(StockstatsDataframePath)[['Trans.ID','price','binarylabels', 'numdev_deviations_30', 'numdev_deviations_7', 'numdev_deviations_1']]
+
 # stockstatsdf = pd.read_pickle(StockstatsDataframePath)[['numdev_means_30', 'numdev_means_7', 'numdev_means_1', 'numdev_deviations_30', 'numdev_deviations_7', 'numdev_deviations_1']]
 # Keep Trans.ID, binarylabels for visualization
 X = stockstatsdf.values
@@ -199,10 +208,19 @@ X = stockstatsdf.values
 numrecords = len(X)
 
 clf = LocalOutlierFactor(n_neighbors=numneighbours, contamination=outliers_fraction)
-
 y_pred = clf.fit_predict(X[:,3:])
-scores_pred = clf.negative_outlier_factor_
+scores_pred = -clf.negative_outlier_factor_
+# scores_pred = clf._decision_function(X[:,3:])
 # The lower, the more normal. Inliers tend to have a LOF score close to 1, while outliers tend to have a larger LOF score.
+
+# import scipy
+# print(-scipy.stats.scoreatpercentile(-scores_pred,99))
+#
+# print(-scores_pred)
+# print(min(scores_pred))
+# print(max(scores_pred))
+#
+# sys.exit()
 
 print('y_pred', y_pred)
 print(len(y_pred[y_pred == -1]))
@@ -219,36 +237,216 @@ print(max(scores_pred))
 stockstatsdf['predictionlabels'] = y_pred
 stockstatsdf['predictionscores'] = scores_pred
 
-stockstatsdf = stockstatsdf.sort_values('predictionscores', ascending=True)
+stockstatsdf = stockstatsdf.sort_values('predictionscores', ascending=False)
 
-X_top = stockstatsdf[['binarylabels','predictionlabels','predictionscores','numdev_means_30', 'numdev_means_7', 'numdev_means_1', 'numdev_deviations_30', 'numdev_deviations_7', 'numdev_deviations_1']].head(N).values
-X_std = StandardScaler().fit_transform(X_top[:,3:])
-cov_mat = np.cov(X_std.T)
+print('stockstatsdf.shape',stockstatsdf.shape)
+# sys.exit()
 
-eig_vals, eig_vecs = np.linalg.eig(cov_mat)
+# print(stockstatsdf)
+# sys.exit()
 
-eig_pairs = [(np.abs(eig_vals[i]), eig_vecs[:,i]) for i in range(len(eig_vals))]
+# print(stockstatsdf.head(100))
+# print(stockstatsdf.groupby('predictionlabels').count())
+# print(stockstatsdf.groupby('binarylabels').count())
 
-# print('Eigenvectors \n%s' %eig_vecs)
-# print('\nEigenvalues \n%s' %eig_vals)
-# print(cov_mat.shape)
 
-eig_pairs.sort()
-eig_pairs.reverse()
+# topcolslist = ['binarylabels','predictionlabels','predictionscores','numdev_means_30', 'numdev_means_7', 'numdev_means_1', 'numdev_deviations_30', 'numdev_deviations_7', 'numdev_deviations_1']
+# topcolslist = ['binarylabels','predictionlabels','predictionscores', 'numdev_means_7', 'numdev_means_1', 'numdev_deviations_7', 'numdev_deviations_1']
+topcolslist = ['binarylabels','predictionlabels','predictionscores', 'numdev_deviations_30', 'numdev_deviations_7', 'numdev_deviations_1']
 
-for i in eig_pairs:
-    print(i[0])
 
-matrix_w = np.hstack((eig_pairs[0][1].reshape(6,1),
-                      eig_pairs[1][1].reshape(6,1)))
+# X_top = stockstatsdf[topcolslist].head(N).values
+# print(stockstatsdf.groupby('predictionlabels').count())
+# print(X_alert.groupby('binarylabels').count())
 
-Y = X_std.dot(matrix_w)
-Y, X_top[:,0:], X_top[:,1:], X_top[:,2:]
+X_top = stockstatsdf.loc[stockstatsdf['predictionlabels'] == -1][topcolslist].head(N).values
+X_norm1 = stockstatsdf.loc[stockstatsdf['predictionlabels'] == 1][topcolslist].head(N).values
 
-print(np.column_stack((Y,X_top[:,0],X_top[:,1])))
+X_alert = stockstatsdf.loc[stockstatsdf['binarylabels'] == 'P'][topcolslist].values
+X_norm2 = stockstatsdf.loc[stockstatsdf['binarylabels'] == 'N'][topcolslist].values
+
+# print(X_top.shape)
+# print(X_alert.shape)
+# print(X_top[:,0])
+# print(X_alert[:,1])
+
+xtop = X_top[:,3]
+ytop = X_top[:,4]
+ztop = X_top[:,5]
+
+xtopnorm = X_norm1[:,3]
+ytopnorm = X_norm1[:,4]
+ztopnorm = X_norm1[:,5]
+
+# xtop = X_top[:,6]
+# ytop = X_top[:,7]
+# ztop = X_top[:,8]
+#
+# xtopnorm = X_norm1[:,6]
+# ytopnorm = X_norm1[:,7]
+# ztopnorm = X_norm1[:,8]
+
+# xtop = X_top[:,5]
+# ytop = X_top[:,6]
+#
+# xtopnorm = X_norm1[:,5]
+# ytopnorm = X_norm1[:,6]
+
+# print('=============')
+# print(len(xtop))
+# print(len(ytop))
+# print(len(ztop))
+# print('=============')
+# print(min(xtop))
+# print(max(xtop))
+# print('=============')
+# print(min(ytop))
+# print(max(ytop))
+# print('=============')
+# print(min(ztop))
+# print(max(ztop))
+# print('=============')
+# print(len(set(xtop)))
+# print(len(set(ytop)))
+# print(len(set(ztop)))
+# print('=============')
+
+
+xalert = X_alert[:,3]
+yalert = X_alert[:,4]
+zalert = X_alert[:,5]
+
+xalertnorm = X_norm2[:,3]
+yalertnorm = X_norm2[:,4]
+zalertnorm = X_norm2[:,5]
+
+# xalert = X_alert[:,6]
+# yalert = X_alert[:,7]
+# zalert = X_alert[:,8]
+#
+# xalertnorm = X_norm2[:,6]
+# yalertnorm = X_norm2[:,7]
+# zalertnorm = X_norm2[:,8]
+
+# xalert = X_alert[:,5]
+# yalert = X_alert[:,6]
+#
+# xalertnorm = X_norm2[:,5]
+# yalertnorm = X_norm2[:,6]
+
+# print('=============')
+# print(len(xalert))
+# print(len(yalert))
+# print(len(zalert))
+# print('=============')
+# print(min(xalert))
+# print(max(xalert))
+# print('=============')
+# print(min(yalert))
+# print(max(yalert))
+# print('=============')
+# print(min(zalert))
+# print(max(zalert))
+# print('=============')
+# print(len(set(xalert)))
+# print(len(set(yalert)))
+# print(len(set(zalert)))
+# print('=============')
+
+
+# print(set(xtop))
+# print(set(ytop))
+# print(set(ztop))
+
+
+# print(stockstatsdf.loc[(stockstatsdf['numdev_deviations_30'] > 43.2) & (stockstatsdf['numdev_deviations_30'] < 44)])
+
+# print(np.where(xalert==43.88457810639417))
+#
+# print(xalert[167])
+# print(yalert[167])
+# print(zalert[167])
+# sys.exit()
+
+# fig = plt.figure()
+# ax = Axes3D(fig)
+# # # ax = fig.add_subplot(111, projection='3d')
+# ax.scatter(xtop, ytop, ztop, c='r', marker='o', alpha=0.8, s=30)
+# ax.scatter(xalert, yalert, zalert, c='b', marker='x', alpha=0.8, s=60)
+# #
+# # # ax.scatter(xtopnorm, ytopnorm, ztopnorm, c='#999999', marker='.')
+# ax.scatter(xalertnorm, yalertnorm, zalertnorm, c='#999999', marker='.')
+# #
+# # ax.set_xlabel('numdev_means_30')
+# # ax.set_ylabel('numdev_means_7')
+# # ax.set_zlabel('numdev_means_1')
+# #
+# ax.set_xlabel('numdev_deviations_30')
+# ax.set_ylabel('numdev_deviations_7')
+# ax.set_zlabel('numdev_deviations_1')
+
+
+# plt.scatter(xtop, ytop, c='r', marker='o', alpha=0.8, s=30)
+# plt.scatter(xalert, yalert, c='b', marker='x', alpha=0.8, s=60)
+# plt.scatter(xalertnorm, yalertnorm, c='#999999', marker='.')
+# plt.xlabel('numdev_deviations_30')
+# plt.ylabel('numdev_deviations_7')
+
+# plt.scatter(ytop, ztop, c='r', marker='o', alpha=0.8, s=30)
+# plt.scatter(yalert, zalert, c='b', marker='x', alpha=0.8, s=60)
+# plt.scatter(yalertnorm, zalertnorm, c='#999999', marker='.')
+# plt.xlabel('numdev_deviations_7')
+# plt.ylabel('numdev_deviations_1')
+#
+plt.scatter(xtop, ztop, c='r', marker='o', alpha=0.8, s=30)
+plt.scatter(xalert, zalert, c='b', marker='x', alpha=0.8, s=60)
+plt.scatter(xalertnorm, zalertnorm, c='#999999', marker='.')
+plt.xlabel('numdev_deviations_30')
+plt.ylabel('numdev_deviations_1')
+
+# plt.show()
+
+# plt.savefig(MeansPlotPath, format="PNG")
+plt.savefig(DeviationsPlotPath, format="PNG")
 
 sys.exit()
 
+
+# Following code gets PCA on the variances
+# X_std = StandardScaler().fit_transform(X_top[:,3:])
+# cov_mat = np.cov(X_std.T)
+#
+# eig_vals, eig_vecs = np.linalg.eig(cov_mat)
+#
+# eig_pairs = [(np.abs(eig_vals[i]), eig_vecs[:,i]) for i in range(len(eig_vals))]
+#
+# # print('Eigenvectors \n%s' %eig_vecs)
+# # print('\nEigenvalues \n%s' %eig_vals)
+# # print(cov_mat.shape)
+#
+# eig_pairs.sort()
+# eig_pairs.reverse()
+#
+# for i in eig_pairs:
+#     print(i[0])
+#
+# matrix_w = np.hstack((eig_pairs[0][1].reshape(6,1),
+#                       eig_pairs[1][1].reshape(6,1)))
+#
+# Y = X_std.dot(matrix_w)
+# Y, X_top[:,0:], X_top[:,1:], X_top[:,2:]
+#
+# print(np.column_stack((Y,X_top[:,0],X_top[:,1])))
+
+
+# https://stackoverflow.com/questions/13224362/principal-component-analysis-pca-in-python
+# https://plot.ly/ipython-notebooks/principal-component-analysis/
+
+# http://scikit-learn.org/dev/auto_examples/neighbors/plot_lof.html#sphx-glr-auto-examples-neighbors-plot-lof-py
+# http://scikit-learn.org/dev/auto_examples/covariance/plot_outlier_detection.html#sphx-glr-auto-examples-covariance-plot-outlier-detection-py
+# https://github.com/damjankuznar/pylof
+# https://www.revolvy.com/main/index.php?s=Local%20outlier%20factor&item_type=topic
+# https://github.com/scikit-learn/scikit-learn/blob/6d4ae1b6/sklearn/neighbors/lof.py#L19
 
 
 

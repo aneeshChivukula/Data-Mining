@@ -1,0 +1,17 @@
+digraph {
+
+node[fontsize=100]
+edge[fontsize=100]
+
+AAPL -> ABT	 [arrowsize=4,penwidth=4,color=yellowgreen];
+AFG -> ABT	 [arrowsize=4,penwidth=4,color=yellowgreen];
+APA -> ABT	 [arrowsize=4,penwidth=4,color=yellowgreen];
+UTX -> ABT	 [arrowsize=4,penwidth=4,color=yellowgreen];
+
+ABT [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+AAPL [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+AFG [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+APA [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+UTX [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+
+}

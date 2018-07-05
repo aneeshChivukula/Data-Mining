@@ -1,0 +1,140 @@
+digraph {
+
+node[fontsize=100]
+edge[fontsize=100]
+
+
+('grurnnmodelgraph edges', OutEdgeDataView([
+('MCD', 'AAPL', {'color': 'red', 'weight': 0.575}), 
+('MCD', 'APA', {'color': 'red', 'weight': 0.662}), 
+('MCD', 'CAT', {'color': 'red', 'weight': 0.313}), 
+('AAPL', 'APA', {'color': 'red', 'weight': 0.395}), 
+('AFG', 'AAPL', {'color': 'red', 'weight': 0.888}), 
+('AFG', 'APA', {'color': 'red', 'weight': 0.94}), 
+('AFG', 'CAT', {'color': 'red', 'weight': 0.574}), 
+('AFG', 'UTX', {'color': 'red', 'weight': 0.369}), 
+('AFG', 'MCD', {'color': 'red', 'weight': 0.344}), 
+('WWD', 'AAPL', {'color': 'red', 'weight': 0.757}), 
+('WWD', 'APA', {'color': 'red', 'weight': 0.802}), 
+('WWD', 'CAT', {'color': 'red', 'weight': 0.464}), 
+('ORCL', 'AAPL', {'color': 'red', 'weight': 1.031}), 
+('ORCL', 'MCD', {'color': 'red', 'weight': 0.446}), 
+('ORCL', 'CAT', {'color': 'red', 'weight': 0.693}), 
+('ORCL', 'UTX', {'color': 'red', 'weight': 0.472}), 
+('ORCL', 'APA', {'color': 'red', 'weight': 1.115}), 
+('ORCL', 'AEM', {'color': 'red', 'weight': 0.344}), 
+('ORCL', 'MSFT', {'color': 'red', 'weight': 0.316}), 
+('ABT', 'MCD', {'color': 'red', 'weight': 1.601}), 
+('ABT', 'AAPL', {'color': 'red', 'weight': 2.654}), 
+('ABT', 'AFG', {'color': 'red', 'weight': 0.939}), 
+('ABT', 'CAT', {'color': 'red', 'weight': 2.046}), 
+('ABT', 'WWD', {'color': 'red', 'weight': 1.06}), 
+('ABT', 'ORCL', {'color': 'red', 'weight': 1.024}), 
+('ABT', 'T', {'color': 'red', 'weight': 0.471}), 
+('ABT', 'UTX', {'color': 'red', 'weight': 1.65}), 
+('ABT', 'APA', {'color': 'red', 'weight': 2.794}), 
+('ABT', 'AEM', {'color': 'red', 'weight': 1.419}), 
+('ABT', 'MSFT', {'color': 'red', 'weight': 1.367}), 
+('T', 'AAPL', {'color': 'red', 'weight': 1.008}), 
+('T', 'MCD', {'color': 'red', 'weight': 0.429}), 
+('T', 'CAT', {'color': 'red', 'weight': 0.674}), 
+('T', 'UTX', {'color': 'red', 'weight': 0.456}), 
+('T', 'APA', {'color': 'red', 'weight': 1.061}), 
+('T', 'AEM', {'color': 'red', 'weight': 0.329}), 
+('T', 'MSFT', {'color': 'red', 'weight': 0.301}), 
+('UTX', 'AAPL', {'color': 'red', 'weight': 0.458}), 
+('UTX', 'APA', {'color': 'red', 'weight': 0.491}),
+('MSFT', 'AAPL', {'color': 'red', 'weight': 0.732}), 
+('MSFT', 'APA', {'color': 'red', 'weight': 0.772}), 
+('MSFT', 'CAT', {'color': 'red', 'weight': 0.444})]))
+
+
+MCD -> AAPL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.575];
+MCD -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.662];
+MCD -> UTX	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.142];
+MCD -> CAT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.313];
+
+AAPL -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.395];
+AAPL -> CAT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.117];
+
+AFG -> AAPL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.888];
+AFG -> MCD	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.344];
+AFG -> CAT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.574];
+AFG -> WWD	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.065];
+AFG -> UTX	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.369];
+AFG -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.94];
+AFG -> AEM	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.25];
+AFG -> MSFT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.223];
+
+CAT -> AAPL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.253];
+CAT -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.295];
+
+WWD -> AAPL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.757];
+WWD -> MCD	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.251];
+WWD -> CAT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.464];
+WWD -> UTX	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.274];
+WWD -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.802];
+WWD -> AEM	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.163];
+WWD -> MSFT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.138];
+
+ORCL -> MCD	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.446];
+ORCL -> AAPL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=1.031];
+ORCL -> AFG	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.078];
+ORCL -> CAT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.693];
+ORCL -> WWD	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.145];
+ORCL -> UTX	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.472];
+ORCL -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=1.115];
+ORCL -> AEM	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.344];
+ORCL -> MSFT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.316];
+
+ABT -> MCD	 [arrowsize=4,penwidth=4,color=yellowgreen,label=1.601];
+ABT -> AAPL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=2.654];
+ABT -> AFG	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.939];
+ABT -> CAT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=2.046];
+ABT -> WWD	 [arrowsize=4,penwidth=4,color=yellowgreen,label=1.06];
+ABT -> ORCL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=1.024];
+ABT -> T	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.471];
+ABT -> UTX	 [arrowsize=4,penwidth=4,color=yellowgreen,label=1.65];
+ABT -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=2.794];
+ABT -> AEM	 [arrowsize=4,penwidth=4,color=yellowgreen,label=1.419];
+ABT -> MSFT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=1.367];
+
+T -> MCD	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.429];
+T -> AAPL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=1.008];
+T -> AFG	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.065];
+T -> CAT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.674];
+T -> WWD	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.132];
+T -> ORCL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.112];
+T -> UTX	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.456];
+T -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=1.061];
+T -> AEM	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.329];
+T -> MSFT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.301];
+
+UTX -> AAPL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.458];
+UTX -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.491];
+UTX -> CAT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.215];
+
+AEM -> AAPL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.207];
+AEM -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.275];
+
+MSFT -> AAPL	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.732];
+MSFT -> MCD	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.233];
+MSFT -> CAT	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.444];
+MSFT -> UTX	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.256];
+MSFT -> APA	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.772];
+MSFT -> AEM	 [arrowsize=4,penwidth=4,color=yellowgreen,label=0.147];
+
+AAPL [shape=circle,color=lightblue,style=filled];
+ABT [shape=circle,color=lightblue,style=filled];
+AEM [shape=circle,color=lightblue,style=filled];
+AFG [shape=circle,color=lightblue,style=filled];
+APA [shape=circle,color=lightblue,style=filled];
+CAT [shape=circle,color=lightblue,style=filled];
+MCD [shape=circle,color=lightblue,style=filled];
+MSFT [shape=circle,color=lightblue,style=filled];
+ORCL [shape=circle,color=lightblue,style=filled];
+T [shape=circle,color=lightblue,style=filled];
+UTX [shape=circle,color=lightblue,style=filled];
+WWD [shape=circle,color=lightblue,style=filled];
+
+}

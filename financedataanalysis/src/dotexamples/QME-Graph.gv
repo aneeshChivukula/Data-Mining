@@ -1,0 +1,69 @@
+digraph {
+
+node[fontsize=100]
+edge[fontsize=100]
+
+AFG -> MCD	 [arrowsize=4,penwidth=4,color=red,label=0.351];
+AFG -> CAT	 [arrowsize=4,penwidth=4,color=red,label=0.147];
+AFG -> WWD	 [arrowsize=4,penwidth=4,color=red,label=0.185];
+AFG -> ORCL	 [arrowsize=4,penwidth=4,color=red,label=0.209];
+AFG -> ABT	 [arrowsize=4,penwidth=4,color=red,label=0.31];
+AFG -> MSFT	 [arrowsize=4,penwidth=4,color=red,label=0.055];
+AAPL -> MCD	 [arrowsize=4,penwidth=4,color=red,label=1.482];
+AAPL -> AFG	 [arrowsize=4,penwidth=4,color=red,label=1.071];
+AAPL -> WWD	 [arrowsize=4,penwidth=4,color=red,label=0.877];
+AAPL -> ABT	 [arrowsize=4,penwidth=4,color=red,label=3.223];
+AAPL -> UTX	 [arrowsize=4,penwidth=4,color=red,label=0.222];
+AAPL -> MSFT	 [arrowsize=4,penwidth=4,color=red,label=0.498];
+MCD -> AAPL	 [arrowsize=4,penwidth=4,color=red,label=0.213];
+MCD -> AFG	 [arrowsize=4,penwidth=4,color=red,label=0.29];
+MCD -> WWD	 [arrowsize=4,penwidth=4,color=red,label=0.091];
+MCD -> ORCL	 [arrowsize=4,penwidth=4,color=red,label=0.569];
+MCD -> ABT	 [arrowsize=4,penwidth=4,color=red,label=0.487];
+MCD -> MSFT	 [arrowsize=4,penwidth=4,color=red,label=0.435];
+CAT -> UTX	 [arrowsize=4,penwidth=4,color=red,label=0.229];
+CAT -> AFG	 [arrowsize=4,penwidth=4,color=red,label=0.307];
+CAT -> ABT	 [arrowsize=4,penwidth=4,color=red,label=0.441];
+CAT -> MCD	 [arrowsize=4,penwidth=4,color=red,label=0.325];
+WWD -> MCD	 [arrowsize=4,penwidth=4,color=red,label=0.404];
+WWD -> AAPL	 [arrowsize=4,penwidth=4,color=red,label=0.41];
+WWD -> AFG	 [arrowsize=4,penwidth=4,color=red,label=0.085];
+WWD -> CAT	 [arrowsize=4,penwidth=4,color=red,label=0.577];
+WWD -> ABT	 [arrowsize=4,penwidth=4,color=red,label=0.983];
+WWD -> UTX	 [arrowsize=4,penwidth=4,color=red,label=0.735];
+WWD -> MSFT	 [arrowsize=4,penwidth=4,color=red,label=0.086];
+ORCL -> AFG	 [arrowsize=4,penwidth=4,color=red,label=0.108];
+ORCL -> ABT	 [arrowsize=4,penwidth=4,color=red,label=0.362];
+ABT -> MSFT	 [arrowsize=4,penwidth=4,color=red,label=0.082];
+T -> ABT	 [arrowsize=4,penwidth=4,color=red,label=0.127];
+UTX -> WWD	 [arrowsize=4,penwidth=4,color=red,label=0.179];
+UTX -> AAPL	 [arrowsize=4,penwidth=4,color=red,label=0.068];
+UTX -> MCD	 [arrowsize=4,penwidth=4,color=red,label=0.649];
+UTX -> ABT	 [arrowsize=4,penwidth=4,color=red,label=0.524];
+UTX -> CAT	 [arrowsize=4,penwidth=4,color=red,label=0.543];
+APA -> WWD	 [arrowsize=4,penwidth=4,color=red,label=0.28];
+APA -> ABT	 [arrowsize=4,penwidth=4,color=red,label=0.415];
+AEM -> CAT	 [arrowsize=4,penwidth=4,color=red,label=0.222];
+AEM -> WWD	 [arrowsize=4,penwidth=4,color=red,label=0.242];
+AEM -> AFG	 [arrowsize=4,penwidth=4,color=red,label=0.105];
+AEM -> ABT	 [arrowsize=4,penwidth=4,color=red,label=0.2];
+AEM -> MCD	 [arrowsize=4,penwidth=4,color=red,label=0.413];
+MSFT -> ABT	 [arrowsize=4,penwidth=4,color=red,label=0.23];
+
+
+AAPL [shape=circle,color=darkseagreen1,style=filled];
+ABT [shape=circle,color=darkseagreen1,style=filled];
+AEM [shape=circle,color=darkseagreen1,style=filled];
+AFG [shape=circle,color=darkseagreen1,style=filled];
+APA [shape=circle,color=darkseagreen1,style=filled];
+CAT [shape=circle,color=darkseagreen1,style=filled];
+MCD [shape=circle,color=darkseagreen1,style=filled];
+MSFT [shape=circle,color=darkseagreen1,style=filled];
+ORCL [shape=circle,color=darkseagreen1,style=filled];
+T [shape=circle,color=darkseagreen1,style=filled];
+UTX [shape=circle,color=darkseagreen1,style=filled];
+WWD [shape=circle,color=darkseagreen1,style=filled];
+
+}
+
+

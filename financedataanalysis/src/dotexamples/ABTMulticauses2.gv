@@ -1,0 +1,19 @@
+digraph {
+
+node[fontsize=100]
+edge[fontsize=100]
+
+AAPL -> ABT	 [arrowsize=4,penwidth=4,color=yellowgreen];
+CAT -> ABT	 [arrowsize=4,penwidth=4,color=yellowgreen];
+MCD -> ABT	 [arrowsize=4,penwidth=4,color=yellowgreen];
+MSFT -> ABT	 [arrowsize=4,penwidth=4,color=yellowgreen];
+T -> ABT	 [arrowsize=4,penwidth=4,color=yellowgreen];
+
+ABT [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+AAPL [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+CAT [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+MCD [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+MSFT [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+T [shape=circle,color=lightblue,style=filled,fixedsize=True,height=4,width=4];
+
+}

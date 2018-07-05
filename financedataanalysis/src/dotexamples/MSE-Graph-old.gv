@@ -1,0 +1,44 @@
+digraph {
+
+node[fontsize=50]
+edge[fontsize=50]
+
+ABT -> ORCL	 [arrowsize=2,penwidth=2,color=red,label=0.135];
+ABT -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.193];
+AAPL -> AFG	 [arrowsize=2,penwidth=2,color=red,label=0.301];
+AAPL -> ABT	 [arrowsize=2,penwidth=2,color=red,label=0.743];
+AFG -> ABT	 [arrowsize=2,penwidth=2,color=red,label=2.036];
+AFG -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.579];
+AFG -> MCD	 [arrowsize=2,penwidth=2,color=red,label=0.442];
+MSFT -> ABT	 [arrowsize=2,penwidth=2,color=red,label=0.479];
+MCD -> AFG	 [arrowsize=2,penwidth=2,color=red,label=0.361];
+MCD -> ORCL	 [arrowsize=2,penwidth=2,color=red,label=0.494];
+MCD -> ABT	 [arrowsize=2,penwidth=2,color=red,label=1.978];
+MCD -> UTX	 [arrowsize=2,penwidth=2,color=red,label=0.385];
+MCD -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.187];
+CAT -> UTX	 [arrowsize=2,penwidth=2,color=red,label=0.123];
+CAT -> ABT	 [arrowsize=2,penwidth=2,color=red,label=0.601];
+UTX -> AFG	 [arrowsize=2,penwidth=2,color=red,label=0.337];
+UTX -> MCD	 [arrowsize=2,penwidth=2,color=red,label=0.367];
+UTX -> ABT	 [arrowsize=2,penwidth=2,color=red,label=2.137];
+UTX -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.097];
+WWD -> AFG	 [arrowsize=2,penwidth=2,color=red,label=0.267];
+WWD -> MCD	 [arrowsize=2,penwidth=2,color=red,label=1.597];
+WWD -> ABT	 [arrowsize=2,penwidth=2,color=red,label=1.67];
+WWD -> UTX	 [arrowsize=2,penwidth=2,color=red,label=0.221];
+WWD -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.325];
+ORCL -> ABT	 [arrowsize=2,penwidth=2,color=red,label=1.874];
+ORCL -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.401];
+ORCL -> AFG	 [arrowsize=2,penwidth=2,color=red,label=0.612];
+
+AAPL [shape=circle,color=burlywood3,style=filled];
+AFG [shape=circle,color=burlywood3,style=filled];
+CAT [shape=circle,color=burlywood3,style=filled];
+WWD [shape=circle,color=burlywood3,style=filled];
+ORCL [shape=circle,color=burlywood3,style=filled];
+ABT [shape=circle,color=burlywood3,style=filled];
+UTX [shape=circle,color=burlywood3,style=filled];
+MCD [shape=circle,color=burlywood3,style=filled];
+MSFT [shape=circle,color=burlywood3,style=filled];
+
+}

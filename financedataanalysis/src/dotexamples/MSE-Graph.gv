@@ -1,0 +1,42 @@
+digraph {
+
+node[fontsize=50]
+edge[fontsize=50]
+
+MCD -> ABT	 [arrowsize=2,penwidth=2,color=red,label=1.736];
+AAPL -> AFG	 [arrowsize=2,penwidth=2,color=red,label=0.799];
+AAPL -> ABT	 [arrowsize=2,penwidth=2,color=red,label=2.595];
+AAPL -> MCD	 [arrowsize=2,penwidth=2,color=red,label=0.39];
+AFG -> MCD	 [arrowsize=2,penwidth=2,color=red,label=0.28];
+AFG -> ABT	 [arrowsize=2,penwidth=2,color=red,label=1.386];
+AFG -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.536];
+CAT -> ABT	 [arrowsize=2,penwidth=2,color=red,label=0.325];
+WWD -> UTX	 [arrowsize=2,penwidth=2,color=red,label=0.306];
+WWD -> AFG	 [arrowsize=2,penwidth=2,color=red,label=0.24];
+WWD -> ABT	 [arrowsize=2,penwidth=2,color=red,label=2.829];
+WWD -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.241];
+WWD -> MCD	 [arrowsize=2,penwidth=2,color=red,label=0.593];
+ORCL -> ABT	 [arrowsize=2,penwidth=2,color=red,label=0.967];
+ABT -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.223];
+T -> ABT	 [arrowsize=2,penwidth=2,color=red,label=0.33];
+UTX -> ORCL	 [arrowsize=2,penwidth=2,color=red,label=0.129];
+UTX -> MCD	 [arrowsize=2,penwidth=2,color=red,label=0.185];
+UTX -> ABT	 [arrowsize=2,penwidth=2,color=red,label=1.616];
+UTX -> MSFT	 [arrowsize=2,penwidth=2,color=red,label=0.211];
+APA -> ABT	 [arrowsize=2,penwidth=2,color=red,label=0.085];
+MSFT -> ABT	 [arrowsize=2,penwidth=2,color=red,label=0.424];
+
+
+AAPL [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+ABT [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+AFG [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+APA [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+CAT [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+MCD [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+MSFT [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+ORCL [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+T [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+UTX [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+WWD [shape=circle,color=burlywood3,style=filled,fixedsize=True,height=3,width=3];
+}
+
